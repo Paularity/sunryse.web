@@ -1,0 +1,19 @@
+node_modules/
+.next/
+out/
+dist/
+build/
+.turbo/
+coverage/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+# Strapi
+apps/cms/.tmp/
+apps/cms/.cache/
+apps/cms/.strapi/
+apps/cms/public/uploads/*
+!apps/cms/public/uploads/.gitkeep
+apps/cms/types/generated/

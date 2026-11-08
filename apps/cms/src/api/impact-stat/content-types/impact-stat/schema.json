@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "impact_stats",
+  "info": {
+    "singularName": "impact-stat",
+    "pluralName": "impact-stats",
+    "displayName": "Impact Stat"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "value": {
+      "type": "decimal",
+      "default": 0
+    },
+    "suffix": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

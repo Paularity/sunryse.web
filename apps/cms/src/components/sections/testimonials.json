@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_sections_testimonialss",
+  "info": {
+    "displayName": "testimonials",
+    "icon": "layout"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "subheading": {
+      "type": "text"
+    }
+  }
+}

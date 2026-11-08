@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "projects",
+  "info": {
+    "singularName": "project",
+    "pluralName": "projects",
+    "displayName": "Project"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "segment": {
+      "type": "enumeration",
+      "enum": [
+        "residential",
+        "commercial",
+        "industrial"
+      ]
+    },
+    "location": {
+      "type": "string"
+    },
+    "sizeKwp": {
+      "type": "decimal"
+    },
+    "panels": {
+      "type": "integer"
+    },
+    "monthlySavings": {
+      "type": "decimal"
+    },
+    "completedAt": {
+      "type": "date"
+    },
+    "gallery": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "summary": {
+      "type": "text"
+    }
+  }
+}

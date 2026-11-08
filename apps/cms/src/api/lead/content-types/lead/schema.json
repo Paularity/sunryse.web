@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "leads",
+  "info": {
+    "singularName": "lead",
+    "pluralName": "leads",
+    "displayName": "Lead"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "segment": {
+      "type": "enumeration",
+      "enum": [
+        "residential",
+        "commercial",
+        "industrial"
+      ]
+    },
+    "monthlyBill": {
+      "type": "decimal"
+    },
+    "address": {
+      "type": "text"
+    },
+    "message": {
+      "type": "text"
+    },
+    "calcSnapshot": {
+      "type": "json"
+    },
+    "source": {
+      "type": "string"
+    }
+  }
+}

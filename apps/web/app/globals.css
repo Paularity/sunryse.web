@@ -1,0 +1,219 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* SunRyse design tokens — see .claude/skills/sunryse-design/SKILL.md (v2 · daylight) */
+
+@theme {
+  /* Brand palette */
+  --color-day-0: #ffffff;
+  --color-day-50: #f7faff;
+  --color-day-100: #eaf2ff;
+  --color-dawn-50: #fff6e6;
+  --color-dawn-100: #ffe9c4;
+  --color-navy-700: #1a3478;
+  --color-navy-900: #0b1f4d;
+  --color-navy-950: #071433;
+  --color-ink-muted: #4a5a80;
+  --color-sky-200: #bfe0ff;
+  --color-sky-400: #4a93ff;
+  --color-sky-500: #1e6fe8;
+  --color-sky-600: #1553c7;
+  --color-sun-300: #ffc93c;
+  --color-sun-500: #ff8a00;
+  --color-sun-600: #ff5a1f;
+  --color-sun-700: #c2410c;
+  --color-leaf-500: #2db84c;
+  --color-leaf-600: #1e8a3a;
+  --color-line: rgb(11 31 77 / 0.1);
+
+  /* Type */
+  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-label: var(--font-jetbrains), ui-monospace, monospace;
+
+  /* Motion */
+  --ease-sun: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-heading: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* shadcn semantic variables mapped to the brand (light-only site) */
+:root {
+  --background: #f7faff;
+  --foreground: #0b1f4d;
+  --card: #ffffff;
+  --card-foreground: #0b1f4d;
+  --popover: #ffffff;
+  --popover-foreground: #0b1f4d;
+  --primary: #ff8a00;
+  --primary-foreground: #0b1f4d;
+  --secondary: #eaf2ff;
+  --secondary-foreground: #0b1f4d;
+  --muted: #eaf2ff;
+  --muted-foreground: #4a5a80;
+  --accent: #1e6fe8;
+  --accent-foreground: #ffffff;
+  --destructive: #d92d20;
+  --border: rgb(11 31 77 / 0.1);
+  --input: rgb(11 31 77 / 0.16);
+  --ring: #1553c7;
+  --chart-1: #ff8a00;
+  --chart-2: #1e6fe8;
+  --chart-3: #2db84c;
+  --chart-4: #ffc93c;
+  --chart-5: #0b1f4d;
+  --radius: 1rem;
+
+  --grad-sun: linear-gradient(135deg, #ffc93c, #ff8a00 45%, #ff5a1f);
+  --grad-sky: linear-gradient(135deg, #3b8bff, #1546c7);
+  --grad-dawn: linear-gradient(180deg, #9fd0ff 0%, #d7ebff 36%, #fff3dc 68%, #ffd48c 100%);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.04em;
+  }
+}
+
+/* ---- Brand utilities ---- */
+
+/* Mono uppercase label (eyebrows, stats, tags) */
+@utility label {
+  font-family: var(--font-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+}
+
+@utility text-sun {
+  background: linear-gradient(135deg, #ffb21a, #ff7a00 45%, #ff4d1a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility text-sky {
+  background: var(--grad-sky);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility bg-sun {
+  background-image: var(--grad-sun);
+}
+
+@utility bg-dawn {
+  background-image: var(--grad-dawn);
+}
+
+/* ChainGPT-style column guides; hidden on small screens */
+@utility grid-lines {
+  background-image: repeating-linear-gradient(90deg, rgb(11 31 77 / 0.06) 0 1px, transparent 1px 220px);
+  @media (width < 48rem) {
+    background-image: none;
+  }
+}
+
+/* Orange L-shaped corner brackets */
+@utility corners {
+  --c: #ff8a00;
+  background:
+    linear-gradient(var(--c), var(--c)) top left / 18px 2px no-repeat,
+    linear-gradient(var(--c), var(--c)) top left / 2px 18px no-repeat,
+    linear-gradient(var(--c), var(--c)) top right / 18px 2px no-repeat,
+    linear-gradient(var(--c), var(--c)) top right / 2px 18px no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom left / 18px 2px no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom left / 2px 18px no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom right / 18px 2px no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom right / 2px 18px no-repeat;
+}
+
+@utility glass {
+  background: rgb(255 255 255 / 0.72);
+  border: 1px solid rgb(255 255 255 / 0.9);
+  box-shadow: 0 20px 50px -20px rgb(11 31 77 / 0.35);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+@utility shadow-card {
+  box-shadow:
+    0 1px 2px rgb(11 31 77 / 0.04),
+    0 12px 32px -12px rgb(11 31 77 / 0.14);
+}
+
+@utility container-site {
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  @media (width >= 40rem) {
+    padding-inline: 1.5rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 2.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

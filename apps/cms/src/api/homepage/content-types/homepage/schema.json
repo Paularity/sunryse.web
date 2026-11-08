@@ -1,0 +1,33 @@
+{
+  "kind": "singleType",
+  "collectionName": "homepages",
+  "info": {
+    "singularName": "homepage",
+    "pluralName": "homepages",
+    "displayName": "Homepage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "sections": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.hero",
+        "sections.benefits-strip",
+        "sections.logo-marquee",
+        "sections.solutions-showcase",
+        "sections.services-grid",
+        "sections.process-steps",
+        "sections.calculator-cta",
+        "sections.solar-vs-grid",
+        "sections.impact-stats",
+        "sections.projects-gallery",
+        "sections.why-us",
+        "sections.testimonials",
+        "sections.faq",
+        "sections.cta-banner"
+      ]
+    }
+  }
+}

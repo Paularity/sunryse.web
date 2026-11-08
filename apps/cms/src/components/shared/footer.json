@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_shared_footers",
+  "info": {
+    "displayName": "footer",
+    "icon": "puzzle-piece"
+  },
+  "options": {},
+  "attributes": {
+    "blurb": {
+      "type": "text"
+    },
+    "links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.link"
+    },
+    "copyright": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "question": "Does solar work during the rainy season?",
+    "answer": "Yes. Panels still generate on cloudy and rainy days, though at reduced output. Systems are sized using annual average sun hours.",
+    "category": "general"
+  },
+  {
+    "question": "What happens at night or during a brownout?",
+    "answer": "Grid-tie systems shut down during a brownout for safety. A hybrid system with batteries can keep your essential loads running at night and during outages.",
+    "category": "systems"
+  },
+  {
+    "question": "How does net metering work?",
+    "answer": "Net metering lets you export excess power to the grid and receive credit. [TBD: confirm current program details.]",
+    "category": "billing"
+  },
+  {
+    "question": "How long is the payback period?",
+    "answer": "Typical payback depends on your bill, system type and size. Use our calculator for an estimate.",
+    "category": "billing"
+  },
+  {
+    "question": "How much maintenance does solar need?",
+    "answer": "Very little: periodic panel cleaning and an annual inspection of electrical components.",
+    "category": "maintenance"
+  },
+  {
+    "question": "Which brands do you use?",
+    "answer": "We work with trusted brands including Solis, Deye, SRNE, Dyness, Pylontech, Genixgreen, Hestia, Sunways and Seraphim.",
+    "category": "brands"
+  }
+]

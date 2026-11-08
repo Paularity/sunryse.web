@@ -1,0 +1,56 @@
+{
+  "kind": "singleType",
+  "collectionName": "calculator_configs",
+  "info": {
+    "singularName": "calculator-config",
+    "pluralName": "calculator-configs",
+    "displayName": "Calculator Config"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "electricityRate": {
+      "type": "decimal"
+    },
+    "peakSunHours": {
+      "type": "decimal"
+    },
+    "performanceRatio": {
+      "type": "decimal"
+    },
+    "panelWatt": {
+      "type": "decimal"
+    },
+    "panelAreaM2": {
+      "type": "decimal"
+    },
+    "costPerKwpGridTie": {
+      "type": "decimal"
+    },
+    "costPerKwpHybrid": {
+      "type": "decimal"
+    },
+    "batteryCostPerKwh": {
+      "type": "decimal"
+    },
+    "exportCreditRate": {
+      "type": "decimal"
+    },
+    "rateEscalation": {
+      "type": "decimal"
+    },
+    "degradation": {
+      "type": "decimal"
+    },
+    "gridEmissionFactor": {
+      "type": "decimal"
+    },
+    "kgCo2PerTree": {
+      "type": "decimal"
+    },
+    "disclaimer": {
+      "type": "text"
+    }
+  }
+}

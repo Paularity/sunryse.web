@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SunRyse — Motion system and tokens</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=Manrope:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7FAFF}
+.mono{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.12em}
+.sun-text{background:linear-gradient(135deg,#FFB21A,#FF7A00 45%,#FF4D1A);-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{background:#FFFFFF;border:1px solid rgba(11,31,77,.10);box-shadow:0 1px 2px rgba(11,31,77,.04),0 12px 32px -12px rgba(11,31,77,.14)}
+</style>
+</helmet>
+<div style="width:1440px;height:2050px;box-sizing:border-box;padding:64px;background:#F7FAFF;color:#0B1F4D;font-family:Manrope,sans-serif;display:flex;flex-direction:column;gap:56px;background-image:repeating-linear-gradient(90deg,rgba(11,31,77,.05) 0 1px,transparent 1px 218px)">
+
+<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:40px">
+<div style="display:flex;flex-direction:column;gap:14px">
+<span class="mono" style="font-size:12px;color:#C2410C">Motion system · structure inspired by chaingpt.org</span>
+<h1 style="font-family:Sora;font-size:66px;font-weight:700;letter-spacing:-.045em;line-height:1;margin:0">Daylight <span class="sun-text">sunrise</span></h1>
+<p style="margin:0;color:#4A5A80;font-size:18px;max-width:740px;line-height:1.6">Bright, sunny pages from the brand sheet, with ChainGPT’s technical structure and motion: grid lines, numbered sections, mono labels, scrambled status text and scroll-scrubbed scenes.</p>
+</div>
+<div class="mono" style="display:flex;flex-wrap:wrap;gap:8px;max-width:460px;justify-content:flex-end;font-size:11px">
+<sc-for list="{{libs}}" as="l" hint-placeholder-count="7"><span style="background:#FFFFFF;border:1px solid rgba(11,31,77,.15);border-radius:999px;padding:8px 12px">{{l}}</span></sc-for>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:18px">
+<span class="mono" style="font-size:12px;color:#4A5A80">Hero storyboard · pinned 200vh · scrub</span>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px">
+<sc-for list="{{frames}}" as="f" hint-placeholder-count="4"><div style="display:flex;flex-direction:column;gap:12px">
+<div style="position:relative;height:220px;border-radius:18px;overflow:hidden;border:1px solid rgba(11,31,77,.12);background:{{f.sky}}">
+<div style="position:absolute;left:50%;width:130px;height:130px;margin-left:-65px;border-radius:50%;bottom:{{f.sunY}};background:radial-gradient(circle at 45% 40%,#FFFBEA,#FFE07A 25%,#FFB21A 55%,#FF7A00 85%,#FF5A1F);box-shadow:0 0 60px {{f.glow}} rgba(255,178,26,.55)"></div>
+<div style="position:absolute;left:0;right:0;bottom:0;height:70px;border-top:2px solid #E6EEF9;background:repeating-linear-gradient(90deg,rgba(230,238,249,.9) 0 2px,transparent 2px 10%),linear-gradient(160deg,{{f.panel}},#0D2A70)"></div>
+<span class="mono" style="position:absolute;top:12px;left:12px;font-size:10px;background:rgba(255,255,255,.8);border-radius:6px;padding:4px 7px">{{f.pct}}</span>
+</div>
+<span style="font-family:Sora;font-weight:700;font-size:17px">{{f.t}}</span>
+<span style="font-size:14px;color:#4A5A80;line-height:1.5">{{f.d}}</span>
+</div></sc-for>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:18px">
+<span class="mono" style="font-size:12px;color:#4A5A80">Recipes · components/motion/*</span>
+<div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px">
+<sc-for list="{{recipes}}" as="r" hint-placeholder-count="10"><div class="card" style="display:flex;flex-direction:column;gap:10px;padding:18px;border-radius:16px;min-height:190px">
+<span class="mono" style="font-size:10px;color:#C2410C">{{r.n}}</span>
+<span style="font-family:Sora;font-weight:700;font-size:17px">{{r.t}}</span>
+<span style="font-size:13px;color:#4A5A80;line-height:1.5">{{r.d}}</span>
+<span class="mono" style="margin-top:auto;font-size:9px;color:#1553C7">{{r.lib}}</span>
+<span class="mono" style="font-size:9px;color:#1E8A3A">Mobile: {{r.m}}</span>
+</div></sc-for>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:1.3fr 1fr;gap:40px">
+<div style="display:flex;flex-direction:column;gap:18px">
+<span class="mono" style="font-size:12px;color:#4A5A80">Color tokens · from the SunRyse brand sheet</span>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px">
+<sc-for list="{{colors}}" as="c" hint-placeholder-count="12"><div class="card" style="border-radius:14px;overflow:hidden"><div style="height:60px;background:{{c.hex}};border-bottom:1px solid rgba(11,31,77,.08)"></div><div style="padding:10px 12px;display:flex;flex-direction:column;gap:2px"><span class="mono" style="font-size:10px">{{c.name}}</span><span class="mono" style="font-size:10px;color:#4A5A80">{{c.hex}}</span></div></div></sc-for>
+</div>
+<div style="display:flex;gap:12px;flex-wrap:wrap">
+<div class="mono" style="flex:1;height:56px;border-radius:14px;background:linear-gradient(135deg,#FFC93C,#FF8A00 45%,#FF5A1F);display:flex;align-items:center;padding:0 16px;font-size:10px">--grad-sun</div>
+<div class="mono" style="flex:1;height:56px;border-radius:14px;background:linear-gradient(180deg,#9FD0FF,#D7EBFF 38%,#FFF3DC 70%,#FFD48C);display:flex;align-items:center;padding:0 16px;font-size:10px">--grad-dawn</div>
+<div class="mono" style="flex:1;height:56px;border-radius:14px;background:linear-gradient(135deg,#4A93FF,#1E4FD8);display:flex;align-items:center;padding:0 16px;font-size:10px;color:#FFFFFF">--grad-sky</div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:18px">
+<span class="mono" style="font-size:12px;color:#4A5A80">Type · components</span>
+<div class="card" style="display:flex;flex-direction:column;gap:6px;padding:20px;border-radius:16px">
+<span style="font-family:Sora;font-size:46px;font-weight:700;letter-spacing:-.045em;line-height:1">Sora Display</span>
+<span style="font-size:16px;color:#4A5A80">Manrope body — clear, friendly and readable at 16–18px.</span>
+<span class="mono" style="font-size:12px;color:#C2410C">JetBrains Mono · labels &amp; stats</span>
+</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+<button class="mono" style="border:0;border-radius:14px;padding:16px 22px;font-size:12px;color:#0B1F4D;background:linear-gradient(135deg,#FFC93C,#FF8A00 50%,#FF5A1F);letter-spacing:.12em">Get a quote</button>
+<button class="mono" style="border:0;border-radius:14px;padding:16px 22px;font-size:12px;color:#FFFFFF;background:#0B1F4D;letter-spacing:.12em">Calculate</button>
+<span class="mono" style="width:46px;height:46px;border:2px solid #FF8A00;border-radius:50%;display:grid;place-items:center;font-size:12px;color:#C2410C">01</span>
+<span style="font-family:Sora;font-size:24px;font-weight:700;border:2px solid #1E6FE8;border-radius:12px;padding:0 12px 3px">boxed</span>
+</div>
+<div class="card" style="padding:20px;border-radius:18px;border-color:#FF8A00;background:linear-gradient(160deg,#FFF6E6,#FFFFFF 60%)">
+<span class="mono" style="font-size:10px;color:#4A5A80">GlowCard · hover state</span>
+<span style="display:block;font-family:Sora;font-weight:700;font-size:18px;margin-top:20px">Battery storage solutions</span>
+</div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2050}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      libs: ['GSAP 3','ScrollTrigger','SplitText','ScrambleText','Lenis','Motion','React Three Fiber'],
+      frames: [
+        { pct:'0% · dawn', t:'First light', d:'Sun sits low behind the panel field; headline lines slide up (SplitText).', sky:'linear-gradient(180deg,#7FA9E6,#C9D9F2 50%,#F6D9B8)', sunY:'-50px', glow:'10px', panel:'#1E4FA8' },
+        { pct:'33% · rising', t:'Sun breaks', d:'Sun climbs, rays rotate slowly, status label scrambles "SIZING YOUR SYSTEM_".', sky:'linear-gradient(180deg,#9FD0FF,#D7EBFF 45%,#FFE2B0)', sunY:'20px', glow:'30px', panel:'#2A5FD0' },
+        { pct:'66% · bright', t:'Panels light up', d:'Panel cells shine left→right; savings chips count up.', sky:'linear-gradient(180deg,#9FD0FF,#E6F2FF 40%,#FFF3DC 70%,#FFD48C)', sunY:'70px', glow:'50px', panel:'#2F6BEA' },
+        { pct:'100% · day', t:'Hand-off', d:'Pin releases; the warm glow carries into the benefits strip.', sky:'linear-gradient(180deg,#BFE0FF,#F7FAFF 60%,#FFF6E6)', sunY:'110px', glow:'70px', panel:'#3B74F0' }
+      ],
+      recipes: [
+        { n:'R01', t:'SunriseHero', d:'Pinned scrub timeline: sun, rays, sky, panels.', lib:'GSAP · ScrollTrigger · R3F', m:'static poster' },
+        { n:'R02', t:'ScrambleLabel', d:'Rotating mono status text every 2.5s.', lib:'ScrambleTextPlugin', m:'same' },
+        { n:'R03', t:'SplitReveal', d:'Headline lines rise from a mask.', lib:'SplitText', m:'fade only' },
+        { n:'R04', t:'BoxedWord', d:'Border draws in, word scrambles.', lib:'GSAP clip-path', m:'same' },
+        { n:'R05', t:'PinnedShowcase', d:'Sticky photo swaps 01→03 with dot rail.', lib:'ScrollTrigger pin', m:'stacked cards' },
+        { n:'R06', t:'GridLines', d:'Column guides grow on first view.', lib:'GSAP scaleY', m:'hidden' },
+        { n:'R07', t:'Marquee', d:'Brand logos loop, pause on hover.', lib:'CSS keyframes', m:'same' },
+        { n:'R08', t:'GlowCard', d:'Cursor-follow warm glow + 2° tilt.', lib:'Motion', m:'tap highlight' },
+        { n:'R09', t:'CountUp', d:'Stats and savings count when in view.', lib:'GSAP snap', m:'same' },
+        { n:'R10', t:'HorizontalSteps', d:'Process scrolls sideways while pinned.', lib:'ScrollTrigger', m:'vertical timeline' }
+      ],
+      colors: [
+        { name:'day-50', hex:'#F7FAFF' }, { name:'day-100', hex:'#EAF2FF' }, { name:'dawn-50', hex:'#FFF6E6' }, { name:'navy-900', hex:'#0B1F4D' },
+        { name:'sky-600', hex:'#1553C7' }, { name:'sky-500', hex:'#1E6FE8' }, { name:'sun-300', hex:'#FFC93C' }, { name:'sun-500', hex:'#FF8A00' },
+        { name:'sun-600', hex:'#FF5A1F' }, { name:'sun-700 (text)', hex:'#C2410C' }, { name:'leaf-500', hex:'#2DB84C' }, { name:'muted', hex:'#4A5A80' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

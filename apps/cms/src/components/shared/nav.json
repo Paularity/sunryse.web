@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_shared_navs",
+  "info": {
+    "displayName": "nav",
+    "icon": "puzzle-piece"
+  },
+  "options": {},
+  "attributes": {
+    "links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.link"
+    },
+    "ctaLabel": {
+      "type": "string"
+    },
+    "ctaHref": {
+      "type": "string"
+    }
+  }
+}

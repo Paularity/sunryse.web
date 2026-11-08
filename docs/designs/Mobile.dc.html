@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SunRyse — Home (phone)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=Manrope:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7FAFF}
+a{color:#1553C7;text-decoration:none}
+.mono{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.12em}
+.sun-text{background:linear-gradient(135deg,#FFB21A,#FF7A00 45%,#FF4D1A);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sky-text{background:linear-gradient(135deg,#3B8BFF,#1546C7);-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{background:#FFFFFF;border:1px solid rgba(11,31,77,.10);box-shadow:0 1px 2px rgba(11,31,77,.04),0 12px 28px -14px rgba(11,31,77,.18)}
+.glass{background:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.9);box-shadow:0 16px 40px -18px rgba(11,31,77,.35);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.h2{font-family:Sora;font-weight:700;font-size:32px;line-height:1.05;letter-spacing:-.04em;margin:0}
+.eb{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:#C2410C}
+.sec{padding:56px 16px;display:flex;flex-direction:column;gap:16px}
+.row{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;margin-right:-16px;padding-right:16px;scroll-snap-type:x mandatory}
+.row::-webkit-scrollbar{display:none}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border-radius:14px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.12em;font-size:12px}
+</style>
+</helmet>
+<div style="position:relative;width:390px;height:6300px;overflow:hidden;background:#F7FAFF;color:#0B1F4D;font-family:Manrope,sans-serif">
+
+<div class="mono" style="background:#0B1F4D;color:#FFFFFF;font-size:11px;padding:10px 16px;text-align:center">Free site assessment · <span style="color:#FFC93C;text-decoration:underline">Book now →</span></div>
+
+<!-- HERO -->
+<section style="position:relative;overflow:hidden;background:linear-gradient(180deg,#9FD0FF 0%,#D7EBFF 36%,#FFF3DC 68%,#FFD48C 100%);padding-bottom:150px">
+<div aria-hidden="true" style="position:absolute;right:-90px;top:120px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle at 45% 40%,#FFFBEA,#FFE07A 25%,#FFB21A 55%,#FF7A00 85%,#FF5A1F);box-shadow:0 0 90px 30px rgba(255,178,26,.5)"></div>
+<div aria-hidden="true" style="position:absolute;left:-20%;right:-20%;bottom:-50px;height:190px;transform:perspective(500px) rotateX(60deg);transform-origin:bottom;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;padding:0 12px">
+<sc-for list="{{panels}}" as="p" hint-placeholder-count="21"><div style="border:2px solid #E6EEF9;border-radius:3px;background-image:linear-gradient(155deg,rgba(255,255,255,.55),rgba(255,255,255,0) 35%),repeating-linear-gradient(90deg,rgba(190,215,255,.45) 0 1px,transparent 1px 25%),linear-gradient(160deg,#2F6BEA,#163E9E 55%,#0D2A70)"></div></sc-for>
+</div>
+<header style="position:relative;z-index:2;padding:12px 12px 0">
+<div class="glass" style="display:flex;align-items:center;justify-content:space-between;height:62px;border-radius:18px;padding:0 8px 0 14px">
+<a href="Main.dc.html" style="display:flex;align-items:center;gap:8px;min-height:48px" aria-label="SunRyse home">
+<svg width="32" height="32" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="lm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFC93C"></stop><stop offset="1" stop-color="#FF5A1F"></stop></linearGradient></defs><g stroke="url(#lm)" stroke-width="2.2" stroke-linecap="round"><line x1="20" y1="3" x2="20" y2="7"></line><line x1="8" y1="9" x2="10.6" y2="11.8"></line><line x1="32" y1="9" x2="29.4" y2="11.8"></line></g><path d="M8 22a12 12 0 0 1 24 0z" fill="url(#lm)"></path><path d="M10 23.5h22l-3.5 7H6.5z" fill="#1E6FE8"></path><path d="M3 31c9 7 26 7 34-5" stroke="#2DB84C" stroke-width="2.5" fill="none" stroke-linecap="round"></path></svg>
+<span style="font-family:Sora;font-weight:800;font-size:20px"><span class="sun-text">Sun</span><span class="sky-text">Ryse</span></span>
+</a>
+<a href="MenuMobile.dc.html" aria-label="Open menu" style="width:48px;height:48px;border-radius:14px;background:#0B1F4D;display:grid;place-items:center;color:#FFFFFF"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"></path></svg></a>
+</div>
+</header>
+<div style="position:relative;z-index:1;padding:26px 16px 0;display:flex;flex-direction:column;gap:18px">
+<span class="mono glass" style="align-self:flex-start;font-size:11px;color:#C2410C;border-radius:999px;padding:8px 12px">● Calculating savings_</span>
+<h1 style="font-family:Sora;font-weight:700;font-size:44px;line-height:1;letter-spacing:-.045em;margin:0">Power your home &amp; business with the <span style="display:inline-block;border:2px solid #FF8A00;border-radius:14px;padding:0 10px 5px;background:rgba(255,255,255,.55)"><span class="sun-text">sun.</span></span></h1>
+<p style="font-size:16px;line-height:1.55;color:#22365F;margin:0">Design, installation and after-sales for homes, businesses and industry.</p>
+<form class="glass" style="display:flex;flex-direction:column;gap:8px;border-radius:18px;padding:10px" aria-label="Quick savings estimate">
+<label for="mb" class="mono" style="font-size:11px;color:#4A5A80;padding:4px 6px 0">Your monthly bill ₱</label>
+<input id="mb" value="10,000" inputmode="numeric" style="background:#FFFFFF;border:1px solid rgba(11,31,77,.15);border-radius:12px;color:#0B1F4D;font-family:Sora;font-weight:600;font-size:22px;padding:0 14px;min-height:52px;box-sizing:border-box;width:100%">
+<a href="Calculator.dc.html" class="btn" style="background:#0B1F4D;color:#FFFFFF">See my savings →</a>
+</form>
+<div class="glass" style="display:flex;justify-content:space-between;align-items:center;gap:8px;border-radius:14px;padding:12px 14px;flex-wrap:wrap">
+<span style="font-family:Sora;font-weight:700;font-size:15px">4.5 kWp</span><span style="font-family:Sora;font-weight:700;font-size:15px;color:#1E8A3A">₱6,160/mo</span><span style="font-family:Sora;font-weight:700;font-size:15px;color:#C2410C">3.5 yr payback</span>
+</div>
+</div>
+</section>
+
+<!-- BENEFITS + BRANDS -->
+<section style="background:#FFFFFF;padding:16px 0 20px">
+<div class="row" style="padding:0 16px">
+<sc-for list="{{benefits}}" as="b" hint-placeholder-count="5"><div style="flex:none;display:flex;gap:10px;align-items:center;border:1px solid rgba(11,31,77,.1);border-radius:999px;padding:8px 16px 8px 8px"><span style="width:34px;height:34px;border-radius:50%;background:{{b.bg}};display:block"></span><span style="font-family:Sora;font-size:14px;font-weight:700;white-space:nowrap">{{b.t}}</span></div></sc-for>
+</div>
+<div style="display:flex;gap:28px;padding:16px 16px 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)">
+<sc-for list="{{brands}}" as="br" hint-placeholder-count="9"><span style="font-family:Sora;font-weight:800;font-size:17px;opacity:.5;white-space:nowrap">{{br}}</span></sc-for>
+</div>
+</section>
+
+<!-- SOLUTIONS -->
+<section class="sec">
+<span class="eb">[ 02 ] Solutions</span>
+<h2 class="h2">Solar built for <span style="border:2px solid #1E6FE8;border-radius:10px;padding:0 8px 3px">every roof</span></h2>
+<div class="mono row" role="tablist" style="font-size:12px;gap:6px">
+<button role="tab" aria-selected="true" style="flex:none;font:inherit;letter-spacing:inherit;border:0;border-radius:12px;min-height:46px;padding:0 16px;background:#0B1F4D;color:#FFFFFF">01 Residential</button>
+<button role="tab" aria-selected="false" style="flex:none;font:inherit;letter-spacing:inherit;border:1px solid rgba(11,31,77,.15);border-radius:12px;min-height:46px;padding:0 16px;background:#FFFFFF;color:#0B1F4D">02 Commercial</button>
+<button role="tab" aria-selected="false" style="flex:none;font:inherit;letter-spacing:inherit;border:1px solid rgba(11,31,77,.15);border-radius:12px;min-height:46px;padding:0 16px;background:#FFFFFF;color:#0B1F4D">03 Industrial</button>
+</div>
+<div class="card" style="border-radius:22px;overflow:hidden">
+<img src="/_blob/42d95a6784882c1da3bc89a29593485f" alt="Residential rooftop solar by SunRyse" style="width:100%;height:240px;object-fit:cover;display:block">
+<div style="padding:18px;display:flex;flex-direction:column;gap:12px">
+<span style="font-size:15px;line-height:1.55;color:#4A5A80">Cut your household bill and keep the essentials running through brownouts.</span>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div style="background:#F7FAFF;border-radius:12px;padding:12px"><span class="mono" style="font-size:11px;color:#4A5A80;display:block">Typical size</span><b style="font-family:Sora">3–10 kWp</b></div><div style="background:#F7FAFF;border-radius:12px;padding:12px"><span class="mono" style="font-size:11px;color:#4A5A80;display:block">Bill reduction</span><b style="font-family:Sora;color:#1E8A3A">[xx]%</b></div></div>
+<a href="Solution.dc.html" class="btn" style="background:#0B1F4D;color:#FFFFFF">Explore residential →</a>
+</div>
+</div>
+</section>
+
+<!-- SERVICES -->
+<section class="sec" style="background:#EAF2FF">
+<span class="eb">[ 03 ] Our services</span>
+<h2 class="h2">14 ways we put the <span class="sun-text">sun</span> to work</h2>
+<div style="display:flex;flex-direction:column;gap:8px">
+<sc-for list="{{services}}" as="s" hint-placeholder-count="6"><a href="Service.dc.html" class="card" style="display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:16px;color:#0B1F4D;min-height:64px;box-sizing:border-box"><span style="flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:{{s.tile}};color:#FFFFFF;font-family:'JetBrains Mono';font-size:12px">{{s.n}}</span><span style="flex:1;font-family:Sora;font-weight:700;font-size:16px;line-height:1.25">{{s.t}}</span><svg class="ico" style="width:16px;height:16px;color:#1553C7" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"></path></svg></a></sc-for>
+</div>
+<div style="border-radius:18px;padding:20px;background:#0B1F4D;color:#FFFFFF;display:flex;flex-direction:column;gap:12px;background-image:radial-gradient(ellipse at 100% 0%,rgba(255,138,0,.5),transparent 60%)">
+<span class="mono" style="font-size:11px;color:#FFC93C">Not sure what you need?</span>
+<span style="font-family:Sora;font-size:20px;font-weight:700;line-height:1.25">An advisor will recommend the right system.</span>
+<a href="Contact.dc.html" class="btn" style="background:linear-gradient(135deg,#FFC93C,#FF8A00 50%,#FF5A1F);color:#0B1F4D">Talk to an advisor</a>
+</div>
+<a href="#" class="btn" style="background:#FFFFFF;border:1px solid rgba(11,31,77,.15);color:#0B1F4D">View all 14 services</a>
+</section>
+
+<!-- PROCESS -->
+<section class="sec" style="background:#FFFFFF">
+<span class="eb">[ 04 ] How it works</span>
+<h2 class="h2">From first call to first kWh</h2>
+<div style="position:relative;display:flex;flex-direction:column;gap:22px">
+<div aria-hidden="true" style="position:absolute;left:23px;top:10px;bottom:10px;width:3px;border-radius:3px;background:linear-gradient(180deg,#FFC93C,#FF5A1F 45%,#1E6FE8 75%,#2DB84C)"></div>
+<sc-for list="{{steps}}" as="st" hint-placeholder-count="5"><div style="position:relative;display:flex;gap:14px"><span class="mono" style="flex:none;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:#FFFFFF;border:3px solid {{st.c}};font-size:12px;box-sizing:border-box">{{st.n}}</span><span style="display:flex;flex-direction:column;gap:4px;padding-top:4px"><b style="font-family:Sora;font-size:17px">{{st.t}}</b><span style="font-size:15px;color:#4A5A80;line-height:1.5">{{st.d}}</span></span></div></sc-for>
+</div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="sec" style="background:linear-gradient(180deg,#FFF6E6,#FFE9C4)">
+<span class="eb">[ 05 ] Savings calculator</span>
+<h2 class="h2">How much could <span class="sun-text">you</span> save?</h2>
+<div class="card" style="border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:14px">
+<span style="display:flex;align-items:center;gap:8px;border:2px solid #0B1F4D;border-radius:14px;padding:0 14px;min-height:56px"><b style="font-family:Sora;font-size:22px;color:#4A5A80">₱</b><span style="font-family:Sora;font-size:24px;font-weight:700">10,000</span></span>
+<div class="row mono" style="font-size:12px;gap:6px">
+<sc-for list="{{presets}}" as="p" hint-placeholder-count="5"><span style="flex:none;display:grid;place-items:center;min-height:44px;padding:0 15px;border-radius:999px;border:1px solid {{p.border}};background:{{p.bg}}">{{p.l}}</span></sc-for>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<sc-for list="{{tiles}}" as="k" hint-placeholder-count="4"><div style="background:#F7FAFF;border-radius:12px;padding:12px"><span class="mono" style="font-size:11px;color:#4A5A80;display:block">{{k.l}}</span><b style="font-family:Sora;font-size:20px;color:{{k.c}}">{{k.v}}</b></div></sc-for>
+</div>
+<a href="Calculator.dc.html" class="btn" style="background:#0B1F4D;color:#FFFFFF">Open full calculator →</a>
+</div>
+</section>
+
+<!-- IMPACT -->
+<section style="padding:40px 16px;background:#0B1F4D;color:#FFFFFF;display:grid;grid-template-columns:1fr 1fr;gap:22px">
+<sc-for list="{{impact}}" as="m" hint-placeholder-count="4"><div style="border-left:2px solid #FFC93C;padding-left:12px"><b style="font-family:Sora;font-size:30px;display:block">{{m.v}}</b><span class="mono" style="font-size:11px;color:#C9D4F2">{{m.l}}</span></div></sc-for>
+</section>
+
+<!-- PROJECTS -->
+<section class="sec">
+<span class="eb">[ 07 ] Recent projects</span>
+<h2 class="h2">Rooftops we’ve <span class="sun-text">lit up</span></h2>
+<div class="row">
+<sc-for list="{{projects}}" as="pr" hint-placeholder-count="3"><figure style="flex:none;position:relative;margin:0;width:300px;height:340px;border-radius:20px;overflow:hidden;scroll-snap-align:start"><img src="{{pr.src}}" alt="{{pr.alt}}" style="width:100%;height:100%;object-fit:cover"><figcaption class="mono glass" style="position:absolute;left:10px;right:10px;bottom:10px;padding:10px 12px;border-radius:10px;font-size:11px;color:#0B1F4D">{{pr.seg}}</figcaption></figure></sc-for>
+</div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="sec" style="background:#FFFFFF">
+<span class="eb">[ 08 ] Customer stories</span>
+<h2 class="h2">Bills down. <span class="sky-text">Smiles up.</span></h2>
+<div style="display:flex;align-items:center;gap:10px"><b style="font-family:Sora;font-size:30px">[4.9]</b><span style="color:#FFB21A;letter-spacing:2px">★★★★★</span><span class="mono" style="font-size:11px;color:#4A5A80">[xx] reviews</span></div>
+<div class="row">
+<sc-for list="{{quotes}}" as="q" hint-placeholder-count="3"><figure class="card" style="flex:none;width:300px;margin:0;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:14px;scroll-snap-align:start;box-sizing:border-box"><span style="color:#FFB21A;letter-spacing:2px">★★★★★</span><blockquote style="margin:0;font-size:16px;line-height:1.55">“{{q.t}}”</blockquote><figcaption style="display:flex;align-items:center;gap:10px"><span style="width:40px;height:40px;border-radius:50%;background:{{q.bg}};display:grid;place-items:center;font-family:Sora;font-weight:700">{{q.i}}</span><span><b style="display:block;font-family:Sora">[Customer name]</b><span class="mono" style="font-size:11px;color:#4A5A80">{{q.m}}</span></span></figcaption></figure></sc-for>
+</div>
+</section>
+
+<!-- FAQ -->
+<section class="sec" style="background:#EAF2FF">
+<span class="eb">[ 10 ] FAQ</span>
+<div class="card" style="border-radius:18px;padding:0 16px">
+<sc-for list="{{faqs}}" as="q" hint-placeholder-count="5"><button style="width:100%;display:flex;justify-content:space-between;gap:12px;align-items:center;background:none;border:0;border-bottom:1px solid rgba(11,31,77,.1);color:#0B1F4D;font-family:Sora;font-size:16px;font-weight:700;text-align:left;padding:16px 0;min-height:56px">{{q}} <span style="color:#4A5A80;font-size:20px">+</span></button></sc-for>
+</div>
+</section>
+
+<!-- CTA -->
+<section class="sec" style="background:linear-gradient(140deg,#FFC93C,#FF8A00 50%,#FF5A1F)">
+<span class="mono" style="font-size:11px">Inquire now</span>
+<h2 style="font-family:Sora;font-weight:800;font-size:34px;line-height:1;letter-spacing:-.045em;margin:0">Ready to rise with the sun?</h2>
+<div class="card" style="border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px;border:0">
+<label style="display:flex;flex-direction:column;gap:6px"><span class="mono" style="font-size:11px;color:#4A5A80">Name</span><input autocomplete="name" style="background:#F7FAFF;border:1px solid rgba(11,31,77,.18);border-radius:12px;padding:12px;min-height:52px;box-sizing:border-box;font-size:16px"></label>
+<label style="display:flex;flex-direction:column;gap:6px"><span class="mono" style="font-size:11px;color:#4A5A80">Mobile</span><input type="tel" placeholder="09xx xxx xxxx" style="background:#F7FAFF;border:1px solid rgba(11,31,77,.18);border-radius:12px;padding:12px;min-height:52px;box-sizing:border-box;font-size:16px"></label>
+<button type="button" class="btn" style="border:0;background:#0B1F4D;color:#FFFFFF">Inquire now »</button>
+<span style="font-size:13px;color:#4A5A80">We reply within 1 business day.</span>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer style="padding:32px 16px 120px;background:#071433;color:#FFFFFF;display:flex;flex-direction:column;gap:14px">
+<span style="font-family:Sora;font-weight:800;font-size:22px"><span class="sun-text">Sun</span><span style="color:#6AA8FF">Ryse</span></span>
+<span style="font-size:14px;color:#C9D4F2;line-height:1.6">[Phone] · [Email]<br>[Address] · Mon–Sat [8–5]</span>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;font-size:15px"><a href="#" style="color:#E3E9F7;min-height:44px;display:flex;align-items:center">Residential</a><a href="#" style="color:#E3E9F7;min-height:44px;display:flex;align-items:center">About</a><a href="#" style="color:#E3E9F7;min-height:44px;display:flex;align-items:center">Commercial</a><a href="#" style="color:#E3E9F7;min-height:44px;display:flex;align-items:center">Projects</a><a href="#" style="color:#E3E9F7;min-height:44px;display:flex;align-items:center">Industrial</a><a href="#" style="color:#E3E9F7;min-height:44px;display:flex;align-items:center">FAQ</a></div>
+<span class="mono" style="font-size:11px;color:#8E9CC2">© 2026 SunRyse Solar Services</span>
+</footer>
+
+<!-- Sticky bar, drawn at the first-screen fold (844px) -->
+<nav aria-label="Quick actions" style="position:absolute;left:0;right:0;top:768px;height:76px;padding:12px;box-sizing:border-box;display:grid;grid-template-columns:52px 1fr 1.2fr;gap:8px;background:rgba(255,255,255,.95);border-top:1px solid rgba(11,31,77,.12);box-shadow:0 -10px 30px -12px rgba(11,31,77,.3);z-index:3">
+<a href="tel:" aria-label="Call SunRyse" style="border-radius:14px;border:1px solid rgba(11,31,77,.18);display:grid;place-items:center;color:#0B1F4D"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>
+<a href="Calculator.dc.html" class="btn" style="border:1px solid rgba(11,31,77,.18);color:#0B1F4D;min-height:0">Calculate</a>
+<a href="Contact.dc.html" class="btn" style="background:linear-gradient(135deg,#FFC93C,#FF8A00 50%,#FF5A1F);color:#0B1F4D;min-height:0">Get a quote</a>
+</nav>
+<span class="mono" style="position:absolute;right:16px;top:850px;font-size:11px;color:#4A5A80;z-index:3">↑ sticky bar · fold at 844px</span>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":6300}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var svc = [['Solar design & consultation','#1E6FE8'],['Solar panel installation','#FF8A00'],['Hybrid & grid-tie systems','#1E6FE8'],['Battery storage solutions','#1E6FE8'],['Electrical works & protections','#FF8A00'],['Mounting structures','#FF8A00']];
+    return {
+      panels: Array.from({ length: 21 }, function (_, i) { return i; }),
+      benefits: [
+        { t:'Lower bills', bg:'#2DB84C' }, { t:'Clean energy', bg:'#FF8A00' }, { t:'Power backup', bg:'#1E6FE8' },
+        { t:'Pro installation', bg:'#F5A300' }, { t:'After-sales', bg:'#FF5A1F' }
+      ],
+      brands: ['Solis','Deye','SRNE','Dyness','Pylontech','Genixgreen','Hestia','Sunways','Seraphim'],
+      services: svc.map(function (s, i) { return { n: String(i + 1).padStart(2, '0'), t: s[0], tile: s[1] }; }),
+      steps: [
+        { n:'01', t:'Consult & site survey', d:'Free bill review and roof inspection.', c:'#FFC93C' },
+        { n:'02', t:'Design & quote', d:'Sized to your usage, clear pricing.', c:'#FF8A00' },
+        { n:'03', t:'Installation', d:'Licensed team, done in days.', c:'#FF5A1F' },
+        { n:'04', t:'Net metering', d:'We file the utility paperwork.', c:'#1E6FE8' },
+        { n:'05', t:'Monitor & support', d:'App tracking and maintenance.', c:'#2DB84C' }
+      ],
+      presets: [
+        { l:'₱5k', bg:'#FFFFFF', border:'rgba(11,31,77,.18)' }, { l:'₱10k', bg:'#FFF6E6', border:'#FF8A00' },
+        { l:'₱20k', bg:'#FFFFFF', border:'rgba(11,31,77,.18)' }, { l:'₱50k', bg:'#FFFFFF', border:'rgba(11,31,77,.18)' },
+        { l:'₱100k', bg:'#FFFFFF', border:'rgba(11,31,77,.18)' }
+      ],
+      tiles: [
+        { l:'System', v:'4.5 kWp', c:'#0B1F4D' }, { l:'Panels', v:'8 × 620W', c:'#0B1F4D' },
+        { l:'Monthly savings', v:'₱6,160', c:'#1E8A3A' }, { l:'Payback', v:'≈ 3.5 yrs', c:'#C2410C' }
+      ],
+      impact: [ { v:'[000]+', l:'kWp installed' }, { v:'[00]+', l:'Projects' }, { v:'[000]', l:'MWh generated' }, { v:'[0,000]', l:'Trees equivalent' } ],
+      projects: [
+        { src:'/_blob/94c36bb5061eb61ab9e437be0098acec', alt:'Commercial rooftop solar array', seg:'Commercial · [Location]' },
+        { src:'/_blob/fedf1a8f2b873a26ddbdbdd0862b7ef0', alt:'Residential rooftop panels from above', seg:'Residential · [Location]' },
+        { src:'/_blob/ef0bec22719d959787977d1ded4b4573', alt:'Panels on a corrugated roof at dusk', seg:'Residential · [Location]' }
+      ],
+      quotes: [
+        { t:'[Short quote about the bill dropping after installation.]', m:'Residential · [City]', i:'A', bg:'#FFE9C4' },
+        { t:'[Quote about the team being professional and on schedule.]', m:'Commercial · [City]', i:'B', bg:'#D7EBFF' }
+      ],
+      faqs: ['Does solar work in the rainy season?','What happens during a brownout?','What is net metering?','How long is the payback?','Which brands do you install?']
+    };
+  }
+}
+</script>
+</body>
+</html>

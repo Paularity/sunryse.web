@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_socials",
+  "info": {
+    "displayName": "social",
+    "icon": "puzzle-piece"
+  },
+  "options": {},
+  "attributes": {
+    "platform": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

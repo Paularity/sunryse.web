@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SunRyse — Projects</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=Manrope:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7FAFF}
+a{color:#1553C7;text-decoration:none}a:hover{color:#C2410C}
+.mono{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.12em}
+.wrap{max-width:1320px;margin:0 auto;padding:0 40px;box-sizing:border-box}
+.sun-text{background:linear-gradient(135deg,#FFB21A,#FF7A00 45%,#FF4D1A);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sky-text{background:linear-gradient(135deg,#3B8BFF,#1546C7);-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{background:#FFFFFF;border:1px solid rgba(11,31,77,.10);box-shadow:0 1px 2px rgba(11,31,77,.04),0 12px 32px -12px rgba(11,31,77,.14)}
+.glass{background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.feat{display:grid;grid-template-columns:1.3fr 1fr;gap:0}
+.grid3{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:18px}
+.navlinks{display:flex}.navlinks a{display:inline-flex;align-items:center;min-height:44px}
+.burger,.mbar,.mbar-sp{display:none}
+.noscroll{scrollbar-width:none}.noscroll::-webkit-scrollbar{display:none}
+@media (max-width:1000px){.feat{grid-template-columns:1fr}.feat>div:first-child{min-height:280px !important}.navlinks{display:none}.burger{display:grid}.mbar{display:grid;position:fixed;left:0;right:0;bottom:0;z-index:20}.mbar-sp{display:block;height:84px}}
+@media (max-width:640px){.wrap{padding:0 16px}.hdr-quote{display:none !important}.feat-body{padding:22px !important}}
+</style>
+</helmet>
+<div style="width:100%;background:#F7FAFF;color:#0B1F4D;font-family:Manrope,sans-serif;overflow:hidden">
+
+<header style="background:#FFFFFF;border-bottom:1px solid rgba(11,31,77,.08)">
+<div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:20px;height:76px">
+<a href="Main.dc.html" style="display:flex;align-items:center;min-height:48px;font-family:Sora;font-weight:800;font-size:24px;letter-spacing:-.02em" aria-label="SunRyse home"><span class="sun-text">Sun</span><span class="sky-text">Ryse</span></a>
+<nav class="navlinks mono" style="gap:26px;font-size:12px" aria-label="Main"><a href="Solution.dc.html" style="color:#0B1F4D">Solutions ▾</a><a href="Service.dc.html" style="color:#0B1F4D">Services ▾</a><a href="Calculator.dc.html" style="color:#0B1F4D">Calculator</a><a href="#" style="color:#C2410C">Projects</a><a href="About.dc.html" style="color:#0B1F4D">About</a></nav>
+<div style="display:flex;gap:8px;align-items:center"><a href="Contact.dc.html" class="mono hdr-quote" style="display:inline-flex;align-items:center;min-height:48px;box-sizing:border-box;font-size:12px;color:#0B1F4D;background:linear-gradient(135deg,#FFC93C,#FF8A00 50%,#FF5A1F);border-radius:14px;padding:0 18px;font-weight:500">Get a quote</a><a href="MenuMobile.dc.html" class="burger" aria-label="Open menu" style="width:48px;height:48px;border-radius:14px;background:#0B1F4D;place-items:center;color:#FFFFFF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"></path></svg></a></div>
+</div>
+</header>
+
+<section style="padding:56px 0 40px;background:linear-gradient(180deg,#E6F2FF,#F7FAFF)">
+<div class="wrap" style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap">
+<div style="display:flex;flex-direction:column;gap:18px">
+<span class="mono" style="font-size:11px;color:#4A5A80">Home / <span style="color:#C2410C">Projects</span></span>
+<h1 style="font-family:Sora;font-weight:700;font-size:clamp(44px,5.6vw,84px);line-height:.98;letter-spacing:-.045em;margin:0">Rooftops we’ve <span class="sun-text">lit up</span></h1>
+</div>
+<div style="display:flex;gap:28px;flex-wrap:wrap">
+<sc-for list="{{stats}}" as="s" hint-placeholder-count="3"><div style="border-left:2px solid #FF8A00;padding-left:14px"><span style="font-family:Sora;font-size:36px;font-weight:700;display:block">{{s.v}}</span><span class="mono" style="font-size:11px;color:#4A5A80">{{s.l}}</span></div></sc-for>
+</div>
+</div>
+</section>
+
+<!-- FEATURED -->
+<section style="padding:20px 0 70px">
+<div class="wrap">
+<div class="card feat" style="border-radius:28px;overflow:hidden">
+<div style="position:relative;min-height:440px">
+<img src="/_blob/94c36bb5061eb61ab9e437be0098acec" alt="Featured commercial rooftop solar project by SunRyse" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+<span class="mono glass" style="position:absolute;left:18px;top:18px;font-size:11px;border-radius:999px;padding:8px 12px;color:#C2410C">★ Featured case study</span>
+</div>
+<div class="feat-body" style="padding:40px;display:flex;flex-direction:column;gap:18px">
+<span class="mono" style="font-size:11px;color:#1553C7">Commercial · [Location]</span>
+<h2 style="font-family:Sora;font-weight:700;font-size:38px;line-height:1.05;letter-spacing:-.04em;margin:0">[Client name] rooftop system</h2>
+<p style="margin:0;color:#4A5A80;line-height:1.65">[Two lines on the client’s goal, the challenge and what SunRyse delivered — e.g. cutting daytime load costs for a busy building.]</p>
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+<sc-for list="{{featStats}}" as="f" hint-placeholder-count="4"><div style="background:#F7FAFF;border-radius:14px;padding:14px"><span class="mono" style="font-size:11px;color:#4A5A80;display:block">{{f.l}}</span><span style="font-family:Sora;font-size:22px;font-weight:700;color:{{f.c}}">{{f.v}}</span></div></sc-for>
+</div>
+<a href="#" class="mono" style="align-self:flex-start;font-size:12px;color:#FFFFFF;background:#0B1F4D;border-radius:14px;padding:16px 22px;margin-top:auto">Read the case study →</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FILTER + GRID -->
+<section style="padding:0 0 100px">
+<div class="wrap">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:24px">
+<div role="tablist" aria-label="Filter projects" class="mono noscroll" style="display:flex;gap:6px;max-width:100%;overflow-x:auto;background:#FFFFFF;border:1px solid rgba(11,31,77,.1);border-radius:16px;padding:5px;font-size:12px">
+<button role="tab" aria-selected="true" style="flex:none;font:inherit;letter-spacing:inherit;text-transform:inherit;border:0;border-radius:12px;min-height:44px;padding:0 16px;background:#0B1F4D;color:#FFFFFF">All</button>
+<button role="tab" aria-selected="false" style="flex:none;font:inherit;letter-spacing:inherit;text-transform:inherit;border:0;border-radius:12px;min-height:44px;padding:0 16px;background:transparent;color:#0B1F4D">Residential</button>
+<button role="tab" aria-selected="false" style="flex:none;font:inherit;letter-spacing:inherit;text-transform:inherit;border:0;border-radius:12px;min-height:44px;padding:0 16px;background:transparent;color:#0B1F4D">Commercial</button>
+<button role="tab" aria-selected="false" style="flex:none;font:inherit;letter-spacing:inherit;text-transform:inherit;border:0;border-radius:12px;min-height:44px;padding:0 16px;background:transparent;color:#0B1F4D">Industrial</button>
+</div>
+<span class="mono" style="font-size:11px;color:#4A5A80">Showing 6 of [xx]</span>
+</div>
+<div class="grid3">
+<sc-for list="{{projects}}" as="p" hint-placeholder-count="6"><a href="#" class="card" style="display:flex;flex-direction:column;border-radius:22px;overflow:hidden;color:#0B1F4D">
+<sc-if value="{{p.hasImg}}" hint-placeholder-val="{{true}}"><img src="{{p.src}}" alt="{{p.alt}}" style="width:100%;height:240px;object-fit:cover;display:block"></sc-if>
+<sc-if value="{{p.noImg}}" hint-placeholder-val="{{false}}"><div role="img" aria-label="Project photo placeholder" style="height:240px;background:repeating-linear-gradient(135deg,#EAF2FF 0 14px,#F4F8FF 14px 28px);display:grid;place-items:center"><span class="mono" style="font-size:11px;color:#4A5A80">[ Project photo ]</span></div></sc-if>
+<div style="padding:20px;display:flex;flex-direction:column;gap:12px">
+<span style="display:flex;justify-content:space-between" class="mono"><span style="font-size:11px;color:{{p.segColor}}">{{p.seg}}</span><span style="font-size:11px;color:#4A5A80">[Month YYYY]</span></span>
+<span style="font-family:Sora;font-size:20px;font-weight:700">{{p.t}}</span>
+<div class="mono" style="display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:#4A5A80;padding-top:12px;border-top:1px solid rgba(11,31,77,.08)"><span>[x] kWp</span><span>[x] panels</span><span style="color:#1E8A3A">₱[x]/mo saved</span></div>
+</div>
+</a></sc-for>
+</div>
+<div style="display:flex;justify-content:center;margin-top:36px"><button class="mono" style="font-size:12px;letter-spacing:.12em;color:#0B1F4D;background:#FFFFFF;border:1px solid rgba(11,31,77,.18);border-radius:14px;padding:17px 26px">Load more projects</button></div>
+</div>
+</section>
+
+<section style="background:linear-gradient(120deg,#FFC93C,#FF8A00 45%,#FF5A1F)">
+<div class="wrap" style="display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding-top:60px;padding-bottom:60px">
+<h2 style="font-family:Sora;font-weight:800;font-size:clamp(30px,4vw,52px);line-height:1;letter-spacing:-.045em;margin:0;max-width:640px">Your roof could be next.</h2>
+<a href="Contact.dc.html" class="mono" style="font-size:13px;color:#FFFFFF;background:#0B1F4D;border-radius:14px;padding:19px 26px">Book a free survey »</a>
+</div>
+</section>
+<footer class="mono" style="background:#071433;color:#C9D4F2;font-size:11px"><div class="wrap" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:28px;padding-bottom:28px"><span>© 2026 SunRyse Solar Services</span><span>[Phone] · [Email] · [Address]</span></div><div class="mbar-sp"></div></footer>
+<nav class="mbar" aria-label="Quick actions" style="grid-template-columns:auto 1fr;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.95);border-top:1px solid rgba(11,31,77,.12);box-shadow:0 -10px 30px -12px rgba(11,31,77,.3)">
+<a href="tel:" aria-label="Call SunRyse" style="width:52px;min-height:50px;border-radius:14px;border:1px solid rgba(11,31,77,.18);display:grid;place-items:center;color:#0B1F4D"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>
+<a href="Contact.dc.html" class="mono" style="display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:14px;font-size:12px;color:#0B1F4D;background:linear-gradient(135deg,#FFC93C,#FF8A00 50%,#FF5A1F)">Book a free survey</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2700}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var segColor = { Residential:'#C2410C', Commercial:'#1553C7', Industrial:'#1E8A3A' };
+    var list = [
+      ['Residential','Two-storey home rooftop','/_blob/42d95a6784882c1da3bc89a29593485f','Solar array beside a blue house with a red roof'],
+      ['Residential','Hybrid system with battery','/_blob/fedf1a8f2b873a26ddbdbdd0862b7ef0','Residential rooftop panels seen from above'],
+      ['Commercial','Mixed-use building rooftop','/_blob/94c36bb5061eb61ab9e437be0098acec','Commercial rooftop solar array'],
+      ['Residential','Grid-tie home system','/_blob/ef0bec22719d959787977d1ded4b4573','Panels on a corrugated roof at dusk'],
+      ['Commercial','[Project title]','',''],
+      ['Industrial','[Project title]','','']
+    ];
+    return {
+      stats: [ { v:'[000]+', l:'kWp installed' }, { v:'[00]+', l:'Projects' }, { v:'[00]', l:'Cities served' } ],
+      featStats: [
+        { l:'System size', v:'[x] kWp', c:'#0B1F4D' },
+        { l:'Panels', v:'[x] × 620W', c:'#0B1F4D' },
+        { l:'Monthly savings', v:'₱[x]', c:'#1E8A3A' },
+        { l:'Payback', v:'[x] yrs', c:'#C2410C' }
+      ],
+      projects: list.map(function (p) {
+        return { seg: p[0], segColor: segColor[p[0]], t: p[1], src: p[2], alt: p[3], hasImg: !!p[2], noImg: !p[2] };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

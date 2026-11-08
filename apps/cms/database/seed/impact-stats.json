@@ -1,0 +1,26 @@
+[
+  {
+    "label": "Projects completed",
+    "value": 0,
+    "suffix": "+",
+    "order": 1
+  },
+  {
+    "label": "Installed capacity (kWp)",
+    "value": 0,
+    "suffix": "+",
+    "order": 2
+  },
+  {
+    "label": "Homes and businesses powered",
+    "value": 0,
+    "suffix": "+",
+    "order": 3
+  },
+  {
+    "label": "CO2 avoided (tons/yr)",
+    "value": 0,
+    "suffix": "+",
+    "order": 4
+  }
+]

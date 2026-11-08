@@ -1,0 +1,16 @@
+{
+  "electricityRate": 12.5,
+  "peakSunHours": 4.5,
+  "performanceRatio": 0.8,
+  "panelWatt": 620,
+  "panelAreaM2": 2.6,
+  "costPerKwpGridTie": 60000,
+  "costPerKwpHybrid": 75000,
+  "batteryCostPerKwh": 28000,
+  "exportCreditRate": 6,
+  "rateEscalation": 0.03,
+  "degradation": 0.005,
+  "gridEmissionFactor": 0.71,
+  "kgCo2PerTree": 21,
+  "disclaimer": "Estimates are indicative only and based on placeholder assumptions. Actual savings, costs and payback depend on your site, usage and utility rates. Contact us for an exact quote."
+}

@@ -1,0 +1,38 @@
+import type { Metadata, Viewport } from "next";
+import { JetBrains_Mono, Manrope, Sora } from "next/font/google";
+import { SmoothScroll } from "@/components/motion/smooth-scroll";
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import "./globals.css";
+
+const sora = Sora({ variable: "--font-sora", subsets: ["latin"], weight: ["400", "600", "700", "800"] });
+const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"] });
+const jetbrains = JetBrains_Mono({ variable: "--font-jetbrains", subsets: ["latin"], weight: ["500"] });
+
+export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  title: {
+    default: "SunRyse Solar Services — Clean Energy, Brighter Tomorrow",
+    template: "%s · SunRyse Solar Services",
+  },
+  description:
+    "Residential, commercial and industrial solar in the Philippines: design, installation, hybrid and battery systems, and after-sales support.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#f7faff",
+};
+
+export default function RootLayout({ children }: LayoutProps<"/">) {
+  return (
+    <html lang="en" className={`${sora.variable} ${manrope.variable} ${jetbrains.variable} h-full`}>
+      <body className="flex min-h-full flex-col">
+        <TooltipProvider>
+          <SmoothScroll />
+          {children}
+          <Toaster />
+        </TooltipProvider>
+      </body>
+    </html>
+  );
+}

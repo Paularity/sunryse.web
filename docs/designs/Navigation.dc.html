@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SunRyse — Services mega menu</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=Manrope:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0B1F4D;text-decoration:none}
+.mono{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.12em}
+.sun-text{background:linear-gradient(135deg,#FFB21A,#FF7A00 45%,#FF4D1A);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sky-text{background:linear-gradient(135deg,#3B8BFF,#1546C7);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.item{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:14px;min-height:44px}
+.item:hover{background:#F7FAFF}
+</style>
+</helmet>
+<div style="width:1440px;height:780px;box-sizing:border-box;font-family:Manrope,sans-serif;color:#0B1F4D;background:linear-gradient(180deg,#9FD0FF,#D7EBFF 60%,#FFF3DC);position:relative;overflow:hidden">
+<div aria-hidden="true" style="position:absolute;inset:0;background:rgba(11,31,77,.28)"></div>
+
+<div style="position:relative;max-width:1320px;margin:0 auto;padding:16px 40px 0">
+<div style="display:flex;align-items:center;justify-content:space-between;height:68px;border-radius:20px;padding:0 10px 0 18px;background:#FFFFFF;box-shadow:0 20px 50px -20px rgba(11,31,77,.35)">
+<span style="font-family:Sora;font-weight:800;font-size:22px"><span class="sun-text">Sun</span><span class="sky-text">Ryse</span></span>
+<nav class="mono" style="display:flex;gap:4px;font-size:12px" aria-label="Main">
+<a href="#" style="display:inline-flex;align-items:center;min-height:44px;padding:0 12px">Solutions ▾</a>
+<a href="#" aria-expanded="true" style="display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border-radius:10px;background:#FFF6E6;color:#C2410C">Services ▴</a>
+<a href="#" style="display:inline-flex;align-items:center;min-height:44px;padding:0 12px">Calculator</a>
+<a href="#" style="display:inline-flex;align-items:center;min-height:44px;padding:0 12px">Projects</a>
+<a href="#" style="display:inline-flex;align-items:center;min-height:44px;padding:0 12px">About</a>
+<a href="#" style="display:inline-flex;align-items:center;min-height:44px;padding:0 12px">Learn</a>
+</nav>
+<span class="mono" style="display:inline-flex;align-items:center;min-height:48px;padding:0 18px;border-radius:14px;font-size:12px;background:linear-gradient(135deg,#FFC93C,#FF8A00 50%,#FF5A1F)">Get a quote</span>
+</div>
+
+<!-- Mega panel -->
+<div role="region" aria-label="Services menu" style="margin-top:10px;border-radius:24px;background:#FFFFFF;box-shadow:0 30px 70px -24px rgba(11,31,77,.45);display:grid;grid-template-columns:1fr 1fr 1fr 340px;gap:8px;padding:22px">
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="3"><div style="display:flex;flex-direction:column;gap:2px;padding:6px">
+<span class="mono" style="font-size:11px;color:{{g.c}};padding:6px 12px 10px;display:flex;align-items:center;gap:8px"><i style="width:8px;height:8px;border-radius:50%;background:{{g.c}};display:block"></i>{{g.t}} · {{g.n}}</span>
+<sc-for list="{{g.items}}" as="it" hint-placeholder-count="5"><a href="Service.dc.html" class="item"><span style="display:flex;flex-direction:column;gap:2px"><b style="font-family:Sora;font-size:15px">{{it.t}}</b><span style="font-size:13px;color:#4A5A80;line-height:1.4">{{it.d}}</span></span></a></sc-for>
+</div></sc-for>
+<div style="display:flex;flex-direction:column;gap:10px">
+<a href="Calculator.dc.html" style="border-radius:18px;padding:20px;background:linear-gradient(150deg,#FFF6E6,#FFE9C4);display:flex;flex-direction:column;gap:10px">
+<span class="mono" style="font-size:11px;color:#C2410C">Savings calculator</span>
+<b style="font-family:Sora;font-size:20px;line-height:1.2">How much could your roof save?</b>
+<span class="mono" style="font-size:11px;color:#1553C7">Calculate in 30 seconds →</span>
+</a>
+<a href="Contact.dc.html" style="border-radius:18px;padding:20px;background:#0B1F4D;color:#FFFFFF;display:flex;flex-direction:column;gap:10px">
+<span class="mono" style="font-size:11px;color:#FFC93C">Not sure what you need?</span>
+<b style="font-family:Sora;font-size:18px;line-height:1.25">Talk to a solar advisor — free.</b>
+<span style="display:flex;gap:8px;align-items:center;font-size:14px;color:#E3E9F7"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>Messenger · Viber · Call</span>
+</a>
+<a href="#" class="mono" style="display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:14px;border:1px solid rgba(11,31,77,.15);font-size:12px">View all 14 services</a>
+</div>
+</div>
+<p class="mono" style="position:relative;color:#FFFFFF;font-size:11px;margin:16px 0 0">↳ Opens on hover (150ms delay) and on click/Enter; Esc closes; arrow keys move between items. Solutions uses the same panel with 3 large photo cards.</p>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":780}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      groups: [
+        { t:'Systems', n:6, c:'#1553C7', items:[
+          { t:'Solar system design & consultation', d:'Survey, load analysis, sizing' },
+          { t:'Hybrid & grid-tie systems', d:'Savings with or without backup' },
+          { t:'Battery storage solutions', d:'Power for nights and brownouts' },
+          { t:'Residential solar', d:'Homes of every size' },
+          { t:'Commercial solar', d:'Shops, offices, malls' },
+          { t:'Industrial solar', d:'Factories and warehouses' } ] },
+        { t:'Installation', n:5, c:'#C2410C', items:[
+          { t:'Solar panel installation', d:'Tier-1 panels, our own crew' },
+          { t:'Mounting structures', d:'Typhoon-rated rails and frames' },
+          { t:'Electrical works & protections', d:'Breakers, surge, grounding' },
+          { t:'Maintenance & troubleshooting', d:'Cleaning, checks, repairs' },
+          { t:'EV charger installation', d:'Charge from your rooftop' } ] },
+        { t:'Specialty', n:3, c:'#1E8A3A', items:[
+          { t:'Solar lighting systems', d:'Street, garden, perimeter' },
+          { t:'Solar water pump systems', d:'Irrigation and supply' },
+          { t:'Solar CCTV solutions', d:'Off-grid security cameras' } ] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_sections_services_grids",
+  "info": {
+    "displayName": "services-grid",
+    "icon": "layout"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "subheading": {
+      "type": "text"
+    },
+    "limit": {
+      "type": "integer",
+      "default": 6
+    },
+    "ctaLabel": {
+      "type": "string"
+    },
+    "ctaHref": {
+      "type": "string"
+    }
+  }
+}

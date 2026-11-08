@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_sections_logo_marquees",
+  "info": {
+    "displayName": "logo-marquee",
+    "icon": "layout"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    }
+  }
+}

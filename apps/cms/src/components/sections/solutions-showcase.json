@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_sections_solutions_showcases",
+  "info": {
+    "displayName": "solutions-showcase",
+    "icon": "layout"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "subheading": {
+      "type": "text"
+    }
+  }
+}

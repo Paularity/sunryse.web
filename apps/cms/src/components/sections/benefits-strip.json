@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_sections_benefits_strips",
+  "info": {
+    "displayName": "benefits-strip",
+    "icon": "layout"
+  },
+  "options": {},
+  "attributes": {
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.feature-item"
+    }
+  }
+}

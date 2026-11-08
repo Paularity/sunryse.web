@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SunRyse — Get a quote</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=Manrope:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7FAFF}
+a{color:#1553C7;text-decoration:none}a:hover{color:#C2410C}
+.mono{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.12em}
+.wrap{max-width:1320px;margin:0 auto;padding:0 40px;box-sizing:border-box}
+.sun-text{background:linear-gradient(135deg,#FFB21A,#FF7A00 45%,#FF4D1A);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sky-text{background:linear-gradient(135deg,#3B8BFF,#1546C7);-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{background:#FFFFFF;border:1px solid rgba(11,31,77,.10);box-shadow:0 1px 2px rgba(11,31,77,.04),0 12px 32px -12px rgba(11,31,77,.14)}
+.ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.fld{background:#F7FAFF;border:1px solid rgba(11,31,77,.18);border-radius:12px;padding:14px;color:#0B1F4D;font:inherit;font-size:16px;min-height:52px;box-sizing:border-box;width:100%}
+.fld:focus{outline:3px solid rgba(21,83,199,.35);border-color:#1553C7}
+.lbl{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:#4A5A80}
+.err{font-size:13px;color:#B42318;display:flex;gap:6px;align-items:center}
+.layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.navlinks{display:flex}.navlinks a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;color:#0B1F4D}
+.burger,.quick{display:none}
+@media (max-width:1000px){.layout{grid-template-columns:1fr}.navlinks{display:none}.burger{display:grid}.quick{display:grid}.side-contacts{display:none}}
+@media (max-width:640px){.wrap{padding:0 16px}.two{grid-template-columns:1fr}.form{padding:20px !important}.hdr-call{display:none !important}}
+</style>
+</helmet>
+<div style="width:100%;min-height:1800px;background:linear-gradient(180deg,#D7EBFF 0%,#F7FAFF 35%,#FFF6E6 100%);color:#0B1F4D;font-family:Manrope,sans-serif">
+
+<header style="background:#FFFFFF;border-bottom:1px solid rgba(11,31,77,.08)">
+<div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:16px;height:72px">
+<a href="Main.dc.html" style="display:flex;align-items:center;min-height:48px;font-family:Sora;font-weight:800;font-size:24px;letter-spacing:-.02em" aria-label="SunRyse home"><span class="sun-text">Sun</span><span class="sky-text">Ryse</span></a>
+<nav class="navlinks mono" style="font-size:12px" aria-label="Main"><a href="Navigation.dc.html">Solutions ▾</a><a href="Navigation.dc.html">Services ▾</a><a href="Calculator.dc.html">Calculator</a><a href="Projects.dc.html">Projects</a><a href="About.dc.html">About</a></nav>
+<div style="display:flex;gap:8px;align-items:center">
+<a href="tel:" class="mono hdr-call" style="display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 16px;border-radius:14px;border:1px solid rgba(11,31,77,.2);font-size:12px;color:#0B1F4D"><svg class="ico" style="width:18px;height:18px" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>Call us</a>
+<a href="MenuMobile.dc.html" class="burger" aria-label="Open menu" style="width:48px;height:48px;border-radius:14px;background:#0B1F4D;place-items:center;color:#FFFFFF"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"></path></svg></a>
+</div>
+</div>
+</header>
+
+<div class="wrap" style="padding-top:44px;padding-bottom:72px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:14px;max-width:760px">
+<span class="mono" style="font-size:12px;color:#4A5A80">Home / <span style="color:#C2410C">Get a quote</span></span>
+<h1 style="font-family:Sora;font-weight:700;font-size:clamp(38px,5.2vw,76px);line-height:1;letter-spacing:-.045em;margin:0">Let’s size your <span style="display:inline-block;border:2px solid #FF8A00;border-radius:18px;padding:0 14px 6px;background:rgba(255,255,255,.6)"><span class="sun-text">solar</span></span></h1>
+<p style="font-size:18px;line-height:1.6;color:#22365F;margin:0">Three quick steps, about a minute. A solar advisor calls within one business day to book your free site assessment.</p>
+</div>
+
+<!-- Quick contact (tablet + phone only) -->
+<div class="quick" style="grid-template-columns:1fr 1fr;gap:10px">
+<a href="tel:" style="display:flex;align-items:center;justify-content:center;gap:10px;min-height:56px;border-radius:16px;background:#0B1F4D;color:#FFFFFF;font-weight:700"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>Call now</a>
+<a href="#" style="display:flex;align-items:center;justify-content:center;gap:10px;min-height:56px;border-radius:16px;background:#FFFFFF;border:1px solid rgba(11,31,77,.15);color:#0B1F4D;font-weight:700"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>Messenger</a>
+<span class="mono" style="grid-column:1/-1;text-align:center;font-size:11px;color:#4A5A80">— or fill in the form —</span>
+</div>
+
+<div class="layout">
+<form class="card form" style="border-radius:28px;padding:32px;display:flex;flex-direction:column;gap:24px" aria-label="Quote request" novalidate="">
+<div style="display:flex;flex-direction:column;gap:10px">
+<div class="mono" style="display:flex;justify-content:space-between;font-size:11px;color:#4A5A80"><span>{{stepLabel}}</span><span>{{stepName}}</span></div>
+<div style="height:8px;border-radius:99px;background:#EAF2FF" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="{{stepNow}}"><div style="height:100%;width:{{progress}};border-radius:99px;background:linear-gradient(90deg,#FFC93C,#FF8A00,#FF5A1F)"></div></div>
+</div>
+
+<sc-if value="{{s1}}" hint-placeholder-val="{{true}}">
+<div style="display:flex;flex-direction:column;gap:22px">
+<fieldset style="border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:10px">
+<legend style="font-family:Sora;font-size:22px;font-weight:700;margin-bottom:12px">What type of property?</legend>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px">
+<sc-for list="{{props}}" as="p" hint-placeholder-count="3"><button type="button" onClick="{{p.pick}}" aria-pressed="{{p.on}}" style="display:flex;flex-direction:column;gap:8px;align-items:flex-start;padding:16px;border-radius:16px;cursor:pointer;background:{{p.bg}};border:2px solid {{p.border}};color:#0B1F4D;text-align:left;min-height:110px">
+<span style="color:{{p.ic}}"><sc-if value="{{p.home}}" hint-placeholder-val="{{false}}"><svg class="ico" style="width:26px;height:26px" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"></path></svg></sc-if><sc-if value="{{p.biz}}" hint-placeholder-val="{{false}}"><svg class="ico" style="width:26px;height:26px" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"></rect><path d="M9 22v-4h6v4M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"></path></svg></sc-if><sc-if value="{{p.ind}}" hint-placeholder-val="{{false}}"><svg class="ico" style="width:26px;height:26px" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 20V9l6 4V9l6 4V4h6v16z"></path><path d="M2 20h20"></path></svg></sc-if></span>
+<span style="font-family:Sora;font-weight:700;font-size:16px">{{p.t}}</span><span style="font-size:13px;color:#4A5A80">{{p.d}}</span></button></sc-for>
+</div>
+</fieldset>
+<div class="two">
+<label style="display:flex;flex-direction:column;gap:6px"><span class="lbl">Average monthly bill ₱</span><input class="fld" inputmode="numeric" value="10,000"></label>
+<label style="display:flex;flex-direction:column;gap:6px"><span class="lbl">Interested in</span><select class="fld"><option>Not sure yet</option><option>Grid-tie</option><option>Hybrid + battery</option><option>Battery only</option><option>Other service</option></select></label>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{s2}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-direction:column;gap:22px">
+<fieldset style="border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:10px">
+<legend style="font-family:Sora;font-size:22px;font-weight:700;margin-bottom:12px">Tell us about your roof</legend>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px">
+<sc-for list="{{roofs}}" as="r" hint-placeholder-count="4"><button type="button" onClick="{{r.pick}}" aria-pressed="{{r.on}}" style="min-height:52px;padding:12px;border-radius:14px;cursor:pointer;background:{{r.bg}};border:2px solid {{r.border}};color:#0B1F4D;font-family:Sora;font-weight:700;font-size:14px">{{r.t}}</button></sc-for>
+</div>
+</fieldset>
+<label style="display:flex;flex-direction:column;gap:6px"><span class="lbl">City / barangay</span><input class="fld" autocomplete="address-level2" placeholder="e.g. [City], [Province]"></label>
+<label style="display:flex;flex-direction:column;gap:6px"><span class="lbl">Preferred survey date (optional)</span><input class="fld" type="date"></label>
+</div>
+</sc-if>
+
+<sc-if value="{{s3}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-direction:column;gap:14px">
+<span style="font-family:Sora;font-size:22px;font-weight:700">How can we reach you?</span>
+<label style="display:flex;flex-direction:column;gap:6px"><span class="lbl">Full name</span><input class="fld" autocomplete="name" value="{{name}}" onChange="{{onName}}" aria-invalid="{{nameBad}}" style="border-color:{{nameBorder}}"><sc-if value="{{nameBad}}" hint-placeholder-val="{{false}}"><span class="err" role="alert"><svg class="ico" style="width:16px;height:16px" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4M12 16h.01"></path></svg>Please enter your name.</span></sc-if></label>
+<div class="two">
+<label style="display:flex;flex-direction:column;gap:6px"><span class="lbl">Mobile</span><input class="fld" type="tel" autocomplete="tel" placeholder="0917 123 4567" value="{{phone}}" onChange="{{onPhone}}" aria-invalid="{{phoneBad}}" style="border-color:{{phoneBorder}}"><sc-if value="{{phoneBad}}" hint-placeholder-val="{{false}}"><span class="err" role="alert"><svg class="ico" style="width:16px;height:16px" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4M12 16h.01"></path></svg>Use a PH mobile number, e.g. 0917 123 4567.</span></sc-if></label>
+<label style="display:flex;flex-direction:column;gap:6px"><span class="lbl">Email (optional)</span><input class="fld" type="email" autocomplete="email"></label>
+</div>
+<label style="display:flex;flex-direction:column;gap:6px"><span class="lbl">Anything else?</span><textarea class="fld" rows="3" style="resize:vertical" placeholder="e.g. We have frequent brownouts in the evening"></textarea></label>
+<label style="display:flex;gap:12px;align-items:flex-start;font-size:14px;color:#4A5A80;min-height:44px;cursor:pointer"><input type="checkbox" onChange="{{onConsent}}" checked="{{consent}}" style="width:22px;height:22px;margin-top:1px;accent-color:#FF8A00;flex:none">I agree to be contacted about my quote and accept the privacy policy.</label>
+<sc-if value="{{consentBad}}" hint-placeholder-val="{{false}}"><span class="err" role="alert">Please tick the box so we can contact you.</span></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{done}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:30px 0">
+<span style="width:84px;height:84px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 45% 40%,#FFFBEA,#FFE07A 30%,#FFB21A 65%,#FF7A00);box-shadow:0 0 50px 10px rgba(255,178,26,.45);color:#0B1F4D"><svg class="ico" style="width:34px;height:34px;stroke-width:2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>
+<span style="font-family:Sora;font-size:30px;font-weight:700;letter-spacing:-.03em">Thanks, {{firstName}}!</span>
+<span style="color:#4A5A80;max-width:420px;line-height:1.6">A SunRyse advisor will call {{phone}} within one business day to schedule your free site assessment.</span>
+<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:6px"><a href="#" class="mono" style="display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 18px;border-radius:14px;background:#0B1F4D;color:#FFFFFF;font-size:12px"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>Message us now</a><button type="button" onClick="{{restart}}" class="mono" style="font-size:12px;letter-spacing:.12em;border:1px solid rgba(11,31,77,.2);background:#FFFFFF;color:#0B1F4D;border-radius:14px;min-height:48px;padding:0 18px;cursor:pointer">Start over</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{showNav}}" hint-placeholder-val="{{true}}">
+<div style="display:flex;justify-content:space-between;gap:10px;padding-top:18px;border-top:1px solid rgba(11,31,77,.1)">
+<button type="button" onClick="{{back}}" disabled="{{atStart}}" class="mono" style="font-size:12px;letter-spacing:.12em;border:1px solid rgba(11,31,77,.2);background:#FFFFFF;color:#0B1F4D;border-radius:14px;padding:0 20px;min-height:52px;cursor:pointer;opacity:{{backOpacity}}">← Back</button>
+<button type="button" onClick="{{next}}" class="mono" style="flex:1;max-width:280px;font-size:12px;letter-spacing:.12em;border:0;background:{{nextBg}};color:{{nextFg}};border-radius:14px;padding:0 22px;min-height:52px;cursor:pointer">{{nextLabel}}</button>
+</div>
+</sc-if>
+<span style="font-size:13px;color:#4A5A80;display:flex;gap:8px;align-items:center"><svg class="ico" style="width:16px;height:16px" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Your details are only used for your quote.</span>
+</form>
+
+<div style="display:flex;flex-direction:column;gap:14px">
+<div class="side-contacts" style="border-radius:24px;padding:24px;background:#0B1F4D;color:#FFFFFF;display:flex;flex-direction:column;gap:14px;background-image:radial-gradient(ellipse at 100% 0%,rgba(255,138,0,.45),transparent 55%)">
+<span class="mono" style="font-size:11px;color:#FFC93C">Prefer to talk?</span>
+<a href="tel:" style="display:flex;gap:14px;align-items:center;color:#FFFFFF;min-height:52px"><span style="flex:none;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.1);display:grid;place-items:center"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></span><span><span class="mono" style="font-size:11px;color:#C9D4F2;display:block">Call or Viber</span><b style="font-family:Sora">[Phone number]</b></span></a>
+<a href="#" style="display:flex;gap:14px;align-items:center;color:#FFFFFF;min-height:52px"><span style="flex:none;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.1);display:grid;place-items:center"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg></span><span><span class="mono" style="font-size:11px;color:#C9D4F2;display:block">Messenger</span><b style="font-family:Sora">[Facebook page]</b></span></a>
+<a href="mailto:" style="display:flex;gap:14px;align-items:center;color:#FFFFFF;min-height:52px"><span style="flex:none;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.1);display:grid;place-items:center"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-10 6L2 7"></path></svg></span><span><span class="mono" style="font-size:11px;color:#C9D4F2;display:block">Email</span><b style="font-family:Sora">[Email address]</b></span></a>
+<span style="font-size:13px;color:#C9D4F2;display:flex;gap:8px;align-items:center"><svg class="ico" style="width:16px;height:16px" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>Mon–Sat · [8:00 AM – 5:00 PM]</span>
+</div>
+<div class="card" role="img" aria-label="Map placeholder showing SunRyse office and service area" style="height:220px;border-radius:24px;overflow:hidden;position:relative;background:repeating-linear-gradient(0deg,rgba(11,31,77,.05) 0 1px,transparent 1px 32px),repeating-linear-gradient(90deg,rgba(11,31,77,.05) 0 1px,transparent 1px 32px),#EAF2FF">
+<span style="position:absolute;left:50%;top:45%;width:170px;height:170px;margin:-85px 0 0 -85px;border-radius:50%;background:rgba(255,138,0,.15);border:2px dashed rgba(255,138,0,.6)"></span>
+<span style="position:absolute;left:50%;top:45%;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;background:#FF5A1F;border:4px solid #FFFFFF;box-shadow:0 4px 10px rgba(11,31,77,.3)"></span>
+<span class="mono" style="position:absolute;left:14px;bottom:14px;font-size:11px;background:#FFFFFF;border-radius:8px;padding:7px 10px">[ Office · service area ]</span>
+</div>
+<div class="card" style="border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:12px">
+<span class="mono" style="font-size:11px;color:#4A5A80">What happens next</span>
+<sc-for list="{{next3}}" as="n" hint-placeholder-count="3"><div style="display:flex;gap:12px;align-items:center"><span class="mono" style="flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:2px solid #FF8A00;font-size:11px;color:#C2410C">{{n.n}}</span><span style="font-size:15px">{{n.t}}</span></div></sc-for>
+</div>
+</div>
+</div>
+</div>
+<footer class="mono" style="background:#071433;color:#C9D4F2;font-size:11px"><div class="wrap" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:28px;padding-bottom:28px"><span>© 2026 SunRyse Solar Services</span><span>Privacy · Terms</span></div></footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { step: 1, prop: 'res', roof: 'metal', name: '', phone: '', consent: false, tried: false };
+  }
+  renderVals() {
+    var self = this;
+    var s = this.state;
+    var names = { 1: 'Property', 2: 'Location', 3: 'Contact', 4: 'Done' };
+    var nameOk = s.name.trim().length >= 2;
+    var phoneOk = /^(\+?63|0)9\d{2}[\s-]?\d{3}[\s-]?\d{4}$/.test(s.phone.trim());
+    var props = [['res', 'Home', 'House or townhouse', 'home'], ['com', 'Business', 'Shop, office, mall', 'biz'], ['ind', 'Industrial', 'Factory, warehouse', 'ind']].map(function (o) {
+      var on = s.prop === o[0];
+      var p = { t: o[1], d: o[2], on: on, bg: on ? '#FFF6E6' : '#FFFFFF', border: on ? '#FF8A00' : 'rgba(11,31,77,.12)', ic: on ? '#C2410C' : '#1553C7', pick: function () { self.setState({ prop: o[0] }); } };
+      p[o[3]] = true;
+      return p;
+    });
+    var roofs = [['metal', 'Metal / GI sheet'], ['tile', 'Tile'], ['concrete', 'Concrete deck'], ['unsure', 'Not sure']].map(function (o) {
+      var on = s.roof === o[0];
+      return { t: o[1], on: on, bg: on ? '#EAF2FF' : '#FFFFFF', border: on ? '#1553C7' : 'rgba(11,31,77,.12)', pick: function () { self.setState({ roof: o[0] }); } };
+    });
+    var last = s.step === 3;
+    var showErr = s.tried && last;
+    return {
+      s1: s.step === 1, s2: s.step === 2, s3: s.step === 3, done: s.step === 4,
+      showNav: s.step < 4, atStart: s.step === 1, backOpacity: s.step === 1 ? '.4' : '1',
+      stepLabel: s.step < 4 ? 'Step ' + s.step + ' of 3' : 'Complete',
+      stepName: names[s.step], stepNow: Math.min(3, s.step),
+      progress: Math.min(100, Math.round(s.step / 3 * 100)) + '%',
+      nextLabel: last ? 'Send my request »' : 'Continue →',
+      nextBg: last ? 'linear-gradient(135deg,#FFC93C,#FF8A00 50%,#FF5A1F)' : '#0B1F4D',
+      nextFg: last ? '#0B1F4D' : '#FFFFFF',
+      next: function () {
+        if (s.step === 3) {
+          if (!(nameOk && phoneOk && s.consent)) { self.setState({ tried: true }); return; }
+          self.setState({ step: 4 }); return;
+        }
+        self.setState({ step: s.step + 1 });
+      },
+      back: function () { self.setState({ step: Math.max(1, s.step - 1) }); },
+      restart: function () { self.setState({ step: 1, tried: false }); },
+      name: s.name, phone: s.phone, consent: s.consent,
+      onName: function (e) { self.setState({ name: e.target.value }); },
+      onPhone: function (e) { self.setState({ phone: e.target.value }); },
+      onConsent: function (e) { self.setState({ consent: !!e.target.checked }); },
+      nameBad: showErr && !nameOk, phoneBad: showErr && !phoneOk, consentBad: showErr && !s.consent,
+      nameBorder: showErr && !nameOk ? '#B42318' : 'rgba(11,31,77,.18)',
+      phoneBorder: showErr && !phoneOk ? '#B42318' : 'rgba(11,31,77,.18)',
+      firstName: (s.name.trim().split(' ')[0] || 'there'),
+      props: props, roofs: roofs,
+      next3: [
+        { n:'01', t:'We call to confirm details' },
+        { n:'02', t:'Free on-site assessment' },
+        { n:'03', t:'Your custom design & quote' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

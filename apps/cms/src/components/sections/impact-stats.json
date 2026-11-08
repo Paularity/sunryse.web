@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_sections_impact_statss",
+  "info": {
+    "displayName": "impact-stats",
+    "icon": "layout"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "subheading": {
+      "type": "text"
+    }
+  }
+}
