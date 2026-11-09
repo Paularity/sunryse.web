@@ -8,7 +8,7 @@
 <body>
 <x-dc>
 <helmet>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=Manrope:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Sora:wght@800&amp;family=Manrope:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
 <style>
 body{margin:0;background:#F7FAFF}
 a{color:#1553C7;text-decoration:none}a:hover{color:#C2410C}
@@ -28,38 +28,140 @@ a{color:#1553C7;text-decoration:none}a:hover{color:#C2410C}
 .subnav a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:12px;white-space:nowrap;color:#0B1F4D}
 @media (max-width:1000px){.split{grid-template-columns:1fr}.navlinks{display:none}.flow{flex-direction:column;align-items:stretch}.flow .arr{transform:rotate(90deg);align-self:center}.burger{display:grid}.mbar{display:grid;position:fixed;left:0;right:0;bottom:0;z-index:20}.mbar-sp{display:block;height:84px}.hero-fig{height:340px !important}}
 @media (max-width:640px){.wrap{padding:0 16px}.hdr-quote{display:none !important}.stats3{grid-template-columns:1fr 1fr !important}.stats3>div:last-child{grid-column:1/-1}}
+/* fx-layer:start — SunRyse "daylight futurism" layer. Identical on every board; edit fx/layer.css, not here. */
+/* Baseline icon style (zero specificity: a board's own .ico rule wins) */
+:where(.ico){width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+/* Logo lockup (canonical, never restyled) */
+.fx-logo{display:flex;align-items:center;gap:10px;min-height:44px;color:#0B1F4D;text-decoration:none;flex:none}
+.fx-logo:hover{color:#0B1F4D}
+.fx-logo-w{display:flex;flex-direction:column;line-height:1}
+.fx-logo-n{font-family:Sora,sans-serif;font-weight:800;font-size:22px;letter-spacing:-.02em}
+.fx-logo-t{font-family:'JetBrains Mono',monospace;text-transform:uppercase;font-size:9px;letter-spacing:.3em;margin-top:4px;color:#0B1F4D}
+.fx-logo .sun-text{background:linear-gradient(135deg,#FFB21A,#FF7A00 45%,#FF4D1A);-webkit-background-clip:text;background-clip:text;color:transparent}
+.fx-logo .sky-text{background:linear-gradient(135deg,#3B8BFF,#1546C7);-webkit-background-clip:text;background-clip:text;color:transparent}
+.fx-foot .fx-logo-t{color:#C9D4F2}
+.fx-foot .fx-logo .sky-text{background-image:linear-gradient(135deg,#7DB6FF,#3B8BFF)}
+/* Buttons (same on every page) */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:14px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:500;box-sizing:border-box;transition:box-shadow .3s,transform .3s,background .3s}
+.btn-sun{background:linear-gradient(135deg,#FFC93C,#FF8A00 50%,#FF5A1F);color:#0B1F4D;box-shadow:0 8px 20px -8px rgba(255,90,31,.7)}
+.btn-navy{background:#0B1F4D;color:#FFFFFF}
+.btn-navy:hover{color:#FFFFFF;box-shadow:0 12px 28px -10px rgba(30,111,232,.8),inset 0 0 0 1px rgba(111,176,255,.5)}
+.btn-line{background:rgba(255,255,255,.8);color:#0B1F4D;border:1px solid rgba(11,31,77,.18)}
+.btn-line:hover{color:#0B1F4D;border-color:#1E6FE8;box-shadow:0 10px 24px -14px rgba(30,111,232,.7)}
+.btn-sun,.fx-sheen{position:relative;overflow:hidden;isolation:isolate}
+.btn-sun::after,.fx-sheen::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;z-index:-1;background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);transform:skewX(-20deg);animation:fx-sheen 5s ease-in-out infinite;pointer-events:none}
+.btn-sun:hover,.fx-sheen:hover{color:#0B1F4D;box-shadow:0 14px 30px -10px rgba(255,90,31,.85)}
+/* Header (same on every page; active link uses aria-current) */
+.fx-hdr>.wrap,.fx-foot>.wrap{max-width:1320px;margin:0 auto;padding:0 40px;box-sizing:border-box}
+@media (max-width:640px){.fx-hdr>.wrap,.fx-foot>.wrap{padding:0 16px}}
+.fx-hdr{position:relative;z-index:6;padding-top:16px;text-align:left}
+.fx-hdr .glass{display:flex;align-items:center;justify-content:space-between;gap:16px;height:68px;border-radius:20px;padding:0 10px 0 16px}
+.fx-hdr .navlinks{display:flex;gap:4px;font-size:12px}
+.fx-hdr .navlinks a{position:relative;display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border-radius:10px;color:#0B1F4D;transition:background .2s,color .2s}
+.fx-hdr .navlinks a:hover{background:rgba(30,111,232,.08);color:#0B1F4D}
+.fx-hdr .navlinks a[aria-current]{color:#C2410C;background:rgba(255,138,0,.10)}
+.fx-hdr .navlinks a[aria-current]::after{content:"";position:absolute;left:12px;right:12px;bottom:6px;height:2px;border-radius:2px;background:linear-gradient(90deg,#FFC93C,#FF5A1F);box-shadow:0 0 10px rgba(255,138,0,.8)}
+.fx-hdr .burger{display:none;width:48px;height:48px;border-radius:14px;background:#0B1F4D;place-items:center;color:#FFFFFF}
+@media (max-width:1023px){.fx-hdr .navlinks,.fx-hdr .hdr-call{display:none}.fx-hdr .burger{display:grid}}
+@media (max-width:640px){.fx-hdr .hdr-quote{display:none !important}.fx-hdr .glass{height:62px;padding:0 8px 0 12px}}
+/* Glass + cards */
+.glass{background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.95);box-shadow:inset 0 1px 0 #FFFFFF,0 20px 50px -22px rgba(11,31,77,.38);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3)}
+.card{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,255,255,.84));border:1px solid rgba(11,31,77,.09);box-shadow:inset 0 1px 0 #FFFFFF,0 1px 2px rgba(11,31,77,.04),0 18px 40px -22px rgba(11,31,77,.30)}
+a.card,.fx-lift{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+a.card:hover,.fx-lift:hover{transform:translateY(-3px);box-shadow:inset 0 1px 0 #FFFFFF,0 28px 54px -26px rgba(11,31,77,.45)}
+a.card::after,.fx-ring::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;background:linear-gradient(135deg,#FFC93C,rgba(255,90,31,.4) 35%,rgba(30,111,232,.3) 65%,#4A93FF);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .35s}
+a.card:hover::after,.fx-ring:hover::after,.fx-ring.on::after{opacity:1}
+.fx-ring{position:relative}
+/* Section eyebrow with live dot */
+.eyebrow,.eb,.fx-eb{display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before,.eb::before,.fx-eb::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;flex:none;animation:fx-ping 2.4s ease-out infinite}
+/* Highlighted headline word (glowing frame) */
+.hl{display:inline-block;margin:0 2px;border-radius:16px;box-shadow:0 0 0 2px #1E6FE8,0 14px 34px -14px rgba(30,111,232,.75);background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(234,242,255,.75))}
+.hl-sun{box-shadow:0 0 0 2px #FF8A00,0 16px 40px -14px rgba(255,138,0,.85)}
+/* Blueprint grid (light sections) */
+.gl,.fx-grid{background-image:radial-gradient(rgba(11,31,77,.11) 1px,transparent 1.4px),repeating-linear-gradient(90deg,rgba(11,31,77,.05) 0 1px,transparent 1px 220px);background-size:22px 22px,auto}
+/* Page-hero blueprint grid (behind content) */
+section[data-pt]{isolation:isolate}
+.fx-hero-grid{position:absolute;left:0;right:0;top:0;height:100%;max-height:900px;z-index:-1;pointer-events:none;background-image:radial-gradient(rgba(11,31,77,.13) 1px,transparent 1.4px),repeating-linear-gradient(90deg,rgba(11,31,77,.05) 0 1px,transparent 1px 220px);background-size:22px 22px,auto;-webkit-mask-image:radial-gradient(90% 75% at 50% 20%,#000,transparent 80%);mask-image:radial-gradient(90% 75% at 50% 20%,#000,transparent 80%)}
+/* Dark accent band (Services, Impact, inner CTA bands) */
+.fx-dark{position:relative;overflow:hidden;isolation:isolate;background:#071433 !important;color:#FFFFFF}
+.fx-dark::before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(55% 60% at 88% 0%,rgba(255,138,0,.32),transparent 70%),radial-gradient(45% 55% at 0% 100%,rgba(30,111,232,.40),transparent 70%)}
+.fx-dark::after{content:"";position:absolute;left:-20%;right:-20%;bottom:0;height:70%;z-index:-1;background-image:linear-gradient(rgba(120,170,255,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(120,170,255,.16) 1px,transparent 1px);background-size:64px 64px;transform:perspective(700px) rotateX(60deg);transform-origin:bottom;-webkit-mask-image:linear-gradient(to top,#000,transparent 90%);mask-image:linear-gradient(to top,#000,transparent 90%)}
+/* Dark "screen" panel inside light sections (charts, spec sheets) */
+.fx-screen{position:relative;overflow:hidden;background:radial-gradient(90% 70% at 100% 0%,rgba(255,138,0,.22),transparent 60%),radial-gradient(70% 60% at 0% 100%,rgba(30,111,232,.30),transparent 60%),#0A1838;color:#FFFFFF;border:1px solid rgba(255,255,255,.10);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 30px 60px -30px rgba(7,20,51,.7)}
+.fx-screen::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(120,170,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(120,170,255,.08) 1px,transparent 1px);background-size:32px 32px}
+.fx-screen>*{position:relative}
+/* HUD chip */
+.fx-hud{display:inline-flex;align-items:center;gap:8px;font:500 11px/1.2 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;padding:8px 12px;border-radius:999px;background:rgba(7,20,51,.74);color:#E6EEFF;border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);white-space:nowrap}
+.fx-hud.light{background:rgba(255,255,255,.78);color:#0B1F4D;border-color:rgba(255,255,255,.95)}
+.fx-dot{width:7px;height:7px;border-radius:50%;background:#5BD97A;box-shadow:0 0 10px #5BD97A;flex:none;animation:fx-blink 1.8s ease-in-out infinite}
+.fx-dot.amber{background:#FF8A00;box-shadow:0 0 10px #FF8A00}
+/* Image scan line (photos in bracket frames) */
+.corners{position:relative}
+.fx-scan{position:absolute;inset:8px;border-radius:14px;overflow:hidden;pointer-events:none;z-index:1}
+.fx-scan::before{content:"";position:absolute;left:0;right:0;height:34%;top:-34%;background:linear-gradient(180deg,transparent,rgba(255,201,60,.10) 70%,rgba(255,201,60,.7));animation:fx-scan 5s cubic-bezier(.5,0,.5,1) infinite}
+.fx-scan::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 4px)}
+/* Footer */
+.fx-foot{position:relative;overflow:hidden;background:#071433;color:#FFFFFF;padding:64px 0 28px}
+.fx-foot::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,#FF8A00 30%,#4A93FF 70%,transparent);box-shadow:0 0 18px rgba(255,138,0,.7)}
+.fx-foot::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(50% 80% at 100% 0%,rgba(255,138,0,.14),transparent 70%),radial-gradient(40% 70% at 0% 100%,rgba(30,111,232,.18),transparent 70%)}
+.fx-foot>*{position:relative;z-index:1}
+.fx-foot-grid{display:grid;grid-template-columns:1.3fr repeat(3,minmax(0,1fr));gap:32px}
+.fx-foot nav a,.fx-foot .fx-flink{color:#E3E9F7;min-height:44px;display:flex;align-items:center}
+.fx-foot nav a:hover{color:#FFC93C}
+.fx-soc{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#FFFFFF;transition:background .3s,box-shadow .3s}
+.fx-soc:hover{color:#0B1F4D;background:linear-gradient(135deg,#FFC93C,#FF8A00 50%,#FF5A1F);box-shadow:0 8px 24px -8px rgba(255,138,0,.9)}
+@media (max-width:1023px){.fx-foot-grid{grid-template-columns:1fr 1fr}.fx-foot{padding-bottom:110px}}
+@media (max-width:640px){.fx-foot-desc{display:none}.fx-foot{padding-top:48px}.fx-foot-grid{grid-template-columns:1fr 1fr;gap:20px 16px}.fx-foot-grid>:first-child,.fx-foot-grid>:last-child{grid-column:1/-1}.fx-foot-grid>:last-child{flex-direction:row !important;flex-wrap:wrap;align-items:center;column-gap:18px !important}.fx-foot-grid>:last-child>.mono{flex-basis:100%}}
+/* Motion */
+@keyframes fx-ping{0%{box-shadow:0 0 0 0 rgba(255,138,0,.55)}70%{box-shadow:0 0 0 8px rgba(255,138,0,0)}100%{box-shadow:0 0 0 0 rgba(255,138,0,0)}}
+@keyframes fx-blink{50%{opacity:.35}}
+@keyframes fx-scan{0%{top:-34%}100%{top:100%}}
+@keyframes fx-sheen{0%,60%{left:-60%}100%{left:130%}}
+@keyframes fx-spin{to{transform:rotate(360deg)}}
+@keyframes fx-flow{to{stroke-dashoffset:-24}}
+@media (prefers-reduced-motion:reduce){.eyebrow::before,.eb::before,.fx-eb::before,.fx-dot,.fx-scan::before,.btn-sun::after,.fx-sheen::after,.fx-spin,.fx-flowline{animation:none !important}.fx-scan{display:none}a.card,.fx-lift,.btn{transition:none}}
+/* fx-layer:end */
 </style>
 </helmet>
 <div style="width:100%;background:#F7FAFF;color:#0B1F4D;font-family:Manrope,sans-serif;overflow:hidden">
 
-<header style="background:#FFFFFF;border-bottom:1px solid rgba(11,31,77,.08)">
-<div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:20px;height:76px">
-<a href="Main.dc.html" style="display:flex;align-items:center;min-height:48px;font-family:Sora;font-weight:800;font-size:24px;letter-spacing:-.02em" aria-label="SunRyse home"><span class="sun-text">Sun</span><span class="sky-text">Ryse</span></a>
-<nav class="navlinks mono" style="gap:26px;font-size:12px" aria-label="Main"><a href="#" style="color:#C2410C">Solutions ▾</a><a href="Service.dc.html" style="color:#0B1F4D">Services ▾</a><a href="Calculator.dc.html" style="color:#0B1F4D">Calculator</a><a href="Projects.dc.html" style="color:#0B1F4D">Projects</a><a href="About.dc.html" style="color:#0B1F4D">About</a></nav>
-<div style="display:flex;gap:8px;align-items:center"><a href="Contact.dc.html" class="mono hdr-quote" style="display:inline-flex;align-items:center;min-height:48px;box-sizing:border-box;font-size:12px;color:#0B1F4D;background:linear-gradient(135deg,#FFC93C,#FF8A00 50%,#FF5A1F);border-radius:14px;padding:0 18px;font-weight:500">Get a quote</a><a href="MenuMobile.dc.html" class="burger" aria-label="Open menu" style="width:48px;height:48px;border-radius:14px;background:#0B1F4D;place-items:center;color:#FFFFFF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"></path></svg></a></div>
-</div>
-</header>
 
 <!-- HERO -->
-<section style="position:relative;background:linear-gradient(180deg,#BFE0FF 0%,#E6F2FF 45%,#FFF3DC 100%);padding:56px 0 80px;overflow:hidden">
+<section data-pt="56" style="position:relative;background:linear-gradient(180deg,#BFE0FF 0%,#E6F2FF 45%,#FFF3DC 100%);padding:0 0 80px;overflow:hidden">
+<div class="fx-hero-grid" aria-hidden="true"></div>
+<header class="fx-hdr">
+<div class="wrap">
+<div class="glass">
+<a href="Main.dc.html" class="fx-logo" aria-label="SunRyse Solar Services home"><svg width="38" height="38" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="fxlg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFC93C"></stop><stop offset="1" stop-color="#FF5A1F"></stop></linearGradient></defs><g stroke="url(#fxlg)" stroke-width="2.2" stroke-linecap="round"><line x1="20" y1="3" x2="20" y2="7"></line><line x1="8" y1="9" x2="10.6" y2="11.8"></line><line x1="32" y1="9" x2="29.4" y2="11.8"></line><line x1="3" y1="18" x2="6.6" y2="19"></line><line x1="37" y1="18" x2="33.4" y2="19"></line></g><path d="M8 22a12 12 0 0 1 24 0z" fill="url(#fxlg)"></path><path d="M10 23.5h22l-3.5 7H6.5z" fill="#1E6FE8"></path><path d="M14 23.5l-2.5 7M19.5 23.5l-2.5 7M25 23.5l-2.5 7M8.3 27h22" stroke="#FFFFFF" stroke-width=".9"></path><path d="M3 31c9 7 26 7 34-5" stroke="#2DB84C" stroke-width="2.5" fill="none" stroke-linecap="round"></path></svg><span class="fx-logo-w"><span class="fx-logo-n"><span class="sun-text">Sun</span><span class="sky-text">Ryse</span></span><span class="fx-logo-t">Solar Services</span></span></a>
+<nav class="navlinks mono" aria-label="Main"><a href="Solution.dc.html" aria-current="page">Solutions ▾</a><a href="Navigation.dc.html">Services ▾</a><a href="Calculator.dc.html">Calculator</a><a href="Projects.dc.html">Projects</a><a href="About.dc.html">About</a><a href="#">Learn</a></nav>
+<div style="display:flex;gap:8px;align-items:center">
+<a href="tel:" class="btn btn-line hdr-call" aria-label="Call SunRyse"><svg class="ico" style="width:18px;height:18px" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>Call</a>
+<a href="Contact.dc.html" class="btn btn-sun hdr-quote">Get a quote</a>
+<a href="MenuMobile.dc.html" class="burger" aria-label="Open menu"><svg class="ico" style="width:22px;height:22px" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"></path></svg></a>
+</div>
+</div>
+</div>
+</header>
+<div class="fx-hdr-sp" style="height:31px"></div>
 <div style="position:absolute;right:-160px;top:-180px;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,rgba(255,201,60,.55),rgba(255,201,60,0) 65%)"></div>
 <div class="wrap split" style="position:relative">
 <div style="display:flex;flex-direction:column;gap:22px">
 <span class="mono" style="font-size:11px;color:#4A5A80">Home / Solutions / <span style="color:#C2410C">Residential</span></span>
-<h1 style="font-family:Sora;font-weight:700;font-size:clamp(44px,5.6vw,84px);line-height:.98;letter-spacing:-.045em;margin:0">Solar for your <span style="border:2px solid #FF8A00;border-radius:18px;padding:0 16px 6px;background:rgba(255,255,255,.55)"><span class="sun-text">home</span></span></h1>
+<h1 style="font-family:'Space Grotesk';font-weight:700;font-size:clamp(44px,5.6vw,84px);line-height:.98;letter-spacing:-.045em;margin:0">Solar for your <span class="hl hl-sun" style="border-radius:18px;padding:0 16px 6px;background:rgba(255,255,255,.55)"><span class="sun-text">home</span></span></h1>
 <p style="font-size:19px;line-height:1.6;color:#22365F;margin:0;max-width:540px">Lower your monthly bill, keep the lights on during brownouts, and earn credits for the power you send back to the grid.</p>
 <div style="display:flex;gap:10px;flex-wrap:wrap">
 <a href="Calculator.dc.html" class="mono" style="font-size:12px;color:#FFFFFF;background:#0B1F4D;border-radius:14px;padding:17px 22px">Calculate my savings →</a>
 <a href="Contact.dc.html" class="mono" style="font-size:12px;color:#0B1F4D;background:#FFFFFF;border:1px solid rgba(11,31,77,.15);border-radius:14px;padding:17px 22px">Book a free survey</a>
 </div>
 <div class="stats3" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;max-width:560px;margin-top:6px">
-<div class="glass" style="border-radius:16px;padding:14px"><span class="mono" style="font-size:11px;color:#4A5A80;display:block">Typical size</span><span style="font-family:Sora;font-size:22px;font-weight:700">3–10 kWp</span></div>
-<div class="glass" style="border-radius:16px;padding:14px"><span class="mono" style="font-size:11px;color:#4A5A80;display:block">Bill reduction</span><span style="font-family:Sora;font-size:22px;font-weight:700;color:#1E8A3A">[xx–xx]%</span></div>
-<div class="glass" style="border-radius:16px;padding:14px"><span class="mono" style="font-size:11px;color:#4A5A80;display:block">Payback</span><span style="font-family:Sora;font-size:22px;font-weight:700;color:#C2410C">[x–x] yrs</span></div>
+<div class="glass" style="border-radius:16px;padding:14px"><span class="mono" style="font-size:11px;color:#4A5A80;display:block">Typical size</span><span style="font-family:'Space Grotesk';font-size:22px;font-weight:700">3–10 kWp</span></div>
+<div class="glass" style="border-radius:16px;padding:14px"><span class="mono" style="font-size:11px;color:#4A5A80;display:block">Bill reduction</span><span style="font-family:'Space Grotesk';font-size:22px;font-weight:700;color:#1E8A3A">[xx–xx]%</span></div>
+<div class="glass" style="border-radius:16px;padding:14px"><span class="mono" style="font-size:11px;color:#4A5A80;display:block">Payback</span><span style="font-family:'Space Grotesk';font-size:22px;font-weight:700;color:#C2410C">[x–x] yrs</span></div>
 </div>
 </div>
 <figure class="corners hero-fig" style="position:relative;margin:0;height:520px;padding:10px;box-sizing:border-box">
-<img src="/_blob/42d95a6784882c1da3bc89a29593485f" alt="Residential rooftop solar system installed by SunRyse" style="width:100%;height:100%;object-fit:cover;border-radius:18px;display:block">
+<img src="/_blob/42d95a6784882c1da3bc89a29593485f" alt="Residential rooftop solar system installed by SunRyse" style="width:100%;height:100%;object-fit:cover;border-radius:18px;display:block"><span class="fx-scan" aria-hidden="true" style="inset:10px"></span><span class="fx-hud" style="position:absolute;left:22px;top:22px;z-index:2"><span class="fx-dot"></span>System online</span>
 <figcaption class="mono glass" style="position:absolute;left:24px;bottom:24px;font-size:11px;border-radius:10px;padding:9px 12px">Residential · [Location] · [x] kWp</figcaption>
 </figure>
 </div>
@@ -76,11 +178,11 @@ a{color:#1553C7;text-decoration:none}a:hover{color:#C2410C}
 <!-- GRID-TIE vs HYBRID -->
 <section id="systems" style="padding:clamp(64px,8vw,100px) 0;background:#FFFFFF">
 <div class="wrap">
-<span class="mono" style="font-size:11px;color:#C2410C">[ 01 ] Choose your system</span>
-<h2 style="font-family:Sora;font-weight:700;font-size:clamp(32px,4vw,56px);line-height:1.02;letter-spacing:-.04em;margin:16px 0 40px">Grid-tie or <span style="border:2px solid #1E6FE8;border-radius:14px;padding:0 12px 4px">hybrid</span>?</h2>
+<span class="mono fx-eb" style="font-size:11px;color:#C2410C">[ 01 ] Choose your system</span>
+<h2 style="font-family:'Space Grotesk';font-weight:700;font-size:clamp(32px,4vw,56px);line-height:1.02;letter-spacing:-.04em;margin:16px 0 40px">Grid-tie or <span class="hl" style="border-radius:14px;padding:0 12px 4px">hybrid</span>?</h2>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px">
 <sc-for list="{{systems}}" as="sy" hint-placeholder-count="2"><div class="card" style="border-radius:24px;padding:30px;display:flex;flex-direction:column;gap:16px;border-color:{{sy.border}}">
-<div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:Sora;font-size:28px;font-weight:700">{{sy.t}}</span><span class="mono" style="font-size:11px;border-radius:999px;padding:7px 11px;background:{{sy.tagBg}};color:{{sy.tagFg}}">{{sy.tag}}</span></div>
+<div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Space Grotesk';font-size:28px;font-weight:700">{{sy.t}}</span><span class="mono" style="font-size:11px;border-radius:999px;padding:7px 11px;background:{{sy.tagBg}};color:{{sy.tagFg}}">{{sy.tag}}</span></div>
 <p style="margin:0;color:#4A5A80;line-height:1.6">{{sy.d}}</p>
 <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px">
 <sc-for list="{{sy.points}}" as="pt" hint-placeholder-count="4"><li style="display:flex;gap:10px;align-items:flex-start"><span style="flex:none;width:22px;height:22px;border-radius:50%;background:#2DB84C;color:#FFFFFF;display:grid;place-items:center;font-size:12px">✓</span><span>{{pt}}</span></li></sc-for>
@@ -94,19 +196,19 @@ a{color:#1553C7;text-decoration:none}a:hover{color:#C2410C}
 <!-- ENERGY FLOW -->
 <section id="how" style="padding:clamp(64px,8vw,100px) 0;background:#EAF2FF">
 <div class="wrap">
-<span class="mono" style="font-size:11px;color:#C2410C">[ 02 ] How a hybrid system works</span>
-<h2 style="font-family:Sora;font-weight:700;font-size:clamp(32px,4vw,56px);line-height:1.02;letter-spacing:-.04em;margin:16px 0 44px">Sun in. Savings out.</h2>
+<span class="mono fx-eb" style="font-size:11px;color:#C2410C">[ 02 ] How a hybrid system works</span>
+<h2 style="font-family:'Space Grotesk';font-weight:700;font-size:clamp(32px,4vw,56px);line-height:1.02;letter-spacing:-.04em;margin:16px 0 44px">Sun in. Savings out.</h2>
 <div class="flow">
-<div class="card" style="flex:1;border-radius:20px;padding:22px;text-align:center"><span style="display:block;width:56px;height:56px;margin:0 auto 12px;border-radius:50%;background:radial-gradient(circle,#FFE07A,#FF8A00)"></span><span style="font-family:Sora;font-weight:700">Sunlight</span><span style="display:block;font-size:13px;color:#4A5A80;margin-top:4px">4–5 peak hours a day</span></div>
+<div class="card" style="flex:1;border-radius:20px;padding:22px;text-align:center"><span style="display:block;width:56px;height:56px;margin:0 auto 12px;border-radius:50%;background:radial-gradient(circle,#FFE07A,#FF8A00)"></span><span style="font-family:'Space Grotesk';font-weight:700">Sunlight</span><span style="display:block;font-size:13px;color:#4A5A80;margin-top:4px">4–5 peak hours a day</span></div>
 <span class="arr" style="font-size:26px;color:#FF8A00" aria-hidden="true">→</span>
-<div class="card" style="flex:1;border-radius:20px;padding:22px;text-align:center"><span style="display:block;width:64px;height:44px;margin:0 auto 18px;border-radius:6px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.5) 0 1px,transparent 1px 25%),linear-gradient(160deg,#2F6BEA,#0D2A70)"></span><span style="font-family:Sora;font-weight:700">Solar panels</span><span style="display:block;font-size:13px;color:#4A5A80;margin-top:4px">DC power</span></div>
+<div class="card" style="flex:1;border-radius:20px;padding:22px;text-align:center"><span style="display:block;width:64px;height:44px;margin:0 auto 18px;border-radius:6px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.5) 0 1px,transparent 1px 25%),linear-gradient(160deg,#2F6BEA,#0D2A70)"></span><span style="font-family:'Space Grotesk';font-weight:700">Solar panels</span><span style="display:block;font-size:13px;color:#4A5A80;margin-top:4px">DC power</span></div>
 <span class="arr" style="font-size:26px;color:#FF8A00" aria-hidden="true">→</span>
-<div class="card" style="flex:1;border-radius:20px;padding:22px;text-align:center;border-color:#FF8A00"><span class="mono" style="display:grid;place-items:center;width:56px;height:56px;margin:0 auto 12px;border-radius:14px;background:#0B1F4D;color:#FFC93C;font-size:11px">INV</span><span style="font-family:Sora;font-weight:700">Hybrid inverter</span><span style="display:block;font-size:13px;color:#4A5A80;margin-top:4px">Routes power where it’s needed</span></div>
+<div class="card" style="flex:1;border-radius:20px;padding:22px;text-align:center;border-color:#FF8A00"><span class="mono" style="display:grid;place-items:center;width:56px;height:56px;margin:0 auto 12px;border-radius:14px;background:#0B1F4D;color:#FFC93C;font-size:11px">INV</span><span style="font-family:'Space Grotesk';font-weight:700">Hybrid inverter</span><span style="display:block;font-size:13px;color:#4A5A80;margin-top:4px">Routes power where it’s needed</span></div>
 <span class="arr" style="font-size:26px;color:#FF8A00" aria-hidden="true">→</span>
 <div style="flex:1.2;display:flex;flex-direction:column;gap:10px">
-<div class="card" style="border-radius:16px;padding:14px 16px;display:flex;justify-content:space-between"><span style="font-family:Sora;font-weight:700">1 · Your home</span><span class="mono" style="font-size:11px;color:#1E8A3A">Used first</span></div>
-<div class="card" style="border-radius:16px;padding:14px 16px;display:flex;justify-content:space-between"><span style="font-family:Sora;font-weight:700">2 · Battery</span><span class="mono" style="font-size:11px;color:#1553C7">Stored for night</span></div>
-<div class="card" style="border-radius:16px;padding:14px 16px;display:flex;justify-content:space-between"><span style="font-family:Sora;font-weight:700">3 · The grid</span><span class="mono" style="font-size:11px;color:#C2410C">Net-metering credit</span></div>
+<div class="card" style="border-radius:16px;padding:14px 16px;display:flex;justify-content:space-between"><span style="font-family:'Space Grotesk';font-weight:700">1 · Your home</span><span class="mono" style="font-size:11px;color:#1E8A3A">Used first</span></div>
+<div class="card" style="border-radius:16px;padding:14px 16px;display:flex;justify-content:space-between"><span style="font-family:'Space Grotesk';font-weight:700">2 · Battery</span><span class="mono" style="font-size:11px;color:#1553C7">Stored for night</span></div>
+<div class="card" style="border-radius:16px;padding:14px 16px;display:flex;justify-content:space-between"><span style="font-family:'Space Grotesk';font-weight:700">3 · The grid</span><span class="mono" style="font-size:11px;color:#C2410C">Net-metering credit</span></div>
 </div>
 </div>
 </div>
@@ -116,18 +218,18 @@ a{color:#1553C7;text-decoration:none}a:hover{color:#C2410C}
 <section id="packages" style="padding:clamp(64px,8vw,100px) 0;background:#FFFFFF">
 <div class="wrap">
 <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:40px">
-<div><span class="mono" style="font-size:11px;color:#C2410C">[ 03 ] Popular home systems</span>
-<h2 style="font-family:Sora;font-weight:700;font-size:clamp(32px,4vw,56px);line-height:1.02;letter-spacing:-.04em;margin:16px 0 0">Pick a size that fits your bill</h2></div>
+<div><span class="mono fx-eb" style="font-size:11px;color:#C2410C">[ 03 ] Popular home systems</span>
+<h2 style="font-family:'Space Grotesk';font-weight:700;font-size:clamp(32px,4vw,56px);line-height:1.02;letter-spacing:-.04em;margin:16px 0 0">Pick a size that fits your bill</h2></div>
 <p style="color:#4A5A80;max-width:380px;margin:0;line-height:1.6">Every system is custom-designed after a site survey. These are starting points.</p>
 </div>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px">
 <sc-for list="{{packages}}" as="pk" hint-placeholder-count="3"><div class="card" style="position:relative;border-radius:24px;padding:28px;display:flex;flex-direction:column;gap:14px;border-color:{{pk.border}};background:{{pk.bg}}">
 <span class="mono" style="font-size:11px;color:{{pk.tagColor}}">{{pk.tag}}</span>
-<span style="font-family:Sora;font-size:46px;font-weight:700;letter-spacing:-.04em">{{pk.kwp}}<span style="font-size:18px;color:#4A5A80"> kWp</span></span>
+<span style="font-family:'Space Grotesk';font-size:46px;font-weight:700;letter-spacing:-.04em">{{pk.kwp}}<span style="font-size:18px;color:#4A5A80"> kWp</span></span>
 <span style="color:#4A5A80">For bills around <b style="color:#0B1F4D">{{pk.bill}}</b>/month</span>
 <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
-<div style="background:#F7FAFF;border-radius:12px;padding:12px"><span class="mono" style="font-size:11px;color:#4A5A80;display:block">Panels</span><span style="font-family:Sora;font-weight:700">{{pk.panels}} × 620W</span></div>
-<div style="background:#F7FAFF;border-radius:12px;padding:12px"><span class="mono" style="font-size:11px;color:#4A5A80;display:block">Starts at</span><span style="font-family:Sora;font-weight:700">[₱ price]</span></div>
+<div style="background:#F7FAFF;border-radius:12px;padding:12px"><span class="mono" style="font-size:11px;color:#4A5A80;display:block">Panels</span><span style="font-family:'Space Grotesk';font-weight:700">{{pk.panels}} × 620W</span></div>
+<div style="background:#F7FAFF;border-radius:12px;padding:12px"><span class="mono" style="font-size:11px;color:#4A5A80;display:block">Starts at</span><span style="font-family:'Space Grotesk';font-weight:700">[₱ price]</span></div>
 </div>
 <a href="Contact.dc.html" class="mono" style="text-align:center;font-size:12px;border-radius:14px;padding:15px;margin-top:auto;color:{{pk.ctaFg}};background:{{pk.ctaBg}}">Get this quote →</a>
 </div></sc-for>
@@ -139,12 +241,12 @@ a{color:#1553C7;text-decoration:none}a:hover{color:#C2410C}
 <section id="net-metering" style="padding:clamp(64px,8vw,100px) 0;background:linear-gradient(180deg,#FFF6E6,#FFE9C4)">
 <div class="wrap split">
 <div style="display:flex;flex-direction:column;gap:18px">
-<span class="mono" style="font-size:11px;color:#C2410C">[ 04 ] Net metering</span>
-<h2 style="font-family:Sora;font-weight:700;font-size:clamp(32px,4vw,56px);line-height:1.02;letter-spacing:-.04em;margin:0">Get paid for extra sunshine</h2>
+<span class="mono fx-eb" style="font-size:11px;color:#C2410C">[ 04 ] Net metering</span>
+<h2 style="font-family:'Space Grotesk';font-weight:700;font-size:clamp(32px,4vw,56px);line-height:1.02;letter-spacing:-.04em;margin:0">Get paid for extra sunshine</h2>
 <p style="color:#4A5A80;line-height:1.65;margin:0;font-size:17px">Power you don’t use at midday flows to the grid and comes back as a credit on your bill. We handle the whole application.</p>
 </div>
 <div style="display:flex;flex-direction:column;gap:12px">
-<sc-for list="{{netSteps}}" as="ns" hint-placeholder-count="3"><div class="card" style="display:flex;gap:16px;align-items:center;border-radius:18px;padding:18px 20px"><span class="mono" style="flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#0B1F4D;color:#FFC93C;font-size:12px">{{ns.n}}</span><span><span style="font-family:Sora;font-weight:700;display:block">{{ns.t}}</span><span style="font-size:14px;color:#4A5A80">{{ns.d}}</span></span></div></sc-for>
+<sc-for list="{{netSteps}}" as="ns" hint-placeholder-count="3"><div class="card" style="display:flex;gap:16px;align-items:center;border-radius:18px;padding:18px 20px"><span class="mono" style="flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#0B1F4D;color:#FFC93C;font-size:12px">{{ns.n}}</span><span><span style="font-family:'Space Grotesk';font-weight:700;display:block">{{ns.t}}</span><span style="font-size:14px;color:#4A5A80">{{ns.d}}</span></span></div></sc-for>
 </div>
 </div>
 </section>
@@ -152,14 +254,14 @@ a{color:#1553C7;text-decoration:none}a:hover{color:#C2410C}
 <!-- PROJECTS + FAQ -->
 <section id="faq" style="padding:clamp(64px,8vw,100px) 0;background:#FFFFFF">
 <div class="wrap">
-<span class="mono" style="font-size:11px;color:#C2410C">[ 05 ] Homes we’ve powered</span>
+<span class="mono fx-eb" style="font-size:11px;color:#C2410C">[ 05 ] Homes we’ve powered</span>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:28px 0 80px">
 <sc-for list="{{projects}}" as="pr" hint-placeholder-count="3"><figure style="position:relative;margin:0;height:300px;border-radius:20px;overflow:hidden"><img src="{{pr.src}}" alt="{{pr.alt}}" style="width:100%;height:100%;object-fit:cover"><figcaption class="mono glass" style="position:absolute;left:12px;right:12px;bottom:12px;border-radius:10px;padding:10px 12px;font-size:11px;display:flex;justify-content:space-between"><span>[Location]</span><span style="color:#C2410C">[x] kWp</span></figcaption></figure></sc-for>
 </div>
 <div class="split" style="align-items:start">
-<h2 style="font-family:Sora;font-weight:700;font-size:clamp(32px,4vw,52px);line-height:1.02;letter-spacing:-.04em;margin:0">Home solar FAQ</h2>
+<h2 style="font-family:'Space Grotesk';font-weight:700;font-size:clamp(32px,4vw,52px);line-height:1.02;letter-spacing:-.04em;margin:0">Home solar FAQ</h2>
 <div class="card" style="border-radius:22px;padding:4px 24px">
-<sc-for list="{{faqs}}" as="q" hint-placeholder-count="4"><button style="width:100%;display:flex;justify-content:space-between;gap:12px;align-items:center;background:none;border:0;border-bottom:1px solid rgba(11,31,77,.1);color:#0B1F4D;font-family:Sora;font-size:17px;font-weight:700;text-align:left;padding:20px 0;min-height:44px">{{q}} <span style="color:#4A5A80">+</span></button></sc-for>
+<sc-for list="{{faqs}}" as="q" hint-placeholder-count="4"><button style="width:100%;display:flex;justify-content:space-between;gap:12px;align-items:center;background:none;border:0;border-bottom:1px solid rgba(11,31,77,.1);color:#0B1F4D;font-family:'Space Grotesk';font-size:17px;font-weight:700;text-align:left;padding:20px 0;min-height:44px">{{q}} <span style="color:#4A5A80">+</span></button></sc-for>
 </div>
 </div>
 </div>
@@ -167,18 +269,27 @@ a{color:#1553C7;text-decoration:none}a:hover{color:#C2410C}
 
 <section style="background:linear-gradient(120deg,#FFC93C,#FF8A00 45%,#FF5A1F)">
 <div class="wrap" style="display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding-top:64px;padding-bottom:64px">
-<h2 style="font-family:Sora;font-weight:800;font-size:clamp(32px,4vw,56px);line-height:1;letter-spacing:-.045em;margin:0;max-width:640px">Ready to power your home with the sun?</h2>
+<h2 style="font-family:'Space Grotesk';font-weight:800;font-size:clamp(32px,4vw,56px);line-height:1;letter-spacing:-.045em;margin:0;max-width:640px">Ready to power your home with the sun?</h2>
 <a href="Contact.dc.html" class="mono" style="font-size:13px;color:#FFFFFF;background:#0B1F4D;border-radius:14px;padding:19px 26px">Inquire now »</a>
 </div>
 </section>
-<footer class="mono" style="background:#071433;color:#C9D4F2;font-size:11px"><div class="wrap" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:28px;padding-bottom:28px"><span>© 2026 SunRyse Solar Services</span><span>[Phone] · [Email] · [Address]</span></div><div class="mbar-sp"></div></footer>
+<footer class="fx-foot">
+<div class="wrap fx-foot-grid">
+<div style="display:flex;flex-direction:column;gap:14px"><a href="Main.dc.html" class="fx-logo" aria-label="SunRyse Solar Services home"><svg width="38" height="38" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="fxlg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFC93C"></stop><stop offset="1" stop-color="#FF5A1F"></stop></linearGradient></defs><g stroke="url(#fxlg)" stroke-width="2.2" stroke-linecap="round"><line x1="20" y1="3" x2="20" y2="7"></line><line x1="8" y1="9" x2="10.6" y2="11.8"></line><line x1="32" y1="9" x2="29.4" y2="11.8"></line><line x1="3" y1="18" x2="6.6" y2="19"></line><line x1="37" y1="18" x2="33.4" y2="19"></line></g><path d="M8 22a12 12 0 0 1 24 0z" fill="url(#fxlg)"></path><path d="M10 23.5h22l-3.5 7H6.5z" fill="#1E6FE8"></path><path d="M14 23.5l-2.5 7M19.5 23.5l-2.5 7M25 23.5l-2.5 7M8.3 27h22" stroke="#FFFFFF" stroke-width=".9"></path><path d="M3 31c9 7 26 7 34-5" stroke="#2DB84C" stroke-width="2.5" fill="none" stroke-linecap="round"></path></svg><span class="fx-logo-w"><span class="fx-logo-n"><span class="sun-text">Sun</span><span class="sky-text">Ryse</span></span><span class="fx-logo-t">Solar Services</span></span></a><span class="fx-foot-desc" style="font-size:15px;color:#C9D4F2;line-height:1.6;max-width:320px">Design, installation and after-sales for solar homes, businesses and industry.</span><span class="fx-hud" style="align-self:flex-start"><span class="fx-dot"></span>Mon–Sat · [8:00 AM – 5:00 PM]</span><span class="mono" style="font-size:11px;color:#8E9CC2">[Contractor license no.]</span></div>
+<nav style="display:flex;flex-direction:column;font-size:15px" aria-label="Solutions"><span class="mono" style="font-size:11px;color:#8E9CC2;margin-bottom:6px">Solutions</span><a href="Solution.dc.html">Residential</a><a href="Solution.dc.html">Commercial</a><a href="Solution.dc.html">Industrial</a><a href="Calculator.dc.html">Savings calculator</a></nav>
+<nav style="display:flex;flex-direction:column;font-size:15px" aria-label="Company"><span class="mono" style="font-size:11px;color:#8E9CC2;margin-bottom:6px">Company</span><a href="About.dc.html">About</a><a href="Projects.dc.html">Projects</a><a href="Navigation.dc.html">Services</a><a href="Contact.dc.html">Get a quote</a></nav>
+<div style="display:flex;flex-direction:column;gap:10px;font-size:15px"><span class="mono" style="font-size:11px;color:#8E9CC2">Contact</span><a href="tel:" class="fx-flink">[Phone]</a><a href="mailto:" class="fx-flink">[Email]</a><span style="color:#E3E9F7">[Address]</span>
+<div style="display:flex;gap:8px;margin-top:4px"><a href="#" class="fx-soc" aria-label="Facebook"><svg class="ico" style="width:20px;height:20px" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a><a href="#" class="fx-soc" aria-label="Instagram"><svg class="ico" style="width:20px;height:20px" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><path d="M17.5 6.5h.01"></path></svg></a><a href="#" class="fx-soc" aria-label="Messenger"><svg class="ico" style="width:20px;height:20px" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg></a></div></div>
+</div>
+<div class="wrap"><div class="mono" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:44px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);font-size:11px;color:#8E9CC2"><span>© 2026 SunRyse Solar Services</span><span>Privacy · Terms</span></div></div>
+</footer>
 <nav class="mbar" aria-label="Quick actions" style="grid-template-columns:auto 1fr;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.95);border-top:1px solid rgba(11,31,77,.12);box-shadow:0 -10px 30px -12px rgba(11,31,77,.3)">
 <a href="tel:" aria-label="Call SunRyse" style="width:52px;min-height:50px;border-radius:14px;border:1px solid rgba(11,31,77,.18);display:grid;place-items:center;color:#0B1F4D"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>
-<a href="Contact.dc.html" class="mono" style="display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:14px;font-size:12px;color:#0B1F4D;background:linear-gradient(135deg,#FFC93C,#FF8A00 50%,#FF5A1F)">Get a home solar quote</a>
+<a href="Contact.dc.html" class="mono fx-sheen" style="display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:14px;font-size:12px;color:#0B1F4D;background:linear-gradient(135deg,#FFC93C,#FF8A00 50%,#FF5A1F)">Get a home solar quote</a>
 </nav>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":4300}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":4650}}'>
 class Component extends DCLogic {
   renderVals() {
     return {

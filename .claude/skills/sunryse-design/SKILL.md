@@ -3,7 +3,7 @@ name: sunryse-design
 description: SunRyse design system — brand tokens, typography, grid, component and responsive rules. Load before building or styling any UI, section, page or shadcn component in apps/web.
 ---
 
-# SunRyse design system (v2 · daylight)
+# SunRyse design system (v4 · daylight futurism)
 
 Concept: **"Daylight sunrise."** Bright, sunny pages straight from the brand sheet (sky blue → warm dawn),
 with ChainGPT-style structure on top: thin grid lines, mono labels, numbered sections, boxed headline words,
@@ -41,7 +41,8 @@ shadcn vars: `--background: day-50`, `--foreground: navy-900`, `--card: day-0`, 
 Cards: white, 1px line border, shadow `0 1px 2px rgb(11 31 77/.04), 0 12px 32px -12px rgb(11 31 77/.12)`.
 
 ## Type (next/font/google)
-- Display: **Sora** 600/700, tracking -0.035em. H1 `clamp(2.75rem, 6.5vw, 6.25rem)`.
+- Display: **Space Grotesk** 500–700, tracking -0.035em. H1 `clamp(2.75rem, 6.5vw, 6.25rem)` (hero ≤ 74px).
+- Logo wordmark only: **Sora** 800 (`--font-logo`). Never restyle the logo lockup (mark + SunRyse + SOLAR SERVICES).
 - Body: **Manrope** 400/500, 16–18px, line-height 1.6.
 - Labels/eyebrows/stats: **JetBrains Mono** 500, UPPERCASE, tracking 0.12em, 11–13px.
 
@@ -78,3 +79,15 @@ Shared: breadcrumb (mono), page hero (dawn gradient, photo in bracket frame), re
 - Module cards: glass on dark, category-colored icon tile (Systems #6FB0FF · Installation #FFB547 · Specialty #5BD97A),
   gradient border + arrow fill on hover. Grid always ends full: the sun-gradient CTA tile spans the leftover columns.
 - Phone: featured → snap row (86%), modules → compact rows (4 in "All" + "View all"). Animations stop with reduced motion.
+
+## Daylight futurism layer (v4, every screen)
+Source of truth for the boards: `docs/designs/fx-layer.css` (pasted identically into every board). In the app: utilities in `globals.css`.
+- **Logo**: one lockup everywhere (sun mark + Sun/Ryse + SOLAR SERVICES). Reversed on dark only via lighter sky gradient. Never redraw it.
+- **Header**: one glass bar on every page (logo · Solutions ▾ · Services ▾ · Calculator · Projects · About · Learn · Call · Get a quote); current page = `aria-current` (orange text + glowing underline).
+- **Footer**: one 4-column navy footer with glowing top hairline; phone = brand row, 2 link columns, contact row.
+- **Eyebrows** get a pulsing dot; **one headline word** gets the glowing frame (`hl`, sun variant `hl-sun`).
+- **Cards**: glass-white; linked cards lift 3px and show the gradient ring (`fx-ring`).
+- **Status chips** (`fx-hud` + `fx-dot`): "System online", "Live estimate", "Generating · 4.2 kW". Use sparingly, 1–2 per section.
+- **Dark accents** for rhythm: bands (`fx-dark`: Services, Impact, inner CTA) and screens inside light sections (`fx-screen`: charts, spec sheets). Never two dark bands in a row.
+- **Photos in bracket frames** get a slow scan line + "System online" chip.
+- **Motion** is ambient and slow (pulse dots, scan lines, flowing chart dashes, marquee, orbit rings) and stops with reduced motion.

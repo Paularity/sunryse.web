@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { JetBrains_Mono, Manrope, Sora } from "next/font/google";
+import { JetBrains_Mono, Manrope, Sora, Space_Grotesk } from "next/font/google";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
-const sora = Sora({ variable: "--font-sora", subsets: ["latin"], weight: ["400", "600", "700", "800"] });
+// Headlines: Space Grotesk. Sora 800 is kept only for the logo wordmark.
+const spaceGrotesk = Space_Grotesk({ variable: "--font-space-grotesk", subsets: ["latin"], weight: ["500", "600", "700"] });
+const sora = Sora({ variable: "--font-sora", subsets: ["latin"], weight: ["800"] });
 const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"] });
 const jetbrains = JetBrains_Mono({ variable: "--font-jetbrains", subsets: ["latin"], weight: ["500"] });
 
@@ -25,7 +27,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${sora.variable} ${manrope.variable} ${jetbrains.variable} h-full`}>
+    <html lang="en" className={`${spaceGrotesk.variable} ${sora.variable} ${manrope.variable} ${jetbrains.variable} h-full`}>
       <body className="flex min-h-full flex-col">
         <TooltipProvider>
           <SmoothScroll />

@@ -71,3 +71,12 @@ Home @768: 12,278px, hero alone ≈ 1,450px.
 - Desktop hero now fits 1440×900 (875px) with the panel field visible; tablet hero 1,450 → 755px.
 - Calculator: presets + ₱ field + sticky results bar on phones; interaction verified (₱20k → 9.0 kWp, ₱12,319/mo).
 - Contact: 3-step flow verified end-to-end, inline validation for name / PH mobile / consent.
+
+## v4 — daylight futurism + consistency pass
+- One shared layer on all 11 boards; the logo, header and footer are now identical everywhere (inner pages used a text-only logo, a plain white header and a one-line footer).
+- Headlines: Space Grotesk replaces Sora (more technical, slightly narrower); the logo keeps Sora 800.
+- Home: glass benefits dock over the panel field, moving brand rail, working Residential/Commercial/Industrial tabs, energy-track process, savings console, dark price chart, impact band with icon rings, HUD project tiles, glass reviews, warranty spec sheet, glass FAQ, CTA with grid floor.
+- Phone board now renders the same source as Home (no more drift between the two).
+- Bugs fixed during testing: orange status dot inherited the hero sun size (class clash), footer wordmark lost its gradient, two boards had invisible icons (no icon base style), CTA content was 40px off the grid, calculator slider and bill input under 44px.
+- Test (automated, every board at 1440 / 768 / 390): horizontal overflow 0, text < 11px 0 (logo tagline exempt), tap targets < 40px 0, invisible icons 0, broken images 0, logo present in header and footer. Calculator (₱20k → 9.0 kWp, ₱12,319/mo), Contact validation and Solutions tabs verified by clicking.
+- Heights @390: Home 12,970 · About 7,382 · Service 5,899 · Solution 8,011 · Projects 4,964 · Contact 2,897 · Calculator 2,959.
