@@ -8,6 +8,7 @@ export type SolutionFlowNode = { kind: "sun" | "panel" | "inverter"; title: stri
 
 export type SolutionDetails = {
   heading: string;
+  lead: string;
   primaryCta: Link;
   secondaryCta: Link;
   stats: { label: string; value: string; tone: Tone }[];
@@ -33,9 +34,8 @@ export type SolutionDetails = {
     items: { tag: string; kwp: string; bill: string; panels: string; price: string; featured: boolean }[];
   };
   details: { eyebrow: string; heading: string; lead: string; steps: { title: string; description: string }[] };
-  benefits: { eyebrow: string; heading: string };
-  faq: { eyebrow: string; heading: string };
-  reviews: { eyebrow: string; heading: string };
+  projects: { eyebrow: string; items: { src: string; alt: string; location: string; kwp: string }[] };
+  faq: { heading: string; questions: string[] };
   cta: { heading: string; label: string };
 };
 

@@ -42,7 +42,7 @@ type Field = "name" | "phone" | "email" | "consent";
 type Errors = Partial<Record<Field, string>>;
 
 const fieldCls =
-  "h-12 rounded-[14px] border-navy-900/20 bg-white px-3.5 text-base text-navy-900 md:text-base placeholder:text-ink-muted/70";
+  "h-auto min-h-[52px] rounded-xl border-navy-900/[.18] bg-day-50 p-3.5 text-[16px] text-navy-900 md:text-[16px] placeholder:text-ink-muted/70";
 const lblCls = "font-label text-[11px] tracking-[0.12em] text-ink-muted uppercase";
 const focusRing = "outline-none focus-visible:ring-3 focus-visible:ring-sky-600/40";
 
@@ -160,7 +160,7 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
       onSubmit={onSubmit}
       noValidate
       aria-label={t(ui, "cfAria")}
-      className="glass-card flex min-w-0 flex-col gap-6 rounded-[28px] p-5 sm:p-8"
+      className="glass-card flex min-w-0 flex-col gap-6 rounded-[28px] p-8 max-[640px]:p-5"
     >
       <div className="flex flex-col gap-2.5">
         <div className="flex justify-between font-label text-[11px] tracking-[0.12em] text-ink-muted uppercase">
@@ -183,14 +183,14 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
       </div>
 
       {step === 1 ? (
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-[22px]">
           <fieldset className="m-0 flex flex-col gap-2.5 border-0 p-0">
             <legend className="mb-3 p-0">
               <h2 ref={headingRef} tabIndex={-1} className="font-display text-[22px] font-bold outline-none">
                 {t(ui, "cfPropertyQ")}
               </h2>
             </legend>
-            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-2.5">
               {content.properties.map((p) => {
                 const on = segment === p.value;
                 return (
@@ -200,22 +200,20 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
                     aria-pressed={on}
                     onClick={() => setSegment(p.value)}
                     className={cn(
-                      "flex min-h-[88px] items-start gap-3 rounded-2xl border-2 p-4 text-left text-navy-900 sm:min-h-[110px] sm:flex-col sm:gap-2",
+                      "flex min-h-[110px] flex-col items-start gap-2 rounded-2xl border-2 p-4 text-left text-navy-900",
                       focusRing,
                       on ? "border-sun-500 bg-dawn-50" : "border-navy-900/10 bg-white hover:border-navy-900/30",
                     )}
                   >
                     <Icon name={p.icon} className={cn("size-[26px]", on ? "text-sun-700" : "text-sky-600")} />
-                    <span className="flex flex-col gap-0.5">
-                      <span className="font-display text-base font-bold">{p.label}</span>
-                      <span className="text-[13px] text-ink-muted">{p.description}</span>
-                    </span>
+                    <span className="font-display text-base font-bold">{p.label}</span>
+                    <span className="text-[13px] text-ink-muted">{p.description}</span>
                   </button>
                 );
               })}
             </div>
           </fieldset>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-2 gap-3 max-[640px]:grid-cols-1">
             <div className="flex flex-col gap-1.5">
               <Label htmlFor={`${uid}-bill`} className={lblCls}>
                 {t(ui, "cfBillLabel")}
@@ -250,14 +248,14 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
       ) : null}
 
       {step === 2 ? (
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-[22px]">
           <fieldset className="m-0 flex flex-col gap-2.5 border-0 p-0">
             <legend className="mb-3 p-0">
               <h2 ref={headingRef} tabIndex={-1} className="font-display text-[22px] font-bold outline-none">
                 {t(ui, "cfRoofTitle")}
               </h2>
             </legend>
-            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] gap-2.5">
               {content.roofs.map((r) => {
                 const on = roof === r.value;
                 return (
@@ -285,7 +283,7 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
             <Input
               id={`${uid}-city`}
               autoComplete="address-level2"
-              placeholder={t(ui, "cfCityPlaceholder")}
+              placeholder={t(ui, "cfCityPh")}
               value={city}
               onChange={(e) => setCity(e.target.value)}
               maxLength={240}
@@ -302,7 +300,7 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
       ) : null}
 
       {step === 3 ? (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3.5">
           <h2 ref={headingRef} tabIndex={-1} className="font-display text-[22px] font-bold outline-none">
             {t(ui, "cfReachTitle")}
           </h2>
@@ -318,8 +316,8 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
               className={fieldCls}
             />
           </TextField>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <TextField id={`${uid}-phone`} label={t(ui, "formMobile")} error={show("phone")} hint={t(ui, "cfMobileHint")}>
+          <div className="grid grid-cols-2 gap-3 max-[640px]:grid-cols-1">
+            <TextField id={`${uid}-phone`} label={t(ui, "formMobile")} error={show("phone")}>
               <Input
                 id={`${uid}-phone`}
                 type="tel"
@@ -357,7 +355,7 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               maxLength={1500}
-              className="min-h-24 rounded-[14px] border-navy-900/20 bg-white px-3.5 py-3 text-base text-navy-900 md:text-base"
+              className={cn(fieldCls, "field-sizing-fixed resize-y")}
             />
           </div>
           <div className="flex flex-col gap-1.5">
@@ -368,7 +366,7 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
                 onCheckedChange={(v) => setConsent(v === true)}
                 aria-invalid={!!show("consent")}
                 aria-describedby={show("consent") ? `${uid}-consent-err` : undefined}
-                className="mt-0.5 size-6 rounded-md border-navy-900/40 bg-white"
+                className="mt-px size-[22px] rounded-md border-navy-900/40 bg-white"
               />
               <span>{content.consentLabel}</span>
             </label>
@@ -387,16 +385,6 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
             {t(ui, "cfThanks", { name: firstName })}
           </h2>
           <p className="m-0 max-w-[420px] leading-relaxed text-ink-muted">{content.successBody.replace("{phone}", phone.trim())}</p>
-          <ol className="m-0 mt-2 flex list-none flex-col gap-2.5 p-0 text-left">
-            {content.nextSteps.map((ns, i) => (
-              <li key={ns} className="flex items-center gap-3 text-[15px]">
-                <span className="grid size-[34px] flex-none place-items-center rounded-full border-2 border-sun-500 font-label text-[11px] text-sun-700">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                {ns}
-              </li>
-            ))}
-          </ol>
           <div className="mt-2 flex flex-wrap justify-center gap-2">
             <Button asChild variant="navy" size="xl">
               <a href={messengerUrl} target="_blank" rel="noopener noreferrer">
@@ -410,10 +398,10 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
         </div>
       ) : (
         <div className="flex justify-between gap-2.5 border-t border-navy-900/10 pt-[18px]">
-          <Button type="button" variant="line" size="xl" disabled={step === 1} onClick={() => setStep((s) => Math.max(1, s - 1))} className="min-h-12 px-5">
+          <Button type="button" variant="line" size="xl" disabled={step === 1} onClick={() => setStep((s) => Math.max(1, s - 1))} className="min-h-[52px] rounded-[14px] px-5">
             {t(ui, "cfBack")}
           </Button>
-          <Button type="submit" variant={last ? "sun" : "navy"} size="xl" disabled={sending} className="max-w-[280px] min-h-12 flex-1 px-5">
+          <Button type="submit" variant={last ? "sun" : "navy"} size="xl" disabled={sending} className="max-w-[280px] min-h-[52px] flex-1 rounded-[14px] px-[22px]">
             {last ? (sending ? t(ui, "formSending") : t(ui, "cfSend")) : t(ui, "cfContinue")}
           </Button>
         </div>

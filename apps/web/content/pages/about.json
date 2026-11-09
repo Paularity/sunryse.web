@@ -24,7 +24,7 @@
   ],
   "timeline": {
     "eyebrow": "[ 02 ] Milestones",
-    "heading": "Rising, ^year by year^",
+    "heading": "Rising, year by year",
     "items": [
       { "year": "[YYYY]", "title": "SunRyse founded", "description": "[First residential installs]", "tone": "sun" },
       { "year": "[YYYY]", "title": "First commercial project", "description": "[Short milestone note]", "tone": "amber" },
@@ -34,14 +34,14 @@
   },
   "team": {
     "eyebrow": "[ 03 ] The team",
-    "heading": "People behind the *panels*",
+    "heading": "People behind the panels",
     "lead": "Licensed electricians, engineers and installers — trained, insured and local.",
     "photoLabel": "Team photo placeholder",
     "members": [
-      { "initial": "A", "name": "[Full name]", "role": "[Founder & CEO]", "tone": "sun" },
-      { "initial": "B", "name": "[Full name]", "role": "[Lead electrical engineer]", "tone": "sky" },
-      { "initial": "C", "name": "[Full name]", "role": "[Installation lead]", "tone": "leaf" },
-      { "initial": "D", "name": "[Full name]", "role": "[Customer success]", "tone": "flame" }
+      { "initial": "A", "name": "[Full name]", "role": "Founder & CEO", "tone": "sun" },
+      { "initial": "B", "name": "[Full name]", "role": "Lead electrical engineer", "tone": "sky" },
+      { "initial": "C", "name": "[Full name]", "role": "Installation lead", "tone": "leaf" },
+      { "initial": "D", "name": "[Full name]", "role": "Customer success", "tone": "flame" }
     ]
   },
   "credentials": {
@@ -52,6 +52,6 @@
       { "title": "[Business registration]", "detail": "[DTI / SEC no.]" }
     ]
   },
-  "brands": { "eyebrow": "[ 05 ] Brands we install" },
-  "cta": { "heading": "Let’s light up your roof *together.*", "label": "Talk to us", "href": "/contact" }
+  "brands": { "eyebrow": "[ 05 ] Brand partners" },
+  "cta": { "heading": "Let’s light up your roof together.", "label": "Talk to us", "href": "/contact" }
 }

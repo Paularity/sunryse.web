@@ -26,6 +26,9 @@
   --color-sun-800: #b45309;
   --color-ink-soft: #a9b8da;
   --color-ink-glow: #cfe0ff;
+  --color-ink-dim: #8e9cc2;
+  --color-ink-pale: #c9d4f2;
+  --color-ink-light: #e3e9f7;
   --color-glow-sky: #6fb0ff;
   --color-glow-amber: #ffb547;
   --color-glow-leaf: #5bd97a;
@@ -469,11 +472,9 @@
   width: 100%;
   max-width: 1320px;
   margin-inline: auto;
+  /* Design: 16px gutter on phones (≤640px), 40px from 641px up */
   padding-inline: 1rem;
-  @media (width >= 40rem) {
-    padding-inline: 1.5rem;
-  }
-  @media (width >= 64rem) {
+  @media (width > 40rem) {
     padding-inline: 2.5rem;
   }
 }

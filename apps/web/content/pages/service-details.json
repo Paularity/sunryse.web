@@ -1,14 +1,38 @@
 {
   "defaults": {
     "systems": {
-      "primaryCta": { "label": "Get a quote", "href": "/contact" },
-      "secondaryCta": { "label": "Size my system", "href": "/calculator" },
-      "image": { "src": "/images/installs/hybrid-inverter-battery.jpg", "alt": "Hybrid inverter and battery installed by SunRyse" },
+      "primaryCta": {
+        "label": "Get a quote",
+        "href": "/contact"
+      },
+      "secondaryCta": {
+        "label": "Size my system",
+        "href": "/calculator"
+      },
+      "image": {
+        "src": "/images/installs/hybrid-inverter-battery.jpg",
+        "alt": "Hybrid inverter and battery installed by SunRyse"
+      },
       "imageCaption": "{title} · [Location]",
       "benefits": [
-        { "title": "Sized to your load", "description": "We start from your bills and appliances, not a one-size-fits-all package.", "icon": "gauge", "tone": "sky" },
-        { "title": "Quality equipment", "description": "Panels, inverters and batteries from the brands listed on this page.", "icon": "shield-check", "tone": "navy" },
-        { "title": "Monitored and supported", "description": "Track performance in the app, with our after-sales team behind it.", "icon": "activity", "tone": "leaf" }
+        {
+          "title": "Sized to your load",
+          "description": "We start from your bills and appliances, not a one-size-fits-all package.",
+          "icon": "gauge",
+          "tone": "sky"
+        },
+        {
+          "title": "Quality equipment",
+          "description": "Panels, inverters and batteries from the brands listed on this page.",
+          "icon": "shield-check",
+          "tone": "navy"
+        },
+        {
+          "title": "Monitored and supported",
+          "description": "Track performance in the app, with our after-sales team behind it.",
+          "icon": "activity",
+          "tone": "leaf"
+        }
       ],
       "included": {
         "eyebrow": "[ 01 ] What’s included",
@@ -22,26 +46,70 @@
           "Warranty registration and after-sales support"
         ]
       },
-      "brandCategories": ["panel", "inverter", "battery"],
+      "brandCategories": [
+        "panel",
+        "inverter",
+        "battery"
+      ],
       "brandsEyebrow": "[ 02 ] Brands we install",
       "stepsEyebrow": "[ 03 ] How it works",
       "steps": [
-        { "title": "Survey", "description": "We visit, measure and review your electricity use.", "tone": "sun" },
-        { "title": "Design & quote", "description": "A system sized to that load with a clear quote.", "tone": "amber" },
-        { "title": "Installation", "description": "Mounted, wired and tested by our own crew.", "tone": "sky" },
-        { "title": "Monitoring", "description": "Track output in the app, with support when you need it.", "tone": "leaf" }
+        {
+          "title": "Survey",
+          "description": "We visit, measure and review your electricity use.",
+          "tone": "sun"
+        },
+        {
+          "title": "Design & quote",
+          "description": "A system sized to that load with a clear quote.",
+          "tone": "amber"
+        },
+        {
+          "title": "Installation",
+          "description": "Mounted, wired and tested by our own crew.",
+          "tone": "sky"
+        },
+        {
+          "title": "Monitoring",
+          "description": "Track output in the app, with support when you need it.",
+          "tone": "leaf"
+        }
       ],
       "ctaHeading": "Ready to talk about {title}?"
     },
     "installation": {
-      "primaryCta": { "label": "Get a quote", "href": "/contact" },
-      "secondaryCta": { "label": "Book a site visit", "href": "/contact" },
-      "image": { "src": "/images/projects/residential-closeup.jpg", "alt": "Solar installation work by the SunRyse crew" },
+      "primaryCta": {
+        "label": "Get a quote",
+        "href": "/contact"
+      },
+      "secondaryCta": {
+        "label": "Book a site visit",
+        "href": "/contact"
+      },
+      "image": {
+        "src": "/images/projects/residential-closeup.jpg",
+        "alt": "Solar installation work by the SunRyse crew"
+      },
       "imageCaption": "{title} · [Location]",
       "benefits": [
-        { "title": "Our own crew", "description": "Installed by SunRyse technicians, not handed off to strangers.", "icon": "users", "tone": "sky" },
-        { "title": "Safety first", "description": "Proper protections, grounding and cabling on every job.", "icon": "shield-check", "tone": "leaf" },
-        { "title": "Tested and documented", "description": "Every install is commissioned and handed over with documentation.", "icon": "clipboard-check", "tone": "amber" }
+        {
+          "title": "Our own crew",
+          "description": "Installed by SunRyse technicians, not handed off to strangers.",
+          "icon": "users",
+          "tone": "sky"
+        },
+        {
+          "title": "Safety first",
+          "description": "Proper protections, grounding and cabling on every job.",
+          "icon": "shield-check",
+          "tone": "leaf"
+        },
+        {
+          "title": "Tested and documented",
+          "description": "Every install is commissioned and handed over with documentation.",
+          "icon": "clipboard-check",
+          "tone": "amber"
+        }
       ],
       "included": {
         "eyebrow": "[ 01 ] What’s included",
@@ -55,26 +123,69 @@
           "After-sales support"
         ]
       },
-      "brandCategories": ["panel", "inverter"],
+      "brandCategories": [
+        "panel",
+        "inverter"
+      ],
       "brandsEyebrow": "[ 02 ] Equipment we install",
       "stepsEyebrow": "[ 03 ] How it works",
       "steps": [
-        { "title": "Site check", "description": "We confirm access, structure and cable routes.", "tone": "sun" },
-        { "title": "Schedule", "description": "A clear installation date and scope.", "tone": "amber" },
-        { "title": "Install & test", "description": "Work completed and verified on site.", "tone": "sky" },
-        { "title": "Handover", "description": "Walkthrough, documents and support contacts.", "tone": "leaf" }
+        {
+          "title": "Site check",
+          "description": "We confirm access, structure and cable routes.",
+          "tone": "sun"
+        },
+        {
+          "title": "Schedule",
+          "description": "A clear installation date and scope.",
+          "tone": "amber"
+        },
+        {
+          "title": "Install & test",
+          "description": "Work completed and verified on site.",
+          "tone": "sky"
+        },
+        {
+          "title": "Handover",
+          "description": "Walkthrough, documents and support contacts.",
+          "tone": "leaf"
+        }
       ],
       "ctaHeading": "Need {title}? Let’s book a visit."
     },
     "specialty": {
-      "primaryCta": { "label": "Get a quote", "href": "/contact" },
-      "secondaryCta": { "label": "Ask a question", "href": "/contact" },
-      "image": { "src": "/images/projects/residential-hillside.jpg", "alt": "Solar installation on open ground by SunRyse" },
+      "primaryCta": {
+        "label": "Get a quote",
+        "href": "/contact"
+      },
+      "secondaryCta": {
+        "label": "Ask a question",
+        "href": "/contact"
+      },
+      "image": {
+        "src": "/images/projects/residential-hillside.jpg",
+        "alt": "Solar installation on open ground by SunRyse"
+      },
       "imageCaption": "{title} · [Location]",
       "benefits": [
-        { "title": "Runs off-grid", "description": "Powered by the sun, so it works where grid power doesn’t reach.", "icon": "sun", "tone": "sun" },
-        { "title": "Low maintenance", "description": "Simple systems with little to look after.", "icon": "wrench", "tone": "leaf" },
-        { "title": "Designed for the site", "description": "Specified around your location, use and daily need.", "icon": "clipboard-check", "tone": "sky" }
+        {
+          "title": "Runs off-grid",
+          "description": "Powered by the sun, so it works where grid power doesn’t reach.",
+          "icon": "sun",
+          "tone": "sun"
+        },
+        {
+          "title": "Low maintenance",
+          "description": "Simple systems with little to look after.",
+          "icon": "wrench",
+          "tone": "leaf"
+        },
+        {
+          "title": "Designed for the site",
+          "description": "Specified around your location, use and daily need.",
+          "icon": "clipboard-check",
+          "tone": "sky"
+        }
       ],
       "included": {
         "eyebrow": "[ 01 ] What’s included",
@@ -92,10 +203,26 @@
       "brandsEyebrow": "[ 02 ] Equipment",
       "stepsEyebrow": "[ 02 ] How it works",
       "steps": [
-        { "title": "Requirements", "description": "We learn what you need and where it will run.", "tone": "sun" },
-        { "title": "Specification & quote", "description": "Components sized to the job.", "tone": "amber" },
-        { "title": "Installation", "description": "Installed and tested on site.", "tone": "sky" },
-        { "title": "Support", "description": "We stay available after handover.", "tone": "leaf" }
+        {
+          "title": "Requirements",
+          "description": "We learn what you need and where it will run.",
+          "tone": "sun"
+        },
+        {
+          "title": "Specification & quote",
+          "description": "Components sized to the job.",
+          "tone": "amber"
+        },
+        {
+          "title": "Installation",
+          "description": "Installed and tested on site.",
+          "tone": "sky"
+        },
+        {
+          "title": "Support",
+          "description": "We stay available after handover.",
+          "tone": "leaf"
+        }
       ],
       "ctaHeading": "Tell us about your {title} project."
     }
@@ -103,14 +230,40 @@
   "services": {
     "battery-storage-solutions": {
       "heroTitle": "Battery storage ^solutions^",
-      "primaryCta": { "label": "Get a battery quote", "href": "/contact" },
-      "secondaryCta": { "label": "Size my system", "href": "/calculator" },
-      "image": { "src": "/images/installs/battery-wall.jpg", "alt": "Wall-mounted battery and inverter installation by SunRyse" },
+      "heroSummary": "Store the sun you make at midday and use it at night — or when the grid goes down. Lithium batteries sized for your essentials or your whole home.",
+      "breadcrumbLabel": "Battery storage",
+      "primaryCta": {
+        "label": "Get a battery quote",
+        "href": "/contact"
+      },
+      "secondaryCta": {
+        "label": "Size my system",
+        "href": "/calculator"
+      },
+      "image": {
+        "src": "/images/installs/battery-wall.jpg",
+        "alt": "Wall-mounted battery and inverter installation by SunRyse"
+      },
       "imageCaption": "Battery + inverter · [Location]",
       "benefits": [
-        { "title": "Backup in brownouts", "description": "Switches over automatically so lights, fans, Wi-Fi and the fridge keep running.", "icon": "zap", "tone": "sky" },
-        { "title": "Solar at night", "description": "Use the energy you stored during the day instead of buying it from the grid.", "icon": "battery", "tone": "navy" },
-        { "title": "Expandable", "description": "Start with one module and add capacity as your needs grow.", "icon": "plug", "tone": "leaf" }
+        {
+          "title": "Backup in brownouts",
+          "description": "Switches over automatically so lights, fans, Wi-Fi and the fridge keep running.",
+          "icon": "zap",
+          "tone": "sky"
+        },
+        {
+          "title": "Solar at night",
+          "description": "Use the energy you stored during the day instead of buying it from the grid.",
+          "icon": "battery",
+          "tone": "navy"
+        },
+        {
+          "title": "Expandable",
+          "description": "Start with one module and add capacity as your needs grow.",
+          "icon": "plug",
+          "tone": "leaf"
+        }
       ],
       "included": {
         "eyebrow": "[ 01 ] What’s included",
@@ -126,59 +279,154 @@
       },
       "sizing": {
         "title": "How much battery do I need?",
-        "columns": ["Backup goal", "Capacity", "Runs for*"],
+        "columns": [
+          "Backup goal",
+          "Capacity",
+          "Runs for*"
+        ],
         "rows": [
-          { "goal": "Essentials", "detail": "Lights, fans, Wi-Fi, fridge", "capacity": "5 kWh", "runtime": "≈ 8–12 hrs" },
-          { "goal": "Most of the home", "detail": "Plus TV, appliances, 1 aircon", "capacity": "10 kWh", "runtime": "≈ 6–10 hrs" },
-          { "goal": "Whole home / small business", "detail": "Multiple aircons, tools", "capacity": "15–20+ kWh", "runtime": "≈ 5–8 hrs" }
+          {
+            "goal": "Essentials",
+            "detail": "Lights, fans, Wi-Fi, fridge",
+            "capacity": "5 kWh",
+            "runtime": "≈ 8–12 hrs"
+          },
+          {
+            "goal": "Most of the home",
+            "detail": "Plus TV, appliances, 1 aircon",
+            "capacity": "10 kWh",
+            "runtime": "≈ 6–10 hrs"
+          },
+          {
+            "goal": "Whole home / small business",
+            "detail": "Multiple aircons, tools",
+            "capacity": "15–20+ kWh",
+            "runtime": "≈ 5–8 hrs"
+          }
         ],
         "footnote": "*Typical estimates — confirmed after load survey"
       },
-      "brandCategories": ["battery", "inverter"],
+      "brandCategories": [
+        "battery",
+        "inverter"
+      ],
       "brandsEyebrow": "[ 02 ] Batteries & inverters we install",
       "stepsEyebrow": "[ 03 ] How it works",
       "steps": [
-        { "title": "Load survey", "description": "We list what you want backed up and for how long.", "tone": "sun" },
-        { "title": "Design & quote", "description": "Battery and inverter sized to that load.", "tone": "amber" },
-        { "title": "Installation", "description": "Wall-mounted, wired and tested in one visit.", "tone": "sky" },
-        { "title": "Monitoring", "description": "Track charge and usage in the app.", "tone": "leaf" }
+        {
+          "title": "Load survey",
+          "description": "We list what you want backed up and for how long.",
+          "tone": "sun"
+        },
+        {
+          "title": "Design & quote",
+          "description": "Battery and inverter sized to that load.",
+          "tone": "amber"
+        },
+        {
+          "title": "Installation",
+          "description": "Wall-mounted, wired and tested in one visit.",
+          "tone": "sky"
+        },
+        {
+          "title": "Monitoring",
+          "description": "Track charge and usage in the app.",
+          "tone": "leaf"
+        }
       ],
-      "ctaHeading": "Never sit through a brownout again."
+      "ctaHeading": "Never sit through a brownout again.",
+      "relatedSlugs": [
+        "hybrid-and-grid-tie-systems",
+        "electrical-works-and-protections",
+        "maintenance-and-troubleshooting"
+      ],
+      "brandNames": [
+        "Dyness",
+        "Pylontech",
+        "SRNE",
+        "Deye",
+        "Solis"
+      ]
     },
     "hybrid-and-grid-tie-systems": {
-      "image": { "src": "/images/installs/dual-inverters.jpg", "alt": "Two inverters installed side by side by SunRyse" },
-      "brandCategories": ["inverter", "panel", "battery"]
+      "image": {
+        "src": "/images/installs/dual-inverters.jpg",
+        "alt": "Two inverters installed side by side by SunRyse"
+      },
+      "brandCategories": [
+        "inverter",
+        "panel",
+        "battery"
+      ]
     },
     "solar-panel-installation": {
-      "image": { "src": "/images/projects/residential-aerial.jpg", "alt": "Rooftop solar panels installed by SunRyse, seen from above" },
-      "brandCategories": ["panel"]
+      "image": {
+        "src": "/images/projects/residential-aerial.jpg",
+        "alt": "Rooftop solar panels installed by SunRyse, seen from above"
+      },
+      "brandCategories": [
+        "panel"
+      ]
     },
     "electrical-works-and-protections": {
-      "image": { "src": "/images/installs/inverter-switchgear.jpg", "alt": "Inverter and switchgear wiring by SunRyse" },
+      "image": {
+        "src": "/images/installs/inverter-switchgear.jpg",
+        "alt": "Inverter and switchgear wiring by SunRyse"
+      },
       "brandCategories": []
     },
     "mounting-structure-installation": {
-      "image": { "src": "/images/projects/residential-red-roof.jpg", "alt": "Solar panels on mounting rails over a red roof" },
+      "image": {
+        "src": "/images/projects/residential-red-roof.jpg",
+        "alt": "Solar panels on mounting rails over a red roof"
+      },
       "brandCategories": []
     },
     "maintenance-and-troubleshooting": {
-      "image": { "src": "/images/installs/inverter-display.jpg", "alt": "Inverter display showing live system data" },
-      "brandCategories": ["inverter"]
+      "image": {
+        "src": "/images/installs/inverter-display.jpg",
+        "alt": "Inverter display showing live system data"
+      },
+      "brandCategories": [
+        "inverter"
+      ]
     },
     "residential-solar-solutions": {
-      "image": { "src": "/images/projects/residential-blue-house.jpg", "alt": "Rooftop solar installation on a residential home" },
-      "brandCategories": ["panel", "inverter", "battery"]
+      "image": {
+        "src": "/images/projects/residential-blue-house.jpg",
+        "alt": "Rooftop solar installation on a residential home"
+      },
+      "brandCategories": [
+        "panel",
+        "inverter",
+        "battery"
+      ]
     },
     "commercial-solar-solutions": {
-      "image": { "src": "/images/projects/commercial-rooftop.jpg", "alt": "Commercial rooftop solar array installed by SunRyse" },
-      "brandCategories": ["panel", "inverter"]
+      "image": {
+        "src": "/images/projects/commercial-rooftop.jpg",
+        "alt": "Commercial rooftop solar array installed by SunRyse"
+      },
+      "brandCategories": [
+        "panel",
+        "inverter"
+      ]
     },
     "industrial-solar-solutions": {
-      "image": { "src": "/images/projects/commercial-facility.jpg", "alt": "Solar array at a large commercial facility" },
-      "brandCategories": ["panel", "inverter"]
+      "image": {
+        "src": "/images/projects/commercial-facility.jpg",
+        "alt": "Solar array at a large commercial facility"
+      },
+      "brandCategories": [
+        "panel",
+        "inverter"
+      ]
     },
     "ev-charger-installation": {
-      "image": { "src": "/images/installs/inverter-switchgear.jpg", "alt": "Electrical installation work by SunRyse" },
+      "image": {
+        "src": "/images/installs/inverter-switchgear.jpg",
+        "alt": "Electrical installation work by SunRyse"
+      },
       "brandCategories": []
     }
   }

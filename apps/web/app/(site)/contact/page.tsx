@@ -10,6 +10,20 @@ import { getSite } from "@/lib/content";
 import { getContactPage } from "@/lib/content/pages/contact";
 import { t } from "@/lib/content/ui";
 
+/** Board h1: the last `*~word~*` becomes the boxed sun word with the board's own padding. */
+function Heading({ text }: { text: string }) {
+  const m = /^(.*?)\*~(.+?)~\*$/.exec(text);
+  if (!m) return <RichText text={text} />;
+  return (
+    <>
+      {m[1]}
+      <span className="hl hl-sun inline-block rounded-[18px] bg-white/60 px-3.5 pb-1.5">
+        <span className="text-sun">{m[2]}</span>
+      </span>
+    </>
+  );
+}
+
 export async function generateMetadata(): Promise<Metadata> {
   const { meta } = await getContactPage();
   return { title: meta.title, description: meta.description, alternates: { canonical: "/contact" } };
@@ -29,28 +43,28 @@ export default async function ContactPage() {
   };
 
   return (
-    <div className="relative isolate bg-[linear-gradient(180deg,var(--color-sky-200),var(--color-day-50)_35%,var(--color-dawn-50))] pt-[calc(var(--site-top)+2rem)] pb-16 lg:pb-24">
+    <div className="relative isolate bg-[linear-gradient(180deg,var(--color-sky-200),var(--color-day-50)_35%,var(--color-dawn-50))] pt-[calc(var(--site-top)+4px)] pb-[72px] leading-[normal]">
       <div
         aria-hidden
         className="fx-grid pointer-events-none absolute inset-x-0 top-0 -z-10 h-full max-h-[900px] [mask-image:radial-gradient(90%_75%_at_50%_20%,black,transparent_80%)]"
       />
       <div className="container-site flex flex-col gap-7">
         <header className="flex max-w-[760px] flex-col gap-3.5">
-          <nav aria-label={t(site.ui, "breadcrumb")} className="font-label text-xs uppercase tracking-[0.12em] text-ink-muted">
-            <Link href="/" className="inline-flex min-h-11 items-center hover:text-navy-900">
+          <nav aria-label={t(site.ui, "breadcrumb")} className="font-label text-[12px] uppercase tracking-[0.12em] text-ink-muted">
+            <Link href="/" className="hover:text-navy-900">
               {t(site.ui, "home")}
             </Link>{" "}
             / <span aria-current="page" className="text-sun-700">{page.breadcrumb}</span>
           </nav>
-          <h1 className="font-display text-[clamp(38px,5.2vw,76px)] leading-none font-bold tracking-[-0.045em] text-balance">
-            <RichText text={page.heading} />
+          <h1 className="m-0 font-display text-[clamp(38px,5.2vw,76px)] leading-none font-bold tracking-[-0.045em]">
+            <Heading text={page.heading} />
           </h1>
-          <p className="m-0 text-lg leading-relaxed text-navy-900/80">{page.lead}</p>
+          <p className="m-0 text-[18px] leading-[1.6] text-navy-900/80">{page.lead}</p>
         </header>
 
         <QuickContact ui={site.ui} phone={site.phone} messengerUrl={site.messengerUrl} divider={page.quickDivider} />
 
-        <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="grid items-start gap-7 min-[1001px]:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
           <Suspense fallback={<ContactForm content={formContent} ui={site.ui} messengerUrl={site.messengerUrl} />}>
             <ContactFromQuery content={formContent} ui={site.ui} messengerUrl={site.messengerUrl} />
           </Suspense>

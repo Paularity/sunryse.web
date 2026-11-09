@@ -102,12 +102,12 @@ export function ServicesDeck({ eyebrow, heading, lead, ctaHeading, ctaLabel, ser
               mono,
               "inline-flex min-h-11 shrink-0 cursor-pointer items-center gap-2 rounded-xl px-4 text-xs transition-colors outline-offset-2 focus-visible:outline-2 focus-visible:outline-sun-300",
               sel
-                ? "bg-[linear-gradient(135deg,var(--color-sun-300),var(--color-sun-500)_50%,var(--color-sun-600))] text-navy-900"
+                ? "bg-white text-navy-900"
                 : "text-ink-glow hover:bg-white/8",
             )}
           >
             {t(ui, tab.labelKey)}
-            <b className={cn("rounded-full px-[7px] py-[3px] text-[11px] font-medium", sel ? "bg-navy-900/15" : "bg-white/10")}>{counts[tab.id]}</b>
+            <b className={cn("rounded-full px-[7px] py-[3px] text-[11px] font-medium", sel ? "bg-navy-900 text-white" : "bg-white/10")}>{counts[tab.id]}</b>
           </button>
         );
       })}
@@ -116,7 +116,7 @@ export function ServicesDeck({ eyebrow, heading, lead, ctaHeading, ctaLabel, ser
 
   return (
     <>
-      <SectionHeader dark id="sv-h" eyebrow={eyebrow} heading={heading} lead={lead} aside={tabs} className="mb-9" />
+      <SectionHeader dark id="sv-h" eyebrow={eyebrow} heading={heading} lead={lead} aside={tabs} className="mb-9 gap-x-10" bodyClassName="max-w-[640px] gap-4" />
 
       <div role="tabpanel" id="sv-panel" aria-labelledby={`sv-tab-${filter}`}>
         {isAll ? featured : null}
@@ -140,9 +140,9 @@ export function ServicesDeck({ eyebrow, heading, lead, ctaHeading, ctaLabel, ser
                 <span className="contents sm:flex sm:items-center sm:gap-3">
                   <span
                     style={{ "--c": cat.c } as CSSProperties}
-                    className="glow-tile order-1 size-[42px] rounded-[14px] sm:size-[46px]"
+                    className="order-1 grid size-[42px] flex-none place-items-center rounded-[14px] border border-[color-mix(in_srgb,var(--c)_35%,transparent)] bg-[color-mix(in_srgb,var(--c)_15%,transparent)] text-[var(--c)] shadow-[0_0_28px_-10px_var(--c)] sm:order-none sm:size-[46px]"
                   >
-                    <Icon name={s.icon} className="size-5 text-navy-950" />
+                    <Icon name={s.icon} className="size-[22px]" />
                   </span>
                   <span className={cn(mono, "hidden sm:block", cat.text)}>{t(ui, cat.labelKey)}</span>
                   <GoArrow dark className="order-3 size-9 sm:order-none sm:ml-auto sm:size-[34px]" />
@@ -163,11 +163,19 @@ export function ServicesDeck({ eyebrow, heading, lead, ctaHeading, ctaLabel, ser
               ctaWide ? "lg:flex-row lg:flex-wrap lg:items-center" : "lg:flex-col lg:flex-nowrap lg:items-stretch lg:justify-between",
             )}
           >
-            <span className="flex items-center gap-3 sm:min-w-[260px] sm:flex-1">
-              <MessageCircle className="size-5 shrink-0" strokeWidth={1.75} aria-hidden />
-              <span className="font-display text-lg font-bold leading-snug sm:text-[22px]">{ctaHeading}</span>
+            <span className={cn(mono, "flex items-center gap-2 text-[11px] lg:basis-full", ctaWide && "basis-full")}>
+              <MessageCircle className="size-4 shrink-0" strokeWidth={1.75} aria-hidden />
+              {t(ui, "megaAdvisorLabel")}
             </span>
-            <Link href="/contact" className={cn(buttonVariants({ variant: "navy", size: "xl" }), "sm:flex-[0_1_240px]")}>
+            <span
+              className={cn(
+                "font-display text-lg font-bold leading-[1.3] sm:min-w-[260px] sm:flex-1",
+                ctaWide ? "sm:text-[22px]" : "lg:min-w-0 lg:flex-none",
+              )}
+            >
+              {ctaHeading}
+            </span>
+            <Link href="/contact" className={cn(buttonVariants({ variant: "navy", size: "xl" }), "sm:flex-[0_1_240px]", !ctaWide && "lg:flex-none")}>
               {ctaLabel}
             </Link>
           </div>

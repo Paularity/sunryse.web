@@ -33,14 +33,14 @@ export function SiteHeader({ site, services, solutions }: { site: Site; services
       }
     >
       <div className="container-site pt-4">
-        <div className="glass relative flex h-[62px] items-center justify-between gap-4 rounded-[20px] pr-2 pl-3 sm:h-[68px] sm:pr-2.5 sm:pl-4">
+        <div className="glass relative flex h-[62px] items-center transition-[background-color] duration-300 group-data-[scrolled=true]/hdr:bg-white/92! justify-between gap-4 rounded-[20px] pr-2 pl-3 sm:h-[68px] sm:pr-2.5 sm:pl-4">
           <Logo />
           <HeaderNav site={site} services={services} solutions={solutions} />
           <div className="flex items-center gap-2">
             <a
               href={tel}
               aria-label={t(ui, "callAria", { name: site.name })}
-              className="hidden min-h-11 items-center gap-2 rounded-lg border border-navy-900/20 bg-white px-4 font-label text-xs uppercase tracking-[0.12em] text-navy-900 hover:border-navy-900/40 lg:inline-flex"
+              className="hidden min-h-11 items-center gap-2 rounded-lg border border-navy-900/20 bg-white px-4 font-label text-xs uppercase tracking-[0.12em] text-navy-900 hover:border-navy-900/40 xl:inline-flex"
             >
               <Icon name="phone" className="size-[18px]" /> {t(ui, "call")}
             </a>

@@ -16,7 +16,17 @@ const ICONS: Record<IconName, LucideIcon> = {
 };
 
 /** One stroke icon set across the site (lucide, 1.75 stroke). */
+/** Mounting structure: A-frame from the design (lucide has no equivalent). */
+function AFrame({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" aria-hidden className={className}>
+      <path d="M3 20h18M5 20 12 6l7 14M8.5 13h7" />
+    </svg>
+  );
+}
+
 export function Icon({ name, className, ...props }: { name: IconName } & LucideProps) {
+  if (name === "frame") return <AFrame className={cn("size-5 shrink-0", className)} />;
   const Cmp = ICONS[name] ?? Sun;
   return <Cmp aria-hidden strokeWidth={1.75} className={cn("size-5 shrink-0", className)} {...props} />;
 }

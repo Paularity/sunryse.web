@@ -9,7 +9,7 @@ export function QuickContact({ ui, phone, messengerUrl, divider }: { ui: UiLabel
   const base =
     "flex min-h-14 items-center justify-center gap-2.5 rounded-2xl font-bold outline-none focus-visible:ring-3 focus-visible:ring-sky-600/40";
   return (
-    <div className="grid grid-cols-2 gap-2.5 lg:hidden">
+    <div className="grid grid-cols-2 gap-2.5 min-[1001px]:hidden">
       <a href={telHref(phone)} className={`${base} bg-navy-900 text-white`}>
         <Icon name="phone" /> {t(ui, "callNow")}
       </a>
@@ -33,30 +33,40 @@ function Row({ icon, label, value, href, external }: { icon: IconName; label: st
       </span>
       <span className="min-w-0">
         <span className="block font-label text-[11px] tracking-[0.12em] text-ink-glow uppercase">{label}</span>
-        <b className="block font-display break-words">{value}</b>
+        <b className="block font-display">{value}</b>
       </span>
     </a>
   );
 }
 
-/** Desktop side column: contact details, hours and what happens next. */
+/** Side column: contact card (hidden <=1000px), map placeholder and what happens next. */
 export function SideContact({ site, nextSteps }: { site: Site; nextSteps: string[] }) {
   const { ui } = site;
   return (
-    <aside aria-label={t(ui, "contactDetails")} className="hidden flex-col gap-3.5 lg:flex lg:sticky lg:top-[calc(var(--site-top)+16px)]">
-      <div className="fx-dark flex flex-col gap-3.5 rounded-3xl p-6">
+    <aside aria-label={t(ui, "contactDetails")} className="flex min-w-0 flex-col gap-3.5">
+      <div className="fx-dark flex flex-col gap-3.5 rounded-3xl p-6 max-[1000px]:hidden">
         <span className="font-label text-[11px] tracking-[0.12em] text-sun-300 uppercase">{t(ui, "preferToTalk")}</span>
         <Row icon="phone" label={t(ui, "callOrViber")} value={site.phone} href={telHref(site.phone)} />
-        <Row icon="message" label={t(ui, "messenger")} value={t(ui, "messageOurPage")} href={site.messengerUrl} external />
+        <Row icon="message" label={t(ui, "messenger")} value={t(ui, "cfFacebookPage")} href={site.messengerUrl} external />
         <Row icon="mail" label={t(ui, "email")} value={site.email} href={`mailto:${site.email}`} />
         <p className="m-0 flex items-center gap-2 text-[13px] text-ink-glow">
           <Icon name="clock" className="size-4" /> {site.hours}
         </p>
-        {site.serviceArea ? (
-          <p className="m-0 flex items-center gap-2 text-[13px] text-ink-glow">
-            <Icon name="map-pin" className="size-4" /> {site.serviceArea}
-          </p>
-        ) : null}
+      </div>
+      <div
+        role="img"
+        aria-label={t(ui, "cfMapAria")}
+        className="glass-card relative h-[220px] overflow-hidden rounded-3xl"
+        style={{
+          background:
+            "repeating-linear-gradient(0deg,rgb(11 31 77/.05) 0 1px,transparent 1px 32px),repeating-linear-gradient(90deg,rgb(11 31 77/.05) 0 1px,transparent 1px 32px),var(--color-day-100)",
+        }}
+      >
+        <span className="absolute top-[45%] left-1/2 -mt-[85px] -ml-[85px] size-[170px] rounded-full border-2 border-dashed border-sun-500/60 bg-sun-500/15" />
+        <span className="absolute top-[45%] left-1/2 -mt-2.5 -ml-2.5 size-5 rounded-full border-4 border-white bg-sun-600 shadow-[0_4px_10px_rgb(11_31_77/0.3)]" />
+        <span className="absolute bottom-3.5 left-3.5 rounded-lg bg-white px-2.5 py-[7px] font-label text-[11px] tracking-[0.12em] uppercase">
+          {t(ui, "cfMapLabel")}
+        </span>
       </div>
       <div className="glass-card flex flex-col gap-3 rounded-3xl p-[22px]">
         <span className="font-label text-[11px] tracking-[0.12em] text-ink-muted uppercase">{t(ui, "whatHappensNext")}</span>

@@ -91,6 +91,7 @@
     "filterAll": "All",
     "filterServices": "Filter services",
     "filterProjects": "Filter projects",
+    "loadMoreProjects": "Load more projects",
     "showingOf": "Showing {shown} of {total}",
     "mostRequested": "Most requested",
     "nodeSolar": "Solar",
@@ -105,6 +106,7 @@
     "step": "Step {n}",
     "relatedEyebrow": "Keep exploring",
     "relatedServicesHeading": "Related *services*",
+    "relatedServicesPlain": "Related services",
     "bestFor": "Best for: {value}",
     "inverterAbbr": "INV",
     "monthlyBill": "Monthly bill",
@@ -145,7 +147,12 @@
     "cfBack": "← Back",
     "cfContinue": "Continue →",
     "cfSend": "Send my request »",
+    "cfFacebookPage": "[Facebook page]",
+    "cfCityPh": "e.g. [City], [Province]",
+    "cfMapAria": "Map placeholder showing SunRyse office and service area",
+    "cfMapLabel": "[ Office · service area ]",
     "cfServerError": "We could not send your request. Please try again or call us.",
+    "subnavSystems": "Systems",
     "subnavHow": "How it works",
     "subnavPackages": "Packages",
     "subnavBenefits": "Benefits",
@@ -231,6 +238,10 @@
     {
       "label": "About",
       "href": "/about"
+    },
+    {
+      "label": "Learn",
+      "href": "/#faq"
     }
   ],
   "quoteCta": {

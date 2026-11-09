@@ -1,29 +1,20 @@
 import Link from "next/link";
 
 import { Hud } from "@/components/fx";
-import { Icon, SocialIcon } from "@/components/icons";
+import { SocialIcon } from "@/components/icons";
 import { Logo } from "@/components/site/logo";
-import type { IconName, Site } from "@/lib/content/types";
+import type { Site } from "@/lib/content/types";
 import { t } from "@/lib/content/ui";
 
-const flink = "flex min-h-11 items-center gap-2.5 text-ink-glow hover:text-sun-300 focus-visible:text-sun-300";
-const head = "font-label text-[11px] uppercase tracking-[0.12em] text-sun-300";
-
-function ContactRow({ icon, children }: { icon: IconName; children: React.ReactNode }) {
-  return (
-    <span className="flex items-start gap-2.5 py-1.5 text-sm text-ink-glow">
-      <Icon name={icon} className="mt-0.5 size-4 text-sun-300" />
-      {children}
-    </span>
-  );
-}
+const flink = "flex min-h-11 items-center text-[15px] text-ink-light hover:text-sun-300 focus-visible:text-sun-300";
+const head = "font-label text-[11px] uppercase tracking-[0.12em] text-ink-dim";
 
 export function SiteFooter({ site }: { site: Site }) {
   const tel = `tel:${site.phone.replace(/[^\d+]/g, "")}`;
   const { footer, ui } = site;
 
   return (
-    <footer className="fx-dark relative overflow-hidden bg-navy-950 pt-12 pb-[110px] text-white sm:pt-16 lg:pb-7">
+    <footer className="relative isolate overflow-hidden bg-navy-950 pt-12 pb-[110px] text-white sm:pt-16 lg:pb-7">
       <span
         aria-hidden
         className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,var(--color-sun-500)_30%,var(--color-sky-400)_70%,transparent)] shadow-[0_0_18px_rgb(255_138_0/0.7)]"
@@ -36,9 +27,9 @@ export function SiteFooter({ site }: { site: Site }) {
         <div className="grid grid-cols-2 gap-x-4 gap-y-5 sm:gap-8 lg:grid-cols-[1.3fr_repeat(3,minmax(0,1fr))]">
           <div className="col-span-2 flex flex-col items-start gap-4 sm:col-span-1">
             <Logo dark />
-            <p className="hidden max-w-xs text-sm leading-relaxed text-ink-soft sm:block">{footer.blurb}</p>
+            <p className="hidden max-w-[320px] text-[15px] leading-[1.6] text-ink-pale sm:block">{footer.blurb}</p>
             <Hud>{site.hours}</Hud>
-            <span className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-soft">{site.license}</span>
+            <span className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-dim">{site.license}</span>
           </div>
 
           {footer.columns.map((col) => (
@@ -53,23 +44,21 @@ export function SiteFooter({ site }: { site: Site }) {
           ))}
 
           <div className="col-span-2 flex flex-row flex-wrap items-center gap-x-[18px] gap-y-1 sm:col-span-1 sm:flex-col sm:items-start sm:gap-y-1">
-            <span className={`${head} basis-full pb-1 sm:pb-2`}>{t(ui, "contact")}</span>
+            <span className={`${head} basis-full pb-1 sm:basis-auto sm:pb-2`}>{t(ui, "contact")}</span>
             <a href={tel} className={flink}>
-              <Icon name="phone" className="size-4 text-sun-300" />
               {site.phone}
             </a>
             <a href={`mailto:${site.email}`} className={flink}>
-              <Icon name="mail" className="size-4 text-sun-300" />
               {site.email}
             </a>
-            <ContactRow icon="map-pin">{site.address}</ContactRow>
-            <ul className="mt-2 flex basis-full gap-2.5">
+            <span className="py-1.5 text-[15px] text-ink-light">{site.address}</span>
+            <ul className="mt-1 flex basis-full flex-wrap gap-2 sm:basis-auto">
               {site.socials.map((s) => (
                 <li key={s.platform}>
                   <a
                     href={s.url}
                     aria-label={s.label}
-                    className="grid size-11 place-items-center rounded-xl border border-white/10 bg-white/10 text-white transition-[background,box-shadow,color] duration-300 hover:bg-[linear-gradient(135deg,var(--color-sun-300),var(--color-sun-500)_50%,var(--color-sun-600))] hover:text-navy-900 hover:shadow-[0_8px_24px_-8px_rgb(255_138_0/0.9)] focus-visible:bg-[linear-gradient(135deg,var(--color-sun-300),var(--color-sun-500)_50%,var(--color-sun-600))] focus-visible:text-navy-900"
+                    className="grid size-11 place-items-center rounded-xl border border-white/12 bg-white/8 text-white transition-[background,box-shadow,color] duration-300 hover:bg-[linear-gradient(135deg,var(--color-sun-300),var(--color-sun-500)_50%,var(--color-sun-600))] hover:text-navy-900 hover:shadow-[0_8px_24px_-8px_rgb(255_138_0/0.9)] focus-visible:bg-[linear-gradient(135deg,var(--color-sun-300),var(--color-sun-500)_50%,var(--color-sun-600))] focus-visible:text-navy-900"
                   >
                     <SocialIcon platform={s.platform} />
                   </a>
@@ -84,7 +73,7 @@ export function SiteFooter({ site }: { site: Site }) {
           <ul className="flex gap-4">
             {footer.legal.map((l) => (
               <li key={l.label}>
-                <Link href={l.href} className="inline-flex min-h-11 items-center hover:text-sun-300">
+                <Link href={l.href} className="-my-3.5 inline-flex min-h-11 items-center hover:text-sun-300">
                   {l.label}
                 </Link>
               </li>

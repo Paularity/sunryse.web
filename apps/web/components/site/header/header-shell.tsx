@@ -28,8 +28,9 @@ export function HeaderShell({ announcement, children }: { announcement: ReactNod
 
   return (
     <header
+      data-scrolled={scrolled}
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-transform duration-300 ease-out motion-reduce:transition-none",
+        "group/hdr fixed inset-x-0 top-0 z-50 transition-transform duration-300 ease-out motion-reduce:transition-none",
         hidden && "-translate-y-full",
       )}
     >

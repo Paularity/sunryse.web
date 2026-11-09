@@ -40,12 +40,14 @@ async function ServiceContent({ params }: { params: Promise<Params> }) {
   const [service, services, brands, site] = await Promise.all([getService(slug), getServices(), getBrands(), getSite()]);
   if (!service) notFound();
 
-  // Same category first; top up from the rest so the related grid always ends full.
+  const details = await getServiceDetails(service);
+  // Content can pick the related services; otherwise same category first, topped up so the grid ends full.
   const others = services.filter((s) => s.slug !== service.slug);
-  const related = [
-    ...others.filter((s) => s.category === service.category),
-    ...others.filter((s) => s.category !== service.category),
-  ].slice(0, 3);
+  const picked = (details.relatedSlugs ?? []).map((slug) => others.find((s) => s.slug === slug)).filter((s) => s !== undefined);
+  const related = (picked.length
+    ? picked
+    : [...others.filter((s) => s.category === service.category), ...others.filter((s) => s.category !== service.category)]
+  ).slice(0, 3);
 
-  return <ServiceView service={service} details={await getServiceDetails(service)} brands={brands} related={related} ui={site.ui} />;
+  return <ServiceView service={service} details={details} brands={brands} related={related} ui={site.ui} />;
 }

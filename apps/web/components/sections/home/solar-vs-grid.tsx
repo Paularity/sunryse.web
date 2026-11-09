@@ -25,7 +25,7 @@ export function SolarVsGrid({ content, config, ui }: { content: HomeContent["sol
 
   return (
     <Section tone="white" labelledBy="svg-h">
-      <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <div className="grid items-center gap-14 lg:grid-cols-2">
         <div className="fx-screen min-w-0 rounded-3xl p-5 sm:p-6">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <Hud dot="amber">{content.chartLabel}</Hud>
@@ -91,11 +91,11 @@ export function SolarVsGrid({ content, config, ui }: { content: HomeContent["sol
           <div className="grid grid-cols-2 gap-2.5">
             <div className="flex min-w-0 flex-col gap-1.5 rounded-[14px] border border-navy-900/8 bg-day-50 p-3.5">
               <span className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">{content.gridLabel}</span>
-              <span className="font-display text-[clamp(26px,3vw,36px)] font-bold leading-tight tracking-[-0.02em] text-sun-700">{content.gridValue}</span>
+              <span className="font-display text-[36px] font-bold leading-tight tracking-[-0.02em] text-sun-700">{content.gridValue}</span>
             </div>
             <div className="flex min-w-0 flex-col gap-1.5 rounded-[14px] border border-navy-900/8 bg-day-50 p-3.5">
               <span className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">{content.solarLabel}</span>
-              <span className="font-display text-[clamp(26px,3vw,36px)] font-bold leading-tight tracking-[-0.02em] text-leaf-600">{content.solarValue}</span>
+              <span className="font-display text-[36px] font-bold leading-tight tracking-[-0.02em] text-leaf-600">{content.solarValue}</span>
             </div>
           </div>
           <span className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">{content.note}</span>

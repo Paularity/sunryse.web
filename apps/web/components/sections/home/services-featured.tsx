@@ -146,7 +146,7 @@ export function ServicesFeatured({ items, ui }: { items: Service[]; ui: UiLabels
   return (
     <div className="-mr-4 mb-3 flex snap-x snap-mandatory gap-3 overflow-x-auto py-1 pr-4 [scrollbar-width:none] sm:mr-0 sm:mb-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:pr-0 lg:grid-cols-4 [&::-webkit-scrollbar]:hidden">
       {big ? (
-        <Link href={`/services/${big.slug}`} className={cn(deckCard, slot, "flex flex-col gap-5 p-5 after:opacity-100!sm:col-span-2 sm:gap-[22px] sm:p-7")}>
+        <Link href={`/services/${big.slug}`} className={cn(deckCard, slot, "flex flex-col gap-5 p-5 after:opacity-100! sm:col-span-2 sm:gap-[22px] sm:p-7")}>
           <span className="flex flex-wrap items-center justify-between gap-3">
             <span className={cn(mono, "inline-flex items-center gap-2 text-sun-300")}>
               <span className="size-2 animate-[fx-blink_1.8s_ease-in-out_infinite] rounded-full bg-glow-leaf shadow-[0_0_10px_var(--color-glow-leaf)] motion-reduce:animate-none" aria-hidden />

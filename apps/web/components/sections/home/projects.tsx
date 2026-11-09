@@ -26,7 +26,7 @@ export function ProjectsBento({ content, projects, ui }: { content: HomeContent[
           </Button>
         }
       />
-      <div className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden -mr-4 flex snap-x snap-mandatory gap-3 overflow-x-auto pr-4 sm:-mr-6 sm:pr-6 lg:mr-0 lg:grid lg:grid-cols-[1.4fr_1fr_1fr] lg:grid-rows-[260px_260px] lg:gap-4 lg:overflow-visible lg:pr-0">
+      <div className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden -mr-4 flex snap-x snap-mandatory gap-3 overflow-x-auto pr-4 sm:-mr-10 sm:pr-10 lg:mr-0 lg:grid lg:grid-cols-[1.4fr_1fr_1fr] lg:grid-rows-[260px_260px] lg:gap-4 lg:overflow-visible lg:pr-0">
         {shown.map((p, i) => (
           <Link
             key={p.slug}

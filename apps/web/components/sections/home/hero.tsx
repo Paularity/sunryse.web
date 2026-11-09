@@ -52,7 +52,7 @@ export function HeroSection({ hero, estimate, ui }: { hero: HomeContent["hero"];
         </div>
       </div>
 
-      <div className="container-site relative z-[2] grid items-center gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-6">
+      <div className="container-site relative z-[2] grid items-center gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:gap-12">
         <div className="flex min-w-0 flex-col gap-6">
           <div className="flex flex-wrap items-center gap-2.5">
             <Hud light dot="amber">
@@ -60,7 +60,7 @@ export function HeroSection({ hero, estimate, ui }: { hero: HomeContent["hero"];
             </Hud>
             <span className={`${mono} text-navy-900`}>{hero.tagline}</span>
           </div>
-          <h1 className="font-display text-[clamp(44px,5.1vw,74px)] font-bold leading-none tracking-[-0.045em] text-navy-900">
+          <h1 className="font-display text-[44px] sm:text-[clamp(48px,5.1vw,74px)] font-bold leading-none tracking-[-0.045em] text-navy-900">
             <RichText text={hero.heading} />
           </h1>
           <p className="max-w-[540px] text-[17px] leading-[1.55] text-navy-900/85 sm:text-[19px]">{hero.subheading}</p>
@@ -135,6 +135,7 @@ export function HeroSection({ hero, estimate, ui }: { hero: HomeContent["hero"];
                 <Hud>{hero.liveChip}</Hud>
               </>
             }
+            captionAlign="right"
             caption={<span className={`${mono} glass rounded-[9px] px-2.5 py-[7px]`}>{hero.imageCaption}</span>}
           >
             <Image src={hero.image.src} alt={hero.image.alt} fill priority sizes="400px" className="object-cover" />

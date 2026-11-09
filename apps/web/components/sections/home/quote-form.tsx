@@ -83,7 +83,7 @@ export function QuoteForm({ ui, label, submitLabel, replyNote, phone }: { ui: Ui
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate aria-label={label} className="glass grid gap-4 rounded-3xl p-5 sm:grid-cols-2 sm:p-6">
+    <form onSubmit={handleSubmit(onSubmit)} noValidate aria-label={label} className="glass grid gap-3 rounded-3xl p-5 sm:grid-cols-2 sm:p-6">
       <span className="col-span-full font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">{label}</span>
 
       <div className="flex flex-col gap-1.5">
@@ -125,7 +125,7 @@ export function QuoteForm({ ui, label, submitLabel, replyNote, phone }: { ui: Ui
         </p>
       ) : null}
 
-      <Button type="submit" variant="navy" size="xl" disabled={isSubmitting} className="col-span-full min-h-14">
+      <Button type="submit" variant="navy" size="xl" disabled={isSubmitting} className="col-span-full min-h-14 text-[13px]">
         {isSubmitting ? <Loader2 aria-hidden className="size-4 animate-spin motion-reduce:animate-none" /> : null}
         {isSubmitting ? t(ui, "formSending") : submitLabel}
         {isSubmitting ? null : <ArrowRight aria-hidden className="size-4" strokeWidth={2} />}

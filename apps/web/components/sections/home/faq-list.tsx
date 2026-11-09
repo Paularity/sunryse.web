@@ -16,7 +16,7 @@ export function FaqList({ faqs, openFirst }: { faqs: Faq[]; openFirst: boolean }
           className="glass-card relative overflow-hidden rounded-[18px] border-b-0 transition-shadow data-[state=open]:shadow-[inset_4px_0_0_var(--color-sun-500),0_18px_40px_-22px_rgb(11_31_77/0.3)]"
         >
           <AccordionPrimitive.Header className="m-0 flex">
-            <AccordionPrimitive.Trigger className="group flex min-h-14 w-full items-center justify-between gap-4 rounded-[18px] px-5 py-4 text-left font-display text-[17px] font-semibold text-navy-900 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:px-6">
+            <AccordionPrimitive.Trigger className="group flex min-h-[60px] w-full items-center justify-between gap-4 rounded-[18px] px-4 py-4 text-left font-display text-base font-bold sm:px-[22px] sm:text-lg text-navy-900 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:px-6">
               <span className="min-w-0">{f.question}</span>
               <span
                 aria-hidden
@@ -27,7 +27,7 @@ export function FaqList({ faqs, openFirst }: { faqs: Faq[]; openFirst: boolean }
               </span>
             </AccordionPrimitive.Trigger>
           </AccordionPrimitive.Header>
-          <AccordionContent className="px-5 pb-5 text-base leading-relaxed text-ink-muted sm:px-6">{f.answer}</AccordionContent>
+          <AccordionContent className="px-4 pb-5 text-base leading-[1.65] text-ink-muted sm:px-[22px]">{f.answer}</AccordionContent>
         </AccordionItem>
       ))}
     </Accordion>

@@ -36,7 +36,7 @@ const SLIDER_MIN = 2000;
 const SLIDER_MAX = 200000;
 const MAX_BILL = 10_000_000;
 
-const labelCls = "font-label text-xs text-ink-muted";
+const labelCls = "font-label text-[12px] text-ink-muted";
 const monoTile = "font-label text-[11px] uppercase tracking-[0.12em]";
 const focusRing = "outline-none focus-visible:ring-3 focus-visible:ring-sky-600/40";
 
@@ -93,7 +93,7 @@ export function CalculatorApp({ config, content, ui, initialBill, initialSegment
     <div className="relative">
       <div className="grid items-start gap-7 lg:grid-cols-[420px_minmax(0,1fr)]">
         {/* INPUTS */}
-        <div className="glass-card flex min-w-0 flex-col gap-6 rounded-3xl p-5 sm:p-[26px] lg:sticky lg:top-[calc(var(--site-top)+16px)]">
+        <div className="glass-card flex min-w-0 flex-col gap-6 rounded-3xl p-[26px] lg:sticky lg:top-[calc(var(--site-top)+16px)]">
           <div className="flex flex-col gap-2.5">
             <label htmlFor={`${uid}-bill`} className={labelCls}>
               {content.billLabel}
@@ -110,7 +110,7 @@ export function CalculatorApp({ config, content, ui, initialBill, initialSegment
                 placeholder="0"
                 aria-describedby={`${uid}-tip`}
                 onChange={(e) => setBill(Math.min(Number(e.target.value.replace(/\D/g, "")), MAX_BILL))}
-                className="w-full min-w-0 bg-transparent font-display text-[30px] font-bold text-navy-900 outline-none"
+                className="min-h-11 w-full min-w-0 bg-transparent font-display text-[30px] font-bold text-navy-900 outline-none"
               />
             </span>
             <input
@@ -124,7 +124,7 @@ export function CalculatorApp({ config, content, ui, initialBill, initialSegment
               aria-valuetext={formatPeso(bill)}
               className={rangeCls}
             />
-            <div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 font-label text-xs [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 font-label text-[12px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {config.presets.map((p) => (
                 <button
                   key={p}
@@ -156,7 +156,7 @@ export function CalculatorApp({ config, content, ui, initialBill, initialSegment
                   aria-pressed={segment === o.value}
                   onClick={() => setSegment(o.value as Segment)}
                   className={cn(
-                    "min-h-11 rounded-[10px] font-display text-sm font-bold",
+                    "min-h-[46px] rounded-[10px] font-display text-[14px] font-bold",
                     focusRing,
                     segment === o.value ? "bg-navy-900 text-white" : "text-navy-900 hover:bg-white/70",
                   )}
@@ -201,7 +201,7 @@ export function CalculatorApp({ config, content, ui, initialBill, initialSegment
               {howOpen ? <Minus className="size-5 text-sun-700" aria-hidden /> : <Plus className="size-5 text-sun-700" aria-hidden />}
             </button>
             {howOpen ? (
-              <ul id={`${uid}-how`} className="m-0 list-disc pb-1 pl-[18px] text-sm leading-[1.7] text-ink-muted">
+              <ul id={`${uid}-how`} className="m-0 list-disc pb-1 pl-[18px] text-[14px] leading-[1.7] text-ink-muted">
                 {assumptions.map((a) => (
                   <li key={a}>{a}</li>
                 ))}
@@ -216,7 +216,7 @@ export function CalculatorApp({ config, content, ui, initialBill, initialSegment
             {t(ui, "calcSummary", { kwp, savings: formatPeso(r.monthlySavings), payback, total: formatPeso(r.savings25) })}
           </p>
 
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <div className="grid grid-cols-3 gap-3 max-[640px]:grid-cols-2">
             <div className="rounded-[20px] bg-[linear-gradient(150deg,var(--color-leaf-500),var(--color-leaf-600))] p-[22px] text-white shadow-[0_16px_32px_-16px_rgb(30_138_58/0.7)]">
               <span className={cn(monoTile, "block")}>{t(ui, "monthlySavings")}</span>
               <span className="font-display text-[clamp(28px,3vw,40px)] font-bold tracking-[-0.02em]">{formatPeso(r.monthlySavings)}</span>
@@ -227,18 +227,18 @@ export function CalculatorApp({ config, content, ui, initialBill, initialSegment
               <span className="font-display text-[clamp(28px,3vw,40px)] font-bold tracking-[-0.02em]">{payback}</span>
               <span className={cn(monoTile, "mt-1 block")}>{t(ui, "calcYears")}</span>
             </div>
-            <div className="col-span-2 rounded-[20px] bg-navy-900 p-[22px] text-white sm:col-span-1">
+            <div className="rounded-[20px] bg-navy-900 p-[22px] text-white max-[640px]:col-span-full">
               <span className={cn(monoTile, "block text-ink-glow")}>{t(ui, "calcSavings25")}</span>
               <span className="font-display text-[clamp(28px,3vw,40px)] font-bold tracking-[-0.02em]">{formatPeso(r.savings25)}</span>
               <span className={cn(monoTile, "mt-1 block text-ink-glow")}>{t(ui, "calcNet", { amount: formatPeso(r.netSavings25) })}</span>
             </div>
           </div>
 
-          <dl className="m-0 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
-            {specs.map((s, i) => (
-              <div key={s.l} className={cn("glass-card min-w-0 rounded-2xl p-4", i === 4 && "col-span-2 sm:col-span-1")}>
+          <dl className="m-0 grid grid-cols-5 gap-3 max-[1023px]:grid-cols-2">
+            {specs.map((s) => (
+              <div key={s.l} className={cn("glass-card min-w-0 rounded-2xl p-4")}>
                 <dt className={cn(monoTile, "block text-ink-muted")}>{s.l}</dt>
-                <dd className="m-0 font-display text-[21px] font-bold">{s.v}</dd>
+                <dd className="m-0 inline font-display text-[21px] font-bold">{s.v}</dd>
               </div>
             ))}
           </dl>
@@ -297,7 +297,7 @@ export function CalculatorApp({ config, content, ui, initialBill, initialSegment
       </div>
 
       {/* Sticky results bar (tablet + phone). Sticks inside this wrapper so it never covers the footer. */}
-      <div className="sticky bottom-0 z-20 -mx-4 mt-8 grid grid-cols-[1fr_auto] items-center gap-2.5 border-t border-navy-900/10 bg-white/95 px-3.5 pt-2.5 pb-[calc(10px+env(safe-area-inset-bottom))] shadow-[0_-10px_30px_-12px_rgb(11_31_77/0.3)] backdrop-blur-md sm:-mx-6 lg:hidden">
+      <div className="sticky bottom-0 z-20 -mx-4 mt-8 grid grid-cols-[1fr_auto] items-center gap-2.5 border-t border-navy-900/10 bg-white/95 px-3.5 pt-2.5 pb-[calc(10px+env(safe-area-inset-bottom))] shadow-[0_-10px_30px_-12px_rgb(11_31_77/0.3)] backdrop-blur-md sm:-mx-10 lg:hidden">
         <span className="flex min-w-0 flex-col leading-tight">
           <span className="truncate font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">
             {t(ui, "calcStickySummary", { kwp, payback })}

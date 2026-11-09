@@ -10,6 +10,8 @@ import { createStrapi, compileStrapi } from '@strapi/strapi';
 const WEB = path.join(__dirname, '..', '..', 'web');
 const read = (n: string) => JSON.parse(fs.readFileSync(path.join(WEB, 'content', `${n}.json`), 'utf8'));
 const FORCE = process.env.SEED_FORCE === '1';
+/** SEED_PRUNE=1 also deletes collection entries that are no longer in the content files. */
+const PRUNE = process.env.SEED_PRUNE === '1';
 
 type Img = { src: string; alt: string };
 const texts = (list: string[] = []) => list.map((value) => ({ value }));
@@ -74,7 +76,17 @@ async function upsertCollection(strapi: any, uid: string, items: any[], key: str
       created++;
     }
   }
-  console.log(`${uid}: created ${created}, updated ${updated}, skipped ${items.length - created - updated}`);
+  let pruned = 0;
+  if (PRUNE) {
+    const keep = new Set(items.map((i) => String(i[key])));
+    for (const doc of await strapi.documents(uid).findMany({ fields: [key], limit: 1000 })) {
+      if (!keep.has(String(doc[key]))) {
+        await strapi.documents(uid).delete({ documentId: doc.documentId });
+        pruned++;
+      }
+    }
+  }
+  console.log(`${uid}: created ${created}, updated ${updated}, skipped ${items.length - created - updated}${PRUNE ? `, pruned ${pruned}` : ""}`);
 }
 
 async function main() {

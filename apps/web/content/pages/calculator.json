@@ -5,7 +5,7 @@
   },
   "breadcrumb": "Calculator",
   "heading": "See what the ~sun~ can save you",
-  "lead": "Enter your average monthly bill. Results update instantly. Send them to us for an exact quote.",
+  "lead": "Enter your average monthly bill. Results update instantly — send them to us for an exact quote.",
   "billLabel": "Average monthly bill",
   "billTip": "Tip: use the average of your last 3 Meralco / co-op bills.",
   "propertyLabel": "Property",
@@ -21,6 +21,6 @@
   ],
   "howLabel": "How we calculate",
   "chartChip": "Cumulative savings vs system cost",
-  "ctaText": "We will attach these numbers to your request. A free site survey confirms roof, shading and exact price.",
+  "ctaText": "We’ll attach these numbers to your request. A free site survey confirms roof, shading and exact price.",
   "ctaLabel": "Get my exact quote"
 }

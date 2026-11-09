@@ -65,20 +65,24 @@ export function Eyebrow({ children, dark, className }: { children: ReactNode; da
   return <span className={cn("fx-eb", dark ? "text-sun-300" : "text-sun-700", className)}>{children}</span>;
 }
 
-export const h2Class = "font-display text-[clamp(32px,4.2vw,58px)] font-bold leading-[1.04] tracking-[-0.04em] text-balance";
+export const h2Class = "font-display text-[clamp(32px,4.2vw,58px)] font-bold leading-[1.04] tracking-[-0.04em]";
 
 /** Eyebrow + H2 (rich text) + optional lead, with an optional right-hand slot (tabs, chip, button). */
 export function SectionHeader({
-  eyebrow, heading, lead, aside, dark, id, className,
-}: { eyebrow: string; heading: string; lead?: string; aside?: ReactNode; dark?: boolean; id?: string; className?: string }) {
+  eyebrow, heading, lead, aside, dark, id, className, bodyClassName,
+}: {
+  eyebrow: string; heading: string; lead?: string; aside?: ReactNode; dark?: boolean; id?: string; className?: string;
+  /** Width limit for the heading column (the design limits only some sections, e.g. Services: max-w-[640px]). */
+  bodyClassName?: string;
+}) {
   return (
-    <div className={cn("mb-9 flex flex-wrap items-end justify-between gap-x-10 gap-y-6", className)}>
-      <div className="flex max-w-[680px] flex-col gap-4">
+    <div className={cn("mb-9 flex flex-wrap items-end justify-between gap-6", className)}>
+      <div className={cn("flex min-w-0 flex-col gap-3.5", bodyClassName)}>
         <Eyebrow dark={dark}>{eyebrow}</Eyebrow>
         <h2 id={id} className={cn(h2Class, dark && "text-white")}>
           <RichText text={heading} />
         </h2>
-        {lead ? <p className={cn("max-w-[540px] text-[17px] leading-relaxed", dark ? "text-ink-soft" : "text-ink-muted")}>{lead}</p> : null}
+        {lead ? <p className={cn("max-w-[520px] text-[17px] leading-[1.6]", dark ? "text-ink-soft" : "text-ink-muted")}>{lead}</p> : null}
       </div>
       {aside}
     </div>
@@ -142,14 +146,16 @@ export function Stars({ rating = 5, label }: { rating?: number; label?: string }
  * Photo frame with orange corner brackets, scan line and optional HUD chips.
  * Pass a next/image (fill) as children.
  */
-export function PhotoFrame({ children, className, chips, caption }: { children: ReactNode; className?: string; chips?: ReactNode; caption?: ReactNode }) {
+export function PhotoFrame({
+  children, className, chips, caption, captionAlign = "left",
+}: { children: ReactNode; className?: string; chips?: ReactNode; caption?: ReactNode; captionAlign?: "left" | "right" }) {
   return (
     <div className={cn("corners relative p-2", className)}>
       <div className="relative size-full overflow-hidden rounded-[18px]">
         {children}
         <span className="fx-scan" aria-hidden />
         {chips ? <div className="absolute inset-x-3.5 top-3.5 z-[1] flex flex-wrap justify-between gap-2">{chips}</div> : null}
-        {caption ? <div className="absolute bottom-3.5 left-3.5 z-[1]">{caption}</div> : null}
+        {caption ? <div className={cn("absolute bottom-3.5 z-[1]", captionAlign === "right" ? "right-3.5" : "left-3.5")}>{caption}</div> : null}
       </div>
     </div>
   );

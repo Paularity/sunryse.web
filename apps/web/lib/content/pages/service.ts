@@ -6,6 +6,12 @@ import type { Brand, IconName, Img, Link, Service, ServiceCategory, Tone } from 
 
 export type ServiceDetails = {
   heroTitle: string;
+  /** Related services to show (slugs, in order); falls back to the same category. */
+  relatedSlugs?: string[];
+  /** Hero lead copy; falls back to the service summary. */
+  heroSummary?: string;
+  /** Breadcrumb tail; falls back to the service title. */
+  breadcrumbLabel?: string;
   primaryCta: Link;
   secondaryCta: Link;
   image: Img;
@@ -19,6 +25,8 @@ export type ServiceDetails = {
     footnote: string;
   };
   brandCategories: Brand["category"][];
+  /** Exact brands to show, in order (overrides brandCategories). */
+  brandNames?: string[];
   brandsEyebrow: string;
   stepsEyebrow: string;
   steps: { title: string; description: string; tone: Tone }[];

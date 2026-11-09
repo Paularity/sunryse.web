@@ -14,7 +14,7 @@ export function CalculatorTeaser({ content, config, ui }: { content: HomeContent
         aria-hidden
         className="pointer-events-none absolute -right-44 -top-40 size-[620px] rounded-full bg-[radial-gradient(circle,rgb(255_201_60/0.55),rgb(255_138_0/0.18)_45%,transparent_70%)]"
       />
-      <div className="relative grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <div className="relative grid items-center gap-14 lg:grid-cols-2">
         <div className="flex min-w-0 flex-col gap-[18px]">
           <Eyebrow>{content.eyebrow}</Eyebrow>
           <h2 id="calc-h" className={h2Class}>

@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { Star } from "lucide-react";
 
-import { Eyebrow, Hud, PhotoFrame, RichText, Section, h2Class } from "@/components/fx";
+import { RichText } from "@/components/fx";
 import { ProjectBrowser } from "@/components/pages/projects/project-browser";
-import { Button } from "@/components/ui/button";
 import { getProjects, getSite } from "@/lib/content";
 import { getProjectsPage } from "@/lib/content/pages/projects";
 import { t } from "@/lib/content/ui";
 import { cn } from "@/lib/utils";
 
 const STAT_TEXT: Record<string, string> = { navy: "text-navy-900", leaf: "text-leaf-600", amber: "text-sun-700" };
+const MONO = "font-label uppercase tracking-[0.12em]";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { meta } = await getProjectsPage();
@@ -22,89 +23,90 @@ export default async function ProjectsPage() {
   const { hero, featured, grid, cta } = page;
 
   return (
-    <>
+    <div className="[line-height:normal]">
+      {/* HERO — board: header 84 + 31 spacer; the layout's fixed header stack (--site-top) replaces it */}
       <section
-        className="relative isolate bg-[linear-gradient(180deg,var(--color-day-100),var(--color-day-50))] pb-10"
-        style={{ paddingTop: "calc(var(--site-top) + 24px)" }}
+        className="relative isolate bg-[linear-gradient(180deg,var(--color-day-100),var(--color-day-50))] pb-[31px]"
+        style={{ paddingTop: "var(--site-top)" }}
       >
         <div
           className="fx-grid pointer-events-none absolute inset-x-0 top-0 -z-10 h-full max-h-[900px] opacity-60 [mask-image:radial-gradient(90%_75%_at_50%_20%,black,transparent_80%)]"
           aria-hidden
         />
         <div className="container-site flex flex-wrap items-end justify-between gap-8">
-          <div className="flex flex-col gap-5">
-            <nav aria-label={t(ui, "breadcrumb")} className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">
-              <Link href="/" className="inline-flex min-h-11 items-center hover:text-sun-700">
+          <div className="flex flex-col gap-[18px]">
+            <nav aria-label={t(ui, "breadcrumb")} className={cn(MONO, "text-[11px] text-ink-muted")}>
+              <Link href="/" className="hover:text-sun-700">
                 {t(ui, "home")}
               </Link>{" "}
               / <span aria-current="page" className="text-sun-700">{t(ui, "breadcrumbProjects")}</span>
             </nav>
-            <h1 className="font-display text-[clamp(44px,5.6vw,84px)] font-bold leading-[0.98] tracking-[-0.045em] text-balance">
+            <h1 className="font-display m-0 text-[clamp(44px,5.6vw,84px)] font-bold leading-[0.98] tracking-[-0.045em]">
               <RichText text={hero.heading} />
             </h1>
           </div>
-          <dl className="flex flex-wrap gap-7">
+          <dl className="m-0 flex flex-wrap gap-7">
             {hero.stats.map((s) => (
-              <div key={s.label} className="flex flex-col border-l-2 border-sun-500 pl-3.5">
-                <dd className="font-display order-2 text-4xl font-bold">{s.value}</dd>
-                <dt className="font-label order-3 text-[11px] uppercase tracking-[0.12em] text-ink-muted">{s.label}</dt>
+              <div key={s.label} className="border-l-2 border-sun-500 pl-3.5">
+                <dd className="font-display m-0 block text-[36px] font-bold">{s.value}</dd>
+                <dt className={cn(MONO, "text-[11px] text-ink-muted")}>{s.label}</dt>
               </div>
             ))}
           </dl>
         </div>
       </section>
 
-      <section className="pb-[clamp(40px,6vw,70px)] pt-5" aria-labelledby="featured-title">
+      {/* FEATURED */}
+      <section className="pb-[70px] pt-5" aria-labelledby="featured-title">
         <div className="container-site">
-          <div className="glass-card grid overflow-hidden rounded-[28px] lg:grid-cols-[1.3fr_1fr]">
-            <PhotoFrame
-              className="min-h-72 lg:min-h-[440px]"
-              chips={
-                <Hud light dot="amber" className="text-sun-700">
-                  {featured.chip}
-                </Hud>
-              }
-            >
-              <Image src={featured.image.src} alt={featured.image.alt} fill priority sizes="(min-width:1024px) 720px, 100vw" className="object-cover" />
-            </PhotoFrame>
-            <div className="flex min-w-0 flex-col gap-4 p-5 sm:p-8 lg:p-10">
-              <Eyebrow className="text-sky-600">{featured.meta}</Eyebrow>
-              <h2 id="featured-title" className="font-display text-[clamp(28px,3vw,38px)] font-bold leading-[1.05] tracking-[-0.04em]">
+          <div className="glass-card grid grid-cols-[1.3fr_1fr] overflow-hidden rounded-[28px] max-[1000px]:grid-cols-1">
+            <div className="relative min-h-[440px] max-[1000px]:min-h-[280px]">
+              <Image src={featured.image.src} alt={featured.image.alt} fill priority sizes="(min-width:1001px) 720px, 100vw" className="object-cover" />
+              <span className={cn(MONO, "glass absolute left-[18px] top-[18px] inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-[11px] text-sun-700")}>
+                <Star aria-hidden className="size-3 fill-current" strokeWidth={1.75} />
+                {featured.chip}
+              </span>
+            </div>
+            <div className="flex min-w-0 flex-col gap-[18px] p-10 max-[640px]:p-[22px]">
+              <span className={cn(MONO, "text-[11px] text-sky-600")}>{featured.meta}</span>
+              <h2 id="featured-title" className="font-display m-0 text-[38px] font-bold leading-[1.05] tracking-[-0.04em]">
                 {featured.title}
               </h2>
-              <p className="leading-relaxed text-ink-muted">{featured.summary}</p>
-              <dl className="grid grid-cols-2 gap-2.5">
+              <p className="m-0 leading-[1.65] text-ink-muted">{featured.summary}</p>
+              <dl className="m-0 grid grid-cols-2 gap-2.5">
                 {featured.stats.map((f) => (
                   <div key={f.label} className="rounded-[14px] bg-day-50 p-3.5">
-                    <dt className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">{f.label}</dt>
-                    <dd className={cn("font-display text-[22px] font-bold", STAT_TEXT[f.tone] ?? "text-navy-900")}>{f.value}</dd>
+                    <dt className={cn(MONO, "block text-[11px] text-ink-muted")}>{f.label}</dt>
+                    <dd className={cn("font-display m-0 text-[22px] font-bold", STAT_TEXT[f.tone] ?? "text-navy-900")}>{f.value}</dd>
                   </div>
                 ))}
               </dl>
-              <Button asChild variant="navy" size="xl" className="mt-auto self-start">
-                <Link href={featured.cta.href}>{featured.cta.label} →</Link>
-              </Button>
+              <Link href={featured.cta.href} className={cn(MONO, "mt-auto self-start rounded-[14px] bg-navy-900 px-[22px] py-4 text-xs text-white")}>
+                {featured.cta.label} →
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="pb-[clamp(64px,9vw,100px)]" aria-label={t(ui, "allProjectsAria")}>
+      {/* FILTER + GRID */}
+      <section className="pb-[100px]" aria-label={t(ui, "allProjectsAria")}>
         <div className="container-site">
-          <ProjectBrowser projects={projects} total={grid.total} allLabel={grid.allLabel} allNote={grid.allNote} ui={ui} />
+          <ProjectBrowser projects={projects} total={grid.total} cardStats={grid.cardStats} ui={ui} />
         </div>
       </section>
 
-      <Section tone="dark">
-        <div className="flex flex-wrap items-center justify-between gap-6">
-          <h2 className={cn(h2Class, "max-w-[640px] text-white")}>
+      {/* CTA band */}
+      <section className="bg-[linear-gradient(120deg,var(--color-sun-300),var(--color-sun-500)_45%,var(--color-sun-600))]">
+        <div className="container-site flex flex-wrap items-center justify-between gap-6 py-[60px]">
+          <h2 className="font-display m-0 max-w-[640px] text-[clamp(30px,4vw,52px)] font-extrabold leading-none tracking-[-0.045em]">
             <RichText text={cta.heading} />
           </h2>
-          <Button asChild variant="sun" size="xl">
-            <Link href={cta.href}>{cta.label} »</Link>
-          </Button>
+          <Link href={cta.href} className={cn(MONO, "rounded-[14px] bg-navy-900 px-[26px] py-[19px] text-[13px] text-white")}>
+            {cta.label} »
+          </Link>
         </div>
-      </Section>
-    </>
+      </section>
+    </div>
   );
 }

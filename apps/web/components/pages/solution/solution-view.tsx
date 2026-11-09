@@ -1,42 +1,60 @@
-import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 import { SolutionSubnav } from "./subnav";
-import { Icon, TONE, TONE_TEXT } from "@/components/icons";
-import { Eyebrow, Hud, RichText, Section, SectionHeader, Stars, PhotoFrame, h2Class } from "@/components/fx";
-import { Reveal } from "@/components/motion/reveal";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/icons";
+import { Hud } from "@/components/fx";
 import type { SolutionDetails } from "@/lib/content/pages/solution";
-import type { Faq, IconName, Solution, Testimonial, Tone, UiLabels } from "@/lib/content/types";
+import type { Solution, UiLabels } from "@/lib/content/types";
 import { t } from "@/lib/content/ui";
 import { cn } from "@/lib/utils";
 
-const ANCHOR = "scroll-mt-[calc(var(--site-top)+56px)]";
-const BENEFIT_ICONS: { icon: IconName; tone: Tone }[] = [
-  { icon: "trending-down", tone: "leaf" },
-  { icon: "battery", tone: "sky" },
-  { icon: "file-text", tone: "amber" },
-  { icon: "solar-panel", tone: "navy" },
-  { icon: "activity", tone: "sky" },
-  { icon: "headset", tone: "sun" },
-];
+/* Board constants (docs/designs/Solution.dc.html) */
+const SECTION = "py-[clamp(64px,8vw,100px)]";
+const SPLIT =
+  "grid grid-cols-[1.05fr_.95fr] items-center gap-[56px] max-[1000px]:grid-cols-1 [&>*]:min-w-0";
+const MONO = "font-label uppercase tracking-[0.12em]";
+const EYEBROW = `${MONO} inline-flex items-center gap-[10px] text-[11px] text-sun-700 before:size-[7px] before:shrink-0 before:animate-[fx-ping_2.4s_ease-out_infinite] before:rounded-full before:bg-current before:content-['']`;
+const H2 = "font-display font-bold text-[clamp(32px,4vw,56px)] leading-[1.02] tracking-[-0.04em]";
+const CARD = "glass-card";
+const HL_BLUE =
+  "mx-[2px] inline-block rounded-[14px] px-[12px] pb-[4px] shadow-[0_0_0_2px_var(--color-sky-500),0_14px_34px_-14px_rgb(30_111_232/0.75)] bg-[linear-gradient(180deg,rgb(255_255_255/0.75),rgb(234_242_255/0.75))]";
+const HL_SUN =
+  "mx-[2px] inline-block rounded-[18px] bg-white/55 px-[16px] pb-[6px] shadow-[0_0_0_2px_var(--color-sun-500),0_16px_40px_-14px_rgb(255_138_0/0.85)]";
+const TONE_COLOR: Record<string, string> = { leaf: "text-leaf-600", sky: "text-sky-600", amber: "text-sun-700", sun: "text-sun-700" };
 
-type Props = { solution: Solution; details: SolutionDetails; faqs: Faq[]; testimonials: Testimonial[]; ui: UiLabels };
+/** `*word*` → glowing frame, `~word~` → sun gradient text. */
+function Rich({ text, hl, depth = 0 }: { text: string; hl: string; depth?: number }): ReactNode {
+  const out: ReactNode[] = [];
+  const re = /([*~])(.+?)\1/g;
+  let last = 0;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(text))) {
+    if (m.index > last) out.push(text.slice(last, m.index));
+    const inner = depth < 1 ? <Rich text={m[2]} hl={hl} depth={depth + 1} /> : m[2];
+    out.push(
+      <span key={`${depth}-${m.index}`} className={m[1] === "*" ? hl : "text-sun"}>
+        {inner}
+      </span>,
+    );
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) out.push(text.slice(last));
+  return <>{out}</>;
+}
 
-export function SolutionView({ solution, details, faqs, testimonials, ui }: Props) {
+type Props = { solution: Solution; details: SolutionDetails; ui: UiLabels };
+
+export function SolutionView({ solution, details, ui }: Props) {
   const stripNum = (s: string) => s.replace(/^\[[^\]]*\]\s*/, "");
   const subnav = [
-    { id: "systems", label: stripNum(details.systems.eyebrow).replace(/^Choose your /, "") },
+    { id: "systems", label: t(ui, "subnavSystems") },
     { id: "how", label: t(ui, "subnavHow") },
     { id: "packages", label: t(ui, "subnavPackages") },
-    { id: "details", label: stripNum(details.details.eyebrow) },
-    { id: "benefits", label: t(ui, "subnavBenefits") },
+    { id: "net-metering", label: stripNum(details.details.eyebrow) },
     { id: "faq", label: t(ui, "subnavFaq") },
-    { id: "reviews", label: t(ui, "subnavReviews") },
   ];
-  subnav[0].label = subnav[0].label.charAt(0).toUpperCase() + subnav[0].label.slice(1);
 
   return (
     <>
@@ -44,76 +62,72 @@ export function SolutionView({ solution, details, faqs, testimonials, ui }: Prop
       <SolutionSubnav items={subnav} cta={{ label: t(ui, "calculateSavings"), href: "/calculator" }} ui={ui} />
       <Systems details={details} ui={ui} />
       <HowItWorks details={details} ui={ui} />
-      <Packages details={details} ui={ui} />
-      <Details details={details} />
-      <Benefits solution={solution} details={details} />
-      <FaqBlock details={details} faqs={faqs} />
-      <Reviews details={details} testimonials={testimonials} />
+      <Packages details={details} />
+      <NetMetering details={details} />
+      <ProjectsFaq details={details} />
       <CtaBand details={details} />
     </>
   );
 }
 
 /* ───────────────────────────── Hero ───────────────────────────── */
-function Hero({ solution, details, ui }: Pick<Props, "solution" | "details" | "ui">) {
+function Hero({ solution, details, ui }: Props) {
   return (
-    <section className="relative isolate overflow-hidden bg-[linear-gradient(180deg,var(--color-sky-200)_0%,var(--color-day-100)_45%,var(--color-dawn-50)_100%)] pb-[clamp(48px,7vw,80px)] pt-[calc(var(--site-top)+24px)]">
+    <section className="relative isolate overflow-hidden bg-[linear-gradient(180deg,var(--color-sky-200)_0%,var(--color-day-100)_45%,var(--color-dawn-50)_100%)] pb-[80px] pt-[var(--site-top)]">
       <div
         aria-hidden
         className="fx-grid pointer-events-none absolute inset-x-0 top-0 -z-10 h-full max-h-[900px] [mask-image:radial-gradient(90%_75%_at_50%_20%,black,transparent_80%)]"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-40 -top-44 -z-10 size-[620px] rounded-full bg-[radial-gradient(circle,rgb(255_201_60/0.55),transparent_65%)]"
+        className="pointer-events-none absolute -right-[160px] -top-[180px] -z-10 size-[620px] rounded-full bg-[radial-gradient(circle,rgb(255_201_60/0.55),transparent_65%)]"
       />
-      <div className="container-site grid items-center gap-10 lg:grid-cols-[1.05fr_.95fr] lg:gap-14">
-        <div className="flex min-w-0 flex-col gap-5">
-          <nav aria-label={t(ui, "breadcrumb")} className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">
-            <ol className="flex flex-wrap items-center gap-x-1.5">
-              <li>
-                <Link href="/" className="inline-flex min-h-11 items-center hover:text-sun-700 focus-visible:underline">{t(ui, "home")}</Link>
-              </li>
-              <li aria-hidden>/</li>
-              <li>{t(ui, "solutions")}</li>
-              <li aria-hidden>/</li>
-              <li aria-current="page" className="text-sun-700">{solution.title}</li>
-            </ol>
-          </nav>
-          <h1 className="font-display text-[clamp(2.75rem,5.2vw,4.6rem)] font-bold leading-[0.98] tracking-[-0.045em] text-balance">
-            <RichText text={details.heading} />
+      <div className={cn("container-site relative", SPLIT)}>
+        <div className="flex flex-col gap-[22px]">
+          <span className={`${MONO} text-[11px] text-ink-muted`}>
+            {t(ui, "home")} / {t(ui, "solutions")} / <span className="text-sun-700">{solution.title}</span>
+          </span>
+          <h1 className="m-0 font-display text-[clamp(44px,5.6vw,84px)] font-bold leading-[0.98] tracking-[-0.045em]">
+            <Rich text={details.heading} hl={HL_SUN} />
           </h1>
-          <p className="max-w-[540px] text-[clamp(1rem,1.4vw,1.1875rem)] leading-relaxed text-navy-900/80">{solution.summary}</p>
-          <div className="flex flex-wrap gap-2.5">
-            <Button asChild variant="navy" size="xl">
-              <Link href={details.primaryCta.href}>{details.primaryCta.label} →</Link>
-            </Button>
-            <Button asChild variant="line" size="xl">
-              <Link href={details.secondaryCta.href}>{details.secondaryCta.label}</Link>
-            </Button>
+          <p className="m-0 max-w-[540px] text-[19px] leading-[1.6] text-navy-900/85">{details.lead}</p>
+          <div className="flex flex-wrap gap-[10px]">
+            <Link href={details.primaryCta.href} className={`${MONO} rounded-[14px] bg-navy-900 px-[22px] py-[17px] text-[12px] text-white`}>
+              {details.primaryCta.label} →
+            </Link>
+            <Link
+              href={details.secondaryCta.href}
+              className={`${MONO} rounded-[14px] border border-navy-900/15 bg-white px-[22px] py-[17px] text-[12px] text-navy-900`}
+            >
+              {details.secondaryCta.label}
+            </Link>
           </div>
-          <dl className="mt-1.5 grid max-w-[560px] grid-cols-2 gap-2.5 sm:grid-cols-3">
-            {details.stats.map((s, i) => (
-              <div key={s.label} className={cn("glass rounded-2xl p-3.5", i === 2 && "col-span-2 sm:col-span-1")}>
-                <dt className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">{s.label}</dt>
-                <dd className={cn("font-display text-[22px] font-bold", TONE_TEXT[s.tone])}>{s.value}</dd>
+          <div className="mt-[6px] grid max-w-[560px] grid-cols-3 gap-[10px] max-[640px]:grid-cols-2 max-[640px]:[&>div:last-child]:col-[1/-1]">
+            {details.stats.map((s) => (
+              <div key={s.label} className="glass min-w-0 rounded-[16px] p-[14px]">
+                <span className={`${MONO} block text-[11px] text-ink-muted`}>{s.label}</span>
+                <span className={cn("font-display text-[22px] font-bold", TONE_COLOR[s.tone])}>{s.value}</span>
               </div>
             ))}
-          </dl>
+          </div>
         </div>
-        <PhotoFrame
-          className="h-[320px] sm:h-[420px] lg:h-[520px]"
-          chips={<Hud>{t(ui, "systemOnline")}</Hud>}
-          caption={<span className="glass rounded-[10px] px-3 py-2 font-label text-[11px] uppercase tracking-[0.12em]">{solution.caption}</span>}
-        >
-          <Image
-            src={solution.image.src}
-            alt={solution.image.alt}
-            fill
-            priority
-            sizes="(min-width: 1024px) 45vw, 100vw"
-            className="object-cover"
-          />
-        </PhotoFrame>
+        <figure className="corners relative m-0 box-border h-[520px] p-[10px] max-[1000px]:h-[340px]">
+          <div className="relative size-full overflow-hidden rounded-[18px]">
+            <Image
+              src={solution.image.src}
+              alt={solution.image.alt}
+              fill
+              priority
+              sizes="(min-width: 1001px) 45vw, 100vw"
+              className="object-cover"
+            />
+            <span className="fx-scan" aria-hidden />
+          </div>
+          <Hud className="absolute left-[22px] top-[22px] z-[2]">{t(ui, "systemOnline")}</Hud>
+          <figcaption className={`${MONO} glass absolute bottom-[24px] left-[24px] rounded-[10px] px-[12px] py-[9px] text-[11px]`}>
+            {solution.caption}
+          </figcaption>
+        </figure>
       </div>
     </section>
   );
@@ -123,263 +137,262 @@ function Hero({ solution, details, ui }: Pick<Props, "solution" | "details" | "u
 function Systems({ details, ui }: { details: SolutionDetails; ui: UiLabels }) {
   const { systems } = details;
   return (
-    <Section id="systems" tone="white" className={ANCHOR}>
-      <SectionHeader eyebrow={systems.eyebrow} heading={systems.heading} />
-      <Reveal className="grid gap-4 md:grid-cols-2">
-        {systems.cards.map((c) => (
-          <article
-            key={c.title}
-            data-reveal
-            className={cn("glass-card flex min-w-0 flex-col gap-4 rounded-3xl p-6 sm:p-8", c.featured && "ring-2 ring-sun-500")}
-          >
-            <header className="flex flex-wrap items-center justify-between gap-2">
-              <h3 className="font-display text-[28px] font-bold tracking-[-0.03em]">{c.title}</h3>
-              <span
-                className={cn(
-                  "rounded-full px-3 py-1.5 font-label text-[11px] uppercase tracking-[0.12em]",
-                  c.featured ? "bg-dawn-50 text-sun-700" : "bg-day-100 text-sky-600",
-                )}
-              >
-                {c.tag}
+    <section id="systems" className={cn(SECTION, "scroll-mt-[calc(var(--site-top)+56px)] bg-white")}>
+      <div className="container-site">
+        <span className={EYEBROW}>{systems.eyebrow}</span>
+        <h2 className={cn(H2, "mb-[40px] mt-[16px]")}>
+          <Rich text={systems.heading} hl={HL_BLUE} />
+        </h2>
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-[18px]">
+          {systems.cards.map((c) => (
+            <div
+              key={c.title}
+              className={cn(CARD, "flex min-w-0 flex-col gap-[16px] rounded-[24px] p-[30px]", c.featured && "border-sun-500!")}
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-display text-[28px] font-bold">{c.title}</span>
+                <span
+                  className={cn(
+                    MONO,
+                    "rounded-full px-[11px] py-[7px] text-[11px]",
+                    c.featured ? "bg-dawn-50 text-sun-700" : "bg-day-100 text-sky-600",
+                  )}
+                >
+                  {c.tag}
+                </span>
+              </div>
+              <p className="m-0 leading-[1.6] text-ink-muted">{c.description}</p>
+              <ul className="m-0 flex list-none flex-col gap-[10px] p-0">
+                {c.points.map((p) => (
+                  <li key={p} className="flex items-start gap-[10px]">
+                    <span className="grid size-[22px] flex-none place-items-center rounded-full bg-leaf-500 text-white">
+                      <Icon name="check" className="size-3" strokeWidth={2.5} />
+                    </span>
+                    <span>{p}</span>
+                  </li>
+                ))}
+              </ul>
+              <span className={`${MONO} mt-auto border-t border-navy-900/10 pt-[14px] text-[11px] text-ink-muted`}>
+                {t(ui, "bestFor", { value: c.best })}
               </span>
-            </header>
-            <p className="leading-relaxed text-ink-muted">{c.description}</p>
-            <ul className="flex flex-col gap-2.5">
-              {c.points.map((p) => (
-                <li key={p} className="flex items-start gap-2.5">
-                  <span className="mt-0.5 grid size-[22px] shrink-0 place-items-center rounded-full bg-leaf-500 text-white">
-                    <Icon name="check" className="size-3.5" strokeWidth={2.5} />
-                  </span>
-                  <span>{p}</span>
-                </li>
-              ))}
-            </ul>
-            <p className="mt-auto border-t border-line pt-3.5 font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">
-              {t(ui, "bestFor", { value: c.best })}
-            </p>
-          </article>
-        ))}
-      </Reveal>
-    </Section>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
 /* ───────────────────────────── 02 How it works ───────────────────────────── */
 function NodeArt({ kind, ui }: { kind: "sun" | "panel" | "inverter"; ui: UiLabels }) {
   if (kind === "sun") {
-    return <span aria-hidden className="mx-auto block size-14 rounded-full bg-[radial-gradient(circle,var(--color-sun-300),var(--color-sun-500))] shadow-[0_0_30px_rgb(255_138_0/0.5)]" />;
+    return <span aria-hidden className="mx-auto mb-[12px] block size-[56px] rounded-full bg-[radial-gradient(circle,var(--color-sun-300),var(--color-sun-500))]" />;
   }
   if (kind === "panel") {
     return (
       <span
         aria-hidden
-        className="mx-auto block h-11 w-16 rounded-md bg-[repeating-linear-gradient(90deg,rgb(255_255_255/0.5)_0_1px,transparent_1px_25%),linear-gradient(160deg,var(--color-sky-500),var(--color-navy-700))]"
+        className="mx-auto mb-[18px] block h-[44px] w-[64px] rounded-[6px] bg-[repeating-linear-gradient(90deg,rgb(255_255_255/0.5)_0_1px,transparent_1px_25%),linear-gradient(160deg,var(--color-sky-500),var(--color-navy-700))]"
       />
     );
   }
   return (
-    <span aria-hidden className="mx-auto grid size-14 place-items-center rounded-2xl bg-navy-900 font-label text-[11px] text-sun-300">
+    <span className={`${MONO} mx-auto mb-[12px] grid size-[56px] place-items-center rounded-[14px] bg-navy-900 text-[11px] text-sun-300`}>
       {t(ui, "inverterAbbr")}
     </span>
   );
 }
 
-function FlowArrow() {
-  return <ArrowRight aria-hidden className="mx-auto size-7 shrink-0 rotate-90 text-sun-500 lg:rotate-0" strokeWidth={1.75} />;
+function Arrow() {
+  return (
+    <span aria-hidden className="text-[26px] text-sun-500 max-[1000px]:rotate-90 max-[1000px]:self-center">
+      →
+    </span>
+  );
 }
 
 function HowItWorks({ details, ui }: { details: SolutionDetails; ui: UiLabels }) {
   const { how } = details;
   return (
-    <Section id="how" tone="tint" className={ANCHOR}>
-      <SectionHeader eyebrow={how.eyebrow} heading={how.heading} />
-      <ol className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-3">
-        {how.nodes.map((n) => (
-          <li key={n.title} className="contents">
-            <div className={cn("glass-card flex min-w-0 flex-1 flex-col gap-3 rounded-[20px] p-5 text-center", n.kind === "inverter" && "ring-2 ring-sun-500")}>
-              <NodeArt kind={n.kind} ui={ui} />
-              <span className="font-display font-bold">{n.title}</span>
-              <span className="text-[13px] text-ink-muted">{n.note}</span>
-            </div>
-            <FlowArrow />
-          </li>
-        ))}
-        <li className="flex min-w-0 flex-[1.2] flex-col gap-2.5">
-          {how.outputs.map((o) => (
-            <div key={o.title} className="glass-card flex items-center justify-between gap-3 rounded-2xl px-4 py-3.5">
-              <span className="font-display font-bold">{o.title}</span>
-              <span className={cn("text-right font-label text-[11px] uppercase tracking-[0.12em]", TONE_TEXT[o.tone])}>{o.note}</span>
-            </div>
+    <section id="how" className={cn(SECTION, "scroll-mt-[calc(var(--site-top)+56px)] bg-day-100")}>
+      <div className="container-site">
+        <span className={EYEBROW}>{how.eyebrow}</span>
+        <h2 className={cn(H2, "mb-[44px] mt-[16px]")}>{how.heading}</h2>
+        <div className="flex items-center gap-[10px] max-[1000px]:flex-col max-[1000px]:items-stretch">
+          {how.nodes.map((n) => (
+            <FlowNode key={n.title} n={n} ui={ui} />
           ))}
-        </li>
-      </ol>
-    </Section>
+          <div className="flex min-w-0 flex-[1.2] flex-col gap-[10px]">
+            {how.outputs.map((o) => (
+              <div key={o.title} className={cn(CARD, "flex justify-between rounded-[16px] px-[16px] py-[14px]")}>
+                <span className="font-display font-bold">{o.title}</span>
+                <span className={cn(MONO, "text-[11px]", TONE_COLOR[o.tone])}>{o.note}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FlowNode({ n, ui }: { n: SolutionDetails["how"]["nodes"][number]; ui: UiLabels }) {
+  return (
+    <>
+      <div className={cn(CARD, "min-w-0 flex-1 rounded-[20px] p-[22px] text-center", n.kind === "inverter" && "border-sun-500!")}>
+        <NodeArt kind={n.kind} ui={ui} />
+        <span className="font-display font-bold">{n.title}</span>
+        <span className="mt-[4px] block text-[13px] text-ink-muted">{n.note}</span>
+      </div>
+      <Arrow />
+    </>
   );
 }
 
 /* ───────────────────────────── 03 Packages ───────────────────────────── */
-function Packages({ details, ui }: { details: SolutionDetails; ui: UiLabels }) {
+function Packages({ details }: { details: SolutionDetails }) {
   const p = details.packages;
   return (
-    <Section id="packages" tone="white" className={ANCHOR}>
-      <SectionHeader eyebrow={p.eyebrow} heading={p.heading} lead={p.lead} />
-      <Reveal className="grid gap-4 lg:grid-cols-3">
-        {p.items.map((it) => (
-          <article
-            key={it.tag}
-            data-reveal
-            className={cn(
-              "glass-card flex min-w-0 flex-col gap-3.5 rounded-3xl p-7",
-              it.featured && "bg-[linear-gradient(170deg,var(--color-dawn-50),white_55%)] ring-2 ring-sun-500",
-            )}
-          >
-            <span className={cn("font-label text-[11px] uppercase tracking-[0.12em]", it.featured ? "text-sun-700" : "text-ink-muted")}>
-              {it.featured ? "★ " : ""}{it.tag}
-            </span>
-            <p className="font-display text-[46px] font-bold leading-none tracking-[-0.04em]">
-              {it.kwp}
-              <span className="text-lg text-ink-muted"> kWp</span>
-            </p>
-            <p className="text-ink-muted">
-              {p.billLabel} <b className="text-navy-900">{it.bill}</b>
-              {p.billUnit}
-            </p>
-            <dl className="grid grid-cols-2 gap-2">
-              <div className="rounded-xl bg-day-50 p-3">
-                <dt className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">{t(ui, "panels")}</dt>
-                <dd className="font-display font-bold">{it.panels}</dd>
+    <section id="packages" className={cn(SECTION, "scroll-mt-[calc(var(--site-top)+56px)] bg-white")}>
+      <div className="container-site">
+        <div className="mb-[40px] flex flex-wrap items-end justify-between gap-[24px]">
+          <div>
+            <span className={EYEBROW}>{p.eyebrow}</span>
+            <h2 className={cn(H2, "mb-0 mt-[16px]")}>{p.heading}</h2>
+          </div>
+          <p className="m-0 max-w-[380px] leading-[1.6] text-ink-muted">{p.lead}</p>
+        </div>
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-[18px]">
+          {p.items.map((it) => (
+            <div
+              key={it.tag}
+              className={cn(
+                CARD,
+                "flex min-w-0 flex-col gap-[14px] rounded-[24px] p-[28px]",
+                it.featured && "border-sun-500! bg-[linear-gradient(170deg,var(--color-dawn-50),white_55%)]!",
+              )}
+            >
+              <span className={cn(MONO, "text-[11px]", it.featured ? "text-sun-700" : "text-ink-muted")}>
+                {it.featured ? "★ " : ""}
+                {it.tag}
+              </span>
+              <span className="font-display text-[46px] font-bold tracking-[-0.04em]">
+                {it.kwp}
+                <span className="text-[18px] text-ink-muted"> kWp</span>
+              </span>
+              <span className="text-ink-muted">
+                {p.billLabel} <b className="text-navy-900">{it.bill}</b>
+                {p.billUnit}
+              </span>
+              <div className="grid grid-cols-2 gap-[8px]">
+                <div className="min-w-0 rounded-[12px] bg-day-50 p-[12px]">
+                  <span className={`${MONO} block text-[11px] text-ink-muted`}>Panels</span>
+                  <span className="font-display font-bold">{it.panels}</span>
+                </div>
+                <div className="min-w-0 rounded-[12px] bg-day-50 p-[12px]">
+                  <span className={`${MONO} block text-[11px] text-ink-muted`}>{p.priceLabel}</span>
+                  <span className="font-display font-bold">{it.price}</span>
+                </div>
               </div>
-              <div className="rounded-xl bg-day-50 p-3">
-                <dt className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">{p.priceLabel}</dt>
-                <dd className="font-display font-bold">{it.price}</dd>
-              </div>
-            </dl>
-            <Button asChild variant={it.featured ? "sun" : "line"} size="xl" className="mt-auto w-full">
-              <Link href="/contact">{p.ctaLabel} →</Link>
-            </Button>
-          </article>
-        ))}
-      </Reveal>
-    </Section>
+              <Link
+                href="/contact"
+                className={cn(
+                  MONO,
+                  "mt-auto rounded-[14px] p-[15px] text-center text-[12px] text-navy-900",
+                  it.featured ? "bg-[linear-gradient(135deg,var(--color-sun-300),var(--color-sun-500)_50%,var(--color-sun-600))]" : "bg-day-50",
+                )}
+              >
+                {p.ctaLabel} →
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
-/* ───────────────────────────── 04 Details (net metering / ROI / O&M) ───────────────────────────── */
-function Details({ details }: { details: SolutionDetails }) {
+/* ───────────────────────────── 04 Net metering ───────────────────────────── */
+function NetMetering({ details }: { details: SolutionDetails }) {
   const d = details.details;
   return (
-    <Section id="details" tone="dawn" className={ANCHOR}>
-      <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-        <div className="flex min-w-0 flex-col gap-4">
-          <Eyebrow>{d.eyebrow}</Eyebrow>
-          <h2 className={h2Class}>
-            <RichText text={d.heading} />
-          </h2>
-          <p className="max-w-[520px] text-[17px] leading-relaxed text-ink-muted">{d.lead}</p>
+    <section
+      id="net-metering"
+      className={cn(SECTION, "scroll-mt-[calc(var(--site-top)+56px)] bg-[linear-gradient(180deg,var(--color-dawn-50),var(--color-dawn-100))]")}
+    >
+      <div className={cn("container-site", SPLIT)}>
+        <div className="flex flex-col gap-[18px]">
+          <span className={EYEBROW}>{d.eyebrow}</span>
+          <h2 className={cn(H2, "m-0")}>{d.heading}</h2>
+          <p className="m-0 text-[17px] leading-[1.65] text-ink-muted">{d.lead}</p>
         </div>
-        <ol className="flex min-w-0 flex-col gap-3">
+        <div className="flex flex-col gap-[12px]">
           {d.steps.map((s, i) => (
-            <li key={s.title} className="glass-card flex items-center gap-4 rounded-[18px] px-5 py-4">
-              <span className="grid size-[46px] shrink-0 place-items-center rounded-full bg-navy-900 font-label text-xs text-sun-300">
+            <div key={s.title} className={cn(CARD, "flex items-center gap-[16px] rounded-[18px] px-[20px] py-[18px]")}>
+              <span className={`${MONO} grid size-[46px] flex-none place-items-center rounded-full bg-navy-900 text-[12px] text-sun-300`}>
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span>
                 <span className="block font-display font-bold">{s.title}</span>
-                <span className="text-sm text-ink-muted">{s.description}</span>
+                <span className="text-[14px] text-ink-muted">{s.description}</span>
               </span>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </Section>
-  );
-}
-
-/* ───────────────────────────── 05 Benefits ───────────────────────────── */
-function Benefits({ solution, details }: Pick<Props, "solution" | "details">) {
-  return (
-    <Section id="benefits" tone="light" className={ANCHOR}>
-      <SectionHeader eyebrow={details.benefits.eyebrow} heading={details.benefits.heading} />
-      <Reveal className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {solution.features.map((f, i) => {
-          const b = BENEFIT_ICONS[i % BENEFIT_ICONS.length];
-          return (
-            <div key={f} data-reveal className="glass-card flex items-center gap-4 rounded-[20px] p-5">
-              <span className="glow-tile size-12 rounded-[14px]" style={{ "--c": TONE[b.tone] } as React.CSSProperties}>
-                <Icon name={b.icon} className="size-5" />
-              </span>
-              <span className="font-display text-[17px] font-bold leading-snug">{f}</span>
             </div>
-          );
-        })}
-      </Reveal>
-    </Section>
-  );
-}
-
-/* ───────────────────────────── 06 FAQ ───────────────────────────── */
-function FaqBlock({ details, faqs }: { details: SolutionDetails; faqs: Faq[] }) {
-  return (
-    <Section id="faq" tone="white" className={ANCHOR}>
-      <div className="grid items-start gap-8 lg:grid-cols-[.8fr_1.2fr] lg:gap-14">
-        <div className="flex flex-col gap-4">
-          <Eyebrow>{details.faq.eyebrow}</Eyebrow>
-          <h2 className={h2Class}>
-            <RichText text={details.faq.heading} />
-          </h2>
-        </div>
-        <Accordion type="single" collapsible className="glass-card rounded-[22px] px-5 py-1 sm:px-6">
-          {faqs.map((q, i) => (
-            <AccordionItem key={q.question} value={`q${i}`} className="border-line">
-              <AccordionTrigger className="min-h-11 items-center gap-3 py-5 font-display text-[17px] font-bold">{q.question}</AccordionTrigger>
-              <AccordionContent className="pb-5 text-[15px] leading-relaxed text-ink-muted">{q.answer}</AccordionContent>
-            </AccordionItem>
           ))}
-        </Accordion>
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }
 
-/* ───────────────────────────── 07 Reviews ───────────────────────────── */
-function Reviews({ details, testimonials }: { details: SolutionDetails; testimonials: Testimonial[] }) {
-  const list = testimonials.slice(0, 3);
-  if (!list.length) return null;
+/* ───────────────────────────── 05 Projects + FAQ ───────────────────────────── */
+function ProjectsFaq({ details }: { details: SolutionDetails }) {
+  const { projects, faq } = details;
   return (
-    <Section id="reviews" tone="tint" className={ANCHOR}>
-      <SectionHeader eyebrow={details.reviews.eyebrow} heading={details.reviews.heading} />
-      <ul className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:-mx-6 sm:px-6 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden">
-        {list.map((r, i) => (
-          <li key={`${i}-${r.name}`} className="glass-card flex w-[86%] shrink-0 snap-start flex-col gap-4 rounded-3xl p-6 md:w-auto">
-            <Stars rating={r.rating} />
-            <blockquote className="leading-relaxed text-navy-900/85">“{r.quote}”</blockquote>
-            <footer className="mt-auto flex items-center gap-3">
-              <span className="glow-tile size-11 rounded-full font-display font-bold" style={{ "--c": TONE[r.tone] } as React.CSSProperties}>
-                {r.initial}
-              </span>
-              <span>
-                <span className="block font-display font-bold">{r.name}</span>
-                <span className="text-[13px] text-ink-muted">{r.roleLocation}</span>
-              </span>
-            </footer>
-          </li>
-        ))}
-      </ul>
-    </Section>
+    <section id="faq" className={cn(SECTION, "scroll-mt-[calc(var(--site-top)+56px)] bg-white")}>
+      <div className="container-site">
+        <span className={EYEBROW}>{projects.eyebrow}</span>
+        <div className="mb-[80px] mt-[28px] grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-[16px]">
+          {projects.items.map((pr) => (
+            <figure key={pr.src} className="relative m-0 h-[300px] overflow-hidden rounded-[20px]">
+              <Image src={pr.src} alt={pr.alt} fill sizes="(min-width: 1001px) 33vw, 100vw" className="object-cover" />
+              <figcaption
+                className={`${MONO} glass absolute inset-x-[12px] bottom-[12px] flex justify-between rounded-[10px] px-[12px] py-[10px] text-[11px]`}
+              >
+                <span>{pr.location}</span>
+                <span className="text-sun-700">{pr.kwp}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <div className={cn(SPLIT, "items-start")}>
+          <h2 className="m-0 font-display text-[clamp(32px,4vw,52px)] font-bold leading-[1.02] tracking-[-0.04em]">{faq.heading}</h2>
+          <ul className={cn(CARD, "m-0 list-none rounded-[22px] px-[24px] py-[4px]")}>
+            {faq.questions.map((q) => (
+              <li
+                key={q}
+                className="flex min-h-[44px] items-center justify-between gap-[12px] border-b border-navy-900/10 py-[20px] text-left font-display text-[17px] font-bold"
+              >
+                {q} <span aria-hidden className="font-normal text-ink-muted">+</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
   );
 }
 
 /* ───────────────────────────── CTA ───────────────────────────── */
 function CtaBand({ details }: { details: SolutionDetails }) {
   return (
-    <section className="fx-dark">
-      <div className="container-site flex flex-wrap items-center justify-between gap-6 py-16">
-        <h2 className="max-w-[640px] font-display text-[clamp(30px,4vw,52px)] font-extrabold leading-none tracking-[-0.045em] text-balance">
+    <section className="bg-[linear-gradient(120deg,var(--color-sun-300),var(--color-sun-500)_45%,var(--color-sun-600))]">
+      <div className="container-site flex flex-wrap items-center justify-between gap-[24px] py-[64px]">
+        <h2 className="m-0 max-w-[640px] font-display text-[clamp(32px,4vw,56px)] font-extrabold leading-none tracking-[-0.045em]">
           {details.cta.heading}
         </h2>
-        <Button asChild variant="sun" size="xl" className="fx-sheen h-14 px-7 text-[13px]">
-          <Link href="/contact">{details.cta.label} »</Link>
-        </Button>
+        <Link href="/contact" className={`${MONO} rounded-[14px] bg-navy-900 px-[26px] py-[19px] text-[13px] text-white`}>
+          {details.cta.label} »
+        </Link>
       </div>
     </section>
   );

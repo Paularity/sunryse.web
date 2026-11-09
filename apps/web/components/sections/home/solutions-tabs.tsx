@@ -76,7 +76,7 @@ export function SolutionsTabs({ content, solutions, ui }: { content: HomeContent
         role="tabpanel"
         id={`${uid}-panel`}
         aria-labelledby={`${uid}-tab-${idx}`}
-        className="grid items-center gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)_minmax(0,0.8fr)] lg:gap-10"
+        className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-10"
       >
         <div className="flex min-w-0 flex-col gap-[18px]">
           <Hud light className="self-start">
@@ -95,7 +95,7 @@ export function SolutionsTabs({ content, solutions, ui }: { content: HomeContent
         </div>
 
         <PhotoFrame
-          className="h-[300px] lg:h-[440px]"
+          className="h-[300px] sm:h-[440px]"
           chips={
             <>
               <Hud>{t(ui, "systemOnline")}</Hud>

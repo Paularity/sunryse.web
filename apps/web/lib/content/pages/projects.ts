@@ -11,7 +11,7 @@ export type ProjectsPage = {
     chip: string; image: Img; meta: string; title: string; summary: string;
     stats: { label: string; value: string; tone: Tone }[]; cta: Link;
   };
-  grid: { total: string; allLabel: string; allNote: string };
+  grid: { total: string; cardStats: { text: string; tone: "muted" | "leaf" }[] };
   cta: { heading: string; label: string; href: string };
 };
 

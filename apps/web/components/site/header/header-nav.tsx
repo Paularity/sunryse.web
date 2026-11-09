@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
 import { isActive } from "./is-active";
 
 const itemClass =
-  "relative inline-flex min-h-11 h-auto items-center rounded-[10px] px-3 py-0 font-label text-xs uppercase tracking-[0.12em] text-navy-900 transition-colors hover:bg-sky-500/10 focus:bg-sky-500/10 aria-[current]:bg-sun-500/10 aria-[current]:text-sun-700 aria-[current]:after:absolute aria-[current]:after:inset-x-3 aria-[current]:after:bottom-1.5 aria-[current]:after:h-0.5 aria-[current]:after:rounded-sm aria-[current]:after:bg-[linear-gradient(90deg,var(--color-sun-300),var(--color-sun-600))] aria-[current]:after:shadow-[0_0_10px_rgb(255_138_0/0.8)] aria-[current]:after:content-['']";
+  "relative inline-flex min-h-11 h-auto items-center rounded-[10px] px-2 py-0 xl:px-3 font-label text-xs uppercase tracking-[0.12em] text-navy-900 transition-colors hover:bg-sky-500/10 focus:bg-sky-500/10 aria-[current]:bg-sun-500/10 aria-[current]:text-sun-700 aria-[current]:after:absolute aria-[current]:after:inset-x-2 xl:aria-[current]:after:inset-x-3 aria-[current]:after:bottom-1.5 aria-[current]:after:h-0.5 aria-[current]:after:rounded-sm aria-[current]:after:bg-[linear-gradient(90deg,var(--color-sun-300),var(--color-sun-600))] aria-[current]:after:shadow-[0_0_10px_rgb(255_138_0/0.8)] aria-[current]:after:content-['']";
 
 const CATEGORIES: { key: ServiceCategory; labelKey: string; color: string }[] = [
   { key: "systems", labelKey: "categorySystems", color: "var(--color-sky-600)" },
@@ -30,8 +30,9 @@ const CATEGORIES: { key: ServiceCategory; labelKey: string; color: string }[] = 
   { key: "specialty", labelKey: "categorySpecialty", color: "var(--color-leaf-600)" },
 ];
 
+/** Panels span the header bar width (container 1320px − 40px gutters), 10px below it, like the design. */
 const contentClass =
-  "p-0 group-data-[viewport=false]/navigation-menu:mt-2.5 group-data-[viewport=false]/navigation-menu:overflow-visible group-data-[viewport=false]/navigation-menu:rounded-[24px] group-data-[viewport=false]/navigation-menu:bg-transparent group-data-[viewport=false]/navigation-menu:shadow-none group-data-[viewport=false]/navigation-menu:ring-0 md:w-full";
+  "p-0 group-data-[viewport=false]/navigation-menu:mt-2.5 group-data-[viewport=false]/navigation-menu:overflow-visible group-data-[viewport=false]/navigation-menu:rounded-[24px] group-data-[viewport=false]/navigation-menu:bg-transparent group-data-[viewport=false]/navigation-menu:shadow-none group-data-[viewport=false]/navigation-menu:ring-0 md:fixed md:left-1/2 md:top-[calc(var(--site-top)+10px)]! md:mt-0! md:w-[min(1240px,calc(100vw-80px))] md:-translate-x-1/2";
 
 const panelShadow = "shadow-[inset_0_1px_0_white,0_30px_70px_-24px_rgb(11_31_77/0.5)]";
 
@@ -95,7 +96,7 @@ function ServicesPanel({
   onNavigate: () => void;
 }) {
   return (
-    <div className={cn("glass grid grid-cols-[1fr_1fr_1fr_340px] gap-2 rounded-[24px] p-[22px]", panelShadow)}>
+    <div className={cn("grid grid-cols-[1fr_1fr_1fr_340px] gap-2 rounded-[24px] border border-white bg-white/95 p-[22px] backdrop-blur-xl", panelShadow)}>
       {CATEGORIES.map((cat) => {
         const items = services.filter((s) => s.category === cat.key).sort((a, b) => a.order - b.order);
         return (
@@ -155,7 +156,7 @@ function ServicesPanel({
 
 function SolutionsPanel({ solutions, onNavigate }: { solutions: Solution[]; onNavigate: () => void }) {
   return (
-    <div className={cn("glass grid grid-cols-3 gap-3.5 rounded-[24px] p-[22px]", panelShadow)}>
+    <div className={cn("grid grid-cols-3 gap-3.5 rounded-[24px] border border-white bg-white/95 p-[22px] backdrop-blur-xl", panelShadow)}>
       {solutions.map((s) => (
         <NavigationMenuLink key={s.slug} asChild className="group relative block min-h-[220px] overflow-hidden rounded-[18px] p-0">
           <Link href={`/solutions/${s.slug}`} onClick={onNavigate}>

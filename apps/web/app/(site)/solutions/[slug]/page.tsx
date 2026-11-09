@@ -4,7 +4,7 @@ import { Suspense } from "react";
 
 import { DetailSkeleton } from "@/components/pages/detail-skeleton";
 import { SolutionView } from "@/components/pages/solution/solution-view";
-import { getFaqs, getSite, getSolution, getTestimonials } from "@/lib/content";
+import { getSite, getSolution } from "@/lib/content";
 import { getSolutionDetails, SOLUTION_SLUGS } from "@/lib/content/pages/solution";
 
 type Params = { slug: string };
@@ -36,9 +36,9 @@ export default function SolutionPage({ params }: { params: Promise<Params> }) {
 
 async function SolutionContent({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
-  const [solution, faqs, testimonials, site] = await Promise.all([getSolution(slug), getFaqs(), getTestimonials(), getSite()]);
+  const [solution, site] = await Promise.all([getSolution(slug), getSite()]);
   const details = await getSolutionDetails(slug);
   if (!solution || !details) notFound();
 
-  return <SolutionView solution={solution} details={details} faqs={faqs} testimonials={testimonials} ui={site.ui} />;
+  return <SolutionView solution={solution} details={details} ui={site.ui} />;
 }

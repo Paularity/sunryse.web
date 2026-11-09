@@ -29,11 +29,11 @@ export function TestimonialsSection({ content, testimonials }: { content: HomeCo
             </linearGradient>
           </defs>
         </svg>
-        <div className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3 [scrollbar-width:none] sm:-mx-6 sm:px-6 lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-5 lg:overflow-visible lg:px-0 lg:pb-0 [&::-webkit-scrollbar]:hidden">
+        <div className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3 [scrollbar-width:none] sm:-mx-10 sm:px-10 lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-5 lg:overflow-visible lg:px-0 lg:pb-0 [&::-webkit-scrollbar]:hidden">
           {testimonials.map((t, i) => (
             <figure
               key={`${i}-${t.name}`}
-              className="glass-card fx-ring fx-lift relative m-0 flex w-[86%] shrink-0 snap-start flex-col gap-4 rounded-[22px] p-6 sm:w-[60%] lg:w-auto lg:p-7"
+              className="glass-card fx-ring fx-lift relative m-0 flex min-h-[320px] w-[84%] shrink-0 snap-start flex-col gap-[18px] rounded-[22px] p-[26px] sm:w-[72%] lg:min-h-0 lg:w-auto"
             >
               <span aria-hidden className="absolute inset-x-6 top-0 h-0.5 rounded bg-[linear-gradient(90deg,var(--color-sun-300),var(--color-sun-600),transparent)]" />
               <div className="flex items-center justify-between">

@@ -5,7 +5,7 @@ import type { HomeContent, Warranty } from "@/lib/content/types";
 export function WhySection({ content, warranty }: { content: HomeContent["why"]; warranty: Warranty[] }) {
   return (
     <Section tone="grid" labelledBy="why-h">
-      <div className="grid items-start gap-10 lg:grid-cols-[1.25fr_1fr] lg:gap-12">
+      <div className="grid items-start gap-14 lg:grid-cols-2">
         <div className="flex min-w-0 flex-col gap-4">
           <Eyebrow>{content.eyebrow}</Eyebrow>
           <h2 id="why-h" className={h2Class}>

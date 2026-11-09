@@ -22,6 +22,13 @@
     ],
     "cta": { "label": "Read the case study", "href": "/contact" }
   },
-  "grid": { "total": "[xx]", "allLabel": "View all projects", "allNote": "More installations coming soon" },
-  "cta": { "heading": "Your roof could be *next.*", "label": "Book a free survey", "href": "/contact" }
+  "grid": {
+    "total": "[xx]",
+    "cardStats": [
+      { "text": "[x] kWp", "tone": "muted" },
+      { "text": "[x] panels", "tone": "muted" },
+      { "text": "₱[x]/mo saved", "tone": "leaf" }
+    ]
+  },
+  "cta": { "heading": "Your roof could be next.", "label": "Book a free survey", "href": "/contact" }
 }
