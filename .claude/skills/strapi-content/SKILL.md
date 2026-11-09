@@ -5,31 +5,41 @@ description: Strapi 5 content model and Next.js data-fetching conventions for Su
 
 # Strapi content model (apps/cms)
 
+## Contract
+`apps/web/lib/content/types.ts` is the contract. `apps/web/lib/content/from-strapi.ts` maps Strapi -> those shapes
+(null when empty -> falls back to `apps/web/content/*.json`). Rich-heading strings keep `*x*` / `~x~` / `^x^` markers.
+
 ## Single types
-- **global** — logo, siteName, tagline, phone, email, address, socials[], nav (component), footer (component), seo
-- **homepage** — `sections` dynamic zone (see components below)
-- **calculator-config** — electricityRate (₱/kWh), peakSunHours, performanceRatio, panelWatt, panelAreaM2,
-  costPerKwpGridTie, costPerKwpHybrid, batteryCostPerKwh, exportCreditRate, rateEscalation, degradation,
-  gridEmissionFactor, kgCo2PerTree, disclaimer
+- **global** — siteName, tagline, phone, email, address, serviceArea, hours, license, messengerUrl, logo, socials[] (platform,url,label),
+  announcement {text,longText,link}, nav {links[] (label,href,menu?)}, quoteCta (link),
+  footer {blurb, columns[] {title, links[]}, legal[] links, copyright}, seo
+- **homepage** — `sections` dynamic zone, one component per home section, in page order:
+  hero (status, tagline, heading, subheading, billLabel, billDefault, cta, trust[], estimateLabel, image, imageCaption, liveChip),
+  benefits-strip (items[]), logo-marquee (heading = marquee label), solutions-showcase, services-grid (featuredSlugs[] + ctaHeading/ctaLabel),
+  process-steps (chip, steps[] tone), calculator-cta (chips[]), solar-vs-grid, impact-stats, projects-gallery, testimonials,
+  why-us (items[], warrantyLabel/Note), faq (openFirst), cta-banner (chip, formLabel, submitLabel, replyNote). `subheading` = contract `lead`.
+- **calculator-config** — rates/assumptions (decimals) + disclaimer + `presets[]` (shared.amount-item)
 
-## Collection types
-- **service** — title, slug, category (enum: systems | installation | specialty), icon, image, summary, body (blocks), features[], order
-- **solution** — title, slug (residential | commercial | industrial), hero, benefits[], idealFor[], typicalSize, savingsRange, faqs (relation)
-- **project** — title, slug, segment, location, sizeKwp, panels, monthlySavings, completedAt, gallery[], summary
-- **brand** — name, logo, category (panel | inverter | battery), url, order
-- **testimonial** — name, role/location, quote, rating, photo, project (relation)
-- **faq** — question, answer, category
-- **article** — title, slug, cover, excerpt, body, tags, publishedAt
-- **impact-stat** — label, value, suffix, order
-- **lead** — name, phone, email, segment, monthlyBill, address, message, calcSnapshot (json), source. Create-only via web API route.
+## Collection types (sorted by `order`)
+- **service** — title, slug, category (systems|installation|specialty), icon (IconName string), summary, order
+- **solution** — slug (residential|commercial|industrial), title, tag, summary, typicalSize, sizeMeter, metricLabel/Value/Meter, features[], caption, image
+- **project** — slug, title, segment, location, sizeKwp (TEXT, e.g. "12 kWp"), system, completed (text), image, order
+- **testimonial** — quote, name, roleLocation, rating, initial, tone, order
+- **impact-stat** — label, value (TEXT, e.g. "[000]+"), icon, tone, order
+- **warranty** — item, years (text), order
+- **faq** — question, answer, category, order · **brand** — name, category (panel|inverter|battery), order
+- **article** — title, slug, cover, excerpt, body, tags, publishedDate (not `publishedAt`)
+- **lead** — create-only via web API route; never publicly readable
 
-## Dynamic-zone components (`sections.*`)
-hero, benefits-strip, logo-marquee, solutions-showcase, services-grid, process-steps, calculator-cta,
-solar-vs-grid, impact-stats, projects-gallery, why-us, testimonials, faq, cta-banner.
-Each maps 1:1 to a React component in `apps/web/components/sections/<name>.tsx` via a registry.
+## Shared components
+link (label, href, newTab, menu?), feature-item (title, description, icon, tone), text-item (value), amount-item (amount),
+step, social, announcement, footer-column, footer, nav, seo. Tone enum: sun|amber|sky|leaf|flame|navy.
 
-Field notes: `article.publishedDate` (not `publishedAt`, which Strapi reserves); `testimonial.roleLocation` is one field.
-Seed: `pnpm --filter cms seed` (idempotent). Public role gets find/findOne on everything except `lead` (bootstrap in `src/index.ts`).
+## Seed
+`pnpm --filter cms seed` reads `apps/web/content/*.json` (single source of truth) and uploads `apps/web/public/images/**` to the media
+library (one file per distinct src+alt so alt text is per use). Idempotent: existing entries are skipped. `SEED_FORCE=1 pnpm --filter cms seed`
+overwrites existing entries from the JSON. Public role gets find/findOne on everything except `lead` (bootstrap in `src/index.ts`).
+After schema edits: `pnpm --filter cms strapi ts:generate-types`.
 
 ## Fetching (apps/web) — Next.js 16 Cache Components
 - `lib/strapi.ts`: `strapiFetch<T>(path, { query, tags })` is a `'use cache'` function with `cacheLife('hours')` and

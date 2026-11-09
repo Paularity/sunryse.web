@@ -51,6 +51,11 @@
     },
     "disclaimer": {
       "type": "text"
+    },
+    "presets": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.amount-item"
     }
   }
 }

@@ -1,0 +1,212 @@
+{
+  "residential": {
+    "heading": "Solar for your *~home~*",
+    "primaryCta": { "label": "Calculate my savings", "href": "/calculator" },
+    "secondaryCta": { "label": "Book a free survey", "href": "/contact" },
+    "stats": [
+      { "label": "Typical size", "value": "3–10 kWp", "tone": "navy" },
+      { "label": "Bill reduction", "value": "[xx–xx]%", "tone": "leaf" },
+      { "label": "Payback", "value": "[x–x] yrs", "tone": "sun" }
+    ],
+    "systems": {
+      "eyebrow": "[ 01 ] Choose your system",
+      "heading": "Grid-tie or *hybrid*?",
+      "cards": [
+        {
+          "title": "Grid-tie", "tag": "Lowest cost", "featured": false,
+          "description": "Panels power your home during the day; the grid covers nights. Simple, affordable, fastest payback.",
+          "points": ["Lowest upfront cost", "Net-metering credits for extra power", "Fewer components to maintain", "Upgradeable to hybrid later"],
+          "best": "homes with stable power and daytime use"
+        },
+        {
+          "title": "Hybrid + battery", "tag": "Most popular", "featured": true,
+          "description": "Adds a battery so you can use solar at night and keep essentials running during outages.",
+          "points": ["Backup power during brownouts", "Use stored solar at night", "Smart app shows every kWh", "Expandable battery capacity"],
+          "best": "areas with brownouts or evening-heavy use"
+        }
+      ]
+    },
+    "how": {
+      "eyebrow": "[ 02 ] How a hybrid system works",
+      "heading": "Sun in. *Savings* out.",
+      "nodes": [
+        { "kind": "sun", "title": "Sunlight", "note": "4–5 peak hours a day" },
+        { "kind": "panel", "title": "Solar panels", "note": "DC power" },
+        { "kind": "inverter", "title": "Hybrid inverter", "note": "Routes power where it’s needed" }
+      ],
+      "outputs": [
+        { "title": "1 · Your home", "note": "Used first", "tone": "leaf" },
+        { "title": "2 · Battery", "note": "Stored for night", "tone": "sky" },
+        { "title": "3 · The grid", "note": "Net-metering credit", "tone": "amber" }
+      ]
+    },
+    "packages": {
+      "eyebrow": "[ 03 ] Popular home systems",
+      "heading": "Pick a size that fits your *bill*",
+      "lead": "Every system is custom-designed after a site survey. These are starting points.",
+      "billLabel": "For bills around",
+      "billUnit": "/month",
+      "priceLabel": "Starts at",
+      "ctaLabel": "Get this quote",
+      "items": [
+        { "tag": "Starter", "kwp": "3", "bill": "₱5k–8k", "panels": "5 × 620W", "price": "[₱ price]", "featured": false },
+        { "tag": "Most chosen", "kwp": "6", "bill": "₱12k–15k", "panels": "10 × 620W", "price": "[₱ price]", "featured": true },
+        { "tag": "Large home", "kwp": "10", "bill": "₱20k–25k", "panels": "17 × 620W", "price": "[₱ price]", "featured": false }
+      ]
+    },
+    "details": {
+      "eyebrow": "[ 04 ] Net metering",
+      "heading": "Get paid for extra *sunshine*",
+      "lead": "Power you don’t use at midday flows to the grid and comes back as a credit on your bill. We handle the whole application.",
+      "steps": [
+        { "title": "We apply for you", "description": "Application and documents filed with your utility." },
+        { "title": "Inspection & meter swap", "description": "Utility inspects and installs a two-way meter." },
+        { "title": "Credits on your bill", "description": "Exported kWh are credited every month." }
+      ]
+    },
+    "benefits": { "eyebrow": "[ 05 ] Why homeowners go solar", "heading": "Built around your *home*" },
+    "faq": { "eyebrow": "[ 06 ] Questions", "heading": "Home solar *FAQ*" },
+    "reviews": { "eyebrow": "[ 07 ] Homeowner reviews", "heading": "Sun-powered, *homeowner* approved" },
+    "cta": { "heading": "Ready to power your home with the sun?", "label": "Inquire now" }
+  },
+  "commercial": {
+    "heading": "Solar for your *~business~*",
+    "primaryCta": { "label": "Calculate my savings", "href": "/calculator" },
+    "secondaryCta": { "label": "Request a site survey", "href": "/contact" },
+    "stats": [
+      { "label": "Typical size", "value": "10–100 kWp", "tone": "navy" },
+      { "label": "Daytime load covered", "value": "[xx–xx]%", "tone": "leaf" },
+      { "label": "Payback", "value": "[x–x] yrs", "tone": "sun" }
+    ],
+    "systems": {
+      "eyebrow": "[ 01 ] Choose your system",
+      "heading": "Grid-tie or *hybrid*?",
+      "cards": [
+        {
+          "title": "Grid-tie", "tag": "Best ROI", "featured": false,
+          "description": "Sized to your daytime consumption so most of the solar output is used on site, with the grid as backup.",
+          "points": ["Matches shop, office and school hours", "Net-metering and export credits", "Three-phase systems available", "Scalable as your load grows"],
+          "best": "businesses that operate mostly in daylight"
+        },
+        {
+          "title": "Hybrid + battery", "tag": "Resilient", "featured": true,
+          "description": "Adds storage to ride through outages and shift solar into evening hours.",
+          "points": ["Keep critical loads running in brownouts", "Shift solar to evening operations", "Monitoring for facility teams", "Expandable battery capacity"],
+          "best": "sites where downtime is costly or hours run late"
+        }
+      ]
+    },
+    "how": {
+      "eyebrow": "[ 02 ] How it works for your site",
+      "heading": "Sun in. *Overhead* down.",
+      "nodes": [
+        { "kind": "sun", "title": "Sunlight", "note": "Peaks when your business is open" },
+        { "kind": "panel", "title": "Rooftop array", "note": "DC power" },
+        { "kind": "inverter", "title": "Three-phase inverter", "note": "Feeds your distribution board" }
+      ],
+      "outputs": [
+        { "title": "1 · Your operations", "note": "Used first", "tone": "leaf" },
+        { "title": "2 · Battery (optional)", "note": "Backup & evening use", "tone": "sky" },
+        { "title": "3 · The grid", "note": "Export credit", "tone": "amber" }
+      ]
+    },
+    "packages": {
+      "eyebrow": "[ 03 ] Typical commercial systems",
+      "heading": "Start from your *load*",
+      "lead": "Commercial systems are engineered per site. These sizes are placeholders until your survey.",
+      "billLabel": "For bills around",
+      "billUnit": "/month",
+      "priceLabel": "Starts at",
+      "ctaLabel": "Request this quote",
+      "items": [
+        { "tag": "Small shop", "kwp": "[xx]", "bill": "[₱xx]", "panels": "[xx] × [xxx]W", "price": "[₱ price]", "featured": false },
+        { "tag": "Most chosen", "kwp": "[xx]", "bill": "[₱xx]", "panels": "[xx] × [xxx]W", "price": "[₱ price]", "featured": true },
+        { "tag": "Mall / school", "kwp": "[xxx]", "bill": "[₱xx]", "panels": "[xx] × [xxx]W", "price": "[₱ price]", "featured": false }
+      ]
+    },
+    "details": {
+      "eyebrow": "[ 04 ] Net metering & ROI",
+      "heading": "Clear *numbers* before you commit",
+      "lead": "We model your load profile, then report savings and payback so the decision is easy to take to your finance team.",
+      "steps": [
+        { "title": "Load & roof survey", "description": "We study your bills, hours of operation and roof." },
+        { "title": "ROI report", "description": "Projected savings and payback, with assumptions listed." },
+        { "title": "Permits & net metering", "description": "We prepare and file the utility application." }
+      ]
+    },
+    "benefits": { "eyebrow": "[ 05 ] Why businesses go solar", "heading": "Built around your *operations*" },
+    "faq": { "eyebrow": "[ 06 ] Questions", "heading": "Commercial solar *FAQ*" },
+    "reviews": { "eyebrow": "[ 07 ] Client reviews", "heading": "Trusted by *local* businesses" },
+    "cta": { "heading": "Ready to cut your operating costs with solar?", "label": "Inquire now" }
+  },
+  "industrial": {
+    "heading": "Solar for your *~industry~*",
+    "primaryCta": { "label": "Calculate my savings", "href": "/calculator" },
+    "secondaryCta": { "label": "Talk to an engineer", "href": "/contact" },
+    "stats": [
+      { "label": "Typical size", "value": "100 kWp+", "tone": "navy" },
+      { "label": "Demand charge relief", "value": "[xx–xx]%", "tone": "leaf" },
+      { "label": "Payback", "value": "[x–x] yrs", "tone": "sun" }
+    ],
+    "systems": {
+      "eyebrow": "[ 01 ] Choose your layout",
+      "heading": "Rooftop or *ground-mount*?",
+      "cards": [
+        {
+          "title": "Rooftop", "tag": "Fastest to deploy", "featured": false,
+          "description": "Uses unused roof area on factories and warehouses, with a structural check up front.",
+          "points": ["No extra land required", "Structural and wind-load review", "Phased roll-out by roof section", "Performance reporting"],
+          "best": "plants with large, sound roofs"
+        },
+        {
+          "title": "Ground-mount", "tag": "Highest capacity", "featured": true,
+          "description": "Purpose-built arrays on open land, laid out for output and easy maintenance access.",
+          "points": ["Optimised tilt and spacing", "Easier cleaning and O&M access", "Medium-voltage integration", "Room to expand in phases"],
+          "best": "sites with open land and heavy loads"
+        }
+      ]
+    },
+    "how": {
+      "eyebrow": "[ 02 ] How it works at scale",
+      "heading": "Sun in. *Demand* down.",
+      "nodes": [
+        { "kind": "sun", "title": "Sunlight", "note": "Offsets daytime production load" },
+        { "kind": "panel", "title": "Solar array", "note": "Rooftop or ground-mount" },
+        { "kind": "inverter", "title": "Inverters", "note": "Integrated at your switchgear" }
+      ],
+      "outputs": [
+        { "title": "1 · Your plant", "note": "Used first", "tone": "leaf" },
+        { "title": "2 · Monitoring", "note": "Performance reporting", "tone": "sky" },
+        { "title": "3 · The grid", "note": "Export where permitted", "tone": "amber" }
+      ]
+    },
+    "packages": {
+      "eyebrow": "[ 03 ] Roll-out options",
+      "heading": "Phase it to fit your *capex*",
+      "lead": "Industrial projects are engineered from a load profile. Sizes below are placeholders until your survey.",
+      "billLabel": "For bills around",
+      "billUnit": "/month",
+      "priceLabel": "Starts at",
+      "ctaLabel": "Request this quote",
+      "items": [
+        { "tag": "Phase 1", "kwp": "[xxx]", "bill": "[₱xx]", "panels": "[xx] × [xxx]W", "price": "[₱ price]", "featured": false },
+        { "tag": "Most chosen", "kwp": "[xxx]", "bill": "[₱xx]", "panels": "[xx] × [xxx]W", "price": "[₱ price]", "featured": true },
+        { "tag": "Full plant", "kwp": "[xxx+]", "bill": "[₱xx]", "panels": "[xx] × [xxx]W", "price": "[₱ price]", "featured": false }
+      ]
+    },
+    "details": {
+      "eyebrow": "[ 04 ] Engineering & O&M",
+      "heading": "Engineered, then *maintained*",
+      "lead": "From load profiling to long-term operations and maintenance contracts, one team stays accountable.",
+      "steps": [
+        { "title": "Load profiling", "description": "Interval data and site engineering define the right size." },
+        { "title": "Build & commission", "description": "Phased installation with testing at each stage." },
+        { "title": "O&M contract", "description": "Scheduled inspections and performance reporting." }
+      ]
+    },
+    "benefits": { "eyebrow": "[ 05 ] Why industry goes solar", "heading": "Built around your *plant*" },
+    "faq": { "eyebrow": "[ 06 ] Questions", "heading": "Industrial solar *FAQ*" },
+    "reviews": { "eyebrow": "[ 07 ] Client reviews", "heading": "Proven on *heavy* loads" },
+    "cta": { "heading": "Ready to take your plant to solar?", "label": "Inquire now" }
+  }
+}

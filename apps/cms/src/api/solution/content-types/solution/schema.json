@@ -52,6 +52,40 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::faq.faq"
+    },
+    "tag": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "sizeMeter": {
+      "type": "integer",
+      "min": 0,
+      "max": 100
+    },
+    "metricLabel": {
+      "type": "string"
+    },
+    "metricValue": {
+      "type": "string"
+    },
+    "metricMeter": {
+      "type": "integer",
+      "min": 0,
+      "max": 100
+    },
+    "features": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.text-item"
+    },
+    "caption": {
+      "type": "string"
     }
   }
 }

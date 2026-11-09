@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_shared_announcements",
+  "info": {
+    "displayName": "announcement",
+    "icon": "puzzle-piece"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    },
+    "longText": {
+      "type": "string"
+    },
+    "link": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.link"
+    }
+  }
+}

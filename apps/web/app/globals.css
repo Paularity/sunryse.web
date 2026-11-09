@@ -23,6 +23,13 @@
   --color-sun-500: #ff8a00;
   --color-sun-600: #ff5a1f;
   --color-sun-700: #c2410c;
+  --color-sun-800: #b45309;
+  --color-ink-soft: #a9b8da;
+  --color-ink-glow: #cfe0ff;
+  --color-glow-sky: #6fb0ff;
+  --color-glow-amber: #ffb547;
+  --color-glow-leaf: #5bd97a;
+  --color-glow-flame: #ff7a3d;
   --color-leaf-500: #2db84c;
   --color-leaf-600: #1e8a3a;
   --color-line: rgb(11 31 77 / 0.1);
@@ -77,6 +84,8 @@
 
 /* shadcn semantic variables mapped to the brand (light-only site) */
 :root {
+  /* Height of the fixed announcement + header stack; page heroes pad by this */
+  --site-top: 124px;
   --background: #f7faff;
   --foreground: #0b1f4d;
   --card: #ffffff;
@@ -310,6 +319,112 @@
   border: 1px solid rgb(255 255 255 / 0.1);
 }
 
+/* Section eyebrow with pulsing dot */
+@utility fx-eb {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font: 500 12px/1.2 var(--font-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  &::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    flex: none;
+    border-radius: 50%;
+    background: currentColor;
+    animation: fx-ping 2.4s ease-out infinite;
+  }
+}
+@utility fx-dot-amber {
+  background: var(--color-sun-500);
+  box-shadow: 0 0 10px var(--color-sun-500);
+}
+
+/* Light glass card (cards, tiles, forms on light sections) */
+@utility glass-card {
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.96), rgb(255 255 255 / 0.84));
+  border: 1px solid rgb(11 31 77 / 0.09);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 1px 2px rgb(11 31 77 / 0.04),
+    0 18px 40px -22px rgb(11 31 77 / 0.3);
+}
+/* Dark glass card (inside dark bands) */
+@utility glass-dark {
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.075), rgb(255 255 255 / 0.025));
+  border: 1px solid rgb(255 255 255 / 0.11);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.08),
+    0 30px 60px -30px rgb(0 0 0 / 0.6);
+}
+/* Hover lift for linked cards */
+@utility fx-lift {
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.35s;
+  &:hover {
+    transform: translateY(-3px);
+  }
+}
+/* Glow tile for icons: set --c to a tone colour */
+@utility glow-tile {
+  display: grid;
+  place-items: center;
+  flex: none;
+  color: #fff;
+  background:
+    radial-gradient(circle at 30% 25%, rgb(255 255 255 / 0.55), transparent 55%),
+    var(--c);
+  box-shadow:
+    0 10px 22px -8px var(--c),
+    inset 0 1px 0 rgb(255 255 255 / 0.5);
+}
+/* Slow scan line over photos (place inside a relative, overflow-hidden frame) */
+@utility fx-scan {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: inherit;
+  &::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    height: 34%;
+    top: -34%;
+    background: linear-gradient(180deg, transparent, rgb(255 201 60 / 0.1) 70%, rgb(255 201 60 / 0.7));
+    animation: fx-scan 5s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  }
+}
+/* Sheen sweep on primary buttons */
+@utility fx-sheen {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  &::after {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    left: -60%;
+    width: 40%;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.6), transparent);
+    transform: skewX(-20deg);
+    animation: fx-sheen 5s ease-in-out infinite;
+  }
+}
+
+/* Light sweep across the hero panel field */
+@utility fx-sweep {
+  background: linear-gradient(100deg, transparent 35%, rgb(255 255 255 / 0.55) 50%, transparent 65%);
+  background-size: 250% 100%;
+  mix-blend-mode: soft-light;
+  animation: fx-sweep 7s ease-in-out infinite;
+}
+
 /* Blueprint dot grid for light sections */
 @utility fx-grid {
   background-image:
@@ -318,6 +433,32 @@
   background-size: 22px 22px, auto;
 }
 
+@keyframes fx-ping {
+  0% { box-shadow: 0 0 0 0 rgb(255 138 0 / 0.55); }
+  70% { box-shadow: 0 0 0 8px rgb(255 138 0 / 0); }
+  100% { box-shadow: 0 0 0 0 rgb(255 138 0 / 0); }
+}
+@keyframes fx-scan {
+  0% { top: -34%; }
+  100% { top: 100%; }
+}
+@keyframes fx-sheen {
+  0%, 60% { left: -60%; }
+  100% { left: 130%; }
+}
+@keyframes fx-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes fx-flow {
+  to { stroke-dashoffset: -24; }
+}
+@keyframes fx-sweep {
+  0% { background-position: 150% 0; }
+  100% { background-position: -50% 0; }
+}
+@keyframes fx-marquee {
+  to { transform: translateX(-50%); }
+}
 @keyframes fx-blink {
   50% {
     opacity: 0.35;

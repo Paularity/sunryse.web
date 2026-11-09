@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Solis",
+    "category": "inverter"
+  },
+  {
+    "name": "Deye",
+    "category": "inverter"
+  },
+  {
+    "name": "SRNE",
+    "category": "inverter"
+  },
+  {
+    "name": "Dyness",
+    "category": "battery"
+  },
+  {
+    "name": "Pylontech",
+    "category": "battery"
+  },
+  {
+    "name": "Genixgreen",
+    "category": "inverter"
+  },
+  {
+    "name": "Hestia",
+    "category": "panel"
+  },
+  {
+    "name": "Sunways",
+    "category": "inverter"
+  },
+  {
+    "name": "Seraphim",
+    "category": "panel"
+  }
+]

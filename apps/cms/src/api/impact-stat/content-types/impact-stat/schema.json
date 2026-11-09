@@ -15,8 +15,7 @@
       "required": true
     },
     "value": {
-      "type": "decimal",
-      "default": 0
+      "type": "string"
     },
     "suffix": {
       "type": "string"
@@ -24,6 +23,20 @@
     "order": {
       "type": "integer",
       "default": 0
+    },
+    "icon": {
+      "type": "string"
+    },
+    "tone": {
+      "type": "enumeration",
+      "enum": [
+        "sun",
+        "amber",
+        "sky",
+        "leaf",
+        "flame",
+        "navy"
+      ]
     }
   }
 }

@@ -1,0 +1,31 @@
+{
+  "projects": [
+    { "slug": "commercial-rooftop", "title": "[Project title]", "segment": "commercial", "location": "[Location]", "sizeKwp": "[x] kWp", "system": "Grid-tie", "completed": "[Month YYYY]", "image": { "src": "/images/projects/commercial-rooftop.jpg", "alt": "Commercial rooftop solar array by SunRyse" } },
+    { "slug": "residential-top-view", "title": "[Project title]", "segment": "residential", "location": "[Location]", "sizeKwp": "[x] kWp", "system": "Hybrid + battery", "completed": "[Month YYYY]", "image": { "src": "/images/projects/residential-top-view.jpg", "alt": "Residential rooftop solar panels seen from above" } },
+    { "slug": "residential-dusk", "title": "[Project title]", "segment": "residential", "location": "[Location]", "sizeKwp": "[x] kWp", "system": "Grid-tie", "completed": "[Month YYYY]", "image": { "src": "/images/projects/residential-dusk.jpg", "alt": "Solar panels on a corrugated roof at dusk" } },
+    { "slug": "residential-blue-house", "title": "[Project title]", "segment": "residential", "location": "[Location]", "sizeKwp": "[x] kWp", "system": "Hybrid + battery", "completed": "[Month YYYY]", "image": { "src": "/images/projects/residential-blue-house.jpg", "alt": "Solar array beside a blue house with a red roof" } },
+    { "slug": "residential-red-roof", "title": "[Project title]", "segment": "residential", "location": "[Location]", "sizeKwp": "[x] kWp", "system": "Grid-tie", "completed": "[Month YYYY]", "image": { "src": "/images/projects/residential-red-roof.jpg", "alt": "Solar panels on a red metal roof" } },
+    { "slug": "residential-hillside", "title": "[Project title]", "segment": "residential", "location": "[Location]", "sizeKwp": "[x] kWp", "system": "Hybrid + battery", "completed": "[Month YYYY]", "image": { "src": "/images/projects/residential-hillside.jpg", "alt": "Rooftop solar array with a hillside view" } },
+    { "slug": "commercial-red-roof", "title": "[Project title]", "segment": "commercial", "location": "[Location]", "sizeKwp": "[x] kWp", "system": "Grid-tie", "completed": "[Month YYYY]", "image": { "src": "/images/projects/commercial-red-roof.jpg", "alt": "Rows of solar panels on a long red roof" } },
+    { "slug": "residential-aerial", "title": "[Project title]", "segment": "residential", "location": "[Location]", "sizeKwp": "[x] kWp", "system": "Grid-tie", "completed": "[Month YYYY]", "image": { "src": "/images/projects/residential-aerial.jpg", "alt": "Aerial view of a residential solar installation" } },
+    { "slug": "industrial-facility", "title": "[Project title]", "segment": "industrial", "location": "[Location]", "sizeKwp": "[x] kWp", "system": "Grid-tie", "completed": "[Month YYYY]", "image": { "src": "/images/projects/commercial-facility.jpg", "alt": "Solar installation at a commercial facility" } }
+  ],
+  "testimonials": [
+    { "quote": "“[Short quote about the bill dropping after installation — real customer words.]”", "name": "[Customer name]", "roleLocation": "Residential · [City]", "rating": 5, "initial": "A", "tone": "sun" },
+    { "quote": "“[Quote about the team being professional, tidy and on schedule.]”", "name": "[Customer name]", "roleLocation": "Commercial · [City]", "rating": 5, "initial": "B", "tone": "sky" },
+    { "quote": "“[Quote about power staying on during a brownout with the battery.]”", "name": "[Customer name]", "roleLocation": "Hybrid system · [City]", "rating": 5, "initial": "C", "tone": "leaf" }
+  ],
+  "impact": [
+    { "value": "[000]+", "label": "kWp installed", "icon": "zap", "tone": "sun" },
+    { "value": "[00]+", "label": "Projects completed", "icon": "check", "tone": "sky" },
+    { "value": "[000]", "label": "MWh generated", "icon": "sun", "tone": "amber" },
+    { "value": "[0,000]", "label": "Trees equivalent", "icon": "leaf", "tone": "leaf" }
+  ],
+  "warranty": [
+    { "item": "Panel performance", "years": "[xx] yrs" },
+    { "item": "Panel product", "years": "[xx] yrs" },
+    { "item": "Inverter", "years": "[xx] yrs" },
+    { "item": "Battery", "years": "[xx] yrs" },
+    { "item": "Workmanship", "years": "[xx] yrs" }
+  ]
+}

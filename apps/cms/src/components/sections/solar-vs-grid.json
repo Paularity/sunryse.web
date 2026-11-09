@@ -15,15 +15,23 @@
     "subheading": {
       "type": "text"
     },
-    "solarPoints": {
-      "type": "component",
-      "repeatable": true,
-      "component": "shared.feature-item"
+    "gridLabel": {
+      "type": "string"
     },
-    "gridPoints": {
-      "type": "component",
-      "repeatable": true,
-      "component": "shared.feature-item"
+    "gridValue": {
+      "type": "string"
+    },
+    "solarLabel": {
+      "type": "string"
+    },
+    "solarValue": {
+      "type": "string"
+    },
+    "note": {
+      "type": "string"
+    },
+    "chartLabel": {
+      "type": "string"
     }
   }
 }

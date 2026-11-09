@@ -1,0 +1,103 @@
+{
+  "hero": {
+    "status": "Sizing your system",
+    "tagline": "Clean energy · Brighter tomorrow",
+    "heading": "Power your home & business with the *~sun.~*",
+    "subheading": "Design, installation and after-sales for homes, businesses and industry: grid-tie, hybrid and battery systems from brands you trust.",
+    "billLabel": "Monthly bill ₱",
+    "billDefault": 10000,
+    "cta": { "label": "See my savings", "href": "/calculator" },
+    "trust": ["Tier-1 panels", "Licensed electricians", "Net metering handled"],
+    "estimateLabel": "Example estimate",
+    "image": { "src": "/images/projects/residential-top-view.jpg", "alt": "SunRyse residential rooftop installation seen from above" },
+    "imageCaption": "Live project · [Location]",
+    "liveChip": "Generating · 4.2 kW"
+  },
+  "benefits": [
+    { "title": "Lower electricity bills", "icon": "trending-down", "tone": "leaf" },
+    { "title": "Clean & renewable energy", "icon": "leaf", "tone": "sun" },
+    { "title": "Reliable power backup", "icon": "battery", "tone": "sky" },
+    { "title": "Professional installation", "icon": "wrench", "tone": "amber" },
+    { "title": "After-sales support", "icon": "headset", "tone": "flame" }
+  ],
+  "marquee": { "label": "Trusted brands we install" },
+  "solutions": { "eyebrow": "[ 02 ] Solutions", "heading": "Solar built for *every roof*" },
+  "services": {
+    "eyebrow": "[ 03 ] Our services",
+    "heading": "14 ways we put the ~sun~ to work",
+    "lead": "From the first roof survey to the battery that keeps your lights on, one licensed team designs, installs and looks after every part of your system.",
+    "featuredSlugs": ["hybrid-and-grid-tie-systems", "solar-system-design-and-consultation", "battery-storage-solutions"],
+    "ctaHeading": "Free system recommendation for your property.",
+    "ctaLabel": "Talk to an advisor"
+  },
+  "process": {
+    "eyebrow": "[ 04 ] How it works",
+    "heading": "From first call to *first kWh*",
+    "chip": "One team, start to finish",
+    "steps": [
+      { "title": "Consult & site survey", "description": "We review your bills and inspect your roof — free.", "tone": "sun" },
+      { "title": "Design & quote", "description": "A system sized to your usage, with clear pricing.", "tone": "amber" },
+      { "title": "Installation", "description": "Our licensed team installs in days, not weeks.", "tone": "flame" },
+      { "title": "Net metering", "description": "We file the paperwork with your utility for you.", "tone": "sky" },
+      { "title": "Monitor & support", "description": "Track output in the app; we handle maintenance.", "tone": "leaf" }
+    ]
+  },
+  "calculator": {
+    "eyebrow": "[ 05 ] Savings calculator",
+    "heading": "How much could ~you~ save?",
+    "lead": "Enter your monthly bill to see system size, panels, payback and 25-year savings, then send it to us for an exact quote.",
+    "chips": ["Instant result", "No sign-up", "PH rates*"],
+    "ctaLabel": "Open full calculator"
+  },
+  "solarVsGrid": {
+    "eyebrow": "[ 06 ] Solar vs. the grid",
+    "heading": "Lock in your power price for 25 years",
+    "lead": "Grid rates keep climbing. Solar turns a monthly bill into a one-time investment: your cost per kWh is set the day we switch it on.",
+    "gridLabel": "Grid today* / kWh",
+    "gridValue": "₱12.50",
+    "solarLabel": "Solar lifetime* / kWh",
+    "solarValue": "≈ ₱2–3",
+    "note": "*Placeholder assumptions: 3% yearly rate increase, to confirm with SunRyse",
+    "chartLabel": "25-year price outlook"
+  },
+  "impact": { "eyebrow": "Our impact so far" },
+  "projects": {
+    "eyebrow": "[ 07 ] Recent projects",
+    "heading": "Rooftops we’ve ~lit up~",
+    "ctaLabel": "All projects",
+    "allLabel": "See every project",
+    "allCount": "[xx]+ installs"
+  },
+  "testimonials": {
+    "eyebrow": "[ 08 ] Customer stories",
+    "heading": "Bills down. ^Smiles up.^",
+    "rating": "[4.9]",
+    "reviewsLabel": "[xx] Facebook reviews"
+  },
+  "why": {
+    "eyebrow": "[ 09 ] Why SunRyse",
+    "heading": "Installed right. ^Supported after.^",
+    "items": [
+      { "title": "Quality products", "description": "Tier-1 panels, inverters and batteries only.", "icon": "award", "tone": "sun" },
+      { "title": "Experienced team", "description": "Licensed electricians and trained installers.", "icon": "users", "tone": "sky" },
+      { "title": "Safe & standard", "description": "Code-compliant wiring and protections.", "icon": "shield-check", "tone": "leaf" },
+      { "title": "After-sales care", "description": "Monitoring, cleaning and fast repairs.", "icon": "headset", "tone": "flame" }
+    ],
+    "warrantyLabel": "Warranty coverage",
+    "warrantyNote": "Registered for you at handover"
+  },
+  "faq": {
+    "eyebrow": "[ 10 ] FAQ",
+    "heading": "Questions, answered",
+    "lead": "Still unsure? Message us and a solar advisor replies the same day.",
+    "openFirst": true
+  },
+  "cta": {
+    "chip": "Free site assessment",
+    "heading": "Ready to rise with the sun?",
+    "lead": "Tell us about your property. We’ll book a free site assessment and send a quote.",
+    "formLabel": "Quote request",
+    "submitLabel": "Inquire now",
+    "replyNote": "We reply within 1 business day. No spam, ever."
+  }
+}

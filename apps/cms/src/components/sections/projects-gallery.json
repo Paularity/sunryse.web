@@ -12,17 +12,13 @@
     "heading": {
       "type": "string"
     },
-    "subheading": {
-      "type": "text"
-    },
-    "limit": {
-      "type": "integer",
-      "default": 6
-    },
     "ctaLabel": {
       "type": "string"
     },
-    "ctaHref": {
+    "allLabel": {
+      "type": "string"
+    },
+    "allCount": {
       "type": "string"
     }
   }

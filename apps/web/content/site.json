@@ -1,0 +1,57 @@
+{
+  "name": "SunRyse Solar Services",
+  "tagline": "Clean energy · Brighter tomorrow",
+  "phone": "[Phone number]",
+  "email": "[Email address]",
+  "address": "[Address]",
+  "serviceArea": "[Service area]",
+  "hours": "Mon–Sat · [8:00 AM – 5:00 PM]",
+  "license": "[Contractor license no.]",
+  "messengerUrl": "#",
+  "socials": [
+    { "platform": "facebook", "url": "#", "label": "Facebook" },
+    { "platform": "instagram", "url": "#", "label": "Instagram" },
+    { "platform": "messenger", "url": "#", "label": "Messenger" }
+  ],
+  "announcement": {
+    "text": "Free site assessment",
+    "longText": "Net-metering paperwork handled",
+    "link": { "label": "Book now", "href": "/contact" }
+  },
+  "nav": [
+    { "label": "Solutions", "href": "/solutions/residential", "menu": "solutions" },
+    { "label": "Services", "href": "/services", "menu": "services" },
+    { "label": "Calculator", "href": "/calculator" },
+    { "label": "Projects", "href": "/projects" },
+    { "label": "About", "href": "/about" }
+  ],
+  "quoteCta": { "label": "Get a quote", "href": "/contact" },
+  "footer": {
+    "blurb": "Design, installation and after-sales for solar homes, businesses and industry.",
+    "columns": [
+      {
+        "title": "Solutions",
+        "links": [
+          { "label": "Residential", "href": "/solutions/residential" },
+          { "label": "Commercial", "href": "/solutions/commercial" },
+          { "label": "Industrial", "href": "/solutions/industrial" },
+          { "label": "Savings calculator", "href": "/calculator" }
+        ]
+      },
+      {
+        "title": "Company",
+        "links": [
+          { "label": "About", "href": "/about" },
+          { "label": "Projects", "href": "/projects" },
+          { "label": "Services", "href": "/services" },
+          { "label": "Get a quote", "href": "/contact" }
+        ]
+      }
+    ],
+    "copyright": "© 2026 SunRyse Solar Services",
+    "legal": [
+      { "label": "Privacy", "href": "#" },
+      { "label": "Terms", "href": "#" }
+    ]
+  }
+}

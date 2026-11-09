@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "title": "Solar savings calculator",
+    "description": "Enter your monthly electricity bill and see your estimated solar system size, monthly savings, payback period and 25-year savings in the Philippines."
+  },
+  "breadcrumb": "Calculator",
+  "heading": "See what the ~sun~ can save you",
+  "lead": "Enter your average monthly bill. Results update instantly. Send them to us for an exact quote.",
+  "billLabel": "Average monthly bill",
+  "billTip": "Tip: use the average of your last 3 Meralco / co-op bills.",
+  "propertyLabel": "Property",
+  "properties": [
+    { "value": "residential", "label": "Home" },
+    { "value": "commercial", "label": "Business" },
+    { "value": "industrial", "label": "Industrial" }
+  ],
+  "systemLabel": "System type",
+  "systems": [
+    { "value": "grid-tie", "label": "Grid-tie", "sub": "Lowest cost" },
+    { "value": "hybrid", "label": "Hybrid + battery", "sub": "Backup in brownouts" }
+  ],
+  "howLabel": "How we calculate",
+  "chartChip": "Cumulative savings vs system cost",
+  "ctaText": "We will attach these numbers to your request. A free site survey confirms roof, shading and exact price.",
+  "ctaLabel": "Get my exact quote"
+}

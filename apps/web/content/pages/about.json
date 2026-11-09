@@ -1,0 +1,45 @@
+{
+  "meta": { "title": "About", "description": "SunRyse Solar Services helps Filipino homes and businesses make their own power — designed, installed and supported by one local team." },
+  "hero": {
+    "heading": "Clean energy. ~Brighter~ tomorrow.",
+    "lead": "SunRyse Solar Services helps Filipino homes and businesses make their own power — designed, installed and supported by one local team."
+  },
+  "story": {
+    "eyebrow": "[ 01 ] Our story",
+    "heading": "Started on one rooftop. ^Built on trust.^",
+    "image": { "src": "/images/projects/residential-dusk.jpg", "alt": "SunRyse solar installation on a residential roof" },
+    "chip": "System online",
+    "paragraphs": [
+      "[Founding story — who started SunRyse, when, and why. One short paragraph about the first project and the problem you set out to solve for local families.]",
+      "[Second paragraph — where you are today: team size, service area and the kinds of clients you serve.]"
+    ]
+  },
+  "mission": { "label": "Mission", "text": "[Make clean, affordable solar power simple for every Filipino home and business.]" },
+  "vision": { "label": "Vision", "text": "[A brighter tomorrow where every rooftop produces its own clean energy.]" },
+  "values": [
+    { "title": "Quality first", "description": "Tier-1 equipment only, installed to code.", "icon": "award", "tone": "amber" },
+    { "title": "Honest advice", "description": "We size for your real usage, not the biggest sale.", "icon": "message", "tone": "sky" },
+    { "title": "Safety always", "description": "Proper protections, grounding and clean wiring.", "icon": "shield-check", "tone": "leaf" },
+    { "title": "Here after install", "description": "Monitoring, maintenance and quick response.", "icon": "headset", "tone": "flame" }
+  ],
+  "timeline": {
+    "eyebrow": "[ 02 ] Milestones",
+    "heading": "Rising, ^year by year^",
+    "items": [
+      { "year": "[YYYY]", "title": "SunRyse founded", "description": "[First residential installs]", "tone": "sun" },
+      { "year": "[YYYY]", "title": "First commercial project", "description": "[Short milestone note]", "tone": "amber" },
+      { "year": "[YYYY]", "title": "Hybrid & battery line", "description": "[Short milestone note]", "tone": "sky" },
+      { "year": "[YYYY]", "title": "[xx] projects completed", "description": "[Short milestone note]", "tone": "leaf" }
+    ]
+  },
+  "credentials": {
+    "eyebrow": "[ 03 ] Licenses & accreditations",
+    "items": [
+      { "title": "[Contractor license]", "detail": "[License no.]" },
+      { "title": "[Registered electrical engineer]", "detail": "[PRC no.]" },
+      { "title": "[Business registration]", "detail": "[DTI / SEC no.]" }
+    ]
+  },
+  "brands": { "eyebrow": "[ 04 ] Brands we install" },
+  "cta": { "heading": "Let’s light up your roof *together.*", "label": "Talk to us", "href": "/contact" }
+}

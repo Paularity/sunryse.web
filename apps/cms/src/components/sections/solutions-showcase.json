@@ -11,9 +11,6 @@
     },
     "heading": {
       "type": "string"
-    },
-    "subheading": {
-      "type": "text"
     }
   }
 }

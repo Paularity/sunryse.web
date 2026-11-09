@@ -15,14 +15,15 @@
     "subheading": {
       "type": "text"
     },
-    "limit": {
-      "type": "integer",
-      "default": 6
+    "featuredSlugs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.text-item"
     },
-    "ctaLabel": {
+    "ctaHeading": {
       "type": "string"
     },
-    "ctaHref": {
+    "ctaLabel": {
       "type": "string"
     }
   }

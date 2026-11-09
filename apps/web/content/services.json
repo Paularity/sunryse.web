@@ -1,0 +1,114 @@
+[
+  {
+    "slug": "solar-system-design-and-consultation",
+    "title": "Solar system design & consultation",
+    "summary": "Site survey, load analysis and a system sized to your bill.",
+    "category": "systems",
+    "icon": "clipboard-check",
+    "order": 1
+  },
+  {
+    "slug": "solar-panel-installation",
+    "title": "Solar panel installation",
+    "summary": "Tier-1 panels mounted and wired by our own crew.",
+    "category": "installation",
+    "icon": "solar-panel",
+    "order": 2
+  },
+  {
+    "slug": "hybrid-and-grid-tie-systems",
+    "title": "Hybrid & grid-tie systems",
+    "summary": "Grid-tie savings, or hybrid with backup when the grid drops.",
+    "category": "systems",
+    "icon": "zap",
+    "order": 3
+  },
+  {
+    "slug": "battery-storage-solutions",
+    "title": "Battery storage solutions",
+    "summary": "Store midday sun for nights and brownouts.",
+    "category": "systems",
+    "icon": "battery",
+    "order": 4
+  },
+  {
+    "slug": "electrical-works-and-protections",
+    "title": "Electrical works & protections",
+    "summary": "Breakers, surge protection, grounding and safe cabling.",
+    "category": "installation",
+    "icon": "shield-check",
+    "order": 5
+  },
+  {
+    "slug": "mounting-structure-installation",
+    "title": "Mounting structure installation",
+    "summary": "Rails and frames rated for typhoon-season winds.",
+    "category": "installation",
+    "icon": "frame",
+    "order": 6
+  },
+  {
+    "slug": "maintenance-and-troubleshooting",
+    "title": "Maintenance & troubleshooting",
+    "summary": "Cleaning, inspections, thermal checks and repairs.",
+    "category": "installation",
+    "icon": "wrench",
+    "order": 7
+  },
+  {
+    "slug": "residential-solar-solutions",
+    "title": "Residential solar solutions",
+    "summary": "Rooftop systems for homes of every size.",
+    "category": "systems",
+    "icon": "home",
+    "order": 8
+  },
+  {
+    "slug": "commercial-solar-solutions",
+    "title": "Commercial solar solutions",
+    "summary": "Lower operating costs for shops, offices and malls.",
+    "category": "systems",
+    "icon": "building",
+    "order": 9
+  },
+  {
+    "slug": "industrial-solar-solutions",
+    "title": "Industrial solar solutions",
+    "summary": "Large rooftop and ground-mount systems.",
+    "category": "systems",
+    "icon": "factory",
+    "order": 10
+  },
+  {
+    "slug": "solar-lighting-systems",
+    "title": "Solar lighting systems",
+    "summary": "Street, garden and perimeter lights, no wiring.",
+    "category": "specialty",
+    "icon": "lightbulb",
+    "order": 11
+  },
+  {
+    "slug": "solar-water-pump-systems",
+    "title": "Solar water pump systems",
+    "summary": "Irrigation and water supply powered by the sun.",
+    "category": "specialty",
+    "icon": "droplet",
+    "order": 12
+  },
+  {
+    "slug": "ev-charger-installation",
+    "title": "EV charger installation",
+    "summary": "Charge your car from your own rooftop.",
+    "category": "installation",
+    "icon": "plug",
+    "order": 13
+  },
+  {
+    "slug": "solar-cctv-solutions",
+    "title": "Solar CCTV solutions",
+    "summary": "Off-grid security cameras for any site.",
+    "category": "specialty",
+    "icon": "cctv",
+    "order": 14
+  }
+]

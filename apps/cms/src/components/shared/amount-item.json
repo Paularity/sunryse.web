@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_shared_amount_items",
+  "info": {
+    "displayName": "amount-item",
+    "icon": "puzzle-piece"
+  },
+  "options": {},
+  "attributes": {
+    "amount": {
+      "type": "integer",
+      "required": true
+    }
+  }
+}

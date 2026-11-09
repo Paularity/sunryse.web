@@ -37,6 +37,24 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::project.project"
+    },
+    "initial": {
+      "type": "string"
+    },
+    "tone": {
+      "type": "enumeration",
+      "enum": [
+        "sun",
+        "amber",
+        "sky",
+        "leaf",
+        "flame",
+        "navy"
+      ]
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
     }
   }
 }

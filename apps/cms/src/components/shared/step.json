@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_shared_steps",
+  "info": {
+    "displayName": "step",
+    "icon": "puzzle-piece"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "tone": {
+      "type": "enumeration",
+      "enum": [
+        "sun",
+        "amber",
+        "sky",
+        "leaf",
+        "flame",
+        "navy"
+      ]
+    }
+  }
+}

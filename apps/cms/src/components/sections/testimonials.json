@@ -12,8 +12,11 @@
     "heading": {
       "type": "string"
     },
-    "subheading": {
-      "type": "text"
+    "rating": {
+      "type": "string"
+    },
+    "reviewsLabel": {
+      "type": "string"
     }
   }
 }

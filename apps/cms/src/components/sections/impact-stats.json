@@ -8,12 +8,6 @@
   "attributes": {
     "eyebrow": {
       "type": "string"
-    },
-    "heading": {
-      "type": "string"
-    },
-    "subheading": {
-      "type": "text"
     }
   }
 }

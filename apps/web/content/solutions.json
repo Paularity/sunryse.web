@@ -1,0 +1,44 @@
+[
+  {
+    "slug": "residential",
+    "title": "Residential",
+    "tag": "Homes & townhouses",
+    "summary": "Cut your household bill and keep the essentials running through brownouts with a hybrid battery system.",
+    "typicalSize": "3–10 kWp",
+    "sizeMeter": 28,
+    "metricLabel": "Bill reduction",
+    "metricValue": "[xx]%",
+    "metricMeter": 70,
+    "features": ["Grid-tie & hybrid systems", "Battery backup for brownouts", "Net-metering application", "Tier-1 panels & inverters", "Mobile app monitoring", "After-sales support"],
+    "image": { "src": "/images/projects/residential-blue-house.jpg", "alt": "SunRyse rooftop solar installation on a residential home" },
+    "caption": "Residential · [Location] · [x] kWp"
+  },
+  {
+    "slug": "commercial",
+    "title": "Commercial",
+    "tag": "Shops, offices & schools",
+    "summary": "Lower daytime operating costs: solar output peaks when shops, offices and schools use the most power.",
+    "typicalSize": "10–100 kWp",
+    "sizeMeter": 60,
+    "metricLabel": "Daytime load covered",
+    "metricValue": "[xx]%",
+    "metricMeter": 75,
+    "features": ["Daytime load matching", "Net metering & export credits", "Three-phase systems", "Monitoring for facility teams", "ROI & payback reporting", "Scheduled maintenance"],
+    "image": { "src": "/images/projects/commercial-rooftop.jpg", "alt": "Commercial rooftop solar array installed by SunRyse" },
+    "caption": "Commercial · [Location] · [x] kWp"
+  },
+  {
+    "slug": "industrial",
+    "title": "Industrial",
+    "tag": "Factories & warehouses",
+    "summary": "Large rooftop and ground-mount systems engineered for heavy loads, phased roll-outs and long-term savings.",
+    "typicalSize": "100 kWp+",
+    "sizeMeter": 92,
+    "metricLabel": "Demand charge relief",
+    "metricValue": "[xx]%",
+    "metricMeter": 60,
+    "features": ["Rooftop & ground-mount", "Load profiling & engineering", "Medium-voltage integration", "Performance reporting", "O&M contracts", "Phased roll-outs"],
+    "image": { "src": "/images/projects/residential-top-view.jpg", "alt": "Large rooftop solar array seen from above" },
+    "caption": "Industrial · [Location] · [x] kWp"
+  }
+]

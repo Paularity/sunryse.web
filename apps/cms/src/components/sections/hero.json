@@ -6,7 +6,10 @@
   },
   "options": {},
   "attributes": {
-    "eyebrow": {
+    "status": {
+      "type": "string"
+    },
+    "tagline": {
       "type": "string"
     },
     "heading": {
@@ -15,15 +18,24 @@
     "subheading": {
       "type": "text"
     },
-    "primaryCta": {
+    "billLabel": {
+      "type": "string"
+    },
+    "billDefault": {
+      "type": "integer"
+    },
+    "cta": {
       "type": "component",
       "repeatable": false,
       "component": "shared.link"
     },
-    "secondaryCta": {
+    "trust": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.link"
+      "repeatable": true,
+      "component": "shared.text-item"
+    },
+    "estimateLabel": {
+      "type": "string"
     },
     "image": {
       "type": "media",
@@ -32,10 +44,11 @@
         "images"
       ]
     },
-    "highlights": {
-      "type": "component",
-      "repeatable": true,
-      "component": "shared.feature-item"
+    "imageCaption": {
+      "type": "string"
+    },
+    "liveChip": {
+      "type": "string"
     }
   }
 }

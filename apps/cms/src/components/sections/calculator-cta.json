@@ -15,10 +15,12 @@
     "subheading": {
       "type": "text"
     },
-    "ctaLabel": {
-      "type": "string"
+    "chips": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.text-item"
     },
-    "ctaHref": {
+    "ctaLabel": {
       "type": "string"
     }
   }

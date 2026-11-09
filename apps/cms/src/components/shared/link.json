@@ -17,6 +17,13 @@
     "newTab": {
       "type": "boolean",
       "default": false
+    },
+    "menu": {
+      "type": "enumeration",
+      "enum": [
+        "solutions",
+        "services"
+      ]
     }
   }
 }

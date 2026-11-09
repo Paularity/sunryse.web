@@ -15,8 +15,9 @@
     "subheading": {
       "type": "text"
     },
-    "category": {
-      "type": "string"
+    "openFirst": {
+      "type": "boolean",
+      "default": true
     }
   }
 }

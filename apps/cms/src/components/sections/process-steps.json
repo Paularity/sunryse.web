@@ -12,13 +12,13 @@
     "heading": {
       "type": "string"
     },
-    "subheading": {
-      "type": "text"
+    "chip": {
+      "type": "string"
     },
     "steps": {
       "type": "component",
       "repeatable": true,
-      "component": "shared.feature-item"
+      "component": "shared.step"
     }
   }
 }

@@ -2,7 +2,7 @@ import type { Core } from '@strapi/strapi';
 
 const PUBLIC_READ = [
   'global', 'homepage', 'calculator-config', 'service', 'solution', 'project', 'brand',
-  'testimonial', 'faq', 'article', 'impact-stat',
+  'testimonial', 'faq', 'article', 'impact-stat', 'warranty',
 ];
 
 async function grantPublicRead(strapi: Core.Strapi) {

@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_shared_text_items",
+  "info": {
+    "displayName": "text-item",
+    "icon": "puzzle-piece"
+  },
+  "options": {},
+  "attributes": {
+    "value": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

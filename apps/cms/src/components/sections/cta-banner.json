@@ -6,7 +6,7 @@
   },
   "options": {},
   "attributes": {
-    "eyebrow": {
+    "chip": {
       "type": "string"
     },
     "heading": {
@@ -15,18 +15,14 @@
     "subheading": {
       "type": "text"
     },
-    "ctaLabel": {
+    "formLabel": {
       "type": "string"
     },
-    "ctaHref": {
+    "submitLabel": {
       "type": "string"
     },
-    "background": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images"
-      ]
+    "replyNote": {
+      "type": "string"
     }
   }
 }

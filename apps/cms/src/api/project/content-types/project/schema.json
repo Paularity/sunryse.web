@@ -31,7 +31,7 @@
       "type": "string"
     },
     "sizeKwp": {
-      "type": "decimal"
+      "type": "string"
     },
     "panels": {
       "type": "integer"
@@ -51,6 +51,23 @@
     },
     "summary": {
       "type": "text"
+    },
+    "system": {
+      "type": "string"
+    },
+    "completed": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
     }
   }
 }

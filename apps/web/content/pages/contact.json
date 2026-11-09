@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "title": "Get a free solar quote",
+    "description": "Request a free solar quote in three quick steps. A SunRyse advisor calls within one business day to book your free site assessment."
+  },
+  "breadcrumb": "Get a quote",
+  "heading": "Let's size your *~solar~*",
+  "lead": "Three quick steps, about a minute. A solar advisor calls within one business day to book your free site assessment.",
+  "quickDivider": "or fill in the form",
+  "properties": [
+    { "value": "residential", "label": "Home", "description": "House or townhouse", "icon": "home" },
+    { "value": "commercial", "label": "Business", "description": "Shop, office, mall", "icon": "building" },
+    { "value": "industrial", "label": "Industrial", "description": "Factory, warehouse", "icon": "factory" }
+  ],
+  "roofs": [
+    { "value": "metal", "label": "Metal / GI sheet" },
+    { "value": "tile", "label": "Tile" },
+    { "value": "concrete", "label": "Concrete deck" },
+    { "value": "unsure", "label": "Not sure" }
+  ],
+  "interests": ["Not sure yet", "Grid-tie", "Hybrid + battery", "Battery only", "Other service"],
+  "stepNames": ["Property", "Roof", "Contact"],
+  "nextSteps": [
+    "We call to confirm details",
+    "Free on-site assessment",
+    "Your custom design and quote"
+  ],
+  "privacyNote": "Your details are only used for your quote.",
+  "consentLabel": "I agree to be contacted about my quote and accept the privacy policy.",
+  "successBody": "A SunRyse advisor will call {phone} within one business day to schedule your free site assessment."
+}

@@ -19,6 +19,13 @@ export const metadata: Metadata = {
   },
   description:
     "Residential, commercial and industrial solar in the Philippines: design, installation, hybrid and battery systems, and after-sales support.",
+  openGraph: {
+    type: "website",
+    siteName: "SunRyse Solar Services",
+    locale: "en_PH",
+    images: [{ url: "/images/projects/residential-blue-house.jpg", width: 1200, height: 630, alt: "SunRyse rooftop solar installation" }],
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {

@@ -12,13 +12,16 @@
     "heading": {
       "type": "string"
     },
-    "subheading": {
-      "type": "text"
-    },
     "items": {
       "type": "component",
       "repeatable": true,
       "component": "shared.feature-item"
+    },
+    "warrantyLabel": {
+      "type": "string"
+    },
+    "warrantyNote": {
+      "type": "string"
     }
   }
 }

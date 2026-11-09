@@ -20,6 +20,10 @@
     },
     "category": {
       "type": "string"
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
     }
   }
 }

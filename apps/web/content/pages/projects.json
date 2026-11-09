@@ -1,0 +1,27 @@
+{
+  "meta": { "title": "Projects", "description": "Solar rooftops SunRyse has designed and installed for homes, businesses and industry." },
+  "hero": {
+    "heading": "Rooftops we’ve ~lit up~",
+    "stats": [
+      { "value": "[000]+", "label": "kWp installed" },
+      { "value": "[00]+", "label": "Projects" },
+      { "value": "[00]", "label": "Cities served" }
+    ]
+  },
+  "featured": {
+    "chip": "Featured case study",
+    "image": { "src": "/images/projects/commercial-rooftop.jpg", "alt": "Featured commercial rooftop solar project by SunRyse" },
+    "meta": "Commercial · [Location]",
+    "title": "[Client name] rooftop system",
+    "summary": "[Two lines on the client’s goal, the challenge and what SunRyse delivered — e.g. cutting daytime load costs for a busy building.]",
+    "stats": [
+      { "label": "System size", "value": "[x] kWp", "tone": "navy" },
+      { "label": "Panels", "value": "[x] × 620W", "tone": "navy" },
+      { "label": "Monthly savings", "value": "₱[x]", "tone": "leaf" },
+      { "label": "Payback", "value": "[x] yrs", "tone": "amber" }
+    ],
+    "cta": { "label": "Read the case study", "href": "/contact" }
+  },
+  "grid": { "total": "[xx]", "allLabel": "View all projects", "allNote": "More installations coming soon" },
+  "cta": { "heading": "Your roof could be *next.*", "label": "Book a free survey", "href": "/contact" }
+}

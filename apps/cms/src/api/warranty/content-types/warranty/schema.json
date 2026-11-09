@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "warranties",
+  "info": {
+    "singularName": "warranty",
+    "pluralName": "warranties",
+    "displayName": "Warranty"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "item": {
+      "type": "string",
+      "required": true
+    },
+    "years": {
+      "type": "string",
+      "required": true
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

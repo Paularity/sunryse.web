@@ -15,6 +15,17 @@
     },
     "icon": {
       "type": "string"
+    },
+    "tone": {
+      "type": "enumeration",
+      "enum": [
+        "sun",
+        "amber",
+        "sky",
+        "leaf",
+        "flame",
+        "navy"
+      ]
     }
   }
 }

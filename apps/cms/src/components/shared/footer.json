@@ -9,13 +9,23 @@
     "blurb": {
       "type": "text"
     },
-    "links": {
+    "columns": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.footer-column"
+    },
+    "legal": {
       "type": "component",
       "repeatable": true,
       "component": "shared.link"
     },
     "copyright": {
       "type": "string"
+    },
+    "links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.link"
     }
   }
 }
