@@ -7,7 +7,7 @@ import { ContactForm, type ContactFormProps } from "./contact-form";
 const SEGMENTS = { residential: "residential", home: "residential", commercial: "commercial", business: "commercial", industrial: "industrial" } as const;
 
 /** Reads ?bill=&segment=&type= on the client (keeps the page prerendered) and prefills the form. */
-export function ContactFromQuery(props: Pick<ContactFormProps, "content" | "messengerUrl">) {
+export function ContactFromQuery(props: Pick<ContactFormProps, "content" | "messengerUrl" | "ui">) {
   const sp = useSearchParams();
   const bill = Number(sp.get("bill"));
   const segment = SEGMENTS[(sp.get("segment") ?? "") as keyof typeof SEGMENTS];

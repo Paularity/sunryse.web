@@ -1,0 +1,19 @@
+{
+  "kind": "singleType",
+  "collectionName": "about_pages",
+  "info": {
+    "singularName": "about-page",
+    "pluralName": "about-pages",
+    "displayName": "About page",
+    "description": "Copy for /about (hero, story, timeline, values, credentials). Edit the JSON values; keep the keys."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "content": {
+      "type": "json",
+      "required": true
+    }
+  }
+}

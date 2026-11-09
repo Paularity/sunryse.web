@@ -1,0 +1,19 @@
+{
+  "kind": "singleType",
+  "collectionName": "service_defaultss",
+  "info": {
+    "singularName": "service-defaults",
+    "pluralName": "service-defaultss",
+    "displayName": "Service page defaults",
+    "description": "Default copy for service pages, per category, used when a service has no own details."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "content": {
+      "type": "json",
+      "required": true
+    }
+  }
+}

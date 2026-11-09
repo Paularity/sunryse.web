@@ -48,3 +48,9 @@ After schema edits: `pnpm --filter cms strapi ts:generate-types`.
 - Leads: `app/api/leads/route.ts` validates with `lib/lead-schema.ts` (zod) → `strapiCreate('leads', …)`.
 - Types: generate with `strapi ts:generate-types`, share via `packages/types`.
 - Public read permissions: find/findOne on content types; lead = create only via server route (never expose token to client).
+
+## Website wiring (v4)
+- **Env**: `pnpm setup` (or `pnpm --filter cms setup:web`) creates the "website" API token (create lead + read content) and writes `apps/web/.env.local` (STRAPI_URL, STRAPI_TOKEN, REVALIDATE_SECRET, NEXT_PUBLIC_SITE_URL) and `apps/cms/.env` (WEB_REVALIDATE_URL, WEB_REVALIDATE_SECRET). Secrets are never printed. Without STRAPI_URL the site renders the bundled defaults.
+- **Refresh**: on start Strapi keeps a webhook "Website revalidate" (entry/media events) → `/api/revalidate` with header `x-revalidate-secret`; the route clears the `strapi` cache tag (all CMS reads).
+- **Page copy**: single types `about-page`, `projects-page`, `calculator-page`, `contact-page`, `service-defaults` each hold a `content` JSON (seeded from `apps/web/content/pages/*.json`); `solution.details` and `service.details` hold per-entry detail copy; `global.ui` holds interface labels. The web merges these over the bundled defaults key by key (`lib/content/strapi-page.ts` `mergeContent`): unknown keys are dropped, wrong types ignored, so partial edits never break a page.
+- **Leads**: `/api/leads` validates with zod and creates a `lead` with the server token (fields include roofType, calcSnapshot, source; `status` defaults to "new" for the sales workflow). Public role cannot read leads.

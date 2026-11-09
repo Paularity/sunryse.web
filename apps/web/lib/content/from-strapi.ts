@@ -80,6 +80,7 @@ const site: Loader<Site> = async () => {
   );
   if (!g) return null;
   return {
+    ui: g.ui && typeof g.ui === "object" ? (g.ui as Record<string, string>) : {},
     name: str(g.siteName),
     tagline: str(g.tagline),
     phone: str(g.phone),
@@ -261,7 +262,8 @@ const services: Loader<Service[]> = async () => {
 };
 
 const solutions: Loader<Solution[]> = async () => {
-  const rows = await many("solutions", "solutions", { image: true, features: true });
+  // Solutions have no "order" field; they are created in display order.
+  const rows = await many("solutions", "solutions", { image: true, features: true }, "id:asc");
   return (
     rows?.map((s) => ({
       slug: s.slug as SolutionSlug,

@@ -14,7 +14,7 @@ export function QuoteCta({ content, site }: { content: HomeContent["cta"]; site:
       {/* navy perspective grid floor */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-[-20%] bottom-0 h-[70%] origin-bottom bg-[linear-gradient(rgb(11_31_77/0.13)_1px,transparent_1px),linear-gradient(90deg,rgb(11_31_77/0.13)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:linear-gradient(to_top,#000,transparent_85%)] [transform:perspective(700px)_rotateX(60deg)]"
+        className="pointer-events-none absolute inset-x-[-20%] bottom-0 h-[70%] origin-bottom bg-[linear-gradient(rgb(11_31_77/0.13)_1px,transparent_1px),linear-gradient(90deg,rgb(11_31_77/0.13)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:linear-gradient(to_top,black,transparent_85%)] [transform:perspective(700px)_rotateX(60deg)]"
       />
       <div aria-hidden className="pointer-events-none absolute -top-44 -right-36 size-[560px] rounded-full bg-[radial-gradient(circle,rgb(255_255_255/0.6),transparent_65%)]" />
       <div aria-hidden className="pointer-events-none absolute -top-48 -right-32 size-[600px] rounded-full border border-white/60 shadow-[inset_0_0_0_40px_rgb(255_255_255/0.07),inset_0_0_0_41px_rgb(255_255_255/0.35)]" />
@@ -43,7 +43,7 @@ export function QuoteCta({ content, site }: { content: HomeContent["cta"]; site:
             </span>
           </div>
         </div>
-        <QuoteForm label={content.formLabel} submitLabel={content.submitLabel} replyNote={content.replyNote} phone={site.phone} />
+        <QuoteForm ui={site.ui} label={content.formLabel} submitLabel={content.submitLabel} replyNote={content.replyNote} phone={site.phone} />
       </div>
     </section>
   );

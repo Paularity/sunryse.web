@@ -6,9 +6,19 @@ import Link from "next/link";
 import { Eyebrow, Hud, PhotoFrame, RichText, Section, h2Class } from "@/components/fx";
 import { Icon, TONE } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import { getBrands } from "@/lib/content";
+import { getBrands, getSite } from "@/lib/content";
 import { getAboutPage } from "@/lib/content/pages/about";
+import type { Tone } from "@/lib/content/types";
+import { t } from "@/lib/content/ui";
 import { cn } from "@/lib/utils";
+
+
+const TEAM_BG: Partial<Record<Tone, string>> = {
+  sun: "bg-[linear-gradient(160deg,var(--color-dawn-100),var(--color-dawn-50))]",
+  sky: "bg-[linear-gradient(160deg,var(--color-sky-200),var(--color-day-100))]",
+  leaf: "bg-[linear-gradient(160deg,color-mix(in_srgb,var(--color-leaf-500)_30%,white),color-mix(in_srgb,var(--color-leaf-500)_8%,white))]",
+  flame: "bg-[linear-gradient(160deg,color-mix(in_srgb,var(--color-glow-flame)_35%,white),color-mix(in_srgb,var(--color-glow-flame)_10%,white))]",
+};
 
 export async function generateMetadata(): Promise<Metadata> {
   const { meta } = await getAboutPage();
@@ -16,29 +26,30 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function AboutPage() {
-  const [page, brands] = await Promise.all([getAboutPage(), getBrands()]);
+  const [page, brands, { ui }] = await Promise.all([getAboutPage(), getBrands(), getSite()]);
   const { hero, story, mission, vision, values, timeline, credentials, cta } = page;
+  const team = page.team;
 
   return (
     <>
       <section
-        className="relative isolate overflow-hidden bg-[linear-gradient(180deg,var(--color-sky-200),#D7EBFF_40%,#FFF3DC_80%,var(--color-dawn-100))] text-center"
+        className="relative isolate overflow-hidden bg-[linear-gradient(180deg,var(--color-sky-200),var(--color-day-100)_40%,var(--color-dawn-50)_80%,var(--color-dawn-100))] text-center"
         style={{ paddingTop: "calc(var(--site-top) + 24px)" }}
       >
         <div
-          className="fx-grid pointer-events-none absolute inset-x-0 top-0 -z-10 h-full max-h-[900px] opacity-60 [mask-image:radial-gradient(90%_75%_at_50%_20%,#000,transparent_80%)]"
+          className="fx-grid pointer-events-none absolute inset-x-0 top-0 -z-10 h-full max-h-[900px] opacity-60 [mask-image:radial-gradient(90%_75%_at_50%_20%,black,transparent_80%)]"
           aria-hidden
         />
         <div
           aria-hidden
-          className="absolute bottom-[-200px] left-1/2 -z-10 size-[420px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_50%_40%,#FFFBEA,var(--color-sun-300)_30%,var(--color-sun-500)_70%,var(--color-sun-600))] shadow-[0_0_140px_60px_rgb(255_178_26/0.5)] sm:bottom-[-260px] sm:size-[560px]"
+          className="absolute bottom-[-200px] left-1/2 -z-10 size-[420px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_50%_40%,var(--color-dawn-50),var(--color-sun-300)_30%,var(--color-sun-500)_70%,var(--color-sun-600))] shadow-[0_0_140px_60px_rgb(255_178_26/0.5)] sm:bottom-[-260px] sm:size-[560px]"
         />
         <div className="container-site relative flex flex-col items-center gap-5 pb-[clamp(220px,28vw,300px)]">
-          <nav aria-label="Breadcrumb" className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">
+          <nav aria-label={t(ui, "breadcrumb")} className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">
             <Link href="/" className="inline-flex min-h-11 items-center hover:text-sun-700">
-              Home
+              {t(ui, "home")}
             </Link>{" "}
-            / <span aria-current="page" className="text-sun-700">About</span>
+            / <span aria-current="page" className="text-sun-700">{t(ui, "breadcrumbAbout")}</span>
           </nav>
           <h1 className="font-display max-w-[1000px] text-[clamp(44px,6vw,92px)] font-bold leading-[0.98] tracking-[-0.045em] text-balance">
             <RichText text={hero.heading} />
@@ -57,9 +68,9 @@ export default async function AboutPage() {
             <h2 className={h2Class}>
               <RichText text={story.heading} />
             </h2>
-            {story.paragraphs.map((t) => (
-              <p key={t} className="text-[17px] leading-[1.7] text-ink-muted">
-                {t}
+            {story.paragraphs.map((para) => (
+              <p key={para} className="text-[17px] leading-[1.7] text-ink-muted">
+                {para}
               </p>
             ))}
           </div>
@@ -117,7 +128,40 @@ export default async function AboutPage() {
         </ol>
       </Section>
 
-      <Section tone="light">
+      {team?.members?.length ? (
+        <Section tone="light" labelledBy="team-h">
+          <div className="mb-9 flex flex-wrap items-end justify-between gap-x-10 gap-y-6">
+            <div className="flex max-w-[680px] flex-col gap-4">
+              <Eyebrow>{team.eyebrow}</Eyebrow>
+              <h2 id="team-h" className={h2Class}>
+                <RichText text={team.heading} />
+              </h2>
+            </div>
+            <p className="m-0 max-w-[380px] leading-relaxed text-ink-muted">{team.lead}</p>
+          </div>
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {team.members.map((m, i) => (
+              <li key={`${i}-${m.role}`} className="glass-card overflow-hidden rounded-[22px]">
+                <div
+                  role="img"
+                  aria-label={team.photoLabel}
+                  className={cn("grid h-56 place-items-center sm:h-60", TEAM_BG[m.tone] ?? TEAM_BG.sun)}
+                >
+                  <span aria-hidden className="font-display text-[54px] font-bold text-navy-900/35">
+                    {m.initial}
+                  </span>
+                </div>
+                <div className="flex flex-col gap-1 p-[18px]">
+                  <span className="font-display text-lg font-bold">{m.name}</span>
+                  <span className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">{m.role}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      ) : null}
+
+      <Section tone="white">
         <div className="grid items-start gap-12 lg:grid-cols-2">
           <div className="flex flex-col gap-4">
             <Eyebrow>{credentials.eyebrow}</Eyebrow>

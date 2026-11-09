@@ -1,6 +1,7 @@
 import "server-only";
 
 import data from "@/content/pages/projects.json";
+import { pageContent } from "@/lib/content/strapi-page";
 import type { Img, Link, Tone } from "@/lib/content/types";
 
 export type ProjectsPage = {
@@ -14,4 +15,5 @@ export type ProjectsPage = {
   cta: { heading: string; label: string; href: string };
 };
 
-export const getProjectsPage = async () => data as ProjectsPage;
+/** Copy from Strapi (projects-page.content) merged over the bundled defaults. */
+export const getProjectsPage = () => pageContent("projects-page", data as ProjectsPage);

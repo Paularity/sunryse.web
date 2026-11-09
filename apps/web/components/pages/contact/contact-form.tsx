@@ -9,7 +9,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import type { IconName } from "@/lib/content/types";
+import type { IconName, UiLabels } from "@/lib/content/types";
+import { t } from "@/lib/content/ui";
 import { leadSchema } from "@/lib/lead-schema";
 import { cn } from "@/lib/utils";
 
@@ -29,6 +30,7 @@ export type ContactFormContent = {
 
 export type ContactFormProps = {
   content: ContactFormContent;
+  ui: UiLabels;
   messengerUrl: string;
   initialBill?: number;
   initialSegment?: Segment;
@@ -46,7 +48,7 @@ const focusRing = "outline-none focus-visible:ring-3 focus-visible:ring-sky-600/
 
 const INTEREST_FOR_SYSTEM: Record<string, string> = { "grid-tie": "Grid-tie", hybrid: "Hybrid + battery" };
 
-export function ContactForm({ content, messengerUrl, initialBill, initialSegment, initialSystem }: ContactFormProps) {
+export function ContactForm({ content, ui, messengerUrl, initialBill, initialSegment, initialSystem }: ContactFormProps) {
   const uid = useId();
   const fromCalc = initialBill !== undefined || initialSegment !== undefined || initialSystem !== undefined;
 
@@ -107,7 +109,7 @@ export function ContactForm({ content, messengerUrl, initialBill, initialSegment
   const show = (f: Field) => (tried ? errors[f] : undefined);
 
   const last = step === 3;
-  const firstName = name.trim().split(/\s+/)[0] || "there";
+  const firstName = name.trim().split(/\s+/)[0] || t(ui, "cfThere");
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -133,7 +135,7 @@ export function ContactForm({ content, messengerUrl, initialBill, initialSegment
       if (!res.ok) throw new Error("failed");
       setStep(4);
     } catch {
-      setServerError("We could not send your request. Please try again or call us.");
+      setServerError(t(ui, "cfServerError"));
     } finally {
       setSending(false);
     }
@@ -151,24 +153,24 @@ export function ContactForm({ content, messengerUrl, initialBill, initialSegment
   }
 
   const done = step === 4;
-  const stepName = content.stepNames[step - 1] ?? "Done";
+  const stepName = content.stepNames[step - 1] ?? t(ui, "cfDone");
 
   return (
     <form
       onSubmit={onSubmit}
       noValidate
-      aria-label="Quote request"
+      aria-label={t(ui, "cfAria")}
       className="glass-card flex min-w-0 flex-col gap-6 rounded-[28px] p-5 sm:p-8"
     >
       <div className="flex flex-col gap-2.5">
         <div className="flex justify-between font-label text-[11px] tracking-[0.12em] text-ink-muted uppercase">
-          <span>{done ? "Complete" : `Step ${step} of 3`}</span>
-          <span>{done ? "Done" : stepName}</span>
+          <span>{done ? t(ui, "cfComplete") : t(ui, "cfStepOf", { n: step })}</span>
+          <span>{done ? t(ui, "cfDone") : stepName}</span>
         </div>
         <div
           className="h-2 rounded-full bg-day-100"
           role="progressbar"
-          aria-label="Quote form progress"
+          aria-label={t(ui, "cfProgressAria")}
           aria-valuemin={0}
           aria-valuemax={3}
           aria-valuenow={Math.min(3, step)}
@@ -185,7 +187,7 @@ export function ContactForm({ content, messengerUrl, initialBill, initialSegment
           <fieldset className="m-0 flex flex-col gap-2.5 border-0 p-0">
             <legend className="mb-3 p-0">
               <h2 ref={headingRef} tabIndex={-1} className="font-display text-[22px] font-bold outline-none">
-                What type of property?
+                {t(ui, "cfPropertyQ")}
               </h2>
             </legend>
             <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
@@ -216,7 +218,7 @@ export function ContactForm({ content, messengerUrl, initialBill, initialSegment
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="flex flex-col gap-1.5">
               <Label htmlFor={`${uid}-bill`} className={lblCls}>
-                Average monthly bill ₱
+                {t(ui, "cfBillLabel")}
               </Label>
               <Input
                 id={`${uid}-bill`}
@@ -230,7 +232,7 @@ export function ContactForm({ content, messengerUrl, initialBill, initialSegment
             </div>
             <div className="flex flex-col gap-1.5">
               <Label htmlFor={`${uid}-interest`} className={lblCls}>
-                Interested in
+                {t(ui, "cfInterestedIn")}
               </Label>
               <select
                 id={`${uid}-interest`}
@@ -252,7 +254,7 @@ export function ContactForm({ content, messengerUrl, initialBill, initialSegment
           <fieldset className="m-0 flex flex-col gap-2.5 border-0 p-0">
             <legend className="mb-3 p-0">
               <h2 ref={headingRef} tabIndex={-1} className="font-display text-[22px] font-bold outline-none">
-                Tell us about your roof
+                {t(ui, "cfRoofTitle")}
               </h2>
             </legend>
             <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
@@ -278,12 +280,12 @@ export function ContactForm({ content, messengerUrl, initialBill, initialSegment
           </fieldset>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor={`${uid}-city`} className={lblCls}>
-              City / barangay
+              {t(ui, "formCity")}
             </Label>
             <Input
               id={`${uid}-city`}
               autoComplete="address-level2"
-              placeholder="e.g. Quezon City, Metro Manila"
+              placeholder={t(ui, "cfCityPlaceholder")}
               value={city}
               onChange={(e) => setCity(e.target.value)}
               maxLength={240}
@@ -292,7 +294,7 @@ export function ContactForm({ content, messengerUrl, initialBill, initialSegment
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor={`${uid}-date`} className={lblCls}>
-              Preferred survey date (optional)
+              {t(ui, "cfSurveyDate")}
             </Label>
             <Input id={`${uid}-date`} type="date" value={surveyDate} onChange={(e) => setSurveyDate(e.target.value)} className={fieldCls} />
           </div>
@@ -302,9 +304,9 @@ export function ContactForm({ content, messengerUrl, initialBill, initialSegment
       {step === 3 ? (
         <div className="flex flex-col gap-4">
           <h2 ref={headingRef} tabIndex={-1} className="font-display text-[22px] font-bold outline-none">
-            How can we reach you?
+            {t(ui, "cfReachTitle")}
           </h2>
-          <TextField id={`${uid}-name`} label="Full name" error={show("name")}>
+          <TextField id={`${uid}-name`} label={t(ui, "cfFullName")} error={show("name")}>
             <Input
               id={`${uid}-name`}
               autoComplete="name"
@@ -317,13 +319,13 @@ export function ContactForm({ content, messengerUrl, initialBill, initialSegment
             />
           </TextField>
           <div className="grid gap-4 sm:grid-cols-2">
-            <TextField id={`${uid}-phone`} label="Mobile" error={show("phone")} hint="e.g. 0917 123 4567">
+            <TextField id={`${uid}-phone`} label={t(ui, "formMobile")} error={show("phone")} hint={t(ui, "cfMobileHint")}>
               <Input
                 id={`${uid}-phone`}
                 type="tel"
                 inputMode="tel"
                 autoComplete="tel"
-                placeholder="0917 123 4567"
+                placeholder={t(ui, "cfMobilePlaceholder")}
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 aria-invalid={!!show("phone")}
@@ -331,7 +333,7 @@ export function ContactForm({ content, messengerUrl, initialBill, initialSegment
                 className={fieldCls}
               />
             </TextField>
-            <TextField id={`${uid}-email`} label="Email (optional)" error={show("email")}>
+            <TextField id={`${uid}-email`} label={t(ui, "cfEmailOptional")} error={show("email")}>
               <Input
                 id={`${uid}-email`}
                 type="email"
@@ -346,12 +348,12 @@ export function ContactForm({ content, messengerUrl, initialBill, initialSegment
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor={`${uid}-notes`} className={lblCls}>
-              Anything else?
+              {t(ui, "cfNotes")}
             </Label>
             <Textarea
               id={`${uid}-notes`}
               rows={3}
-              placeholder="e.g. We have frequent brownouts in the evening"
+              placeholder={t(ui, "cfNotesPlaceholder")}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               maxLength={1500}
@@ -382,37 +384,37 @@ export function ContactForm({ content, messengerUrl, initialBill, initialSegment
             <Check className="size-9" strokeWidth={2.5} aria-hidden />
           </span>
           <h2 ref={headingRef} tabIndex={-1} className="font-display text-[30px] font-bold tracking-[-0.03em] outline-none">
-            Thanks, {firstName}!
+            {t(ui, "cfThanks", { name: firstName })}
           </h2>
           <p className="m-0 max-w-[420px] leading-relaxed text-ink-muted">{content.successBody.replace("{phone}", phone.trim())}</p>
           <ol className="m-0 mt-2 flex list-none flex-col gap-2.5 p-0 text-left">
-            {content.nextSteps.map((t, i) => (
-              <li key={t} className="flex items-center gap-3 text-[15px]">
+            {content.nextSteps.map((ns, i) => (
+              <li key={ns} className="flex items-center gap-3 text-[15px]">
                 <span className="grid size-[34px] flex-none place-items-center rounded-full border-2 border-sun-500 font-label text-[11px] text-sun-700">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                {t}
+                {ns}
               </li>
             ))}
           </ol>
           <div className="mt-2 flex flex-wrap justify-center gap-2">
             <Button asChild variant="navy" size="xl">
               <a href={messengerUrl} target="_blank" rel="noopener noreferrer">
-                <MessageCircle aria-hidden /> Message us now
+                <MessageCircle aria-hidden /> {t(ui, "cfMessageNow")}
               </a>
             </Button>
             <Button type="button" variant="line" size="xl" onClick={restart}>
-              Start over
+              {t(ui, "cfStartOver")}
             </Button>
           </div>
         </div>
       ) : (
         <div className="flex justify-between gap-2.5 border-t border-navy-900/10 pt-[18px]">
           <Button type="button" variant="line" size="xl" disabled={step === 1} onClick={() => setStep((s) => Math.max(1, s - 1))} className="min-h-12 px-5">
-            ← Back
+            {t(ui, "cfBack")}
           </Button>
           <Button type="submit" variant={last ? "sun" : "navy"} size="xl" disabled={sending} className="max-w-[280px] min-h-12 flex-1 px-5">
-            {last ? (sending ? "Sending…" : "Send my request »") : "Continue →"}
+            {last ? (sending ? t(ui, "formSending") : t(ui, "cfSend")) : t(ui, "cfContinue")}
           </Button>
         </div>
       )}

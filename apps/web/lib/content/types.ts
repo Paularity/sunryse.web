@@ -17,7 +17,11 @@ export type Feature = { title: string; description?: string; icon?: IconName; to
 /** Brand tones used for icon tiles, chips and dots. */
 export type Tone = "sun" | "amber" | "sky" | "leaf" | "flame" | "navy";
 
+/** Short interface labels (buttons, chips, form fields). Keys are fixed; values are editable in Strapi (global.ui). */
+export type UiLabels = Record<string, string>;
+
 export type Site = {
+  ui: UiLabels;
   name: string;
   tagline: string;
   phone: string;

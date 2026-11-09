@@ -86,6 +86,9 @@
     },
     "caption": {
       "type": "string"
+    },
+    "details": {
+      "type": "json"
     }
   }
 }

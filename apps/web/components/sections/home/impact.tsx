@@ -21,7 +21,7 @@ export function ImpactBand({ content, stats }: { content: HomeContent["impact"];
                   className="absolute inset-0 rounded-full p-0.5 motion-safe:animate-[fx-spin_6s_linear_infinite]"
                   style={{
                     background: "conic-gradient(from 0deg, var(--c), transparent 75%)",
-                    WebkitMask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+                    WebkitMask: "linear-gradient(black 0 0) content-box, linear-gradient(black 0 0)",
                     WebkitMaskComposite: "xor",
                     maskComposite: "exclude",
                   }}

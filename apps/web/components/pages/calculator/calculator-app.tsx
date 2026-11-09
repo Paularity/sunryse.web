@@ -5,7 +5,8 @@ import { useId, useMemo, useState } from "react";
 
 import { Hud } from "@/components/fx";
 import { Button } from "@/components/ui/button";
-import type { CalculatorConfig } from "@/lib/content/types";
+import type { CalculatorConfig, UiLabels } from "@/lib/content/types";
+import { t } from "@/lib/content/ui";
 import { calculateSolar, formatPeso, type Segment, type SystemType } from "@/lib/solar-calc";
 import { cn } from "@/lib/utils";
 
@@ -25,6 +26,7 @@ export type CalculatorUiContent = {
 export type CalculatorAppProps = {
   config: CalculatorConfig;
   content: CalculatorUiContent;
+  ui: UiLabels;
   initialBill?: number;
   initialSegment?: Segment;
   initialSystem?: SystemType;
@@ -50,7 +52,7 @@ const rangeCls = cn(
 const pct = (n: number) => +(n * 100).toFixed(1);
 const presetLabel = (v: number) => (v >= 1000 ? `₱${v / 1000}k` : `₱${v}`);
 
-export function CalculatorApp({ config, content, initialBill, initialSegment, initialSystem }: CalculatorAppProps) {
+export function CalculatorApp({ config, content, ui, initialBill, initialSegment, initialSystem }: CalculatorAppProps) {
   const uid = useId();
   const [bill, setBill] = useState(initialBill ?? 10000);
   const [segment, setSegment] = useState<Segment>(initialSegment ?? "residential");
@@ -70,18 +72,20 @@ export function CalculatorApp({ config, content, initialBill, initialSegment, in
   const costPos = `${((r.systemCost / max) * 100).toFixed(1)}%`;
 
   const specs = [
-    { l: "System size", v: kwp },
-    { l: "Panels", v: `${r.panels} × ${config.panelWatt}W` },
-    { l: "Roof area", v: `≈ ${Math.round(r.roofAreaM2)} m²` },
-    hybrid ? { l: "Battery", v: `${r.batteryKwh} kWh` } : { l: "Est. price", v: formatPeso(r.systemCost) },
-    { l: "CO₂ avoided", v: `${r.co2TonsPerYear.toFixed(1)} t/yr` },
+    { l: t(ui, "systemSize"), v: kwp },
+    { l: t(ui, "panels"), v: t(ui, "calcPanelsValue", { count: r.panels, watt: config.panelWatt }) },
+    { l: t(ui, "calcRoofArea"), v: t(ui, "calcRoofValue", { n: Math.round(r.roofAreaM2) }) },
+    hybrid
+      ? { l: t(ui, "calcBattery"), v: t(ui, "calcBatteryValue", { n: r.batteryKwh }) }
+      : { l: t(ui, "calcEstPrice"), v: formatPeso(r.systemCost) },
+    { l: t(ui, "calcCo2"), v: t(ui, "calcCo2Value", { n: r.co2TonsPerYear.toFixed(1) }) },
   ];
 
   const assumptions = [
-    `Grid rate ₱${config.electricityRate.toFixed(2)}/kWh · ${config.peakSunHours} peak sun hours · ${pct(config.performanceRatio)}% system performance`,
-    `${config.panelWatt} W panels (${config.panelAreaM2} m² each) · panels lose ${pct(config.degradation)}%/yr`,
-    `Grid rates rise ${pct(config.rateEscalation)}%/yr · exported power credited at ₱${config.exportCreditRate}/kWh`,
-    `Grid-tie ${formatPeso(config.costPerKwpGridTie)}/kWp · hybrid ${formatPeso(config.costPerKwpHybrid)}/kWp + battery ${formatPeso(config.batteryCostPerKwh)}/kWh`,
+    t(ui, "calcAssump1", { rate: config.electricityRate.toFixed(2), sun: config.peakSunHours, perf: pct(config.performanceRatio) }),
+    t(ui, "calcAssump2", { watt: config.panelWatt, area: config.panelAreaM2, deg: pct(config.degradation) }),
+    t(ui, "calcAssump3", { esc: pct(config.rateEscalation), credit: config.exportCreditRate }),
+    t(ui, "calcAssump4", { gridTie: formatPeso(config.costPerKwpGridTie), hybrid: formatPeso(config.costPerKwpHybrid), battery: formatPeso(config.batteryCostPerKwh) }),
     config.disclaimer,
   ];
 
@@ -116,7 +120,7 @@ export function CalculatorApp({ config, content, initialBill, initialSegment, in
               step={500}
               value={Math.min(Math.max(bill, SLIDER_MIN), SLIDER_MAX)}
               onChange={(e) => setBill(Number(e.target.value))}
-              aria-label="Adjust monthly bill"
+              aria-label={t(ui, "calcAdjustBill")}
               aria-valuetext={formatPeso(bill)}
               className={rangeCls}
             />
@@ -209,24 +213,24 @@ export function CalculatorApp({ config, content, initialBill, initialSegment, in
         {/* RESULTS */}
         <div className="flex min-w-0 flex-col gap-3.5">
           <p className="sr-only" role="status" aria-live="polite">
-            {`Estimated system ${kwp}, saving ${formatPeso(r.monthlySavings)} per month, payback ${payback} years, 25-year savings ${formatPeso(r.savings25)}.`}
+            {t(ui, "calcSummary", { kwp, savings: formatPeso(r.monthlySavings), payback, total: formatPeso(r.savings25) })}
           </p>
 
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
             <div className="rounded-[20px] bg-[linear-gradient(150deg,var(--color-leaf-500),var(--color-leaf-600))] p-[22px] text-white shadow-[0_16px_32px_-16px_rgb(30_138_58/0.7)]">
-              <span className={cn(monoTile, "block")}>Monthly savings</span>
+              <span className={cn(monoTile, "block")}>{t(ui, "monthlySavings")}</span>
               <span className="font-display text-[clamp(28px,3vw,40px)] font-bold tracking-[-0.02em]">{formatPeso(r.monthlySavings)}</span>
-              <span className={cn(monoTile, "mt-1 block")}>−{Math.round(r.billReduction * 100)}% on your bill</span>
+              <span className={cn(monoTile, "mt-1 block")}>{t(ui, "calcBillReduction", { n: Math.round(r.billReduction * 100) })}</span>
             </div>
             <div className="rounded-[20px] bg-[linear-gradient(150deg,var(--color-sun-300),var(--color-sun-500))] p-[22px] text-navy-900 shadow-[0_16px_32px_-16px_rgb(255_138_0/0.7)]">
-              <span className={cn(monoTile, "block")}>Payback</span>
+              <span className={cn(monoTile, "block")}>{t(ui, "payback")}</span>
               <span className="font-display text-[clamp(28px,3vw,40px)] font-bold tracking-[-0.02em]">{payback}</span>
-              <span className={cn(monoTile, "mt-1 block")}>years</span>
+              <span className={cn(monoTile, "mt-1 block")}>{t(ui, "calcYears")}</span>
             </div>
             <div className="col-span-2 rounded-[20px] bg-navy-900 p-[22px] text-white sm:col-span-1">
-              <span className={cn(monoTile, "block text-ink-glow")}>25-year savings</span>
+              <span className={cn(monoTile, "block text-ink-glow")}>{t(ui, "calcSavings25")}</span>
               <span className="font-display text-[clamp(28px,3vw,40px)] font-bold tracking-[-0.02em]">{formatPeso(r.savings25)}</span>
-              <span className={cn(monoTile, "mt-1 block text-ink-glow")}>net of system cost: {formatPeso(r.netSavings25)}</span>
+              <span className={cn(monoTile, "mt-1 block text-ink-glow")}>{t(ui, "calcNet", { amount: formatPeso(r.netSavings25) })}</span>
             </div>
           </div>
 
@@ -245,18 +249,18 @@ export function CalculatorApp({ config, content, initialBill, initialSegment, in
               <span className="inline-flex items-center gap-3 text-ink-soft">
                 <span className="inline-flex items-center gap-1.5">
                   <i className="block h-0 w-3.5 border-t-2 border-dashed border-glow-flame" aria-hidden />
-                  cost {formatPeso(r.systemCost)}
+                  {t(ui, "calcCost", { amount: formatPeso(r.systemCost) })}
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <i className="block size-2.5 rounded-[3px] bg-glow-leaf" aria-hidden />
-                  paid off
+                  {t(ui, "calcPaidOff")}
                 </span>
               </span>
             </div>
             <div
               className="relative flex h-[200px] items-end gap-[3px] border-b border-white/15"
               role="img"
-              aria-label={`Bar chart of cumulative savings over 25 years compared with a system cost of ${formatPeso(r.systemCost)}`}
+              aria-label={t(ui, "calcChartAlt", { amount: formatPeso(r.systemCost) })}
             >
               {r.cumulative.map((c, i) => (
                 <div
@@ -275,9 +279,9 @@ export function CalculatorApp({ config, content, initialBill, initialSegment, in
               />
             </div>
             <div className="flex justify-between font-label text-[11px] uppercase tracking-[0.12em] text-ink-soft">
-              <span>Yr 1</span>
-              <span>Yr 13</span>
-              <span>Yr 25</span>
+              <span>{t(ui, "yearStart")}</span>
+              <span>{t(ui, "yearMid")}</span>
+              <span>{t(ui, "yearEnd")}</span>
             </div>
           </div>
 
@@ -296,15 +300,15 @@ export function CalculatorApp({ config, content, initialBill, initialSegment, in
       <div className="sticky bottom-0 z-20 -mx-4 mt-8 grid grid-cols-[1fr_auto] items-center gap-2.5 border-t border-navy-900/10 bg-white/95 px-3.5 pt-2.5 pb-[calc(10px+env(safe-area-inset-bottom))] shadow-[0_-10px_30px_-12px_rgb(11_31_77/0.3)] backdrop-blur-md sm:-mx-6 lg:hidden">
         <span className="flex min-w-0 flex-col leading-tight">
           <span className="truncate font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">
-            {kwp} · payback {payback} yrs
+            {t(ui, "calcStickySummary", { kwp, payback })}
           </span>
           <span className="font-display text-[22px] font-bold text-leaf-600">
             {formatPeso(r.monthlySavings)}
-            <span className="text-[13px] font-normal text-ink-muted">/mo saved</span>
+            <span className="text-[13px] font-normal text-ink-muted">{t(ui, "calcSavedPerMonth")}</span>
           </span>
         </span>
         <Button asChild variant="sun" size="xl" className="px-4">
-          <a href={quoteHref}>Get quote</a>
+          <a href={quoteHref}>{t(ui, "getQuoteShort")}</a>
         </Button>
       </div>
     </div>

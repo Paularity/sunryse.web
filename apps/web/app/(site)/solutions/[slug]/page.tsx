@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
+import { DetailSkeleton } from "@/components/pages/detail-skeleton";
 import { SolutionView } from "@/components/pages/solution/solution-view";
-import { getFaqs, getSolution, getTestimonials } from "@/lib/content";
+import { getFaqs, getSite, getSolution, getTestimonials } from "@/lib/content";
 import { getSolutionDetails, SOLUTION_SLUGS } from "@/lib/content/pages/solution";
-
-// Statically generated per slug; a blocking navigation is fine for these detail pages.
-export const instant = false;
 
 type Params = { slug: string };
 
@@ -26,11 +25,20 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   };
 }
 
-export default async function SolutionPage({ params }: { params: Promise<Params> }) {
+/** Sync shell: the param-dependent content streams in behind a hero-shaped skeleton, so navigation is instant. */
+export default function SolutionPage({ params }: { params: Promise<Params> }) {
+  return (
+    <Suspense fallback={<DetailSkeleton />}>
+      <SolutionContent params={params} />
+    </Suspense>
+  );
+}
+
+async function SolutionContent({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
-  const [solution, faqs, testimonials] = await Promise.all([getSolution(slug), getFaqs(), getTestimonials()]);
-  const details = getSolutionDetails(slug);
+  const [solution, faqs, testimonials, site] = await Promise.all([getSolution(slug), getFaqs(), getTestimonials(), getSite()]);
+  const details = await getSolutionDetails(slug);
   if (!solution || !details) notFound();
 
-  return <SolutionView solution={solution} details={details} faqs={faqs} testimonials={testimonials} />;
+  return <SolutionView solution={solution} details={details} faqs={faqs} testimonials={testimonials} ui={site.ui} />;
 }

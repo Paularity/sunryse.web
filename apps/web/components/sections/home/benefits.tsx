@@ -1,12 +1,13 @@
 import type { CSSProperties } from "react";
 
 import { Icon, TONE } from "@/components/icons";
-import type { HomeContent } from "@/lib/content/types";
+import type { HomeContent, UiLabels } from "@/lib/content/types";
+import { t } from "@/lib/content/ui";
 
 /** Glass dock overlapping the hero by 64px. */
-export function BenefitsDock({ items }: { items: HomeContent["benefits"] }) {
+export function BenefitsDock({ items, ui }: { items: HomeContent["benefits"]; ui: UiLabels }) {
   return (
-    <section aria-label="Benefits" className="relative z-[4] -mt-16">
+    <section aria-label={t(ui, "benefitsAria")} className="relative z-[4] -mt-16">
       <div className="container-site">
         <ul
           className="glass grid gap-0 overflow-x-auto rounded-3xl p-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"

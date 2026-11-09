@@ -3,7 +3,8 @@ import { Check } from "lucide-react";
 import { useId } from "react";
 
 import { Hud, PhotoFrame, RichText } from "@/components/fx";
-import type { HomeContent } from "@/lib/content/types";
+import type { HomeContent, UiLabels } from "@/lib/content/types";
+import { t } from "@/lib/content/ui";
 import { formatPeso } from "@/lib/solar-calc";
 
 import { HeroBillForm } from "./hero-bill-form";
@@ -15,15 +16,15 @@ const mono = "font-label text-[11px] uppercase tracking-[0.12em]";
 const PANEL =
   "rounded-[4px] border-2 border-day-100 shadow-[0_6px_0_var(--color-ink-muted)] bg-[linear-gradient(155deg,rgb(255_255_255/0.55),transparent_35%),linear-gradient(160deg,var(--color-sky-500),var(--color-sky-700)_55%,var(--color-navy-900))]";
 
-function payback(n: number | null) {
-  return n == null ? "—" : `${n.toFixed(1)} yrs`;
+function payback(ui: UiLabels, n: number | null) {
+  return n == null ? "—" : `${n.toFixed(1)} ${t(ui, "years")}`;
 }
 
-export function HeroSection({ hero, estimate }: { hero: HomeContent["hero"]; estimate: Estimate }) {
+export function HeroSection({ hero, estimate, ui }: { hero: HomeContent["hero"]; estimate: Estimate; ui: UiLabels }) {
   const gid = useId();
   return (
     <section
-      aria-label="Hero"
+      aria-label={t(ui, "heroAria")}
       className="relative overflow-hidden bg-[linear-gradient(180deg,var(--color-sky-200)_0%,var(--color-dawn-50)_60%,var(--color-sun-300)_150%)] pb-[120px] pt-[calc(var(--site-top)+36px)] lg:pb-[180px]"
     >
       {/* backdrop */}
@@ -63,21 +64,21 @@ export function HeroSection({ hero, estimate }: { hero: HomeContent["hero"]; est
             <RichText text={hero.heading} />
           </h1>
           <p className="max-w-[540px] text-[17px] leading-[1.55] text-navy-900/85 sm:text-[19px]">{hero.subheading}</p>
-          <HeroBillForm label={hero.billLabel} defaultValue={hero.billDefault} ctaLabel={hero.cta.label} href={hero.cta.href} />
+          <HeroBillForm ariaLabel={t(ui, "quickEstimateAria")} label={hero.billLabel} defaultValue={hero.billDefault} ctaLabel={hero.cta.label} href={hero.cta.href} />
 
           {/* compact estimate strip (below lg) */}
           <div className="glass flex flex-wrap items-center justify-between gap-x-4 gap-y-1 rounded-2xl px-4 py-3 lg:hidden">
             <span className={`${mono} text-ink-muted`}>{hero.estimateLabel}</span>
             <span className="font-display font-bold">{estimate.systemKwp} kWp</span>
-            <span className="font-display font-bold text-leaf-600">{formatPeso(estimate.monthlySavings)}/mo</span>
-            <span className="font-display font-bold text-sun-700">{payback(estimate.paybackYears)}</span>
+            <span className="font-display font-bold text-leaf-600">{formatPeso(estimate.monthlySavings)}{t(ui, "perMonth")}</span>
+            <span className="font-display font-bold text-sun-700">{payback(ui, estimate.paybackYears)}</span>
           </div>
 
           <ul className={`${mono} flex flex-wrap gap-x-[18px] gap-y-2 text-navy-900`}>
-            {hero.trust.map((t) => (
-              <li key={t} className="inline-flex items-center gap-1.5">
+            {hero.trust.map((item) => (
+              <li key={item} className="inline-flex items-center gap-1.5">
                 <Check className="size-4 text-leaf-600" strokeWidth={1.75} aria-hidden />
-                {t}
+                {item}
               </li>
             ))}
           </ul>
@@ -92,10 +93,10 @@ export function HeroSection({ hero, estimate }: { hero: HomeContent["hero"]; est
             </span>
             <dl className="grid grid-cols-2 gap-3">
               {[
-                { k: "System", v: `${estimate.systemKwp} kWp`, unit: "", c: "" },
-                { k: "Panels", v: String(estimate.panels), unit: "", c: "" },
-                { k: "Savings", v: formatPeso(estimate.monthlySavings), unit: "/mo", c: "text-leaf-600" },
-                { k: "Payback", v: payback(estimate.paybackYears), unit: "", c: "text-sun-700" },
+                { k: t(ui, "estimateSystem"), v: `${estimate.systemKwp} kWp`, unit: "", c: "" },
+                { k: t(ui, "estimatePanels"), v: String(estimate.panels), unit: "", c: "" },
+                { k: t(ui, "estimateSavings"), v: formatPeso(estimate.monthlySavings), unit: t(ui, "perMonth"), c: "text-leaf-600" },
+                { k: t(ui, "estimatePayback"), v: payback(ui, estimate.paybackYears), unit: "", c: "text-sun-700" },
               ].map((s) => (
                 <div key={s.k}>
                   <dt className={`${mono} block text-ink-muted`}>{s.k}</dt>
@@ -107,7 +108,7 @@ export function HeroSection({ hero, estimate }: { hero: HomeContent["hero"]; est
               ))}
             </dl>
             <div className="border-t border-navy-900/10 pt-2.5">
-              <span className={`${mono} text-ink-muted`}>Typical daily output</span>
+              <span className={`${mono} text-ink-muted`}>{t(ui, "typicalDailyOutput")}</span>
               <svg viewBox="0 0 260 46" className="mt-1.5 block h-[46px] w-full" aria-hidden>
                 <defs>
                   <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
@@ -120,9 +121,9 @@ export function HeroSection({ hero, estimate }: { hero: HomeContent["hero"]; est
                 <circle cx="150" cy="5" r="4" style={{ fill: "var(--color-sun-500)", filter: "drop-shadow(0 0 5px var(--color-sun-500))" }} />
               </svg>
               <span className={`${mono} flex justify-between text-ink-muted`}>
-                <span>6 AM</span>
-                <span>Noon</span>
-                <span>6 PM</span>
+                <span>{t(ui, "time6am")}</span>
+                <span>{t(ui, "timeNoon")}</span>
+                <span>{t(ui, "time6pm")}</span>
               </span>
             </div>
           </div>

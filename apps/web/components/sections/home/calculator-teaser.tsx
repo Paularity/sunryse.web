@@ -1,14 +1,14 @@
 import { Eyebrow, Hud, RichText, Section, h2Class } from "@/components/fx";
-import type { CalculatorConfig, HomeContent } from "@/lib/content/types";
+import type { CalculatorConfig, HomeContent, UiLabels } from "@/lib/content/types";
 
 import { CalculatorConsole } from "./calculator-teaser-console";
 
-export function CalculatorTeaser({ content, config }: { content: HomeContent["calculator"]; config: CalculatorConfig }) {
+export function CalculatorTeaser({ content, config, ui }: { content: HomeContent["calculator"]; config: CalculatorConfig; ui: UiLabels }) {
   return (
     <Section id="calc" tone="dawn" labelledBy="calc-h" className="overflow-hidden">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(rgb(194_65_12/0.12)_1px,transparent_1.4px)] [background-size:22px_22px] [mask-image:linear-gradient(90deg,#000,transparent_70%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(rgb(194_65_12/0.12)_1px,transparent_1.4px)] [background-size:22px_22px] [mask-image:linear-gradient(90deg,black,transparent_70%)]"
       />
       <div
         aria-hidden
@@ -30,7 +30,7 @@ export function CalculatorTeaser({ content, config }: { content: HomeContent["ca
           </div>
         </div>
         <div className="corners min-w-0 p-2.5">
-          <CalculatorConsole config={config} ctaLabel={content.ctaLabel} />
+          <CalculatorConsole ui={ui} config={config} ctaLabel={content.ctaLabel} />
         </div>
       </div>
     </Section>

@@ -4,12 +4,13 @@ import Link from "next/link";
 
 import { Hud, Section, SectionHeader } from "@/components/fx";
 import { Button } from "@/components/ui/button";
-import type { HomeContent, Project } from "@/lib/content/types";
+import type { HomeContent, Project, UiLabels } from "@/lib/content/types";
+import { t } from "@/lib/content/ui";
 import { cn } from "@/lib/utils";
 
-const SEGMENT: Record<Project["segment"], string> = { residential: "Residential", commercial: "Commercial", industrial: "Industrial" };
+const SEGMENT: Record<Project["segment"], string> = { residential: "segmentResidential", commercial: "segmentCommercial", industrial: "segmentIndustrial" };
 
-export function ProjectsBento({ content, projects }: { content: HomeContent["projects"]; projects: Project[] }) {
+export function ProjectsBento({ content, projects, ui }: { content: HomeContent["projects"]; projects: Project[]; ui: UiLabels }) {
   const shown = projects.slice(0, 4);
   return (
     <Section tone="light" labelledBy="proj-h">
@@ -43,7 +44,7 @@ export function ProjectsBento({ content, projects }: { content: HomeContent["pro
               className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none"
             />
             <span aria-hidden className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_45%,rgb(7_20_51/0.7))]" />
-            <Hud className="absolute left-3.5 top-3.5 z-[2]">{SEGMENT[p.segment]}</Hud>
+            <Hud className="absolute left-3.5 top-3.5 z-[2]">{t(ui, SEGMENT[p.segment])}</Hud>
             <span className="absolute inset-x-3.5 bottom-3.5 z-[2] flex justify-between gap-2 rounded-xl border border-white/20 bg-navy-950/55 px-3.5 py-3 font-label text-[11px] uppercase leading-snug tracking-[0.12em] backdrop-blur-md">
               <span>{p.location}</span>
               <span className="text-sun-300">{p.sizeKwp}</span>

@@ -2,12 +2,15 @@
   "name": "sunryse-web",
   "private": true,
   "packageManager": "pnpm@10.34.9",
-  "engines": { "node": ">=22.12" },
+  "engines": {
+    "node": ">=22.12"
+  },
   "scripts": {
     "dev": "pnpm --parallel --filter web --filter cms dev",
     "build": "pnpm -r build",
     "lint": "pnpm --filter web lint",
     "typecheck": "pnpm --filter web typecheck",
-    "test": "pnpm --filter web test"
+    "test": "pnpm --filter web test",
+    "setup": "pnpm --filter cms seed && pnpm --filter cms setup:web"
   }
 }

@@ -1,4 +1,180 @@
 {
+  "ui": {
+    "call": "Call",
+    "message": "Message",
+    "messageUs": "Message us",
+    "calculate": "Calculate",
+    "getQuote": "Get a quote",
+    "getFreeQuote": "Get a free quote",
+    "getQuoteShort": "Get quote",
+    "isNew": "New",
+    "menu": "Menu",
+    "siteNavigation": "Site navigation",
+    "closeMenu": "Close menu",
+    "openMenu": "Open menu",
+    "contact": "Contact",
+    "home": "Home",
+    "solutions": "Solutions",
+    "services": "Services",
+    "systemOnline": "System online",
+    "liveEstimate": "Live estimate",
+    "illustrative": "Illustrative",
+    "illustrativeValues": "Illustrative values",
+    "roofScan": "Roof scan · illustrative",
+    "typicalDailyOutput": "Typical daily output",
+    "time6am": "6 AM",
+    "timeNoon": "Noon",
+    "time6pm": "6 PM",
+    "estimateSystem": "System",
+    "estimatePanels": "Panels",
+    "estimateSavings": "Savings",
+    "estimatePayback": "Payback",
+    "perMonth": "/mo",
+    "years": "yrs",
+    "teaserSegment": "Residential · Grid-tie",
+    "systemSize": "System size",
+    "panels": "Panels",
+    "monthlySavings": "Monthly savings",
+    "payback": "Payback",
+    "yearStart": "Yr 1",
+    "yearMid": "Yr 13",
+    "yearEnd": "Yr 25",
+    "chartGrid": "Grid",
+    "chartSolar": "Your solar",
+    "megaCalcLabel": "Savings calculator",
+    "megaCalcHeading": "How much could your roof save?",
+    "megaCalcLink": "Calculate in 30 seconds",
+    "megaAdvisorLabel": "Not sure what you need?",
+    "megaAdvisorHeading": "Talk to a solar advisor — free.",
+    "megaAdvisorChannels": "Messenger · Viber · Call",
+    "viewAllServices": "View all {count} services",
+    "categorySystems": "Systems",
+    "categoryInstallation": "Installation",
+    "categorySpecialty": "Specialty",
+    "segmentResidential": "Residential",
+    "segmentCommercial": "Commercial",
+    "segmentIndustrial": "Industrial",
+    "formName": "Name",
+    "formMobile": "Mobile",
+    "formMobileHint": "09xx xxx xxxx",
+    "formProperty": "Property type",
+    "formBill": "Monthly bill ₱",
+    "formCity": "City / barangay",
+    "formSending": "Sending…",
+    "formSuccessTitle": "Thank you, we got your request.",
+    "formSendAnother": "Send another",
+    "formError": "Something went wrong. Please call us at {phone}.",
+    "preferToTalk": "Prefer to talk?",
+    "whatHappensNext": "What happens next",
+    "size": "Size",
+    "system": "System",
+    "completed": "Completed",
+    "skipToContent": "Skip to content",
+    "callAria": "Call {name}",
+    "mainNavigation": "Main",
+    "mobileNavigation": "Mobile",
+    "breadcrumb": "Breadcrumb",
+    "breadcrumbAbout": "About",
+    "breadcrumbProjects": "Projects",
+    "onThisPage": "On this page",
+    "heroAria": "Hero",
+    "benefitsAria": "Benefits",
+    "quickEstimateAria": "Quick savings estimate",
+    "allProjectsAria": "All projects",
+    "contactDetails": "Contact details",
+    "learnMore": "Learn more",
+    "inquireNow": "Inquire now »",
+    "calculateSavings": "Calculate savings",
+    "exploreSolution": "Explore {title}",
+    "choosePropertyType": "Choose a property type",
+    "typicalSize": "Typical size",
+    "filterAll": "All",
+    "filterServices": "Filter services",
+    "filterProjects": "Filter projects",
+    "showingOf": "Showing {shown} of {total}",
+    "mostRequested": "Most requested",
+    "nodeSolar": "Solar",
+    "nodeInverter": "Inverter",
+    "nodeHybrid": "Hybrid",
+    "nodeHome": "Home",
+    "nodeGrid": "Grid",
+    "nodeBattery": "Battery",
+    "energyFlowAlt": "Illustrative energy flow: solar panels feed the inverter, which powers the home, exports to the grid and charges the battery",
+    "chartYearMid": "Yr 12",
+    "chartAlt": "Chart: grid electricity cost rises from {start} to about {end} pesos per kWh over 25 years while solar cost per kWh stays flat at {solar}",
+    "step": "Step {n}",
+    "relatedEyebrow": "Keep exploring",
+    "relatedServicesHeading": "Related *services*",
+    "bestFor": "Best for: {value}",
+    "inverterAbbr": "INV",
+    "monthlyBill": "Monthly bill",
+    "monthlyBillAria": "Monthly bill in pesos",
+    "quickBillAmounts": "Quick bill amounts",
+    "paybackOver": "25+ yrs",
+    "errBillNumbers": "Use numbers only, e.g. 10,000",
+    "toastSuccess": "Request sent. We will contact you shortly.",
+    "toastError": "Could not send your request.",
+    "quoteError": "We could not send your request. Please try again or call us at {phone}.",
+    "callNow": "Call now",
+    "messenger": "Messenger",
+    "callOrViber": "Call or Viber",
+    "messageOurPage": "Message our page",
+    "email": "Email",
+    "cfAria": "Quote request",
+    "cfStepOf": "Step {n} of 3",
+    "cfComplete": "Complete",
+    "cfDone": "Done",
+    "cfProgressAria": "Quote form progress",
+    "cfPropertyQ": "What type of property?",
+    "cfBillLabel": "Average monthly bill ₱",
+    "cfInterestedIn": "Interested in",
+    "cfRoofTitle": "Tell us about your roof",
+    "cfCityPlaceholder": "e.g. Quezon City, Metro Manila",
+    "cfSurveyDate": "Preferred survey date (optional)",
+    "cfReachTitle": "How can we reach you?",
+    "cfFullName": "Full name",
+    "cfMobileHint": "e.g. 0917 123 4567",
+    "cfMobilePlaceholder": "0917 123 4567",
+    "cfEmailOptional": "Email (optional)",
+    "cfNotes": "Anything else?",
+    "cfNotesPlaceholder": "e.g. We have frequent brownouts in the evening",
+    "cfThanks": "Thanks, {name}!",
+    "cfThere": "there",
+    "cfMessageNow": "Message us now",
+    "cfStartOver": "Start over",
+    "cfBack": "← Back",
+    "cfContinue": "Continue →",
+    "cfSend": "Send my request »",
+    "cfServerError": "We could not send your request. Please try again or call us.",
+    "subnavHow": "How it works",
+    "subnavPackages": "Packages",
+    "subnavBenefits": "Benefits",
+    "subnavFaq": "FAQ",
+    "subnavReviews": "Reviews",
+    "calcPanelsValue": "{count} × {watt}W",
+    "calcRoofArea": "Roof area",
+    "calcRoofValue": "≈ {n} m²",
+    "calcBattery": "Battery",
+    "calcBatteryValue": "{n} kWh",
+    "calcEstPrice": "Est. price",
+    "calcCo2": "CO₂ avoided",
+    "calcCo2Value": "{n} t/yr",
+    "calcAssump1": "Grid rate ₱{rate}/kWh · {sun} peak sun hours · {perf}% system performance",
+    "calcAssump2": "{watt} W panels ({area} m² each) · panels lose {deg}%/yr",
+    "calcAssump3": "Grid rates rise {esc}%/yr · exported power credited at ₱{credit}/kWh",
+    "calcAssump4": "Grid-tie {gridTie}/kWp · hybrid {hybrid}/kWp + battery {battery}/kWh",
+    "calcAdjustBill": "Adjust monthly bill",
+    "calcSummary": "Estimated system {kwp}, saving {savings} per month, payback {payback} years, 25-year savings {total}.",
+    "calcBillReduction": "−{n}% on your bill",
+    "calcYears": "years",
+    "calcSavings25": "25-year savings",
+    "calcNet": "net of system cost: {amount}",
+    "calcCost": "cost {amount}",
+    "calcPaidOff": "paid off",
+    "calcChartAlt": "Bar chart of cumulative savings over 25 years compared with a system cost of {amount}",
+    "calcStickySummary": "{kwp} · payback {payback} yrs",
+    "calcSavedPerMonth": "/mo saved"
+  },
   "name": "SunRyse Solar Services",
   "tagline": "Clean energy · Brighter tomorrow",
   "phone": "[Phone number]",
@@ -9,49 +185,114 @@
   "license": "[Contractor license no.]",
   "messengerUrl": "#",
   "socials": [
-    { "platform": "facebook", "url": "#", "label": "Facebook" },
-    { "platform": "instagram", "url": "#", "label": "Instagram" },
-    { "platform": "messenger", "url": "#", "label": "Messenger" }
+    {
+      "platform": "facebook",
+      "url": "#",
+      "label": "Facebook"
+    },
+    {
+      "platform": "instagram",
+      "url": "#",
+      "label": "Instagram"
+    },
+    {
+      "platform": "messenger",
+      "url": "#",
+      "label": "Messenger"
+    }
   ],
   "announcement": {
     "text": "Free site assessment",
     "longText": "Net-metering paperwork handled",
-    "link": { "label": "Book now", "href": "/contact" }
+    "link": {
+      "label": "Book now",
+      "href": "/contact"
+    }
   },
   "nav": [
-    { "label": "Solutions", "href": "/solutions/residential", "menu": "solutions" },
-    { "label": "Services", "href": "/services", "menu": "services" },
-    { "label": "Calculator", "href": "/calculator" },
-    { "label": "Projects", "href": "/projects" },
-    { "label": "About", "href": "/about" }
+    {
+      "label": "Solutions",
+      "href": "/solutions/residential",
+      "menu": "solutions"
+    },
+    {
+      "label": "Services",
+      "href": "/services",
+      "menu": "services"
+    },
+    {
+      "label": "Calculator",
+      "href": "/calculator"
+    },
+    {
+      "label": "Projects",
+      "href": "/projects"
+    },
+    {
+      "label": "About",
+      "href": "/about"
+    }
   ],
-  "quoteCta": { "label": "Get a quote", "href": "/contact" },
+  "quoteCta": {
+    "label": "Get a quote",
+    "href": "/contact"
+  },
   "footer": {
     "blurb": "Design, installation and after-sales for solar homes, businesses and industry.",
     "columns": [
       {
         "title": "Solutions",
         "links": [
-          { "label": "Residential", "href": "/solutions/residential" },
-          { "label": "Commercial", "href": "/solutions/commercial" },
-          { "label": "Industrial", "href": "/solutions/industrial" },
-          { "label": "Savings calculator", "href": "/calculator" }
+          {
+            "label": "Residential",
+            "href": "/solutions/residential"
+          },
+          {
+            "label": "Commercial",
+            "href": "/solutions/commercial"
+          },
+          {
+            "label": "Industrial",
+            "href": "/solutions/industrial"
+          },
+          {
+            "label": "Savings calculator",
+            "href": "/calculator"
+          }
         ]
       },
       {
         "title": "Company",
         "links": [
-          { "label": "About", "href": "/about" },
-          { "label": "Projects", "href": "/projects" },
-          { "label": "Services", "href": "/services" },
-          { "label": "Get a quote", "href": "/contact" }
+          {
+            "label": "About",
+            "href": "/about"
+          },
+          {
+            "label": "Projects",
+            "href": "/projects"
+          },
+          {
+            "label": "Services",
+            "href": "/services"
+          },
+          {
+            "label": "Get a quote",
+            "href": "/contact"
+          }
         ]
       }
     ],
     "copyright": "© 2026 SunRyse Solar Services",
     "legal": [
-      { "label": "Privacy", "href": "#" },
-      { "label": "Terms", "href": "#" }
+      {
+        "label": "Privacy",
+        "href": "#"
+      },
+      {
+        "label": "Terms",
+        "href": "#"
+      }
     ]
   }
 }

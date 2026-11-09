@@ -6,23 +6,24 @@ import { Eyebrow, GoArrow, Hud, PhotoFrame, RichText, Section, SectionHeader, h2
 import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import type { ServiceDetails } from "@/lib/content/pages/service";
-import type { Brand, Service, ServiceCategory } from "@/lib/content/types";
+import type { Brand, Service, ServiceCategory, UiLabels } from "@/lib/content/types";
+import { t } from "@/lib/content/ui";
 
-const CATEGORY_LABEL: Record<ServiceCategory, string> = { systems: "Systems", installation: "Installation", specialty: "Specialty" };
+const CATEGORY_LABEL: Record<ServiceCategory, string> = { systems: "categorySystems", installation: "categoryInstallation", specialty: "categorySpecialty" };
 const CATEGORY_CHIP: Record<ServiceCategory, string> = { systems: "bg-sky-500", installation: "bg-sun-700", specialty: "bg-leaf-600" };
 
 const code = (s: Service) => `S/${String(s.order).padStart(2, "0")}`;
 /** Re-number "[ 02 ] Title" eyebrows so numbering stays continuous when a section is hidden. */
 const numbered = (n: number, eyebrow: string) => `[ ${String(n).padStart(2, "0")} ] ${eyebrow.replace(/^\[[^\]]*\]\s*/, "")}`;
 
-type Props = { service: Service; details: ServiceDetails; brands: Brand[]; related: Service[] };
+type Props = { service: Service; details: ServiceDetails; brands: Brand[]; related: Service[]; ui: UiLabels };
 
-export function ServiceView({ service, details, brands, related }: Props) {
+export function ServiceView({ service, details, brands, related, ui }: Props) {
   const shownBrands = brands.filter((b) => details.brandCategories.includes(b.category));
   let n = 1;
   return (
     <>
-      <Hero service={service} details={details} />
+      <Hero service={service} details={details} ui={ui} />
       <Benefits details={details} />
       <Included details={details} eyebrow={numbered(n++, details.included.eyebrow)} />
       <Process
@@ -31,14 +32,14 @@ export function ServiceView({ service, details, brands, related }: Props) {
         brandsEyebrow={shownBrands.length ? numbered(n++, details.brandsEyebrow) : ""}
         stepsEyebrow={numbered(n++, details.stepsEyebrow)}
       />
-      <Related items={related} />
-      <CtaBand details={details} />
+      <Related items={related} ui={ui} />
+      <CtaBand details={details} ui={ui} />
     </>
   );
 }
 
 /* ───────────────────────────── Hero ───────────────────────────── */
-function Hero({ service, details }: Pick<Props, "service" | "details">) {
+function Hero({ service, details, ui }: Pick<Props, "service" | "details" | "ui">) {
   return (
     <section className="relative isolate overflow-hidden bg-[linear-gradient(180deg,var(--color-day-100),var(--color-day-50))] pb-[clamp(48px,7vw,90px)] pt-[calc(var(--site-top)+24px)]">
       <div
@@ -47,13 +48,13 @@ function Hero({ service, details }: Pick<Props, "service" | "details">) {
       />
       <div className="container-site grid items-center gap-10 lg:grid-cols-[1.05fr_.95fr] lg:gap-14">
         <div className="flex min-w-0 flex-col gap-5">
-          <nav aria-label="Breadcrumb" className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">
+          <nav aria-label={t(ui, "breadcrumb")} className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">
             <ol className="flex flex-wrap items-center gap-x-1.5">
               <li>
-                <Link href="/" className="inline-flex min-h-11 items-center hover:text-sun-700 focus-visible:underline">Home</Link>
+                <Link href="/" className="inline-flex min-h-11 items-center hover:text-sun-700 focus-visible:underline">{t(ui, "home")}</Link>
               </li>
               <li aria-hidden>/</li>
-              <li>Services</li>
+              <li>{t(ui, "services")}</li>
               <li aria-hidden>/</li>
               <li aria-current="page" className="text-sun-700">{service.title}</li>
             </ol>
@@ -61,7 +62,7 @@ function Hero({ service, details }: Pick<Props, "service" | "details">) {
           <span
             className={`self-start rounded-full px-3 py-1.5 font-label text-[11px] uppercase tracking-[0.12em] text-white ${CATEGORY_CHIP[service.category]}`}
           >
-            {code(service)} · {CATEGORY_LABEL[service.category]}
+            {code(service)} · {t(ui, CATEGORY_LABEL[service.category])}
           </span>
           <h1 className="font-display text-[clamp(2.6rem,5vw,4.6rem)] font-bold leading-[0.98] tracking-[-0.045em] text-balance">
             <RichText text={details.heroTitle} />
@@ -78,7 +79,7 @@ function Hero({ service, details }: Pick<Props, "service" | "details">) {
         </div>
         <PhotoFrame
           className="h-[300px] sm:h-[400px] lg:h-[460px]"
-          chips={<Hud>System online</Hud>}
+          chips={<Hud>{t(ui, "systemOnline")}</Hud>}
           caption={<span className="glass rounded-[10px] px-3 py-2 font-label text-[11px] uppercase tracking-[0.12em]">{details.imageCaption}</span>}
         >
           <Image src={details.image.src} alt={details.image.alt} fill priority sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" />
@@ -192,11 +193,11 @@ function Process({ details, brands, brandsEyebrow, stepsEyebrow }: { details: Se
 }
 
 /* ───────────────────────────── Related ───────────────────────────── */
-function Related({ items }: { items: Service[] }) {
+function Related({ items, ui }: { items: Service[]; ui: UiLabels }) {
   if (!items.length) return null;
   return (
     <Section tone="dawn">
-      <SectionHeader eyebrow="Keep exploring" heading="Related *services*" />
+      <SectionHeader eyebrow={t(ui, "relatedEyebrow")} heading={t(ui, "relatedServicesHeading")} />
       <Reveal className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((r) => (
           <Link
@@ -207,13 +208,13 @@ function Related({ items }: { items: Service[] }) {
           >
             <span className="flex items-start justify-between gap-3">
               <span className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">
-                {code(r)} · {CATEGORY_LABEL[r.category]}
+                {code(r)} · {t(ui, CATEGORY_LABEL[r.category])}
               </span>
               <Icon name={r.icon} className="size-5 text-sky-600" />
             </span>
             <span className="mt-auto font-display text-[19px] font-bold leading-snug">{r.title}</span>
             <span className="flex items-center justify-between font-label text-[11px] uppercase tracking-[0.12em] text-sky-600">
-              Learn more
+              {t(ui, "learnMore")}
               <GoArrow className="size-9" />
             </span>
           </Link>
@@ -224,7 +225,7 @@ function Related({ items }: { items: Service[] }) {
 }
 
 /* ───────────────────────────── CTA ───────────────────────────── */
-function CtaBand({ details }: { details: ServiceDetails }) {
+function CtaBand({ details, ui }: { details: ServiceDetails; ui: UiLabels }) {
   return (
     <section className="fx-dark">
       <div className="container-site flex flex-wrap items-center justify-between gap-6 py-16">
@@ -232,7 +233,7 @@ function CtaBand({ details }: { details: ServiceDetails }) {
           {details.ctaHeading}
         </h2>
         <Button asChild variant="sun" size="xl" className="fx-sheen h-14 px-7 text-[13px]">
-          <Link href="/contact">Inquire now »</Link>
+          <Link href="/contact">{t(ui, "inquireNow")}</Link>
         </Button>
       </div>
     </section>

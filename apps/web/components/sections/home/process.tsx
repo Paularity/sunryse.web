@@ -2,7 +2,8 @@ import type { CSSProperties } from "react";
 
 import { Hud, Section, SectionHeader } from "@/components/fx";
 import { TONE, TONE_TEXT } from "@/components/icons";
-import type { HomeContent } from "@/lib/content/types";
+import type { HomeContent, UiLabels } from "@/lib/content/types";
+import { t } from "@/lib/content/ui";
 import { cn } from "@/lib/utils";
 
 /* Travelling light pulse: horizontal track on lg+, vertical timeline below. */
@@ -14,7 +15,7 @@ const PULSE_CSS = `
 @media (prefers-reduced-motion:reduce){.pr-pulse{display:none}}
 `;
 
-export function ProcessSection({ content }: { content: HomeContent["process"] }) {
+export function ProcessSection({ content, ui }: { content: HomeContent["process"]; ui: UiLabels }) {
   return (
     <Section tone="grid" labelledBy="process-h">
       <style>{PULSE_CSS}</style>
@@ -45,7 +46,7 @@ export function ProcessSection({ content }: { content: HomeContent["process"] })
                 {n}
               </span>
               <div className="glass-card flex min-w-0 flex-1 flex-col gap-1.5 rounded-[18px] p-[18px] max-sm:border-0! max-sm:bg-none! max-sm:p-0! max-sm:pt-0.5! max-sm:shadow-none! lg:flex-none">
-                <span className={cn("font-label text-[11px] uppercase tracking-[0.12em]", TONE_TEXT[step.tone])}>Step {n}</span>
+                <span className={cn("font-label text-[11px] uppercase tracking-[0.12em]", TONE_TEXT[step.tone])}>{t(ui, "step", { n })}</span>
                 <h3 className="font-display text-xl font-bold tracking-[-0.02em] text-navy-900">{step.title}</h3>
                 <p className="text-[15px] leading-relaxed text-ink-muted">{step.description}</p>
               </div>

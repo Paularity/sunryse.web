@@ -15,7 +15,8 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import type { Service, ServiceCategory, Site, Solution } from "@/lib/content/types";
+import type { Service, ServiceCategory, Site, Solution, UiLabels } from "@/lib/content/types";
+import { t } from "@/lib/content/ui";
 import { cn } from "@/lib/utils";
 
 import { isActive } from "./is-active";
@@ -23,16 +24,16 @@ import { isActive } from "./is-active";
 const itemClass =
   "relative inline-flex min-h-11 h-auto items-center rounded-[10px] px-3 py-0 font-label text-xs uppercase tracking-[0.12em] text-navy-900 transition-colors hover:bg-sky-500/10 focus:bg-sky-500/10 aria-[current]:bg-sun-500/10 aria-[current]:text-sun-700 aria-[current]:after:absolute aria-[current]:after:inset-x-3 aria-[current]:after:bottom-1.5 aria-[current]:after:h-0.5 aria-[current]:after:rounded-sm aria-[current]:after:bg-[linear-gradient(90deg,var(--color-sun-300),var(--color-sun-600))] aria-[current]:after:shadow-[0_0_10px_rgb(255_138_0/0.8)] aria-[current]:after:content-['']";
 
-const CATEGORIES: { key: ServiceCategory; label: string; color: string }[] = [
-  { key: "systems", label: "Systems", color: "var(--color-sky-600)" },
-  { key: "installation", label: "Installation", color: "var(--color-sun-700)" },
-  { key: "specialty", label: "Specialty", color: "var(--color-leaf-600)" },
+const CATEGORIES: { key: ServiceCategory; labelKey: string; color: string }[] = [
+  { key: "systems", labelKey: "categorySystems", color: "var(--color-sky-600)" },
+  { key: "installation", labelKey: "categoryInstallation", color: "var(--color-sun-700)" },
+  { key: "specialty", labelKey: "categorySpecialty", color: "var(--color-leaf-600)" },
 ];
 
 const contentClass =
   "p-0 group-data-[viewport=false]/navigation-menu:mt-2.5 group-data-[viewport=false]/navigation-menu:overflow-visible group-data-[viewport=false]/navigation-menu:rounded-[24px] group-data-[viewport=false]/navigation-menu:bg-transparent group-data-[viewport=false]/navigation-menu:shadow-none group-data-[viewport=false]/navigation-menu:ring-0 md:w-full";
 
-const panelShadow = "shadow-[inset_0_1px_0_#fff,0_30px_70px_-24px_rgb(11_31_77/0.5)]";
+const panelShadow = "shadow-[inset_0_1px_0_white,0_30px_70px_-24px_rgb(11_31_77/0.5)]";
 
 export function HeaderNav({ site, services, solutions }: { site: Site; services: Service[]; solutions: Solution[] }) {
   const pathname = usePathname();
@@ -45,7 +46,7 @@ export function HeaderNav({ site, services, solutions }: { site: Site; services:
       viewport={false}
       value={value}
       onValueChange={setValue}
-      aria-label="Main"
+      aria-label={t(site.ui, "mainNavigation")}
       className="static hidden max-w-none flex-none lg:flex"
     >
       <NavigationMenuList className="gap-1">
@@ -69,7 +70,7 @@ export function HeaderNav({ site, services, solutions }: { site: Site; services:
               </NavigationMenuTrigger>
               <NavigationMenuContent className={contentClass}>
                 {item.menu === "services" ? (
-                  <ServicesPanel services={services} allHref={servicesHref} onNavigate={close} />
+                  <ServicesPanel ui={site.ui} services={services} allHref={servicesHref} onNavigate={close} />
                 ) : (
                   <SolutionsPanel solutions={solutions} onNavigate={close} />
                 )}
@@ -82,7 +83,17 @@ export function HeaderNav({ site, services, solutions }: { site: Site; services:
   );
 }
 
-function ServicesPanel({ services, allHref, onNavigate }: { services: Service[]; allHref: string; onNavigate: () => void }) {
+function ServicesPanel({
+  ui,
+  services,
+  allHref,
+  onNavigate,
+}: {
+  ui: UiLabels;
+  services: Service[];
+  allHref: string;
+  onNavigate: () => void;
+}) {
   return (
     <div className={cn("glass grid grid-cols-[1fr_1fr_1fr_340px] gap-2 rounded-[24px] p-[22px]", panelShadow)}>
       {CATEGORIES.map((cat) => {
@@ -94,7 +105,7 @@ function ServicesPanel({ services, allHref, onNavigate }: { services: Service[];
               style={{ color: cat.color }}
             >
               <i className="block size-2 rounded-full" style={{ background: cat.color, boxShadow: `0 0 10px ${cat.color}` }} />
-              {cat.label} · {items.length}
+              {t(ui, cat.labelKey)} · {items.length}
             </span>
             {items.map((s) => (
               <NavigationMenuLink
@@ -117,17 +128,17 @@ function ServicesPanel({ services, allHref, onNavigate }: { services: Service[];
           onClick={onNavigate}
           className="glass-card fx-lift flex flex-col gap-2.5 rounded-[18px] bg-[linear-gradient(150deg,var(--color-dawn-50),var(--color-dawn-100))] p-5"
         >
-          <span className="fx-eb font-label text-[11px] uppercase tracking-[0.12em] text-sun-700">Savings calculator</span>
-          <b className="font-display text-xl leading-tight">How much could your roof save?</b>
+          <span className="fx-eb font-label text-[11px] uppercase tracking-[0.12em] text-sun-700">{t(ui, "megaCalcLabel")}</span>
+          <b className="font-display text-xl leading-tight">{t(ui, "megaCalcHeading")}</b>
           <span className="inline-flex items-center gap-1.5 font-label text-[11px] uppercase tracking-[0.12em] text-sky-600">
-            Calculate in 30 seconds <Icon name="zap" className="size-3.5" />
+            {t(ui, "megaCalcLink")} <Icon name="zap" className="size-3.5" />
           </span>
         </Link>
         <Link href="/contact" onClick={onNavigate} className="fx-screen flex flex-col gap-2.5 rounded-[18px] p-5">
-          <span className="font-label text-[11px] uppercase tracking-[0.12em] text-sun-300">Not sure what you need?</span>
-          <b className="font-display text-lg leading-tight text-white">Talk to a solar advisor — free.</b>
+          <span className="font-label text-[11px] uppercase tracking-[0.12em] text-sun-300">{t(ui, "megaAdvisorLabel")}</span>
+          <b className="font-display text-lg leading-tight text-white">{t(ui, "megaAdvisorHeading")}</b>
           <span className="flex items-center gap-2 text-sm text-white/85">
-            <Icon name="message" className="size-4" /> Messenger · Viber · Call
+            <Icon name="message" className="size-4" /> {t(ui, "megaAdvisorChannels")}
           </span>
         </Link>
         <Link
@@ -135,7 +146,7 @@ function ServicesPanel({ services, allHref, onNavigate }: { services: Service[];
           onClick={onNavigate}
           className="inline-flex min-h-11 items-center justify-center rounded-lg border border-navy-900/20 bg-white px-4 font-label text-xs uppercase tracking-[0.12em] hover:border-navy-900/40"
         >
-          View all {services.length} services
+          {t(ui, "viewAllServices", { count: services.length })}
         </Link>
       </div>
     </div>

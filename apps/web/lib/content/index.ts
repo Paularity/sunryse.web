@@ -29,7 +29,11 @@ async function withFallback<T>(load: () => Promise<T | null>, fallback: T): Prom
   }
 }
 
-export const getSite = () => withFallback(fromStrapi.site, site as Site);
+/** Site settings; interface labels merge key by key so a partly edited set never leaves gaps. */
+export const getSite = async (): Promise<Site> => {
+  const s = await withFallback(fromStrapi.site, site as Site);
+  return { ...s, ui: { ...(site as Site).ui, ...(s.ui ?? {}) } };
+};
 export const getHome = () => withFallback(fromStrapi.home, home as HomeContent);
 export const getServices = () =>
   withFallback(fromStrapi.services, services as Service[]).then((list) => [...list].sort((a, b) => a.order - b.order));

@@ -7,23 +7,24 @@ import { useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNod
 import { GoArrow, SectionHeader } from "@/components/fx";
 import { Icon } from "@/components/icons";
 import { buttonVariants } from "@/components/ui/button";
-import type { Service, ServiceCategory } from "@/lib/content/types";
+import type { Service, ServiceCategory, UiLabels } from "@/lib/content/types";
+import { t } from "@/lib/content/ui";
 import { cn } from "@/lib/utils";
 
 import { deckCard, mono } from "./services-featured";
 
 type Filter = "all" | ServiceCategory;
-const TABS: { id: Filter; label: string }[] = [
-  { id: "all", label: "All" },
-  { id: "systems", label: "Systems" },
-  { id: "installation", label: "Installation" },
-  { id: "specialty", label: "Specialty" },
+const TABS: { id: Filter; labelKey: string }[] = [
+  { id: "all", labelKey: "filterAll" },
+  { id: "systems", labelKey: "categorySystems" },
+  { id: "installation", labelKey: "categoryInstallation" },
+  { id: "specialty", labelKey: "categorySpecialty" },
 ];
 
-const CAT: Record<ServiceCategory, { c: string; text: string; label: string }> = {
-  systems: { c: "var(--color-glow-sky)", text: "text-glow-sky", label: "Systems" },
-  installation: { c: "var(--color-glow-amber)", text: "text-glow-amber", label: "Installation" },
-  specialty: { c: "var(--color-glow-leaf)", text: "text-glow-leaf", label: "Specialty" },
+const CAT: Record<ServiceCategory, { c: string; text: string; labelKey: string }> = {
+  systems: { c: "var(--color-glow-sky)", text: "text-glow-sky", labelKey: "categorySystems" },
+  installation: { c: "var(--color-glow-amber)", text: "text-glow-amber", labelKey: "categoryInstallation" },
+  specialty: { c: "var(--color-glow-leaf)", text: "text-glow-leaf", labelKey: "categorySpecialty" },
 };
 
 /** lg:col-span classes must be literal for Tailwind. */
@@ -36,6 +37,7 @@ type Props = {
   ctaHeading: string;
   ctaLabel: string;
   services: Service[];
+  ui: UiLabels;
   /** Slugs shown in the featured row (excluded from the module grid in "All"). */
   featuredSlugs: string[];
   /** Server-rendered featured row, shown only in "All". */
@@ -44,7 +46,7 @@ type Props = {
   showAll?: boolean;
 };
 
-export function ServicesDeck({ eyebrow, heading, lead, ctaHeading, ctaLabel, services, featuredSlugs, featured, showAll = false }: Props) {
+export function ServicesDeck({ eyebrow, heading, lead, ctaHeading, ctaLabel, services, ui, featuredSlugs, featured, showAll = false }: Props) {
   const [filter, setFilter] = useState<Filter>("all");
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const isAll = filter === "all";
@@ -77,24 +79,24 @@ export function ServicesDeck({ eyebrow, heading, lead, ctaHeading, ctaLabel, ser
   const tabs = (
     <div
       role="tablist"
-      aria-label="Filter services"
+      aria-label={t(ui, "filterServices")}
       className="flex max-w-full gap-1 overflow-x-auto rounded-2xl border border-white/12 bg-white/6 p-[5px] backdrop-blur-md [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     >
-      {TABS.map((t, i) => {
-        const sel = filter === t.id;
+      {TABS.map((tab, i) => {
+        const sel = filter === tab.id;
         return (
           <button
-            key={t.id}
+            key={tab.id}
             ref={(el) => {
               tabRefs.current[i] = el;
             }}
             type="button"
             role="tab"
-            id={`sv-tab-${t.id}`}
+            id={`sv-tab-${tab.id}`}
             aria-selected={sel}
             aria-controls="sv-panel"
             tabIndex={sel ? 0 : -1}
-            onClick={() => setFilter(t.id)}
+            onClick={() => setFilter(tab.id)}
             onKeyDown={(e) => onKey(e, i)}
             className={cn(
               mono,
@@ -104,8 +106,8 @@ export function ServicesDeck({ eyebrow, heading, lead, ctaHeading, ctaLabel, ser
                 : "text-ink-glow hover:bg-white/8",
             )}
           >
-            {t.label}
-            <b className={cn("rounded-full px-[7px] py-[3px] text-[11px] font-medium", sel ? "bg-navy-900/15" : "bg-white/10")}>{counts[t.id]}</b>
+            {t(ui, tab.labelKey)}
+            <b className={cn("rounded-full px-[7px] py-[3px] text-[11px] font-medium", sel ? "bg-navy-900/15" : "bg-white/10")}>{counts[tab.id]}</b>
           </button>
         );
       })}
@@ -142,7 +144,7 @@ export function ServicesDeck({ eyebrow, heading, lead, ctaHeading, ctaLabel, ser
                   >
                     <Icon name={s.icon} className="size-5 text-navy-950" />
                   </span>
-                  <span className={cn(mono, "hidden sm:block", cat.text)}>{cat.label}</span>
+                  <span className={cn(mono, "hidden sm:block", cat.text)}>{t(ui, cat.labelKey)}</span>
                   <GoArrow dark className="order-3 size-9 sm:order-none sm:ml-auto sm:size-[34px]" />
                 </span>
                 <span className="order-2 flex min-w-0 flex-1 flex-col gap-1.5 sm:order-none sm:flex-none">
@@ -176,7 +178,7 @@ export function ServicesDeck({ eyebrow, heading, lead, ctaHeading, ctaLabel, ser
             href="/services"
             className={cn(buttonVariants({ variant: "line", size: "xl" }), "mt-3.5 w-full border-white/25 bg-transparent text-white hover:bg-white/8 hover:text-white lg:hidden")}
           >
-            View all {services.length} services
+            {t(ui, "viewAllServices", { count: services.length })}
           </Link>
         ) : null}
       </div>

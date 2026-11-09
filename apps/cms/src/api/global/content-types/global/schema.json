@@ -74,6 +74,9 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.link"
+    },
+    "ui": {
+      "type": "json"
     }
   }
 }

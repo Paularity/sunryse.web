@@ -8,6 +8,7 @@ import { ContactFromQuery } from "@/components/pages/contact/contact-loader";
 import { QuickContact, SideContact } from "@/components/pages/contact/contact-panels";
 import { getSite } from "@/lib/content";
 import { getContactPage } from "@/lib/content/pages/contact";
+import { t } from "@/lib/content/ui";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { meta } = await getContactPage();
@@ -31,13 +32,13 @@ export default async function ContactPage() {
     <div className="relative isolate bg-[linear-gradient(180deg,var(--color-sky-200),var(--color-day-50)_35%,var(--color-dawn-50))] pt-[calc(var(--site-top)+2rem)] pb-16 lg:pb-24">
       <div
         aria-hidden
-        className="fx-grid pointer-events-none absolute inset-x-0 top-0 -z-10 h-full max-h-[900px] [mask-image:radial-gradient(90%_75%_at_50%_20%,#000,transparent_80%)]"
+        className="fx-grid pointer-events-none absolute inset-x-0 top-0 -z-10 h-full max-h-[900px] [mask-image:radial-gradient(90%_75%_at_50%_20%,black,transparent_80%)]"
       />
       <div className="container-site flex flex-col gap-7">
         <header className="flex max-w-[760px] flex-col gap-3.5">
-          <nav aria-label="Breadcrumb" className="font-label text-xs uppercase tracking-[0.12em] text-ink-muted">
+          <nav aria-label={t(site.ui, "breadcrumb")} className="font-label text-xs uppercase tracking-[0.12em] text-ink-muted">
             <Link href="/" className="inline-flex min-h-11 items-center hover:text-navy-900">
-              Home
+              {t(site.ui, "home")}
             </Link>{" "}
             / <span aria-current="page" className="text-sun-700">{page.breadcrumb}</span>
           </nav>
@@ -47,11 +48,11 @@ export default async function ContactPage() {
           <p className="m-0 text-lg leading-relaxed text-navy-900/80">{page.lead}</p>
         </header>
 
-        <QuickContact phone={site.phone} messengerUrl={site.messengerUrl} divider={page.quickDivider} />
+        <QuickContact ui={site.ui} phone={site.phone} messengerUrl={site.messengerUrl} divider={page.quickDivider} />
 
         <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
-          <Suspense fallback={<ContactForm content={formContent} messengerUrl={site.messengerUrl} />}>
-            <ContactFromQuery content={formContent} messengerUrl={site.messengerUrl} />
+          <Suspense fallback={<ContactForm content={formContent} ui={site.ui} messengerUrl={site.messengerUrl} />}>
+            <ContactFromQuery content={formContent} ui={site.ui} messengerUrl={site.messengerUrl} />
           </Suspense>
           <SideContact site={site} nextSteps={page.nextSteps} />
         </div>

@@ -1,5 +1,6 @@
 import { Eyebrow, Hud, RichText, Section, h2Class } from "@/components/fx";
-import type { CalculatorConfig, HomeContent } from "@/lib/content/types";
+import type { CalculatorConfig, HomeContent, UiLabels } from "@/lib/content/types";
+import { t } from "@/lib/content/ui";
 
 const X0 = 40;
 const X1 = 550;
@@ -8,7 +9,7 @@ const Y_START = 150;
 const Y_BASE = 205;
 const YEARS = 25;
 
-export function SolarVsGrid({ content, config }: { content: HomeContent["solarVsGrid"]; config: CalculatorConfig }) {
+export function SolarVsGrid({ content, config, ui }: { content: HomeContent["solarVsGrid"]; config: CalculatorConfig; ui: UiLabels }) {
   const rate = (yr: number) => config.electricityRate * Math.pow(1 + config.rateEscalation, yr - 1);
   const start = rate(1);
   const end = rate(YEARS);
@@ -20,7 +21,7 @@ export function SolarVsGrid({ content, config }: { content: HomeContent["solarVs
   });
   const line = "M" + pts.join(" L");
   const area = `${line} L${X1} ${Y_BASE} L${X0} ${Y_BASE} Z`;
-  const alt = `Chart: grid electricity cost rises from ${start.toFixed(2)} to about ${end.toFixed(2)} pesos per kWh over 25 years while solar cost per kWh stays flat at ${content.solarValue}`;
+  const alt = t(ui, "chartAlt", { start: start.toFixed(2), end: end.toFixed(2), solar: content.solarValue });
 
   return (
     <Section tone="white" labelledBy="svg-h">
@@ -70,9 +71,9 @@ export function SolarVsGrid({ content, config }: { content: HomeContent["solarVs
             <circle cx={X1} cy={yFor(end)} r="6" fill="var(--color-sun-600)" style={{ filter: "drop-shadow(0 0 8px var(--color-sun-600))" }} />
             <circle cx={X1} cy={Y_BASE} r="6" fill="var(--color-glow-leaf)" style={{ filter: "drop-shadow(0 0 8px var(--color-glow-leaf))" }} />
             <g fontSize="12" fill="var(--color-ink-soft)" className="font-label">
-              <text x={X0} y="252">Yr 1</text>
-              <text x="295" y="252" textAnchor="middle">Yr 12</text>
-              <text x={X1} y="252" textAnchor="end">Yr 25</text>
+              <text x={X0} y="252">{t(ui, "yearStart")}</text>
+              <text x="295" y="252" textAnchor="middle">{t(ui, "chartYearMid")}</text>
+              <text x={X1} y="252" textAnchor="end">{t(ui, "yearEnd")}</text>
             </g>
             <g fontSize="12" fontWeight="500" className="font-label">
               <text x={X1} y="20" textAnchor="end" fill="var(--color-sun-300)">{endLabel}</text>

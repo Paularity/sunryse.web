@@ -15,7 +15,7 @@ const SEGMENTS: Record<string, Segment> = {
 const SYSTEMS: Record<string, SystemType> = { "grid-tie": "grid-tie", grid: "grid-tie", hybrid: "hybrid" };
 
 /** Reads ?bill=&segment=&type= on the client (so the page itself stays prerendered) and seeds the calculator. */
-export function CalculatorFromQuery(props: Pick<CalculatorAppProps, "config" | "content">) {
+export function CalculatorFromQuery(props: Pick<CalculatorAppProps, "config" | "content" | "ui">) {
   const sp = useSearchParams();
   const bill = Number(sp.get("bill"));
   return (

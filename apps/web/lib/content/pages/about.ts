@@ -1,6 +1,7 @@
 import "server-only";
 
 import data from "@/content/pages/about.json";
+import { pageContent } from "@/lib/content/strapi-page";
 import type { IconName, Img, Tone } from "@/lib/content/types";
 
 export type AboutPage = {
@@ -14,6 +15,8 @@ export type AboutPage = {
   credentials: { eyebrow: string; items: { title: string; detail: string }[] };
   brands: { eyebrow: string };
   cta: { heading: string; label: string; href: string };
+  team: { eyebrow: string; heading: string; lead: string; photoLabel: string; members: { initial: string; name: string; role: string; tone: Tone }[] };
 };
 
-export const getAboutPage = async () => data as AboutPage;
+/** Copy from Strapi (about-page.content) merged over the bundled defaults. */
+export const getAboutPage = () => pageContent("about-page", data as AboutPage);

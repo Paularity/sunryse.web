@@ -52,6 +52,9 @@
     "order": {
       "type": "integer",
       "default": 0
+    },
+    "details": {
+      "type": "json"
     }
   }
 }

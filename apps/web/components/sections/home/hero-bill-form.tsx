@@ -7,10 +7,10 @@ import { useId, useState, type FormEvent } from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-type Props = { label: string; defaultValue: number; ctaLabel: string; href: string };
+type Props = { label: string; ariaLabel: string; defaultValue: number; ctaLabel: string; href: string };
 
 /** Hero quick-estimate form: monthly bill → calculator with ?bill=. */
-export function HeroBillForm({ label, defaultValue, ctaLabel, href }: Props) {
+export function HeroBillForm({ label, ariaLabel, defaultValue, ctaLabel, href }: Props) {
   const router = useRouter();
   const id = useId();
   const [value, setValue] = useState(defaultValue.toLocaleString("en-PH"));
@@ -24,7 +24,7 @@ export function HeroBillForm({ label, defaultValue, ctaLabel, href }: Props) {
   }
 
   return (
-    <form onSubmit={onSubmit} aria-label="Quick savings estimate" className="glass flex max-w-[560px] flex-wrap gap-2 rounded-[20px] p-2">
+    <form onSubmit={onSubmit} aria-label={ariaLabel} className="glass flex max-w-[560px] flex-wrap gap-2 rounded-[20px] p-2">
       <label htmlFor={id} className="flex min-w-0 flex-[1_1_220px] items-center gap-2.5 px-3">
         <span className="font-label text-[11px] uppercase tracking-[0.12em] whitespace-nowrap text-ink-muted">{label}</span>
         <input

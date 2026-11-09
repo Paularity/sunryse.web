@@ -92,9 +92,12 @@ async function main() {
     const brands = read('brands');
     const calculator = read('calculator');
     const collections = read('collections');
+    const serviceDetails = read('pages/service-details');
+    const solutionDetails = read('pages/solution-details');
 
     // Global
     await upsertSingle(strapi, 'api::global.global', {
+      ui: site.ui ?? {},
       siteName: site.name,
       tagline: site.tagline,
       phone: site.phone,
@@ -168,11 +171,16 @@ async function main() {
     );
 
     // Collections
-    await upsertCollection(strapi, 'api::service.service', services, 'slug');
+    await upsertCollection(
+      strapi,
+      'api::service.service',
+      services.map((sv: any) => ({ ...sv, details: serviceDetails.services?.[sv.slug] ?? null })),
+      'slug',
+    );
 
     const solutionData = [];
     for (const { image, ...s } of solutions) {
-      solutionData.push({ ...s, features: texts(s.features), image: await media(image) });
+      solutionData.push({ ...s, features: texts(s.features), image: await media(image), details: solutionDetails[s.slug] ?? null });
     }
     await upsertCollection(strapi, 'api::solution.solution', solutionData, 'slug');
 
@@ -188,6 +196,17 @@ async function main() {
     await upsertCollection(strapi, 'api::brand.brand', ordered(brands), 'name');
     await upsertCollection(strapi, 'api::impact-stat.impact-stat', ordered(collections.impact), 'label');
     await upsertCollection(strapi, 'api::warranty.warranty', ordered(collections.warranty), 'item');
+
+    // Page copy (JSON per page; the web app merges it over its bundled defaults key by key)
+    for (const [uid, file] of [
+      ['api::about-page.about-page', 'pages/about'],
+      ['api::projects-page.projects-page', 'pages/projects'],
+      ['api::calculator-page.calculator-page', 'pages/calculator'],
+      ['api::contact-page.contact-page', 'pages/contact'],
+    ] as const) {
+      await upsertSingle(strapi, uid, { content: read(file) }, false);
+    }
+    await upsertSingle(strapi, 'api::service-defaults.service-defaults', { content: serviceDetails.defaults }, false);
   } finally {
     await strapi.destroy();
   }

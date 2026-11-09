@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import type { UiLabels } from "@/lib/content/types";
+import { t } from "@/lib/content/ui";
 import { cn } from "@/lib/utils";
 
 export type SubnavItem = { id: string; label: string };
 
 /** Sticky in-page navigation. Highlights the section currently in view. */
-export function SolutionSubnav({ items, cta }: { items: SubnavItem[]; cta: { label: string; href: string } }) {
+export function SolutionSubnav({ items, cta, ui }: { items: SubnavItem[]; cta: { label: string; href: string }; ui: UiLabels }) {
   const [active, setActive] = useState(items[0]?.id ?? "");
 
   useEffect(() => {
@@ -28,7 +30,7 @@ export function SolutionSubnav({ items, cta }: { items: SubnavItem[]; cta: { lab
 
   return (
     <nav
-      aria-label="On this page"
+      aria-label={t(ui, "onThisPage")}
       className="sticky top-[var(--site-top)] z-20 border-b border-line bg-white/90 backdrop-blur-md"
     >
       <div className="container-site flex items-center gap-1 overflow-x-auto py-1.5 font-label text-xs uppercase tracking-[0.12em] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">

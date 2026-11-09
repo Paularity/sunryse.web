@@ -9,7 +9,8 @@ import { Reveal } from "@/components/motion/reveal";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import type { SolutionDetails } from "@/lib/content/pages/solution";
-import type { Faq, IconName, Solution, Testimonial, Tone } from "@/lib/content/types";
+import type { Faq, IconName, Solution, Testimonial, Tone, UiLabels } from "@/lib/content/types";
+import { t } from "@/lib/content/ui";
 import { cn } from "@/lib/utils";
 
 const ANCHOR = "scroll-mt-[calc(var(--site-top)+56px)]";
@@ -22,28 +23,28 @@ const BENEFIT_ICONS: { icon: IconName; tone: Tone }[] = [
   { icon: "headset", tone: "sun" },
 ];
 
-type Props = { solution: Solution; details: SolutionDetails; faqs: Faq[]; testimonials: Testimonial[] };
+type Props = { solution: Solution; details: SolutionDetails; faqs: Faq[]; testimonials: Testimonial[]; ui: UiLabels };
 
-export function SolutionView({ solution, details, faqs, testimonials }: Props) {
+export function SolutionView({ solution, details, faqs, testimonials, ui }: Props) {
   const stripNum = (s: string) => s.replace(/^\[[^\]]*\]\s*/, "");
   const subnav = [
     { id: "systems", label: stripNum(details.systems.eyebrow).replace(/^Choose your /, "") },
-    { id: "how", label: "How it works" },
-    { id: "packages", label: "Packages" },
+    { id: "how", label: t(ui, "subnavHow") },
+    { id: "packages", label: t(ui, "subnavPackages") },
     { id: "details", label: stripNum(details.details.eyebrow) },
-    { id: "benefits", label: "Benefits" },
-    { id: "faq", label: "FAQ" },
-    { id: "reviews", label: "Reviews" },
+    { id: "benefits", label: t(ui, "subnavBenefits") },
+    { id: "faq", label: t(ui, "subnavFaq") },
+    { id: "reviews", label: t(ui, "subnavReviews") },
   ];
   subnav[0].label = subnav[0].label.charAt(0).toUpperCase() + subnav[0].label.slice(1);
 
   return (
     <>
-      <Hero solution={solution} details={details} />
-      <SolutionSubnav items={subnav} cta={{ label: "Calculate savings", href: "/calculator" }} />
-      <Systems details={details} />
-      <HowItWorks details={details} />
-      <Packages details={details} />
+      <Hero solution={solution} details={details} ui={ui} />
+      <SolutionSubnav items={subnav} cta={{ label: t(ui, "calculateSavings"), href: "/calculator" }} ui={ui} />
+      <Systems details={details} ui={ui} />
+      <HowItWorks details={details} ui={ui} />
+      <Packages details={details} ui={ui} />
       <Details details={details} />
       <Benefits solution={solution} details={details} />
       <FaqBlock details={details} faqs={faqs} />
@@ -54,7 +55,7 @@ export function SolutionView({ solution, details, faqs, testimonials }: Props) {
 }
 
 /* ───────────────────────────── Hero ───────────────────────────── */
-function Hero({ solution, details }: Pick<Props, "solution" | "details">) {
+function Hero({ solution, details, ui }: Pick<Props, "solution" | "details" | "ui">) {
   return (
     <section className="relative isolate overflow-hidden bg-[linear-gradient(180deg,var(--color-sky-200)_0%,var(--color-day-100)_45%,var(--color-dawn-50)_100%)] pb-[clamp(48px,7vw,80px)] pt-[calc(var(--site-top)+24px)]">
       <div
@@ -67,13 +68,13 @@ function Hero({ solution, details }: Pick<Props, "solution" | "details">) {
       />
       <div className="container-site grid items-center gap-10 lg:grid-cols-[1.05fr_.95fr] lg:gap-14">
         <div className="flex min-w-0 flex-col gap-5">
-          <nav aria-label="Breadcrumb" className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">
+          <nav aria-label={t(ui, "breadcrumb")} className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">
             <ol className="flex flex-wrap items-center gap-x-1.5">
               <li>
-                <Link href="/" className="inline-flex min-h-11 items-center hover:text-sun-700 focus-visible:underline">Home</Link>
+                <Link href="/" className="inline-flex min-h-11 items-center hover:text-sun-700 focus-visible:underline">{t(ui, "home")}</Link>
               </li>
               <li aria-hidden>/</li>
-              <li>Solutions</li>
+              <li>{t(ui, "solutions")}</li>
               <li aria-hidden>/</li>
               <li aria-current="page" className="text-sun-700">{solution.title}</li>
             </ol>
@@ -101,7 +102,7 @@ function Hero({ solution, details }: Pick<Props, "solution" | "details">) {
         </div>
         <PhotoFrame
           className="h-[320px] sm:h-[420px] lg:h-[520px]"
-          chips={<Hud>System online</Hud>}
+          chips={<Hud>{t(ui, "systemOnline")}</Hud>}
           caption={<span className="glass rounded-[10px] px-3 py-2 font-label text-[11px] uppercase tracking-[0.12em]">{solution.caption}</span>}
         >
           <Image
@@ -119,7 +120,7 @@ function Hero({ solution, details }: Pick<Props, "solution" | "details">) {
 }
 
 /* ───────────────────────────── 01 Systems ───────────────────────────── */
-function Systems({ details }: { details: SolutionDetails }) {
+function Systems({ details, ui }: { details: SolutionDetails; ui: UiLabels }) {
   const { systems } = details;
   return (
     <Section id="systems" tone="white" className={ANCHOR}>
@@ -154,7 +155,7 @@ function Systems({ details }: { details: SolutionDetails }) {
               ))}
             </ul>
             <p className="mt-auto border-t border-line pt-3.5 font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">
-              Best for: {c.best}
+              {t(ui, "bestFor", { value: c.best })}
             </p>
           </article>
         ))}
@@ -164,7 +165,7 @@ function Systems({ details }: { details: SolutionDetails }) {
 }
 
 /* ───────────────────────────── 02 How it works ───────────────────────────── */
-function NodeArt({ kind }: { kind: "sun" | "panel" | "inverter" }) {
+function NodeArt({ kind, ui }: { kind: "sun" | "panel" | "inverter"; ui: UiLabels }) {
   if (kind === "sun") {
     return <span aria-hidden className="mx-auto block size-14 rounded-full bg-[radial-gradient(circle,var(--color-sun-300),var(--color-sun-500))] shadow-[0_0_30px_rgb(255_138_0/0.5)]" />;
   }
@@ -178,7 +179,7 @@ function NodeArt({ kind }: { kind: "sun" | "panel" | "inverter" }) {
   }
   return (
     <span aria-hidden className="mx-auto grid size-14 place-items-center rounded-2xl bg-navy-900 font-label text-[11px] text-sun-300">
-      INV
+      {t(ui, "inverterAbbr")}
     </span>
   );
 }
@@ -187,7 +188,7 @@ function FlowArrow() {
   return <ArrowRight aria-hidden className="mx-auto size-7 shrink-0 rotate-90 text-sun-500 lg:rotate-0" strokeWidth={1.75} />;
 }
 
-function HowItWorks({ details }: { details: SolutionDetails }) {
+function HowItWorks({ details, ui }: { details: SolutionDetails; ui: UiLabels }) {
   const { how } = details;
   return (
     <Section id="how" tone="tint" className={ANCHOR}>
@@ -196,7 +197,7 @@ function HowItWorks({ details }: { details: SolutionDetails }) {
         {how.nodes.map((n) => (
           <li key={n.title} className="contents">
             <div className={cn("glass-card flex min-w-0 flex-1 flex-col gap-3 rounded-[20px] p-5 text-center", n.kind === "inverter" && "ring-2 ring-sun-500")}>
-              <NodeArt kind={n.kind} />
+              <NodeArt kind={n.kind} ui={ui} />
               <span className="font-display font-bold">{n.title}</span>
               <span className="text-[13px] text-ink-muted">{n.note}</span>
             </div>
@@ -217,7 +218,7 @@ function HowItWorks({ details }: { details: SolutionDetails }) {
 }
 
 /* ───────────────────────────── 03 Packages ───────────────────────────── */
-function Packages({ details }: { details: SolutionDetails }) {
+function Packages({ details, ui }: { details: SolutionDetails; ui: UiLabels }) {
   const p = details.packages;
   return (
     <Section id="packages" tone="white" className={ANCHOR}>
@@ -245,7 +246,7 @@ function Packages({ details }: { details: SolutionDetails }) {
             </p>
             <dl className="grid grid-cols-2 gap-2">
               <div className="rounded-xl bg-day-50 p-3">
-                <dt className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">Panels</dt>
+                <dt className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">{t(ui, "panels")}</dt>
                 <dd className="font-display font-bold">{it.panels}</dd>
               </div>
               <div className="rounded-xl bg-day-50 p-3">
@@ -348,17 +349,17 @@ function Reviews({ details, testimonials }: { details: SolutionDetails; testimon
     <Section id="reviews" tone="tint" className={ANCHOR}>
       <SectionHeader eyebrow={details.reviews.eyebrow} heading={details.reviews.heading} />
       <ul className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:-mx-6 sm:px-6 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden">
-        {list.map((t, i) => (
-          <li key={`${i}-${t.name}`} className="glass-card flex w-[86%] shrink-0 snap-start flex-col gap-4 rounded-3xl p-6 md:w-auto">
-            <Stars rating={t.rating} />
-            <blockquote className="leading-relaxed text-navy-900/85">“{t.quote}”</blockquote>
+        {list.map((r, i) => (
+          <li key={`${i}-${r.name}`} className="glass-card flex w-[86%] shrink-0 snap-start flex-col gap-4 rounded-3xl p-6 md:w-auto">
+            <Stars rating={r.rating} />
+            <blockquote className="leading-relaxed text-navy-900/85">“{r.quote}”</blockquote>
             <footer className="mt-auto flex items-center gap-3">
-              <span className="glow-tile size-11 rounded-full font-display font-bold" style={{ "--c": TONE[t.tone] } as React.CSSProperties}>
-                {t.initial}
+              <span className="glow-tile size-11 rounded-full font-display font-bold" style={{ "--c": TONE[r.tone] } as React.CSSProperties}>
+                {r.initial}
               </span>
               <span>
-                <span className="block font-display font-bold">{t.name}</span>
-                <span className="text-[13px] text-ink-muted">{t.roleLocation}</span>
+                <span className="block font-display font-bold">{r.name}</span>
+                <span className="text-[13px] text-ink-muted">{r.roleLocation}</span>
               </span>
             </footer>
           </li>

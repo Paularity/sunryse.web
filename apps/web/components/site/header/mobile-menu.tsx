@@ -10,6 +10,7 @@ import { Icon } from "@/components/icons";
 import { Logo } from "@/components/site/logo";
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import type { Service, Site, Solution } from "@/lib/content/types";
+import { t } from "@/lib/content/ui";
 import { cn } from "@/lib/utils";
 
 const rowClass =
@@ -20,13 +21,14 @@ const btnLine =
 export function MobileMenu({ site, services, solutions }: { site: Site; services: Service[]; solutions: Solution[] }) {
   const [open, setOpen] = useState(false);
   const [solOpen, setSolOpen] = useState(true);
+  const { ui } = site;
   const close = () => setOpen(false);
   const tel = `tel:${site.phone.replace(/[^\d+]/g, "")}`;
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger
-        aria-label="Open menu"
+        aria-label={t(ui, "openMenu")}
         className="grid size-12 place-items-center rounded-[14px] bg-navy-900 text-white outline-none focus-visible:ring-3 focus-visible:ring-ring/50 lg:hidden"
       >
         <Menu className="size-[22px]" aria-hidden />
@@ -36,14 +38,14 @@ export function MobileMenu({ site, services, solutions }: { site: Site; services
         showCloseButton={false}
         className="gap-0 bg-[linear-gradient(180deg,var(--color-sky-200),var(--color-day-50)_40%)] p-0 data-[side=right]:w-full data-[side=right]:sm:max-w-none"
       >
-        <SheetTitle className="sr-only">Menu</SheetTitle>
-        <SheetDescription className="sr-only">Site navigation</SheetDescription>
+        <SheetTitle className="sr-only">{t(ui, "menu")}</SheetTitle>
+        <SheetDescription className="sr-only">{t(ui, "siteNavigation")}</SheetDescription>
         <div className="flex items-center justify-between px-4 pt-4">
           <Logo />
           <button
             type="button"
             onClick={close}
-            aria-label="Close menu"
+            aria-label={t(ui, "closeMenu")}
             className="grid size-12 place-items-center rounded-[14px] bg-navy-900 text-white outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             <X className="size-[22px]" aria-hidden />
@@ -52,14 +54,14 @@ export function MobileMenu({ site, services, solutions }: { site: Site; services
 
         <div className="grid grid-cols-2 gap-2.5 px-4 pt-4">
           <a href={tel} className={btnLine}>
-            <Icon name="phone" className="size-[18px]" /> Call
+            <Icon name="phone" className="size-[18px]" /> {t(ui, "call")}
           </a>
           <a href={site.messengerUrl} className={btnLine}>
-            <Icon name="message" className="size-[18px]" /> Message
+            <Icon name="message" className="size-[18px]" /> {t(ui, "message")}
           </a>
         </div>
 
-        <nav aria-label="Mobile" className="flex-1 overflow-y-auto px-2 py-3">
+        <nav aria-label={t(ui, "mobileNavigation")} className="flex-1 overflow-y-auto px-2 py-3">
           {site.nav.map((item) => {
             if (item.menu === "solutions") {
               return (
@@ -104,7 +106,7 @@ export function MobileMenu({ site, services, solutions }: { site: Site; services
                   <span className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">{services.length}</span>
                 ) : item.href === "/calculator" ? (
                   <Hud light dot="amber" className="px-2.5 py-1.5">
-                    New
+                    {t(ui, "isNew")}
                   </Hud>
                 ) : null}
               </Link>
@@ -118,7 +120,7 @@ export function MobileMenu({ site, services, solutions }: { site: Site; services
             onClick={close}
             className="inline-flex min-h-14 items-center justify-center rounded-[14px] bg-sun font-label text-xs uppercase tracking-[0.12em] text-navy-900 shadow-[0_8px_20px_-8px_rgb(255_90_31/0.7)]"
           >
-            Get a free quote
+            {t(ui, "getFreeQuote")}
           </Link>
           <Hud light className="self-center">
             {site.hours}

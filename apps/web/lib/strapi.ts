@@ -20,23 +20,38 @@ export class StrapiError extends Error {
   }
 }
 
-/**
- * Cached read from the Strapi REST API (server only).
- * Uses Cache Components: `'use cache'` + tags, invalidated with revalidateTag(tag, "max").
- */
-export async function strapiFetch<T>(path: string, { query, tags = [] }: FetchOptions = {}): Promise<T> {
-  "use cache";
-  cacheLife("hours");
-  cacheTag("strapi", ...tags);
+type CachedResult = { ok: true; body: unknown } | { ok: false; status: number };
 
+/**
+ * The cached part. It never throws: a failed read is cached for seconds only (so an outage
+ * is retried quickly), a good read for hours (cleared by the Strapi webhook via revalidateTag).
+ */
+async function cachedGet(url: string, tags: string[]): Promise<CachedResult> {
+  "use cache";
+  cacheTag("strapi", ...tags);
+  try {
+    const res = await fetch(url, {
+      headers: process.env.STRAPI_TOKEN ? { Authorization: `Bearer ${process.env.STRAPI_TOKEN}` } : undefined,
+    });
+    if (!res.ok) {
+      cacheLife("seconds");
+      return { ok: false, status: res.status };
+    }
+    cacheLife("hours");
+    return { ok: true, body: await res.json() };
+  } catch {
+    cacheLife("seconds");
+    return { ok: false, status: 0 };
+  }
+}
+
+/** Cached read from the Strapi REST API (server only). Throws StrapiError on failure. */
+export async function strapiFetch<T>(path: string, { query, tags = [] }: FetchOptions = {}): Promise<T> {
   const search = query ? `?${qs.stringify(query, { encodeValuesOnly: true })}` : "";
   const url = `${STRAPI_URL}/api/${path.replace(/^\//, "")}${search}`;
-
-  const res = await fetch(url, {
-    headers: process.env.STRAPI_TOKEN ? { Authorization: `Bearer ${process.env.STRAPI_TOKEN}` } : undefined,
-  });
-  if (!res.ok) throw new StrapiError(res.status, path);
-  return (await res.json()) as T;
+  const result = await cachedGet(url, tags);
+  if (!result.ok) throw new StrapiError(result.status, path);
+  return result.body as T;
 }
 
 /** Absolute URL for a Strapi media path (uploads are served by Strapi in dev). */

@@ -7,14 +7,15 @@ import { useId, useState } from "react";
 
 import { Hud } from "@/components/fx";
 import { cn } from "@/lib/utils";
-import type { Project, SolutionSlug } from "@/lib/content/types";
+import type { Project, SolutionSlug, UiLabels } from "@/lib/content/types";
+import { t } from "@/lib/content/ui";
 
 type Filter = "all" | SolutionSlug;
-const FILTERS: { id: Filter; label: string }[] = [
-  { id: "all", label: "All" },
-  { id: "residential", label: "Residential" },
-  { id: "commercial", label: "Commercial" },
-  { id: "industrial", label: "Industrial" },
+const FILTERS: { id: Filter; labelKey: string }[] = [
+  { id: "all", labelKey: "filterAll" },
+  { id: "residential", labelKey: "segmentResidential" },
+  { id: "commercial", labelKey: "segmentCommercial" },
+  { id: "industrial", labelKey: "segmentIndustrial" },
 ];
 const SEG_TEXT: Record<SolutionSlug, string> = {
   residential: "text-sun-700",
@@ -22,7 +23,7 @@ const SEG_TEXT: Record<SolutionSlug, string> = {
   industrial: "text-leaf-600",
 };
 
-export function ProjectBrowser({ projects, total, allLabel, allNote }: { projects: Project[]; total: string; allLabel: string; allNote: string }) {
+export function ProjectBrowser({ projects, total, allLabel, allNote, ui }: { projects: Project[]; total: string; allLabel: string; allNote: string; ui: UiLabels }) {
   const [filter, setFilter] = useState<Filter>("all");
   const id = useId();
   const shown = filter === "all" ? projects : projects.filter((p) => p.segment === filter);
@@ -32,7 +33,7 @@ export function ProjectBrowser({ projects, total, allLabel, allNote }: { project
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
         <div
           role="tablist"
-          aria-label="Filter projects"
+          aria-label={t(ui, "filterProjects")}
           className="font-label flex max-w-full gap-1.5 overflow-x-auto rounded-2xl border border-navy-900/10 bg-white p-1.5 text-xs uppercase tracking-[0.12em] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {FILTERS.map((f) => {
@@ -51,13 +52,13 @@ export function ProjectBrowser({ projects, total, allLabel, allNote }: { project
                   on ? "bg-navy-900 text-white" : "bg-transparent text-navy-900 hover:bg-day-100",
                 )}
               >
-                {f.label}
+                {t(ui, f.labelKey)}
               </button>
             );
           })}
         </div>
         <span className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted" aria-live="polite">
-          Showing {shown.length} of {total}
+          {t(ui, "showingOf", { shown: shown.length, total })}
         </span>
       </div>
 
@@ -76,7 +77,7 @@ export function ProjectBrowser({ projects, total, allLabel, allNote }: { project
             <div className="relative h-56 sm:h-60">
               <Image src={p.image.src} alt={p.image.alt} fill sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" className="object-cover" />
               <Hud light dot="none" className={cn("absolute left-3 top-3 capitalize", SEG_TEXT[p.segment])}>
-                {p.segment}
+                {t(ui, `segment${p.segment.charAt(0).toUpperCase()}${p.segment.slice(1)}`)}
               </Hud>
             </div>
             <div className="flex flex-1 flex-col gap-3 p-5">
@@ -84,8 +85,8 @@ export function ProjectBrowser({ projects, total, allLabel, allNote }: { project
               <h3 className="font-display text-xl font-bold tracking-[-0.02em]">{p.title}</h3>
               <p className="text-sm text-ink-muted">{p.location}</p>
               <dl className="font-label mt-auto flex flex-wrap gap-x-4 gap-y-1 border-t border-navy-900/10 pt-3 text-[11px] uppercase tracking-[0.12em] text-ink-muted">
-                <div><dt className="sr-only">Size</dt><dd>{p.sizeKwp}</dd></div>
-                <div><dt className="sr-only">System</dt><dd>{p.system}</dd></div>
+                <div><dt className="sr-only">{t(ui, "size")}</dt><dd>{p.sizeKwp}</dd></div>
+                <div><dt className="sr-only">{t(ui, "system")}</dt><dd>{p.system}</dd></div>
               </dl>
             </div>
           </Link>

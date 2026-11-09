@@ -11,7 +11,10 @@ export async function POST(req: NextRequest) {
   }
 
   // `consent` is required by the schema but is not stored in Strapi.
-  const lead = { ...parsed.data, consent: undefined };
+  // An empty optional email would fail Strapi's email validation, so it is dropped.
+  const { consent: _consent, email, ...rest } = parsed.data;
+  void _consent;
+  const lead = { ...rest, ...(email ? { email } : {}) };
   try {
     await strapiCreate("leads", { ...lead, source: lead.source ?? "website" });
     // TODO(phase 6): notify SunRyse by email (Resend) once the address is confirmed.

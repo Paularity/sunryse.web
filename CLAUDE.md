@@ -10,6 +10,7 @@ Full plan: `docs/PLAN.md`. Screen designs: `docs/designs/` (approved before code
 - Package manager: pnpm workspaces (`corepack enable` once)
 
 ## Commands
+- First run: `pnpm install`, then `pnpm setup` (seeds Strapi from `apps/web/content/*.json`, creates the website API token, writes `apps/web/.env.local` + `apps/cms/.env` webhook settings). Then `pnpm dev`.
 - `pnpm dev` (web + cms) · `pnpm --filter web dev` · `pnpm --filter cms develop`
 - `pnpm lint` · `pnpm typecheck` · `pnpm --filter web build`
 - Add UI: `pnpm dlx shadcn@latest add <name>` inside `apps/web` (or use the shadcn MCP)
@@ -18,7 +19,7 @@ Full plan: `docs/PLAN.md`. Screen designs: `docs/designs/` (approved before code
 - Mobile-first. Every component must work at 360px, 768px, 1280px+. No horizontal scroll.
 - Animations: respect `prefers-reduced-motion`; GSAP only inside `useGSAP` with scope; kill ScrollTriggers on unmount.
 - Server Components by default; `"use client"` only for interactive/animated leaves.
-- All copy, images, prices and calculator assumptions come from Strapi — never hardcode content in components.
+- All copy, images, prices, calculator assumptions and interface labels come from Strapi (fallback: `apps/web/content/*.json`, same shapes) — never hardcode content or labels in components; labels via `t(site.ui, key)`.
 - Use design tokens (`--sun-*`, `--sky-*`, `--navy-*`, `--leaf-*`) — no raw hex in components.
 - Images via `next/image`; 3D/heavy code via `next/dynamic` with a static fallback.
 

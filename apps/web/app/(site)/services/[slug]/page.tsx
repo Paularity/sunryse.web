@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
+import { DetailSkeleton } from "@/components/pages/detail-skeleton";
 import { ServiceView } from "@/components/pages/service/service-view";
-import { getBrands, getService, getServices } from "@/lib/content";
+import { getBrands, getService, getServices, getSite } from "@/lib/content";
 import { getServiceDetails } from "@/lib/content/pages/service";
-
-// Statically generated per slug; a blocking navigation is fine for these detail pages.
-export const instant = false;
 
 type Params = { slug: string };
 
@@ -18,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { slug } = await params;
   const service = await getService(slug);
   if (!service) return {};
-  const { image } = getServiceDetails(service);
+  const { image } = await getServiceDetails(service);
   return {
     title: service.title,
     description: service.summary,
@@ -27,9 +26,18 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   };
 }
 
-export default async function ServicePage({ params }: { params: Promise<Params> }) {
+/** Sync shell: the param-dependent content streams in behind a hero-shaped skeleton, so navigation is instant. */
+export default function ServicePage({ params }: { params: Promise<Params> }) {
+  return (
+    <Suspense fallback={<DetailSkeleton />}>
+      <ServiceContent params={params} />
+    </Suspense>
+  );
+}
+
+async function ServiceContent({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
-  const [service, services, brands] = await Promise.all([getService(slug), getServices(), getBrands()]);
+  const [service, services, brands, site] = await Promise.all([getService(slug), getServices(), getBrands(), getSite()]);
   if (!service) notFound();
 
   // Same category first; top up from the rest so the related grid always ends full.
@@ -39,5 +47,5 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
     ...others.filter((s) => s.category !== service.category),
   ].slice(0, 3);
 
-  return <ServiceView service={service} details={getServiceDetails(service)} brands={brands} related={related} />;
+  return <ServiceView service={service} details={await getServiceDetails(service)} brands={brands} related={related} ui={site.ui} />;
 }

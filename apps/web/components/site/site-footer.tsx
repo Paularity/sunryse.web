@@ -4,13 +4,14 @@ import { Hud } from "@/components/fx";
 import { Icon, SocialIcon } from "@/components/icons";
 import { Logo } from "@/components/site/logo";
 import type { IconName, Site } from "@/lib/content/types";
+import { t } from "@/lib/content/ui";
 
-const flink = "flex min-h-11 items-center gap-2.5 text-[#E3E9F7] hover:text-sun-300 focus-visible:text-sun-300";
+const flink = "flex min-h-11 items-center gap-2.5 text-ink-glow hover:text-sun-300 focus-visible:text-sun-300";
 const head = "font-label text-[11px] uppercase tracking-[0.12em] text-sun-300";
 
 function ContactRow({ icon, children }: { icon: IconName; children: React.ReactNode }) {
   return (
-    <span className="flex items-start gap-2.5 py-1.5 text-sm text-[#E3E9F7]">
+    <span className="flex items-start gap-2.5 py-1.5 text-sm text-ink-glow">
       <Icon name={icon} className="mt-0.5 size-4 text-sun-300" />
       {children}
     </span>
@@ -19,7 +20,7 @@ function ContactRow({ icon, children }: { icon: IconName; children: React.ReactN
 
 export function SiteFooter({ site }: { site: Site }) {
   const tel = `tel:${site.phone.replace(/[^\d+]/g, "")}`;
-  const { footer } = site;
+  const { footer, ui } = site;
 
   return (
     <footer className="fx-dark relative overflow-hidden bg-navy-950 pt-12 pb-[110px] text-white sm:pt-16 lg:pb-7">
@@ -35,9 +36,9 @@ export function SiteFooter({ site }: { site: Site }) {
         <div className="grid grid-cols-2 gap-x-4 gap-y-5 sm:gap-8 lg:grid-cols-[1.3fr_repeat(3,minmax(0,1fr))]">
           <div className="col-span-2 flex flex-col items-start gap-4 sm:col-span-1">
             <Logo dark />
-            <p className="hidden max-w-xs text-sm leading-relaxed text-[#C9D4F2] sm:block">{footer.blurb}</p>
+            <p className="hidden max-w-xs text-sm leading-relaxed text-ink-soft sm:block">{footer.blurb}</p>
             <Hud>{site.hours}</Hud>
-            <span className="font-label text-[11px] uppercase tracking-[0.12em] text-[#C9D4F2]">{site.license}</span>
+            <span className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-soft">{site.license}</span>
           </div>
 
           {footer.columns.map((col) => (
@@ -52,7 +53,7 @@ export function SiteFooter({ site }: { site: Site }) {
           ))}
 
           <div className="col-span-2 flex flex-row flex-wrap items-center gap-x-[18px] gap-y-1 sm:col-span-1 sm:flex-col sm:items-start sm:gap-y-1">
-            <span className={`${head} basis-full pb-1 sm:pb-2`}>Contact</span>
+            <span className={`${head} basis-full pb-1 sm:pb-2`}>{t(ui, "contact")}</span>
             <a href={tel} className={flink}>
               <Icon name="phone" className="size-4 text-sun-300" />
               {site.phone}
@@ -78,7 +79,7 @@ export function SiteFooter({ site }: { site: Site }) {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-5 font-label text-[11px] uppercase tracking-[0.12em] text-[#C9D4F2] sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-5 font-label text-[11px] uppercase tracking-[0.12em] text-ink-soft sm:flex-row sm:items-center sm:justify-between">
           <span>{footer.copyright}</span>
           <ul className="flex gap-4">
             {footer.legal.map((l) => (

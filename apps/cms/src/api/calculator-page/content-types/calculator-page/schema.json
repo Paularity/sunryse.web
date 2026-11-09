@@ -1,0 +1,19 @@
+{
+  "kind": "singleType",
+  "collectionName": "calculator_pages",
+  "info": {
+    "singularName": "calculator-page",
+    "pluralName": "calculator-pages",
+    "displayName": "Calculator page",
+    "description": "Copy and labels for /calculator."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "content": {
+      "type": "json",
+      "required": true
+    }
+  }
+}

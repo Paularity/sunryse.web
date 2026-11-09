@@ -7,12 +7,13 @@ import { useId, useRef, useState, type KeyboardEvent } from "react";
 
 import { Hud, Meter, PhotoFrame, SectionHeader } from "@/components/fx";
 import { buttonVariants } from "@/components/ui/button";
-import type { HomeContent, Solution } from "@/lib/content/types";
+import type { HomeContent, Solution, UiLabels } from "@/lib/content/types";
+import { t } from "@/lib/content/ui";
 import { cn } from "@/lib/utils";
 
 const mono = "font-label uppercase tracking-[0.12em]";
 
-export function SolutionsTabs({ content, solutions }: { content: HomeContent["solutions"]; solutions: Solution[] }) {
+export function SolutionsTabs({ content, solutions, ui }: { content: HomeContent["solutions"]; solutions: Solution[]; ui: UiLabels }) {
   const uid = useId();
   const [idx, setIdx] = useState(0);
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -35,15 +36,15 @@ export function SolutionsTabs({ content, solutions }: { content: HomeContent["so
   const tabs = (
     <div
       role="tablist"
-      aria-label="Choose a property type"
+      aria-label={t(ui, "choosePropertyType")}
       onKeyDown={onKey}
       className="glass flex max-w-full gap-1 overflow-x-auto rounded-2xl p-[5px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     >
-      {solutions.map((t, i) => {
+      {solutions.map((tab, i) => {
         const on = i === idx;
         return (
           <button
-            key={t.slug}
+            key={tab.slug}
             ref={(el) => {
               refs.current[i] = el;
             }}
@@ -61,7 +62,7 @@ export function SolutionsTabs({ content, solutions }: { content: HomeContent["so
             )}
           >
             <span className="opacity-55">{String(i + 1).padStart(2, "0")}</span>
-            {t.title}
+            {tab.title}
           </button>
         );
       })}
@@ -84,11 +85,11 @@ export function SolutionsTabs({ content, solutions }: { content: HomeContent["so
           <h3 className="font-display text-[clamp(34px,3.4vw,46px)] font-bold leading-[1.02] tracking-[-0.035em]">{s.title}</h3>
           <p className="text-[17px] leading-[1.65] text-ink-muted">{s.summary}</p>
           <div className="grid grid-cols-2 gap-2.5">
-            <Stat label="Typical size" value={s.typicalSize} meter={s.sizeMeter} tone="sun" />
+            <Stat label={t(ui, "typicalSize")} value={s.typicalSize} meter={s.sizeMeter} tone="sun" />
             <Stat label={s.metricLabel} value={s.metricValue} meter={s.metricMeter} tone="leaf" valueClass="text-leaf-600" />
           </div>
           <Link href={`/solutions/${s.slug}`} className={cn(buttonVariants({ variant: "navy", size: "xl" }), "self-start")}>
-            Explore {s.title}
+            {t(ui, "exploreSolution", { title: s.title })}
             <ArrowRight className="size-4" aria-hidden />
           </Link>
         </div>
@@ -97,7 +98,7 @@ export function SolutionsTabs({ content, solutions }: { content: HomeContent["so
           className="h-[300px] lg:h-[440px]"
           chips={
             <>
-              <Hud>System online</Hud>
+              <Hud>{t(ui, "systemOnline")}</Hud>
               <Hud dot="none">{s.typicalSize}</Hud>
             </>
           }

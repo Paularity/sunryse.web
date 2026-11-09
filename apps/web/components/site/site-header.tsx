@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Icon } from "@/components/icons";
 import { Logo } from "@/components/site/logo";
 import type { Service, Site, Solution } from "@/lib/content/types";
+import { t } from "@/lib/content/ui";
 
 import { HeaderNav } from "./header/header-nav";
 import { HeaderShell } from "./header/header-shell";
@@ -11,7 +12,7 @@ import { MobileMenu } from "./header/mobile-menu";
 /** Fixed header stack: announcement bar (40) + glass bar (16 + 68) = var(--site-top) 124px. */
 export function SiteHeader({ site, services, solutions }: { site: Site; services: Service[]; solutions: Solution[] }) {
   const tel = `tel:${site.phone.replace(/[^\d+]/g, "")}`;
-  const { announcement } = site;
+  const { announcement, ui } = site;
 
   return (
     <HeaderShell
@@ -38,10 +39,10 @@ export function SiteHeader({ site, services, solutions }: { site: Site; services
           <div className="flex items-center gap-2">
             <a
               href={tel}
-              aria-label={`Call ${site.name}`}
+              aria-label={t(ui, "callAria", { name: site.name })}
               className="hidden min-h-11 items-center gap-2 rounded-lg border border-navy-900/20 bg-white px-4 font-label text-xs uppercase tracking-[0.12em] text-navy-900 hover:border-navy-900/40 lg:inline-flex"
             >
-              <Icon name="phone" className="size-[18px]" /> Call
+              <Icon name="phone" className="size-[18px]" /> {t(ui, "call")}
             </a>
             <Link
               href={site.quoteCta.href}

@@ -2,12 +2,13 @@ import { MessageCircle } from "lucide-react";
 
 import { Eyebrow, RichText, h2Class } from "@/components/fx";
 import { buttonVariants } from "@/components/ui/button";
-import type { Faq, HomeContent } from "@/lib/content/types";
+import type { Faq, HomeContent, UiLabels } from "@/lib/content/types";
+import { t } from "@/lib/content/ui";
 import { cn } from "@/lib/utils";
 
 import { FaqList } from "./faq-list";
 
-export function FaqSection({ content, faqs, messengerUrl }: { content: HomeContent["faq"]; faqs: Faq[]; messengerUrl: string }) {
+export function FaqSection({ content, faqs, messengerUrl, ui }: { content: HomeContent["faq"]; faqs: Faq[]; messengerUrl: string; ui: UiLabels }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -29,7 +30,7 @@ export function FaqSection({ content, faqs, messengerUrl }: { content: HomeConte
             className={cn(buttonVariants({ variant: "line", size: "xl" }), "self-start")}
           >
             <MessageCircle aria-hidden className="size-[18px]" strokeWidth={1.75} />
-            Message us
+            {t(ui, "messageUs")}
           </a>
         </div>
         <FaqList faqs={faqs} openFirst={content.openFirst} />

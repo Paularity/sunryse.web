@@ -25,19 +25,19 @@ export default async function HomePage() {
 
   return (
     <>
-      <HeroSection hero={home.hero} estimate={estimate} />
-      <BenefitsDock items={home.benefits} />
+      <HeroSection hero={home.hero} estimate={estimate} ui={site.ui} />
+      <BenefitsDock items={home.benefits} ui={site.ui} />
       <BrandRail label={home.marquee.label} brands={brands} />
-      <SolutionsSection content={home.solutions} solutions={solutions} />
-      <ServicesSection content={home.services} services={services} />
-      <ProcessSection content={home.process} />
-      <CalculatorTeaser content={home.calculator} config={config} />
-      <SolarVsGrid content={home.solarVsGrid} config={config} />
+      <SolutionsSection content={home.solutions} solutions={solutions} ui={site.ui} />
+      <ServicesSection content={home.services} services={services} ui={site.ui} />
+      <ProcessSection content={home.process} ui={site.ui} />
+      <CalculatorTeaser content={home.calculator} config={config} ui={site.ui} />
+      <SolarVsGrid content={home.solarVsGrid} config={config} ui={site.ui} />
       <ImpactBand content={home.impact} stats={impact} />
-      <ProjectsBento content={home.projects} projects={projects.slice(0, 4)} />
+      <ProjectsBento content={home.projects} projects={projects.slice(0, 4)} ui={site.ui} />
       <TestimonialsSection content={home.testimonials} testimonials={testimonials} />
       <WhySection content={home.why} warranty={warranty} />
-      <FaqSection content={home.faq} faqs={faqs} messengerUrl={site.messengerUrl} />
+      <FaqSection content={home.faq} faqs={faqs} messengerUrl={site.messengerUrl} ui={site.ui} />
       <QuoteCta content={home.cta} site={site} />
     </>
   );

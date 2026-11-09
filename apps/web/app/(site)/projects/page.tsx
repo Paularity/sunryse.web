@@ -5,8 +5,9 @@ import Link from "next/link";
 import { Eyebrow, Hud, PhotoFrame, RichText, Section, h2Class } from "@/components/fx";
 import { ProjectBrowser } from "@/components/pages/projects/project-browser";
 import { Button } from "@/components/ui/button";
-import { getProjects } from "@/lib/content";
+import { getProjects, getSite } from "@/lib/content";
 import { getProjectsPage } from "@/lib/content/pages/projects";
+import { t } from "@/lib/content/ui";
 import { cn } from "@/lib/utils";
 
 const STAT_TEXT: Record<string, string> = { navy: "text-navy-900", leaf: "text-leaf-600", amber: "text-sun-700" };
@@ -17,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ProjectsPage() {
-  const [page, projects] = await Promise.all([getProjectsPage(), getProjects()]);
+  const [page, projects, { ui }] = await Promise.all([getProjectsPage(), getProjects(), getSite()]);
   const { hero, featured, grid, cta } = page;
 
   return (
@@ -27,16 +28,16 @@ export default async function ProjectsPage() {
         style={{ paddingTop: "calc(var(--site-top) + 24px)" }}
       >
         <div
-          className="fx-grid pointer-events-none absolute inset-x-0 top-0 -z-10 h-full max-h-[900px] opacity-60 [mask-image:radial-gradient(90%_75%_at_50%_20%,#000,transparent_80%)]"
+          className="fx-grid pointer-events-none absolute inset-x-0 top-0 -z-10 h-full max-h-[900px] opacity-60 [mask-image:radial-gradient(90%_75%_at_50%_20%,black,transparent_80%)]"
           aria-hidden
         />
         <div className="container-site flex flex-wrap items-end justify-between gap-8">
           <div className="flex flex-col gap-5">
-            <nav aria-label="Breadcrumb" className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">
+            <nav aria-label={t(ui, "breadcrumb")} className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">
               <Link href="/" className="inline-flex min-h-11 items-center hover:text-sun-700">
-                Home
+                {t(ui, "home")}
               </Link>{" "}
-              / <span aria-current="page" className="text-sun-700">Projects</span>
+              / <span aria-current="page" className="text-sun-700">{t(ui, "breadcrumbProjects")}</span>
             </nav>
             <h1 className="font-display text-[clamp(44px,5.6vw,84px)] font-bold leading-[0.98] tracking-[-0.045em] text-balance">
               <RichText text={hero.heading} />
@@ -88,9 +89,9 @@ export default async function ProjectsPage() {
         </div>
       </section>
 
-      <section className="pb-[clamp(64px,9vw,100px)]" aria-label="All projects">
+      <section className="pb-[clamp(64px,9vw,100px)]" aria-label={t(ui, "allProjectsAria")}>
         <div className="container-site">
-          <ProjectBrowser projects={projects} total={grid.total} allLabel={grid.allLabel} allNote={grid.allNote} />
+          <ProjectBrowser projects={projects} total={grid.total} allLabel={grid.allLabel} allNote={grid.allNote} ui={ui} />
         </div>
       </section>
 

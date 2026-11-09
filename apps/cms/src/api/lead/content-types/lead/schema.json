@@ -42,6 +42,26 @@
     },
     "source": {
       "type": "string"
+    },
+    "roofType": {
+      "type": "enumeration",
+      "enum": [
+        "metal",
+        "tile",
+        "concrete",
+        "unsure"
+      ]
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "new",
+        "contacted",
+        "quoted",
+        "won",
+        "lost"
+      ],
+      "default": "new"
     }
   }
 }

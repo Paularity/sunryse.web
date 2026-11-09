@@ -1,5 +1,6 @@
 import "server-only";
 
+import { mergeContent, strapiJson } from "@/lib/content/strapi-page";
 import details from "@/content/pages/solution-details.json";
 import type { Link, SolutionSlug, Tone } from "@/lib/content/types";
 
@@ -40,9 +41,12 @@ export type SolutionDetails = {
 
 const DETAILS = details as unknown as Record<SolutionSlug, SolutionDetails>;
 
-/** Page copy for a solution template (not part of the shared content contract). */
-export function getSolutionDetails(slug: string): SolutionDetails | null {
-  return DETAILS[slug as SolutionSlug] ?? null;
+/** Page copy for a solution template; Strapi's solution.details is merged over the bundled copy. */
+export async function getSolutionDetails(slug: string): Promise<SolutionDetails | null> {
+  const bundled = DETAILS[slug as SolutionSlug];
+  if (!bundled) return null;
+  const cms = await strapiJson("solutions", "details", "solutions", { filters: { slug: { $eq: slug } }, fields: ["details"] });
+  return mergeContent(bundled, cms);
 }
 
 export const SOLUTION_SLUGS = Object.keys(DETAILS) as SolutionSlug[];

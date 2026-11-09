@@ -5,8 +5,9 @@ import { Suspense } from "react";
 import { RichText } from "@/components/fx";
 import { CalculatorApp } from "@/components/pages/calculator/calculator-app";
 import { CalculatorFromQuery } from "@/components/pages/calculator/calculator-loader";
-import { getCalculatorConfig } from "@/lib/content";
+import { getCalculatorConfig, getSite } from "@/lib/content";
 import { getCalculatorPage } from "@/lib/content/pages/calculator";
+import { t } from "@/lib/content/ui";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { meta } = await getCalculatorPage();
@@ -14,8 +15,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function CalculatorPage() {
-  const [page, config] = await Promise.all([getCalculatorPage(), getCalculatorConfig()]);
-  const ui = {
+  const [page, config, { ui }] = await Promise.all([getCalculatorPage(), getCalculatorConfig(), getSite()]);
+  const content = {
     billLabel: page.billLabel,
     billTip: page.billTip,
     propertyLabel: page.propertyLabel,
@@ -32,14 +33,14 @@ export default async function CalculatorPage() {
     <div className="relative isolate bg-[linear-gradient(180deg,var(--color-sky-200),var(--color-day-50)_30%,var(--color-dawn-50))] pt-[calc(var(--site-top)+2rem)] pb-16 lg:pb-24">
       <div
         aria-hidden
-        className="fx-grid pointer-events-none absolute inset-x-0 top-0 -z-10 h-full max-h-[900px] [mask-image:radial-gradient(90%_75%_at_50%_20%,#000,transparent_80%)]"
+        className="fx-grid pointer-events-none absolute inset-x-0 top-0 -z-10 h-full max-h-[900px] [mask-image:radial-gradient(90%_75%_at_50%_20%,black,transparent_80%)]"
       />
       <div className="container-site flex flex-col gap-7">
         <header className="flex flex-wrap items-end justify-between gap-5">
           <div className="flex flex-col gap-3">
-            <nav aria-label="Breadcrumb" className="font-label text-xs uppercase tracking-[0.12em] text-ink-muted">
+            <nav aria-label={t(ui, "breadcrumb")} className="font-label text-xs uppercase tracking-[0.12em] text-ink-muted">
               <Link href="/" className="inline-flex min-h-11 items-center hover:text-navy-900">
-                Home
+                {t(ui, "home")}
               </Link>{" "}
               / <span aria-current="page" className="text-sun-700">{page.breadcrumb}</span>
             </nav>
@@ -50,8 +51,8 @@ export default async function CalculatorPage() {
           <p className="m-0 max-w-[400px] text-base leading-relaxed text-ink-muted">{page.lead}</p>
         </header>
 
-        <Suspense fallback={<CalculatorApp config={config} content={ui} />}>
-          <CalculatorFromQuery config={config} content={ui} />
+        <Suspense fallback={<CalculatorApp config={config} content={content} ui={ui} />}>
+          <CalculatorFromQuery config={config} content={content} ui={ui} />
         </Suspense>
       </div>
     </div>
