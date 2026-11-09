@@ -24,9 +24,77 @@ a{color:#1553C7;text-decoration:none}
 .row{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;margin-right:-16px;padding-right:16px;scroll-snap-type:x mandatory}
 .row::-webkit-scrollbar{display:none}
 .btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border-radius:14px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.12em;font-size:12px}
+.noscroll{scrollbar-width:none}.noscroll::-webkit-scrollbar{display:none}
+.sv-tab{cursor:default}
+/* Services: "energy deck" (dark band) */
+.sv{position:relative;overflow:hidden;isolation:isolate;background:#071433;color:#FFFFFF}
+.sv::before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(55% 45% at 88% 0%,rgba(255,138,0,.30),transparent 70%),radial-gradient(45% 40% at 0% 100%,rgba(30,111,232,.38),transparent 70%)}
+.sv::after{content:"";position:absolute;left:-20%;right:-20%;bottom:0;height:62%;z-index:-1;background-image:linear-gradient(rgba(120,170,255,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(120,170,255,.16) 1px,transparent 1px);background-size:64px 64px;transform:perspective(700px) rotateX(60deg);transform-origin:bottom;-webkit-mask-image:linear-gradient(to top,#000 0%,transparent 90%);mask-image:linear-gradient(to top,#000 0%,transparent 90%)}
+.sv-lead{font-size:17px;line-height:1.6;color:#A9B8DA;margin:0;max-width:520px}
+.sv-tabs{display:flex;gap:4px;padding:5px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);overflow-x:auto;max-width:100%;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.sv-tab{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:0;border-radius:12px;font:500 12px/1 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s}
+.sv-tab b{font-weight:500;font-size:11px;padding:3px 7px;border-radius:999px}
+.gcard{position:relative;overflow:hidden;box-sizing:border-box;border-radius:24px;color:#FFFFFF;background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.11);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 30px 60px -30px rgba(0,0,0,.6);transition:transform .35s cubic-bezier(.2,.7,.2,1),background .35s,border-color .35s}
+.gcard::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:linear-gradient(135deg,#FFC93C,rgba(255,90,31,.35) 35%,rgba(30,111,232,.15) 60%,#4A93FF);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .35s}
+a.gcard:hover{transform:translateY(-3px);background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.04));color:#FFFFFF}
+a.gcard:hover::before,.gcard.lit::before{opacity:1}
+a.gcard:focus-visible{outline:2px solid #FFC93C;outline-offset:3px}
+.sv-feat{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:16px}
+.sv-feat>*{min-width:0}
+.sv-big{grid-column:span 2}
+.flow{position:relative;display:grid;grid-template-columns:26% 22% 26%;justify-content:space-between;align-items:center;min-height:210px}
+.flow>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.flow .f{stroke-dasharray:3 9;stroke-linecap:round;animation:sv-dash .9s linear infinite}
+.node{position:relative;z-index:1;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:rgba(9,24,61,.92);border:1px solid rgba(255,255,255,.14)}
+.node .k{display:block;font:500 11px/1.2 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#A9B8DA}
+.node .v{display:block;font:700 16px/1.25 Sora,sans-serif;color:#FFFFFF;white-space:nowrap}
+.node-inv{flex-direction:column;text-align:center;gap:8px;padding:16px 10px;border-color:rgba(255,201,60,.5);box-shadow:0 0 0 6px rgba(255,138,0,.08),0 0 40px -8px rgba(255,138,0,.6)}
+.pulse{width:8px;height:8px;border-radius:50%;background:#5BD97A;box-shadow:0 0 0 0 rgba(91,217,122,.6);animation:sv-pulse 1.8s ease-out infinite;flex:none}
+.scan{position:absolute;left:0;right:0;height:42%;top:-42%;background:linear-gradient(180deg,transparent,rgba(255,201,60,.16) 70%,rgba(255,201,60,.9) 100%);animation:sv-scan 3.2s cubic-bezier(.5,0,.5,1) infinite;pointer-events:none}
+.cell{border-radius:4px;background:linear-gradient(160deg,#2A5BC8,#14306E);border:1px solid rgba(160,200,255,.35)}
+.bseg{flex:1;border-radius:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1)}
+.bseg.on{background:linear-gradient(180deg,#7BE596,#2DB84C);border-color:transparent;box-shadow:0 0 18px -4px rgba(45,184,76,.8)}
+.bseg.blink{animation:sv-blink 1.6s ease-in-out infinite}
+.chip{display:inline-flex;align-items:center;min-height:32px;padding:0 12px;border-radius:999px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#CFE0FF;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
+.go{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;flex:none;border:1px solid rgba(255,255,255,.2);color:#FFFFFF;transition:background .3s,color .3s,transform .35s,border-color .3s}
+a.gcard:hover .go{background:linear-gradient(135deg,#FFC93C,#FF8A00 50%,#FF5A1F);color:#0B1F4D;border-color:transparent;transform:rotate(-45deg)}
+.sv-mods{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.sv-mods>*{min-width:0}
+.mod{display:flex;flex-direction:column;gap:16px;padding:20px;border-radius:20px}
+.mod-ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;flex:none}
+.mod-t{font:600 17px/1.3 Sora,sans-serif;letter-spacing:-.01em}
+.mod-d{font-size:14px;line-height:1.5;color:#A9B8DA}
+.mod-top{display:flex;align-items:center;gap:12px}
+.mod .go{width:34px;height:34px;margin-left:auto}
+.sv-cta{box-sizing:border-box;border-radius:20px;padding:22px;display:flex;flex-direction:column;justify-content:space-between;gap:14px;color:#0B1F4D;background:linear-gradient(135deg,#FFC93C,#FF8A00 52%,#FF5A1F);box-shadow:0 24px 50px -24px rgba(255,90,31,.8)}
+.sv-cta.wide{flex-direction:row;align-items:center;flex-wrap:wrap;gap:16px 28px}
+.sv-cta.wide .cta-t{flex:1 1 260px;font-size:22px !important}
+.sv-cta.wide .cta-a{flex:0 1 240px}
+.sv-cta.wide>.mono{flex-basis:100%}
+.svc-more{display:none}
+@keyframes sv-dash{to{stroke-dashoffset:-12}}
+@keyframes sv-pulse{70%{box-shadow:0 0 0 10px rgba(91,217,122,0)}100%{box-shadow:0 0 0 0 rgba(91,217,122,0)}}
+@keyframes sv-scan{0%{top:-42%}100%{top:100%}}
+@keyframes sv-blink{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.flow .f,.pulse,.scan,.bseg.blink{animation:none}.scan{display:none}.gcard,.go{transition:none}}
+/* phone layout */
+.sv-feat{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 -16px 0 0;padding-right:16px;scrollbar-width:none}
+.sv-feat::-webkit-scrollbar{display:none}
+.sv-feat>*{flex:0 0 86%;scroll-snap-align:start}
+.sv-big{padding:20px !important}
+.flow{min-height:170px;grid-template-columns:28% 24% 30%}
+.node{flex-direction:column;align-items:flex-start;gap:4px;padding:8px}
+.node .v{font-size:14px}
+.node>.ico{display:none}
+.sv-mods{grid-template-columns:1fr;gap:8px}
+.mod{flex-direction:row;align-items:center;padding:12px 14px;gap:14px;border-radius:16px}
+.mod-top{display:contents}
+.mod-ic{order:1;width:42px;height:42px}.mod-body{order:2;flex:1}.mod .go{order:3}
+.mod-t{font-size:16px}
+.sv-tabs{margin-right:-16px;border-radius:16px 0 0 16px}
 </style>
 </helmet>
-<div style="position:relative;width:390px;height:6300px;overflow:hidden;background:#F7FAFF;color:#0B1F4D;font-family:Manrope,sans-serif">
+<div style="position:relative;width:390px;height:6900px;overflow:hidden;background:#F7FAFF;color:#0B1F4D;font-family:Manrope,sans-serif">
 
 <div class="mono" style="background:#0B1F4D;color:#FFFFFF;font-size:11px;padding:10px 16px;text-align:center">Free site assessment · <span style="color:#FFC93C;text-decoration:underline">Book now →</span></div>
 
@@ -89,19 +157,66 @@ a{color:#1553C7;text-decoration:none}
 </div>
 </section>
 
-<!-- SERVICES -->
-<section class="sec" style="background:#EAF2FF">
-<span class="eb">[ 03 ] Our services</span>
-<h2 class="h2">14 ways we put the <span class="sun-text">sun</span> to work</h2>
-<div style="display:flex;flex-direction:column;gap:8px">
-<sc-for list="{{services}}" as="s" hint-placeholder-count="6"><a href="Service.dc.html" class="card" style="display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:16px;color:#0B1F4D;min-height:64px;box-sizing:border-box"><span style="flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:{{s.tile}};color:#FFFFFF;font-family:'JetBrains Mono';font-size:12px">{{s.n}}</span><span style="flex:1;font-family:Sora;font-weight:700;font-size:16px;line-height:1.25">{{s.t}}</span><svg class="ico" style="width:16px;height:16px;color:#1553C7" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"></path></svg></a></sc-for>
+<!-- SERVICES — energy deck -->
+<section class="sec sv" style="gap:20px">
+<span class="eb" style="color:#FFC93C;display:inline-flex;align-items:center;gap:10px"><span class="pulse"></span>[ 03 ] Our services</span>
+<h2 class="h2" style="color:#FFFFFF">14 ways we put the <span class="sun-text">sun</span> to work</h2>
+<p style="margin:0;font-size:16px;line-height:1.55;color:#A9B8DA">One licensed team designs, installs and looks after every part of your system.</p>
+<div class="sv-tabs noscroll" role="tablist" aria-label="Filter services"><span class="sv-tab" style="background:#FFFFFF;color:#0B1F4D">All<b style="background:#0B1F4D;color:#FFFFFF">14</b></span><span class="sv-tab" style="background:transparent;color:#CFE0FF">Systems<b style="background:rgba(255,255,255,.1);color:#CFE0FF">6</b></span><span class="sv-tab" style="background:transparent;color:#CFE0FF">Installation<b style="background:rgba(255,255,255,.1);color:#CFE0FF">5</b></span><span class="sv-tab" style="background:transparent;color:#CFE0FF">Specialty<b style="background:rgba(255,255,255,.1);color:#CFE0FF">3</b></span></div>
+<div class="sv-feat">
+<a href="Service.dc.html" class="gcard lit sv-big" style="padding:28px;display:flex;flex-direction:column;gap:22px">
+<span style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><span class="mono" style="font-size:11px;color:#FFC93C;display:inline-flex;align-items:center;gap:8px"><span class="pulse"></span>Most requested · Systems</span><span class="mono" style="font-size:11px;color:#8FA2CC">Illustrative values</span></span>
+<span style="display:flex;flex-direction:column;gap:10px"><h3 style="margin:0;font-family:Sora;font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1.1">Hybrid &amp; grid-tie systems</h3><span style="font-size:15px;line-height:1.55;color:#A9B8DA;max-width:460px">Grid-tie cuts your bill by day. Add a battery and your home keeps running through brownouts.</span></span>
+<div class="flow" role="img" aria-label="Energy flow: solar panels feed the inverter, which powers the home, charges the battery and exports to the grid">
+<svg aria-hidden="true">
+<g stroke="rgba(255,255,255,.14)" stroke-width="2"><line x1="26%" y1="50%" x2="39%" y2="50%"></line><line x1="61%" y1="50%" x2="67.5%" y2="50%"></line><line x1="67.5%" y1="15%" x2="67.5%" y2="85%"></line><line x1="67.5%" y1="15%" x2="74%" y2="15%"></line><line x1="67.5%" y1="50%" x2="74%" y2="50%"></line><line x1="67.5%" y1="85%" x2="74%" y2="85%"></line></g>
+<g stroke-width="2.5"><line class="f" stroke="#FFC93C" x1="26%" y1="50%" x2="39%" y2="50%"></line><line class="f" stroke="#FF8A00" x1="61%" y1="50%" x2="67.5%" y2="50%"></line><line class="f" stroke="#6FB0FF" x1="67.5%" y1="50%" x2="67.5%" y2="15%"></line><line class="f" stroke="#6FB0FF" x1="67.5%" y1="15%" x2="74%" y2="15%"></line><line class="f" stroke="#FF8A00" x1="67.5%" y1="50%" x2="74%" y2="50%"></line><line class="f" stroke="#5BD97A" x1="67.5%" y1="50%" x2="67.5%" y2="85%"></line><line class="f" stroke="#5BD97A" x1="67.5%" y1="85%" x2="74%" y2="85%"></line></g>
+<circle cx="67.5%" cy="50%" r="4" fill="#FFC93C"></circle>
+</svg>
+<span class="node"><svg class="ico" style="color:#FFC93C" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg><span><span class="k">Solar</span><span class="v">4.2 kW</span></span></span>
+<span class="node node-inv"><span style="width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#FFC93C,#FF8A00 50%,#FF5A1F);color:#0B1F4D"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"></path></svg></span><span><span class="k">Inverter</span><span class="v">Hybrid</span></span></span>
+<span style="display:grid;gap:10px;position:relative;z-index:1">
+<span class="node"><svg class="ico" style="color:#6FB0FF" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"></path></svg><span><span class="k">Home</span><span class="v">2.1 kW</span></span></span>
+<span class="node"><svg class="ico" style="color:#FF8A00" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20M5 6h14M7 10h10M8 22l4-6 4 6"></path></svg><span><span class="k">Grid</span><span class="v">+1.3 kW</span></span></span>
+<span class="node"><svg class="ico" style="color:#5BD97A" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h12a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2zM22 11v2M6 11v2M10 11v2"></path></svg><span><span class="k">Battery</span><span class="v">82%</span></span></span>
+</span>
 </div>
-<div style="border-radius:18px;padding:20px;background:#0B1F4D;color:#FFFFFF;display:flex;flex-direction:column;gap:12px;background-image:radial-gradient(ellipse at 100% 0%,rgba(255,138,0,.5),transparent 60%)">
-<span class="mono" style="font-size:11px;color:#FFC93C">Not sure what you need?</span>
-<span style="font-family:Sora;font-size:20px;font-weight:700;line-height:1.25">An advisor will recommend the right system.</span>
-<a href="Contact.dc.html" class="btn" style="background:linear-gradient(135deg,#FFC93C,#FF8A00 50%,#FF5A1F);color:#0B1F4D">Talk to an advisor</a>
+<span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span class="chip">Grid-tie</span><span class="chip">Hybrid</span><span class="chip">Off-grid</span><span class="go" style="margin-left:auto" aria-hidden="true"><svg class="ico" style="width:18px;height:18px" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></span>
+</a>
+
+<a href="Service.dc.html" class="gcard" style="padding:24px;display:flex;flex-direction:column;gap:18px">
+<span class="mono" style="font-size:11px;color:#6FB0FF;display:flex;justify-content:space-between;gap:8px"><span>01 · Systems</span><span style="color:#5BD97A">Free survey</span></span>
+<div style="position:relative;height:180px;border-radius:16px;overflow:hidden;background:radial-gradient(80% 90% at 50% 0%,rgba(74,147,255,.28),transparent 70%),rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);display:grid;place-items:center">
+<div aria-hidden="true" style="display:grid;grid-template-columns:repeat(4,34px);grid-template-rows:repeat(2,50px);gap:5px;padding:8px;border:1px dashed rgba(255,201,60,.6);border-radius:8px;transform:perspective(520px) rotateX(46deg) rotateZ(-10deg)"><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span></div>
+<div class="scan"></div>
+<span class="mono" style="position:absolute;left:12px;bottom:10px;font-size:11px;color:#CFE0FF">Roof scan · 8 × 620 W</span>
 </div>
-<a href="#" class="btn" style="background:#FFFFFF;border:1px solid rgba(11,31,77,.15);color:#0B1F4D">View all 14 services</a>
+<span style="display:flex;flex-direction:column;gap:8px;margin-top:auto"><span class="mod-t" style="font-size:20px">Solar system design &amp; consultation</span><span class="mod-d">Site survey, load analysis and a system sized to your bill.</span></span>
+<span style="display:flex;align-items:center;justify-content:space-between"><span class="mono" style="font-size:11px;color:#CFE0FF">Learn more</span><span class="go" aria-hidden="true"><svg class="ico" style="width:18px;height:18px" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></span>
+</a>
+
+<a href="Service.dc.html" class="gcard" style="padding:24px;display:flex;flex-direction:column;gap:18px">
+<span class="mono" style="font-size:11px;color:#6FB0FF;display:flex;justify-content:space-between;gap:8px"><span>04 · Systems</span><span style="color:#5BD97A">Brownout-ready</span></span>
+<div style="position:relative;height:180px;border-radius:16px;overflow:hidden;background:radial-gradient(80% 90% at 50% 100%,rgba(45,184,76,.24),transparent 70%),rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px">
+<span style="display:flex;align-items:baseline;gap:10px"><span style="font-family:Sora;font-size:36px;font-weight:700;letter-spacing:-.03em">82%</span><span class="mono" style="font-size:11px;color:#A9B8DA">10 kWh pack</span></span>
+<span aria-hidden="true" style="display:flex;align-items:center;gap:4px"><span style="display:flex;gap:5px;width:170px;height:56px;padding:6px;box-sizing:border-box;border-radius:12px;border:1.5px solid rgba(255,255,255,.35)"><span class="bseg on"></span><span class="bseg on"></span><span class="bseg on"></span><span class="bseg on blink"></span><span class="bseg"></span></span><span style="width:6px;height:20px;border-radius:0 4px 4px 0;background:rgba(255,255,255,.35)"></span></span>
+</div>
+<span style="display:flex;flex-direction:column;gap:8px;margin-top:auto"><span class="mod-t" style="font-size:20px">Battery storage solutions</span><span class="mod-d">Store midday sun for nights and brownouts.</span></span>
+<span style="display:flex;align-items:center;justify-content:space-between"><span class="mono" style="font-size:11px;color:#CFE0FF">Learn more</span><span class="go" aria-hidden="true"><svg class="ico" style="width:18px;height:18px" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></span>
+</a>
+</div>
+<div class="sv-mods">
+<a href="Service.dc.html" class="gcard mod"><span class="mod-ic" style="background:rgba(255,138,0,.14);border:1px solid rgba(255,181,71,.35);color:#FFB547;box-shadow:0 0 28px -10px #FFB547"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v12H3zM3 10h18M9 4v12M15 4v12M12 16v4M8 20h8"></path></svg></span><span class="mod-body"><span class="mod-t">Solar panel installation</span></span><span class="go" aria-hidden="true"><svg class="ico" style="width:16px;height:16px" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+<a href="Service.dc.html" class="gcard mod"><span class="mod-ic" style="background:rgba(255,138,0,.14);border:1px solid rgba(255,181,71,.35);color:#FFB547;box-shadow:0 0 28px -10px #FFB547"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 12l2 2 4-4"></path></svg></span><span class="mod-body"><span class="mod-t">Electrical works &amp; protections</span></span><span class="go" aria-hidden="true"><svg class="ico" style="width:16px;height:16px" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+<a href="Service.dc.html" class="gcard mod"><span class="mod-ic" style="background:rgba(255,138,0,.14);border:1px solid rgba(255,181,71,.35);color:#FFB547;box-shadow:0 0 28px -10px #FFB547"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M5 20 12 6l7 14M8.5 13h7"></path></svg></span><span class="mod-body"><span class="mod-t">Mounting structure installation</span></span><span class="go" aria-hidden="true"><svg class="ico" style="width:16px;height:16px" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+<a href="Service.dc.html" class="gcard mod"><span class="mod-ic" style="background:rgba(255,138,0,.14);border:1px solid rgba(255,181,71,.35);color:#FFB547;box-shadow:0 0 28px -10px #FFB547"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg></span><span class="mod-body"><span class="mod-t">Maintenance &amp; troubleshooting</span></span><span class="go" aria-hidden="true"><svg class="ico" style="width:16px;height:16px" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+</div>
+<div class="sv-cta" style="gap:12px">
+<span class="mono" style="font-size:11px;display:flex;align-items:center;gap:8px"><svg class="ico" style="width:16px;height:16px" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>Not sure what you need?</span>
+<span style="font-family:Sora;font-size:18px;font-weight:700;line-height:1.3">Free system recommendation for your property.</span>
+<a href="Contact.dc.html" class="btn" style="background:#0B1F4D;color:#FFFFFF">Talk to an advisor</a>
+</div>
+<a href="#" class="btn" style="color:#FFFFFF;border:1px solid rgba(255,255,255,.25)">View all 14 services</a>
 </section>
 
 <!-- PROCESS -->
@@ -191,10 +306,9 @@ a{color:#1553C7;text-decoration:none}
 <span class="mono" style="position:absolute;right:16px;top:850px;font-size:11px;color:#4A5A80;z-index:3">↑ sticky bar · fold at 844px</span>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":6300}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":6900}}'>
 class Component extends DCLogic {
   renderVals() {
-    var svc = [['Solar design & consultation','#1E6FE8'],['Solar panel installation','#FF8A00'],['Hybrid & grid-tie systems','#1E6FE8'],['Battery storage solutions','#1E6FE8'],['Electrical works & protections','#FF8A00'],['Mounting structures','#FF8A00']];
     return {
       panels: Array.from({ length: 21 }, function (_, i) { return i; }),
       benefits: [
@@ -202,7 +316,6 @@ class Component extends DCLogic {
         { t:'Pro installation', bg:'#F5A300' }, { t:'After-sales', bg:'#FF5A1F' }
       ],
       brands: ['Solis','Deye','SRNE','Dyness','Pylontech','Genixgreen','Hestia','Sunways','Seraphim'],
-      services: svc.map(function (s, i) { return { n: String(i + 1).padStart(2, '0'), t: s[0], tile: s[1] }; }),
       steps: [
         { n:'01', t:'Consult & site survey', d:'Free bill review and roof inspection.', c:'#FFC93C' },
         { n:'02', t:'Design & quote', d:'Sized to your usage, clear pricing.', c:'#FF8A00' },

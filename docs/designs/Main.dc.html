@@ -35,9 +35,57 @@ a{color:#1553C7;text-decoration:none}a:hover{color:#C2410C}
 .hero-chip{display:none}
 .sol{display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:40px;align-items:center}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:56px}
-.svc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-.svc-cta{grid-column:span 2}
+/* Services: "energy deck" (dark band) */
+.sv{position:relative;overflow:hidden;isolation:isolate;background:#071433;color:#FFFFFF}
+.sv::before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(55% 45% at 88% 0%,rgba(255,138,0,.30),transparent 70%),radial-gradient(45% 40% at 0% 100%,rgba(30,111,232,.38),transparent 70%)}
+.sv::after{content:"";position:absolute;left:-20%;right:-20%;bottom:0;height:62%;z-index:-1;background-image:linear-gradient(rgba(120,170,255,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(120,170,255,.16) 1px,transparent 1px);background-size:64px 64px;transform:perspective(700px) rotateX(60deg);transform-origin:bottom;-webkit-mask-image:linear-gradient(to top,#000 0%,transparent 90%);mask-image:linear-gradient(to top,#000 0%,transparent 90%)}
+.sv-lead{font-size:17px;line-height:1.6;color:#A9B8DA;margin:0;max-width:520px}
+.sv-tabs{display:flex;gap:4px;padding:5px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);overflow-x:auto;max-width:100%;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.sv-tab{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:0;border-radius:12px;font:500 12px/1 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s}
+.sv-tab b{font-weight:500;font-size:11px;padding:3px 7px;border-radius:999px}
+.gcard{position:relative;overflow:hidden;box-sizing:border-box;border-radius:24px;color:#FFFFFF;background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.11);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 30px 60px -30px rgba(0,0,0,.6);transition:transform .35s cubic-bezier(.2,.7,.2,1),background .35s,border-color .35s}
+.gcard::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:linear-gradient(135deg,#FFC93C,rgba(255,90,31,.35) 35%,rgba(30,111,232,.15) 60%,#4A93FF);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .35s}
+a.gcard:hover{transform:translateY(-3px);background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.04));color:#FFFFFF}
+a.gcard:hover::before,.gcard.lit::before{opacity:1}
+a.gcard:focus-visible{outline:2px solid #FFC93C;outline-offset:3px}
+.sv-feat{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:16px}
+.sv-feat>*{min-width:0}
+.sv-big{grid-column:span 2}
+.flow{position:relative;display:grid;grid-template-columns:26% 22% 26%;justify-content:space-between;align-items:center;min-height:210px}
+.flow>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.flow .f{stroke-dasharray:3 9;stroke-linecap:round;animation:sv-dash .9s linear infinite}
+.node{position:relative;z-index:1;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:rgba(9,24,61,.92);border:1px solid rgba(255,255,255,.14)}
+.node .k{display:block;font:500 11px/1.2 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#A9B8DA}
+.node .v{display:block;font:700 16px/1.25 Sora,sans-serif;color:#FFFFFF;white-space:nowrap}
+.node-inv{flex-direction:column;text-align:center;gap:8px;padding:16px 10px;border-color:rgba(255,201,60,.5);box-shadow:0 0 0 6px rgba(255,138,0,.08),0 0 40px -8px rgba(255,138,0,.6)}
+.pulse{width:8px;height:8px;border-radius:50%;background:#5BD97A;box-shadow:0 0 0 0 rgba(91,217,122,.6);animation:sv-pulse 1.8s ease-out infinite;flex:none}
+.scan{position:absolute;left:0;right:0;height:42%;top:-42%;background:linear-gradient(180deg,transparent,rgba(255,201,60,.16) 70%,rgba(255,201,60,.9) 100%);animation:sv-scan 3.2s cubic-bezier(.5,0,.5,1) infinite;pointer-events:none}
+.cell{border-radius:4px;background:linear-gradient(160deg,#2A5BC8,#14306E);border:1px solid rgba(160,200,255,.35)}
+.bseg{flex:1;border-radius:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1)}
+.bseg.on{background:linear-gradient(180deg,#7BE596,#2DB84C);border-color:transparent;box-shadow:0 0 18px -4px rgba(45,184,76,.8)}
+.bseg.blink{animation:sv-blink 1.6s ease-in-out infinite}
+.chip{display:inline-flex;align-items:center;min-height:32px;padding:0 12px;border-radius:999px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#CFE0FF;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
+.go{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;flex:none;border:1px solid rgba(255,255,255,.2);color:#FFFFFF;transition:background .3s,color .3s,transform .35s,border-color .3s}
+a.gcard:hover .go{background:linear-gradient(135deg,#FFC93C,#FF8A00 50%,#FF5A1F);color:#0B1F4D;border-color:transparent;transform:rotate(-45deg)}
+.sv-mods{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.sv-mods>*{min-width:0}
+.mod{display:flex;flex-direction:column;gap:16px;padding:20px;border-radius:20px}
+.mod-ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;flex:none}
+.mod-t{font:600 17px/1.3 Sora,sans-serif;letter-spacing:-.01em}
+.mod-d{font-size:14px;line-height:1.5;color:#A9B8DA}
+.mod-top{display:flex;align-items:center;gap:12px}
+.mod .go{width:34px;height:34px;margin-left:auto}
+.sv-cta{box-sizing:border-box;border-radius:20px;padding:22px;display:flex;flex-direction:column;justify-content:space-between;gap:14px;color:#0B1F4D;background:linear-gradient(135deg,#FFC93C,#FF8A00 52%,#FF5A1F);box-shadow:0 24px 50px -24px rgba(255,90,31,.8)}
+.sv-cta.wide{flex-direction:row;align-items:center;flex-wrap:wrap;gap:16px 28px}
+.sv-cta.wide .cta-t{flex:1 1 260px;font-size:22px !important}
+.sv-cta.wide .cta-a{flex:0 1 240px}
+.sv-cta.wide>.mono{flex-basis:100%}
 .svc-more{display:none}
+@keyframes sv-dash{to{stroke-dashoffset:-12}}
+@keyframes sv-pulse{70%{box-shadow:0 0 0 10px rgba(91,217,122,0)}100%{box-shadow:0 0 0 0 rgba(91,217,122,0)}}
+@keyframes sv-scan{0%{top:-42%}100%{top:100%}}
+@keyframes sv-blink{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.flow .f,.pulse,.scan,.bseg.blink{animation:none}.scan{display:none}.gcard,.go{transition:none}}
 .steps{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
 .steps-line{position:absolute;left:0;right:0;top:24px;height:3px}
 .bento{display:grid;grid-template-columns:1.4fr 1fr 1fr;grid-template-rows:260px 260px;gap:16px}
@@ -50,13 +98,18 @@ a{color:#1553C7;text-decoration:none}a:hover{color:#C2410C}
   .navlinks,.hdr-call{display:none}.burger{display:grid}
   .hero,.sol,.split{grid-template-columns:1fr}
   .hero-visual,.rail{display:none !important}.hero-chip{display:flex}
-  .svc>a:nth-child(n+7){display:none !important}
+  .sv-mods.is-all>a:nth-child(n+7){display:none !important}
   .svc-more{display:flex}
+  .sv-feat{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sv-vis{height:140px !important}
+  .sv-mods{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sv-mods>a:nth-last-child(2):nth-child(odd){grid-column:1/-1}
+  .sv-cta{grid-column:1/-1 !important;flex-direction:row;align-items:center;flex-wrap:wrap}
+  .sv-cta .cta-t{flex:1 1 260px}.sv-cta .cta-a{flex:0 1 240px}
   .hero{padding-bottom:150px !important}
   .sun{width:300px !important;height:300px !important;right:-90px !important;top:120px !important}
   .rays{display:none}
   .field{height:150px !important}
-  .svc{grid-template-columns:repeat(2,minmax(0,1fr))}
   .steps{grid-template-columns:1fr;gap:26px;padding-left:4px}
   .steps-line{left:25px;right:auto;top:10px;bottom:10px;width:3px;height:auto}
   .step{flex-direction:row !important;align-items:flex-start}
@@ -67,12 +120,28 @@ a{color:#1553C7;text-decoration:none}a:hover{color:#C2410C}
 }
 @media (max-width:640px){
   .wrap{padding:0 16px}
-  .svc{grid-template-columns:1fr}
-  .svc-cta{grid-column:auto}
-  .svc>a{min-height:0 !important;flex-direction:row !important;align-items:center;gap:14px !important;padding:14px 16px !important}
-  .svc-cat,.svc-d{display:none !important}
-  .svc-t{margin-top:0 !important;font-size:16px !important;flex:1}
-  .svc-lm{font-size:0 !important}
+  .sv-feat{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin-right:-16px;padding-right:16px;scrollbar-width:none}
+  .sv-feat::-webkit-scrollbar{display:none}
+  .sv-feat>*{flex:0 0 86%;scroll-snap-align:start}
+  .sv-big{padding:20px !important}
+  .sv-big h3{font-size:24px !important}
+  .flow{min-height:190px;grid-template-columns:28% 24% 30%}
+  .node{flex-direction:column;align-items:flex-start;gap:4px;padding:8px}
+  .node .v{font-size:14px}
+  .sv-mods{grid-template-columns:1fr;gap:8px}
+  .sv-mods.is-all>a:nth-child(n+5){display:none !important}
+  .sv-mods>a:nth-last-child(2):nth-child(odd){grid-column:auto}
+  .mod{flex-direction:row;align-items:center;min-height:0;padding:12px 14px;gap:14px;border-radius:16px}
+  .mod-d,.mod .cat{display:none}
+  .mod-top{display:contents}
+  .mod-ic{order:1}.mod-body{order:2}.mod .go{order:3}
+  .mod-t{font-size:16px;flex:1}
+  .mod-ic{width:42px;height:42px}
+  .sv-cta,.sv-cta.wide{flex-direction:column;align-items:stretch;gap:12px}
+  .sv-cta .cta-t,.sv-cta .cta-a,.sv-cta.wide .cta-t,.sv-cta.wide .cta-a{flex:none}
+  .sv-cta.wide .cta-t{font-size:18px !important}
+  .node>.ico{display:none}
+  .flow{min-height:170px}
   .hdr-quote,.ann-long{display:none !important}
   .sol .corners{height:300px !important}
   .form2{grid-template-columns:1fr}
@@ -224,35 +293,77 @@ a{color:#1553C7;text-decoration:none}a:hover{color:#C2410C}
 </div>
 </section>
 
-<!-- 05 SERVICES -->
-<section class="sec" style="background:#EAF2FF">
+<!-- 05 SERVICES — energy deck -->
+<section class="sec sv" aria-labelledby="sv-h">
 <div class="wrap">
-<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:32px">
-<div style="display:flex;flex-direction:column;gap:14px">
-<span class="eyebrow">[ 03 ] Our services</span>
-<h2 class="h2">14 ways we put the <span class="sun-text">sun</span> to work</h2>
+<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px 40px;flex-wrap:wrap;margin-bottom:36px">
+<div style="display:flex;flex-direction:column;gap:16px;max-width:640px">
+<span class="eyebrow" style="color:#FFC93C;display:inline-flex;align-items:center;gap:10px"><span class="pulse"></span>[ 03 ] Our services</span>
+<h2 id="sv-h" class="h2" style="color:#FFFFFF">14 ways we put the <span class="sun-text">sun</span> to work</h2>
+<p class="sv-lead">From the first roof survey to the battery that keeps your lights on, one licensed team designs, installs and looks after every part of your system.</p>
 </div>
-<div role="tablist" aria-label="Filter services" class="mono noscroll" style="display:flex;gap:6px;background:#FFFFFF;border:1px solid rgba(11,31,77,.1);border-radius:16px;padding:5px;font-size:12px;overflow-x:auto;max-width:100%">
-<button role="tab" aria-selected="true" style="flex:none;font:inherit;letter-spacing:inherit;text-transform:inherit;border:0;border-radius:12px;min-height:44px;padding:0 16px;background:#0B1F4D;color:#FFFFFF">All</button>
-<button role="tab" aria-selected="false" style="flex:none;font:inherit;letter-spacing:inherit;text-transform:inherit;border:0;border-radius:12px;min-height:44px;padding:0 16px;background:transparent;color:#0B1F4D">Systems</button>
-<button role="tab" aria-selected="false" style="flex:none;font:inherit;letter-spacing:inherit;text-transform:inherit;border:0;border-radius:12px;min-height:44px;padding:0 16px;background:transparent;color:#0B1F4D">Installation</button>
-<button role="tab" aria-selected="false" style="flex:none;font:inherit;letter-spacing:inherit;text-transform:inherit;border:0;border-radius:12px;min-height:44px;padding:0 16px;background:transparent;color:#0B1F4D">Specialty</button>
+<div role="tablist" aria-label="Filter services" class="sv-tabs noscroll">
+<sc-for list="{{tabs}}" as="tb" hint-placeholder-count="4"><button role="tab" class="sv-tab" aria-selected="{{tb.sel}}" onClick="{{tb.pick}}" style="background:{{tb.bg}};color:{{tb.fg}}">{{tb.l}}<b style="background:{{tb.badge}};color:{{tb.badgeFg}}">{{tb.c}}</b></button></sc-for>
 </div>
 </div>
-<div class="svc">
-<sc-for list="{{services}}" as="s" hint-placeholder-count="14"><a href="Service.dc.html" class="card" style="display:flex;flex-direction:column;gap:12px;min-height:200px;padding:22px;border-radius:20px;color:#0B1F4D;background:{{s.bg}};border-color:{{s.border}}">
-<span class="svc-top" style="display:flex;justify-content:space-between;align-items:center"><span style="width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:{{s.tile}};color:#FFFFFF;font-family:'JetBrains Mono';font-size:12px">{{s.n}}</span><span class="mono svc-cat" style="font-size:11px;color:{{s.tagColor}}">{{s.cat}}</span></span>
-<span class="svc-t" style="font-family:Sora;font-size:19px;font-weight:700;line-height:1.25;margin-top:auto">{{s.t}}</span>
-<span class="svc-d" style="font-size:14px;line-height:1.5;color:#4A5A80">{{s.d}}</span>
-<span class="mono svc-lm" style="font-size:11px;color:#1553C7;display:inline-flex;align-items:center;gap:6px">Learn more <svg class="ico" style="width:14px;height:14px" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"></path></svg></span>
+
+<sc-if value="{{isAll}}" hint-placeholder-val="{{true}}">
+<div class="sv-feat">
+<a href="Service.dc.html" class="gcard lit sv-big" style="padding:28px;display:flex;flex-direction:column;gap:22px">
+<span style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><span class="mono" style="font-size:11px;color:#FFC93C;display:inline-flex;align-items:center;gap:8px"><span class="pulse"></span>Most requested · Systems</span><span class="mono" style="font-size:11px;color:#8FA2CC">Illustrative values</span></span>
+<span style="display:flex;flex-direction:column;gap:10px"><h3 style="margin:0;font-family:Sora;font-size:30px;font-weight:700;letter-spacing:-.03em;line-height:1.1">Hybrid &amp; grid-tie systems</h3><span style="font-size:15px;line-height:1.55;color:#A9B8DA;max-width:460px">Grid-tie cuts your bill by day. Add a battery and your home keeps running through brownouts.</span></span>
+<div class="flow" role="img" aria-label="Energy flow: solar panels feed the inverter, which powers the home, charges the battery and exports to the grid">
+<svg aria-hidden="true">
+<g stroke="rgba(255,255,255,.14)" stroke-width="2"><line x1="26%" y1="50%" x2="39%" y2="50%"></line><line x1="61%" y1="50%" x2="67.5%" y2="50%"></line><line x1="67.5%" y1="15%" x2="67.5%" y2="85%"></line><line x1="67.5%" y1="15%" x2="74%" y2="15%"></line><line x1="67.5%" y1="50%" x2="74%" y2="50%"></line><line x1="67.5%" y1="85%" x2="74%" y2="85%"></line></g>
+<g stroke-width="2.5"><line class="f" stroke="#FFC93C" x1="26%" y1="50%" x2="39%" y2="50%"></line><line class="f" stroke="#FF8A00" x1="61%" y1="50%" x2="67.5%" y2="50%"></line><line class="f" stroke="#6FB0FF" x1="67.5%" y1="50%" x2="67.5%" y2="15%"></line><line class="f" stroke="#6FB0FF" x1="67.5%" y1="15%" x2="74%" y2="15%"></line><line class="f" stroke="#FF8A00" x1="67.5%" y1="50%" x2="74%" y2="50%"></line><line class="f" stroke="#5BD97A" x1="67.5%" y1="50%" x2="67.5%" y2="85%"></line><line class="f" stroke="#5BD97A" x1="67.5%" y1="85%" x2="74%" y2="85%"></line></g>
+<circle cx="67.5%" cy="50%" r="4" fill="#FFC93C"></circle>
+</svg>
+<span class="node"><svg class="ico" style="color:#FFC93C" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg><span><span class="k">Solar</span><span class="v">4.2 kW</span></span></span>
+<span class="node node-inv"><span style="width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#FFC93C,#FF8A00 50%,#FF5A1F);color:#0B1F4D"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"></path></svg></span><span><span class="k">Inverter</span><span class="v">Hybrid</span></span></span>
+<span style="display:grid;gap:10px;position:relative;z-index:1">
+<span class="node"><svg class="ico" style="color:#6FB0FF" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"></path></svg><span><span class="k">Home</span><span class="v">2.1 kW</span></span></span>
+<span class="node"><svg class="ico" style="color:#FF8A00" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20M5 6h14M7 10h10M8 22l4-6 4 6"></path></svg><span><span class="k">Grid</span><span class="v">+1.3 kW</span></span></span>
+<span class="node"><svg class="ico" style="color:#5BD97A" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h12a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2zM22 11v2M6 11v2M10 11v2"></path></svg><span><span class="k">Battery</span><span class="v">82%</span></span></span>
+</span>
+</div>
+<span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span class="chip">Grid-tie</span><span class="chip">Hybrid</span><span class="chip">Off-grid</span><span class="go" style="margin-left:auto" aria-hidden="true"><svg class="ico" style="width:18px;height:18px" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></span>
+</a>
+
+<a href="Service.dc.html" class="gcard" style="padding:24px;display:flex;flex-direction:column;gap:18px">
+<span class="mono" style="font-size:11px;color:#6FB0FF;display:flex;justify-content:space-between;gap:8px"><span>01 · Systems</span><span style="color:#5BD97A">Free survey</span></span>
+<div class="sv-vis" style="position:relative;height:180px;border-radius:16px;overflow:hidden;background:radial-gradient(80% 90% at 50% 0%,rgba(74,147,255,.28),transparent 70%),rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);display:grid;place-items:center">
+<div aria-hidden="true" style="display:grid;grid-template-columns:repeat(4,34px);grid-template-rows:repeat(2,50px);gap:5px;padding:8px;border:1px dashed rgba(255,201,60,.6);border-radius:8px;transform:perspective(520px) rotateX(46deg) rotateZ(-10deg)"><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span></div>
+<div class="scan"></div>
+<span class="mono" style="position:absolute;left:12px;bottom:10px;font-size:11px;color:#CFE0FF">Roof scan · 8 × 620 W</span>
+</div>
+<span style="display:flex;flex-direction:column;gap:8px;margin-top:auto"><span class="mod-t" style="font-size:20px">Solar system design &amp; consultation</span><span class="mod-d">Site survey, load analysis and a system sized to your bill.</span></span>
+<span style="display:flex;align-items:center;justify-content:space-between"><span class="mono" style="font-size:11px;color:#CFE0FF">Learn more</span><span class="go" aria-hidden="true"><svg class="ico" style="width:18px;height:18px" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></span>
+</a>
+
+<a href="Service.dc.html" class="gcard" style="padding:24px;display:flex;flex-direction:column;gap:18px">
+<span class="mono" style="font-size:11px;color:#6FB0FF;display:flex;justify-content:space-between;gap:8px"><span>04 · Systems</span><span style="color:#5BD97A">Brownout-ready</span></span>
+<div class="sv-vis" style="position:relative;height:180px;border-radius:16px;overflow:hidden;background:radial-gradient(80% 90% at 50% 100%,rgba(45,184,76,.24),transparent 70%),rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px">
+<span style="display:flex;align-items:baseline;gap:10px"><span style="font-family:Sora;font-size:36px;font-weight:700;letter-spacing:-.03em">82%</span><span class="mono" style="font-size:11px;color:#A9B8DA">10 kWh pack</span></span>
+<span aria-hidden="true" style="display:flex;align-items:center;gap:4px"><span style="display:flex;gap:5px;width:170px;height:56px;padding:6px;box-sizing:border-box;border-radius:12px;border:1.5px solid rgba(255,255,255,.35)"><span class="bseg on"></span><span class="bseg on"></span><span class="bseg on"></span><span class="bseg on blink"></span><span class="bseg"></span></span><span style="width:6px;height:20px;border-radius:0 4px 4px 0;background:rgba(255,255,255,.35)"></span></span>
+</div>
+<span style="display:flex;flex-direction:column;gap:8px;margin-top:auto"><span class="mod-t" style="font-size:20px">Battery storage solutions</span><span class="mod-d">Store midday sun for nights and brownouts.</span></span>
+<span style="display:flex;align-items:center;justify-content:space-between"><span class="mono" style="font-size:11px;color:#CFE0FF">Learn more</span><span class="go" aria-hidden="true"><svg class="ico" style="width:18px;height:18px" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></span>
+</a>
+</div>
+</sc-if>
+
+<div class="sv-mods {{modsCls}}">
+<sc-for list="{{mods}}" as="m" hint-placeholder-count="11"><a href="Service.dc.html" class="gcard mod">
+<span class="mod-top"><span class="mod-ic" style="background:{{m.icBg}};border:1px solid {{m.icBd}};color:{{m.c}};box-shadow:0 0 28px -10px {{m.c}}"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="{{m.icon}}"></path></svg></span><span class="cat mono" style="font-size:11px;color:{{m.c}}">{{m.cat}}</span><span class="go" aria-hidden="true"><svg class="ico" style="width:16px;height:16px" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></span>
+<span class="mod-body" style="display:flex;flex-direction:column;gap:6px;min-width:0"><span class="mod-t">{{m.t}}</span><span class="mod-d">{{m.d}}</span></span>
 </a></sc-for>
-<div class="svc-cta" style="border-radius:20px;padding:26px;background:#0B1F4D;color:#FFFFFF;display:flex;flex-direction:column;justify-content:space-between;gap:16px;min-height:200px;background-image:radial-gradient(ellipse at 100% 0%,rgba(255,138,0,.5),transparent 60%)">
-<span class="mono" style="font-size:11px;color:#FFC93C">Not sure what you need?</span>
-<span style="font-family:Sora;font-size:24px;font-weight:700;line-height:1.2;max-width:420px">Tell us about your property — an advisor will recommend the right system.</span>
-<div style="display:flex;gap:8px;flex-wrap:wrap"><a href="Contact.dc.html" class="btn btn-sun">Talk to an advisor</a><a href="Calculator.dc.html" class="btn" style="color:#FFFFFF;border:1px solid rgba(255,255,255,.3)">Try the calculator</a></div>
+<div class="sv-cta {{ctaCls}}" style="grid-column:span {{ctaSpan}}">
+<span class="mono" style="font-size:11px;display:flex;align-items:center;gap:8px"><svg class="ico" style="width:16px;height:16px" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>Not sure what you need?</span>
+<span class="cta-t" style="font-family:Sora;font-size:18px;font-weight:700;line-height:1.3">Free system recommendation for your property.</span>
+<span class="cta-a" style="display:flex;flex-direction:column;gap:8px"><a href="Contact.dc.html" class="btn btn-navy">Talk to an advisor</a></span>
 </div>
 </div>
-<a href="#" class="btn btn-line svc-more" style="margin-top:14px;width:100%">View all 14 services</a>
+<sc-if value="{{isAll}}" hint-placeholder-val="{{true}}"><a href="#" class="btn svc-more" style="margin-top:14px;width:100%;color:#FFFFFF;border:1px solid rgba(255,255,255,.25)">View all 14 services</a></sc-if>
 </div>
 </section>
 
@@ -465,9 +576,14 @@ a{color:#1553C7;text-decoration:none}a:hover{color:#C2410C}
 </nav>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":9100}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":9250}}'>
 class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { filter: 'All' };
+  }
   renderVals() {
+    var self = this;
     var services = [
       ['Solar system design & consultation','Site survey, load analysis and a system sized to your bill.','Systems'],
       ['Solar panel installation','Tier-1 panels mounted and wired by our own crew.','Installation'],
@@ -484,18 +600,59 @@ class Component extends DCLogic {
       ['EV charger installation','Charge your car from your own rooftop.','Installation'],
       ['Solar CCTV solutions','Off-grid security cameras for any site.','Specialty']
     ];
-    var tag = { Systems:'#1553C7', Installation:'#C2410C', Specialty:'#1E8A3A' };
-    var tile = { Systems:'#1E6FE8', Installation:'#FF8A00', Specialty:'#2DB84C' };
+    // Category colors tuned for the dark services band.
+    var cats = {
+      Systems: { c:'#6FB0FF', bg:'rgba(30,111,232,.16)', bd:'rgba(111,176,255,.35)' },
+      Installation: { c:'#FFB547', bg:'rgba(255,138,0,.14)', bd:'rgba(255,181,71,.35)' },
+      Specialty: { c:'#5BD97A', bg:'rgba(45,184,76,.14)', bd:'rgba(91,217,122,.35)' }
+    };
+    // One lucide-style stroke path per service (same order as `services`).
+    var icons = [
+      'M9 2h6v4H9zM16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2M9 14l2 2 4-4',
+      'M3 4h18v12H3zM3 10h18M9 4v12M15 4v12M12 16v4M8 20h8',
+      'M13 2 3 14h9l-1 8 10-12h-9l1-8z',
+      'M4 7h12a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2zM22 11v2M6 11v2M10 11v2',
+      'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 12l2 2 4-4',
+      'M3 20h18M5 20 12 6l7 14M8.5 13h7',
+      'M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z',
+      'M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z',
+      'M6 2h12a2 2 0 0 1 2 2v18H4V4a2 2 0 0 1 2-2zM9 22v-4h6v4M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01',
+      'M2 20V9l6 4V9l6 4V4h6v16zM2 20h20',
+      'M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z',
+      'M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z',
+      'M12 22v-5M9 8V2M15 8V2M18 8v5a6 6 0 0 1-12 0V8z',
+      'M22 8l-6 4 6 4V8zM4 6h10a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z'
+    ];
+    var featured = [0, 2, 3]; // shown as large cards in the "All" view
+    var filter = this.state.filter;
+    var all = services.map(function (s, i) {
+      var k = cats[s[2]];
+      return { i: i, t: s[0], d: s[1], cat: s[2], icon: icons[i], c: k.c, icBg: k.bg, icBd: k.bd };
+    });
+    var mods = filter === 'All'
+      ? all.filter(function (s) { return featured.indexOf(s.i) < 0; })
+      : all.filter(function (s) { return s.cat === filter; });
+    var rem = mods.length % 4;
+    var tabs = ['All', 'Systems', 'Installation', 'Specialty'].map(function (l) {
+      var on = l === filter;
+      return {
+        l: l, sel: String(on),
+        c: l === 'All' ? all.length : all.filter(function (s) { return s.cat === l; }).length,
+        bg: on ? '#FFFFFF' : 'transparent', fg: on ? '#0B1F4D' : '#CFE0FF',
+        badge: on ? '#0B1F4D' : 'rgba(255,255,255,.1)', badgeFg: on ? '#FFFFFF' : '#CFE0FF',
+        pick: function () { self.setState({ filter: l }); }
+      };
+    });
     return {
+      tabs: tabs,
+      isAll: filter === 'All',
+      modsCls: filter === 'All' ? 'is-all' : '',
+      mods: mods,
+      ctaSpan: rem === 0 ? 4 : 4 - rem,
+      ctaCls: rem === 3 ? '' : 'wide',
       panels: Array.from({ length: 30 }, function (_, i) { return i; }),
       brands: ['Solis','Deye','SRNE','Dyness','Pylontech','Genixgreen','Hestia','Sunways','Seraphim'],
       resFeatures: ['Grid-tie & hybrid systems','Battery backup for brownouts','Net-metering application','Tier-1 panels & inverters','Mobile app monitoring','After-sales support'],
-      services: services.map(function (s, i) {
-        var hl = i === 3;
-        return { n: String(i + 1).padStart(2, '0'), t: s[0], d: s[1], cat: s[2], tagColor: tag[s[2]], tile: tile[s[2]],
-          bg: hl ? 'linear-gradient(160deg,#FFF6E6,#FFFFFF 60%)' : '#FFFFFF',
-          border: hl ? '#FF8A00' : 'rgba(11,31,77,.10)' };
-      }),
       steps: [
         { n:'01', t:'Consult & site survey', d:'We review your bills and inspect your roof — free.', c:'#FFC93C' },
         { n:'02', t:'Design & quote', d:'A system sized to your usage, with clear pricing.', c:'#FF8A00' },

@@ -7,7 +7,7 @@ description: SunRyse design system — brand tokens, typography, grid, component
 
 Concept: **"Daylight sunrise."** Bright, sunny pages straight from the brand sheet (sky blue → warm dawn),
 with ChainGPT-style structure on top: thin grid lines, mono labels, numbered sections, boxed headline words,
-corner brackets. Dark navy is used only for accent bands (impact stats, footer). Brand source: `assets/849605438_…png`.
+corner brackets. Dark navy is used only for accent bands: Services "energy deck", impact stats, footer. Brand source: `assets/849605438_…png`.
 Approved screens: `docs/designs/`.
 
 ## Tokens (`apps/web/app/globals.css`, Tailwind v4 `@theme`)
@@ -70,3 +70,11 @@ Shared: breadcrumb (mono), page hero (dawn gradient, photo in bracket frame), re
   quick Call/Messenger options shown before long forms on phones.
 - Calculator: ₱ number field + presets + slider; results visible while editing (sticky bar on phones).
 - Hero 3D/scrub → static poster below `md` or with `prefers-reduced-motion`.
+
+## Services "energy deck" (home, dark band)
+- Background navy-950 + sun/sky radial glows + perspective grid floor (`.sv::before/::after`).
+- Filter tabs with counts (All 14 · Systems 6 · Installation 5 · Specialty 3); featured row only in "All".
+- Featured: Hybrid & grid-tie (2 cols, live energy-flow diagram, values labelled "Illustrative"), Design (roof scan), Battery (charge gauge).
+- Module cards: glass on dark, category-colored icon tile (Systems #6FB0FF · Installation #FFB547 · Specialty #5BD97A),
+  gradient border + arrow fill on hover. Grid always ends full: the sun-gradient CTA tile spans the leftover columns.
+- Phone: featured → snap row (86%), modules → compact rows (4 in "All" + "View all"). Animations stop with reduced motion.
