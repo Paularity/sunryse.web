@@ -14,17 +14,33 @@ export function QuoteCta({ content, site }: { content: HomeContent["cta"]; site:
       {/* navy perspective grid floor */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-[-20%] bottom-0 h-[70%] origin-bottom bg-[linear-gradient(rgb(11_31_77/0.13)_1px,transparent_1px),linear-gradient(90deg,rgb(11_31_77/0.13)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:linear-gradient(to_top,black,transparent_85%)] [transform:perspective(700px)_rotateX(60deg)]"
+        className="pointer-events-none absolute inset-x-[-20%] bottom-0 h-[70%] origin-bottom [transform:perspective(700px)_rotateX(60deg)] bg-[linear-gradient(rgb(11_31_77/0.13)_1px,transparent_1px),linear-gradient(90deg,rgb(11_31_77/0.13)_1px,transparent_1px)] [mask-image:linear-gradient(to_top,black,transparent_85%)] bg-[size:64px_64px]"
       />
-      <div aria-hidden className="pointer-events-none absolute -top-44 -right-36 size-[560px] rounded-full bg-[radial-gradient(circle,rgb(255_255_255/0.6),transparent_65%)]" />
-      <div aria-hidden className="pointer-events-none absolute -top-48 -right-32 size-[600px] rounded-full border border-white/60 shadow-[inset_0_0_0_40px_rgb(255_255_255/0.07),inset_0_0_0_41px_rgb(255_255_255/0.35)]" />
+      <div
+        aria-hidden
+        className="d3-sun sr-rise pointer-events-none absolute -top-[70px] right-[-40px] size-[170px] [offset-path:none] lg:-top-[90px] lg:right-[43%] lg:size-[210px]"
+      >
+        <span className="d3-orbit" />
+        <span className="d3-orbit -inset-12 border-dashed [animation-direction:reverse] [animation-duration:15s]" />
+      </div>
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-44 -right-36 size-[560px] rounded-full bg-[radial-gradient(circle,rgb(255_255_255/0.6),transparent_65%)]"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-48 -right-32 size-[600px] rounded-full border border-white/60 shadow-[inset_0_0_0_40px_rgb(255_255_255/0.07),inset_0_0_0_41px_rgb(255_255_255/0.35)]"
+      />
 
-      <div className="container-site relative grid items-center gap-10 py-[clamp(64px,9vw,112px)] lg:grid-cols-[1fr_1.05fr] lg:gap-14">
+      <div className="relative container-site grid items-center gap-10 py-[clamp(64px,9vw,112px)] lg:grid-cols-[1fr_1.05fr] lg:gap-14">
         <div className="flex min-w-0 flex-col gap-4 text-navy-900">
           <Hud light className="self-start">
             {content.chip}
           </Hud>
-          <h2 id="quote-h" className="m-0 font-display text-[clamp(36px,4.8vw,68px)] leading-[0.98] font-bold tracking-[-0.04em] text-balance">
+          <h2
+            id="quote-h"
+            className="m-0 font-display text-[clamp(36px,4.8vw,68px)] leading-[0.98] font-bold tracking-[-0.04em] text-balance"
+          >
             {content.heading}
           </h2>
           <p className="m-0 max-w-[420px] text-[17px] leading-relaxed">{content.lead}</p>
@@ -43,7 +59,13 @@ export function QuoteCta({ content, site }: { content: HomeContent["cta"]; site:
             </span>
           </div>
         </div>
-        <QuoteForm ui={site.ui} label={content.formLabel} submitLabel={content.submitLabel} replyNote={content.replyNote} phone={site.phone} />
+        <QuoteForm
+          ui={site.ui}
+          label={content.formLabel}
+          submitLabel={content.submitLabel}
+          replyNote={content.replyNote}
+          phone={site.phone}
+        />
       </div>
     </section>
   );

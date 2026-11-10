@@ -4,6 +4,8 @@ import { AlertCircle, Check, Lock, MessageCircle } from "lucide-react";
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 
 import { Icon } from "@/components/icons";
+import { Scene } from "@/components/three-d/models";
+import { SolutionModel } from "@/components/three-d/solution-model";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -48,7 +50,14 @@ const focusRing = "outline-none focus-visible:ring-3 focus-visible:ring-sky-600/
 
 const INTEREST_FOR_SYSTEM: Record<string, string> = { "grid-tie": "Grid-tie", hybrid: "Hybrid + battery" };
 
-export function ContactForm({ content, ui, messengerUrl, initialBill, initialSegment, initialSystem }: ContactFormProps) {
+export function ContactForm({
+  content,
+  ui,
+  messengerUrl,
+  initialBill,
+  initialSegment,
+  initialSystem,
+}: ContactFormProps) {
   const uid = useId();
   const fromCalc = initialBill !== undefined || initialSegment !== undefined || initialSystem !== undefined;
 
@@ -57,7 +66,9 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
   const [roof, setRoof] = useState<Roof>("metal");
   const [bill, setBill] = useState(initialBill ? String(initialBill) : "");
   const [interest, setInterest] = useState(
-    (initialSystem && INTEREST_FOR_SYSTEM[initialSystem] && content.interests.includes(INTEREST_FOR_SYSTEM[initialSystem]))
+    initialSystem &&
+      INTEREST_FOR_SYSTEM[initialSystem] &&
+      content.interests.includes(INTEREST_FOR_SYSTEM[initialSystem])
       ? INTEREST_FOR_SYSTEM[initialSystem]
       : content.interests[0],
   );
@@ -90,11 +101,17 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
     roofType: roof,
     address: city.trim() || undefined,
     message:
-      [interest !== content.interests[0] && `Interested in: ${interest}`, surveyDate && `Preferred survey date: ${surveyDate}`, notes.trim()]
+      [
+        interest !== content.interests[0] && `Interested in: ${interest}`,
+        surveyDate && `Preferred survey date: ${surveyDate}`,
+        notes.trim(),
+      ]
         .filter(Boolean)
         .join("\n") || undefined,
     consent,
-    calcSnapshot: fromCalc ? { monthlyBill: initialBill, segment: initialSegment, systemType: initialSystem } : undefined,
+    calcSnapshot: fromCalc
+      ? { monthlyBill: initialBill, segment: initialSegment, systemType: initialSystem }
+      : undefined,
     source: fromCalc ? "calculator" : "contact-form",
   };
 
@@ -103,7 +120,8 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
   if (!parsed.success) {
     for (const issue of parsed.error.issues) {
       const key = issue.path[0] as Field;
-      if ((key === "name" || key === "phone" || key === "email" || key === "consent") && !errors[key]) errors[key] = issue.message;
+      if ((key === "name" || key === "phone" || key === "email" || key === "consent") && !errors[key])
+        errors[key] = issue.message;
     }
   }
   const show = (f: Field) => (tried ? errors[f] : undefined);
@@ -160,7 +178,7 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
       onSubmit={onSubmit}
       noValidate
       aria-label={t(ui, "cfAria")}
-      className="glass-card flex min-w-0 flex-col gap-6 rounded-[28px] p-8 max-[640px]:p-5"
+      className="flex min-w-0 flex-col gap-6 rounded-[28px] p-8 glass-card max-[640px]:p-5"
     >
       <div className="flex flex-col gap-2.5">
         <div className="flex justify-between font-label text-[11px] tracking-[0.12em] text-ink-muted uppercase">
@@ -205,6 +223,16 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
                       on ? "border-sun-500 bg-dawn-50" : "border-navy-900/10 bg-white hover:border-navy-900/30",
                     )}
                   >
+                    <Scene
+                      ground={false}
+                      className="-mx-1 -mt-1 h-[84px] w-[calc(100%+8px)] overflow-hidden rounded-xl bg-[linear-gradient(180deg,#e6f2ff,#f7faff)]"
+                      worldClassName={cn(
+                        "top-[62%] [animation-duration:9s]",
+                        p.value === "industrial" ? "scale-[0.26]" : "scale-[0.3]",
+                      )}
+                    >
+                      <SolutionModel slug={p.value} />
+                    </Scene>
                     <Icon name={p.icon} className={cn("size-[26px]", on ? "text-sun-700" : "text-sky-600")} />
                     <span className="font-display text-base font-bold">{p.label}</span>
                     <span className="text-[13px] text-ink-muted">{p.description}</span>
@@ -236,7 +264,10 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
                 id={`${uid}-interest`}
                 value={interest}
                 onChange={(e) => setInterest(e.target.value)}
-                className={cn(fieldCls, "w-full border px-3 outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50")}
+                className={cn(
+                  fieldCls,
+                  "w-full border px-3 outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
+                )}
               >
                 {content.interests.map((o) => (
                   <option key={o}>{o}</option>
@@ -294,7 +325,13 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
             <Label htmlFor={`${uid}-date`} className={lblCls}>
               {t(ui, "cfSurveyDate")}
             </Label>
-            <Input id={`${uid}-date`} type="date" value={surveyDate} onChange={(e) => setSurveyDate(e.target.value)} className={fieldCls} />
+            <Input
+              id={`${uid}-date`}
+              type="date"
+              value={surveyDate}
+              onChange={(e) => setSurveyDate(e.target.value)}
+              className={fieldCls}
+            />
           </div>
         </div>
       ) : null}
@@ -359,7 +396,10 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label htmlFor={`${uid}-consent`} className="flex min-h-11 cursor-pointer items-start gap-3 text-sm text-ink-muted">
+            <label
+              htmlFor={`${uid}-consent`}
+              className="flex min-h-11 cursor-pointer items-start gap-3 text-sm text-ink-muted"
+            >
               <Checkbox
                 id={`${uid}-consent`}
                 checked={consent}
@@ -381,10 +421,16 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
           <span className="grid size-[84px] place-items-center rounded-full bg-[radial-gradient(circle_at_45%_40%,var(--color-dawn-50),var(--color-sun-300)_45%,var(--color-sun-500))] text-navy-900 shadow-[0_0_50px_10px_rgb(255_178_26/0.45)]">
             <Check className="size-9" strokeWidth={2.5} aria-hidden />
           </span>
-          <h2 ref={headingRef} tabIndex={-1} className="font-display text-[30px] font-bold tracking-[-0.03em] outline-none">
+          <h2
+            ref={headingRef}
+            tabIndex={-1}
+            className="font-display text-[30px] font-bold tracking-[-0.03em] outline-none"
+          >
             {t(ui, "cfThanks", { name: firstName })}
           </h2>
-          <p className="m-0 max-w-[420px] leading-relaxed text-ink-muted">{content.successBody.replace("{phone}", phone.trim())}</p>
+          <p className="m-0 max-w-[420px] leading-relaxed text-ink-muted">
+            {content.successBody.replace("{phone}", phone.trim())}
+          </p>
           <div className="mt-2 flex flex-wrap justify-center gap-2">
             <Button asChild variant="navy" size="xl">
               <a href={messengerUrl} target="_blank" rel="noopener noreferrer">
@@ -398,10 +444,23 @@ export function ContactForm({ content, ui, messengerUrl, initialBill, initialSeg
         </div>
       ) : (
         <div className="flex justify-between gap-2.5 border-t border-navy-900/10 pt-[18px]">
-          <Button type="button" variant="line" size="xl" disabled={step === 1} onClick={() => setStep((s) => Math.max(1, s - 1))} className="min-h-[52px] rounded-[14px] px-5">
+          <Button
+            type="button"
+            variant="line"
+            size="xl"
+            disabled={step === 1}
+            onClick={() => setStep((s) => Math.max(1, s - 1))}
+            className="min-h-[52px] rounded-[14px] px-5"
+          >
             {t(ui, "cfBack")}
           </Button>
-          <Button type="submit" variant={last ? "sun" : "navy"} size="xl" disabled={sending} className="max-w-[280px] min-h-[52px] flex-1 rounded-[14px] px-[22px]">
+          <Button
+            type="submit"
+            variant={last ? "sun" : "navy"}
+            size="xl"
+            disabled={sending}
+            className="min-h-[52px] max-w-[280px] flex-1 rounded-[14px] px-[22px]"
+          >
             {last ? (sending ? t(ui, "formSending") : t(ui, "cfSend")) : t(ui, "cfContinue")}
           </Button>
         </div>
@@ -425,14 +484,30 @@ function FieldError({ id, children }: { id: string; children: React.ReactNode })
   );
 }
 
-function TextField({ id, label, error, hint, children }: { id: string; label: string; error?: string; hint?: string; children: React.ReactNode }) {
+function TextField({
+  id,
+  label,
+  error,
+  hint,
+  children,
+}: {
+  id: string;
+  label: string;
+  error?: string;
+  hint?: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="flex flex-col gap-1.5">
       <Label htmlFor={id} className={lblCls}>
         {label}
       </Label>
       {children}
-      {error ? <FieldError id={`${id}-err`}>{error}</FieldError> : hint ? <span className="text-xs text-ink-muted">{hint}</span> : null}
+      {error ? (
+        <FieldError id={`${id}-err`}>{error}</FieldError>
+      ) : hint ? (
+        <span className="text-xs text-ink-muted">{hint}</span>
+      ) : null}
     </div>
   );
 }

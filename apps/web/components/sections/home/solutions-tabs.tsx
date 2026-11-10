@@ -5,15 +5,25 @@ import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import { useId, useRef, useState, type KeyboardEvent } from "react";
 
-import { Hud, Meter, PhotoFrame, SectionHeader } from "@/components/fx";
+import { Hud, Meter, SectionHeader } from "@/components/fx";
 import { buttonVariants } from "@/components/ui/button";
 import type { HomeContent, Solution, UiLabels } from "@/lib/content/types";
 import { t } from "@/lib/content/ui";
 import { cn } from "@/lib/utils";
+import { Scene } from "@/components/three-d/models";
+import { SolutionModel } from "@/components/three-d/solution-model";
 
 const mono = "font-label uppercase tracking-[0.12em]";
 
-export function SolutionsTabs({ content, solutions, ui }: { content: HomeContent["solutions"]; solutions: Solution[]; ui: UiLabels }) {
+export function SolutionsTabs({
+  content,
+  solutions,
+  ui,
+}: {
+  content: HomeContent["solutions"];
+  solutions: Solution[];
+  ui: UiLabels;
+}) {
   const uid = useId();
   const [idx, setIdx] = useState(0);
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -38,7 +48,7 @@ export function SolutionsTabs({ content, solutions, ui }: { content: HomeContent
       role="tablist"
       aria-label={t(ui, "choosePropertyType")}
       onKeyDown={onKey}
-      className="glass flex max-w-full gap-1 overflow-x-auto rounded-2xl p-[5px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      className="flex max-w-full [scrollbar-width:none] gap-1 overflow-x-auto rounded-2xl p-[5px] glass [&::-webkit-scrollbar]:hidden"
     >
       {solutions.map((tab, i) => {
         const on = i === idx;
@@ -58,7 +68,9 @@ export function SolutionsTabs({ content, solutions, ui }: { content: HomeContent
             className={cn(
               mono,
               "inline-flex min-h-[46px] flex-none items-center gap-2 rounded-xl px-[18px] text-xs transition-[background,color,box-shadow] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600",
-              on ? "bg-navy-900 text-white shadow-[0_8px_18px_-8px_rgb(11_31_77/0.6)]" : "text-navy-900 hover:bg-white/70",
+              on
+                ? "bg-navy-900 text-white shadow-[0_8px_18px_-8px_rgb(11_31_77/0.6)]"
+                : "text-navy-900 hover:bg-white/70",
             )}
           >
             <span className="opacity-55">{String(i + 1).padStart(2, "0")}</span>
@@ -82,34 +94,59 @@ export function SolutionsTabs({ content, solutions, ui }: { content: HomeContent
           <Hud light className="self-start">
             {s.tag}
           </Hud>
-          <h3 className="font-display text-[clamp(34px,3.4vw,46px)] font-bold leading-[1.02] tracking-[-0.035em]">{s.title}</h3>
+          <h3 className="font-display text-[clamp(34px,3.4vw,46px)] leading-[1.02] font-bold tracking-[-0.035em]">
+            {s.title}
+          </h3>
           <p className="text-[17px] leading-[1.65] text-ink-muted">{s.summary}</p>
           <div className="grid grid-cols-2 gap-2.5">
             <Stat label={t(ui, "typicalSize")} value={s.typicalSize} meter={s.sizeMeter} tone="sun" />
-            <Stat label={s.metricLabel} value={s.metricValue} meter={s.metricMeter} tone="leaf" valueClass="text-leaf-600" />
+            <Stat
+              label={s.metricLabel}
+              value={s.metricValue}
+              meter={s.metricMeter}
+              tone="leaf"
+              valueClass="text-leaf-600"
+            />
           </div>
-          <Link href={`/solutions/${s.slug}`} className={cn(buttonVariants({ variant: "navy", size: "xl" }), "self-start")}>
+          <Link
+            href={`/solutions/${s.slug}`}
+            className={cn(buttonVariants({ variant: "navy", size: "xl" }), "self-start")}
+          >
             {t(ui, "exploreSolution", { title: s.title })}
             <ArrowRight className="size-4" aria-hidden />
           </Link>
         </div>
 
-        <PhotoFrame
-          className="h-[300px] sm:h-[440px]"
-          chips={
-            <>
-              <Hud>{t(ui, "systemOnline")}</Hud>
-              <Hud dot="none">{s.typicalSize}</Hud>
-            </>
-          }
-          caption={<span className={cn(mono, "glass rounded-[10px] px-[11px] py-2 text-[11px]")}>{s.caption}</span>}
-        >
-          <Image src={s.image.src} alt={s.image.alt} fill sizes="(min-width:1024px) 34vw, 100vw" className="object-cover" />
-        </PhotoFrame>
+        <div className="relative h-[320px] p-2 corners sm:h-[440px]">
+          <Scene
+            label={t(ui, "solutionSceneAria", { title: s.title.toLowerCase() })}
+            className="size-full overflow-hidden rounded-[18px] bg-[linear-gradient(180deg,#cfe6ff,#eef5ff_58%,#fff3dc)]"
+            worldClassName="scale-[0.62] sm:scale-[0.86] lg:scale-[0.74] xl:scale-[0.86]"
+          >
+            <div key={s.slug} className="animate-in duration-700 zoom-in-90 fade-in motion-reduce:animate-none">
+              <SolutionModel slug={s.slug} />
+            </div>
+          </Scene>
+          <div className="absolute inset-x-[22px] top-[22px] z-[2] flex flex-wrap justify-between gap-2">
+            <Hud>{t(ui, "systemOnline")}</Hud>
+            <Hud dot="none">{s.typicalSize}</Hud>
+          </div>
+          <figure className="d3-float absolute bottom-5 left-5 z-[2] m-0 flex w-[150px] flex-col gap-1.5 rounded-[14px] p-1.5 glass sm:w-[168px]">
+            <span className="relative block h-[84px] overflow-hidden rounded-[10px] sm:h-24">
+              <Image src={s.image.src} alt={s.image.alt} fill sizes="168px" className="object-cover" />
+            </span>
+            <figcaption className={cn(mono, "px-1 pb-0.5 text-[11px] leading-snug text-ink-muted")}>
+              {s.caption}
+            </figcaption>
+          </figure>
+        </div>
 
         <ol className={cn(mono, "m-0 grid list-none gap-2 p-0 text-xs")}>
           {s.features.map((f, i) => (
-            <li key={f} className="box-border flex min-h-11 items-center gap-3 rounded-[14px] border border-navy-900/8 bg-white/80 px-3.5 py-2 text-navy-900">
+            <li
+              key={f}
+              className="box-border flex min-h-11 items-center gap-3 rounded-[14px] border border-navy-900/8 bg-white/80 px-3.5 py-2 text-navy-900"
+            >
               <span className="text-[11px] text-sun-700">{String(i + 1).padStart(2, "0")}</span>
               <span className="flex-1">{f}</span>
               <Check className="size-4 text-sun-500" strokeWidth={1.75} aria-hidden />
@@ -121,11 +158,25 @@ export function SolutionsTabs({ content, solutions, ui }: { content: HomeContent
   );
 }
 
-function Stat({ label, value, meter, tone, valueClass }: { label: string; value: string; meter: number; tone: "sun" | "leaf"; valueClass?: string }) {
+function Stat({
+  label,
+  value,
+  meter,
+  tone,
+  valueClass,
+}: {
+  label: string;
+  value: string;
+  meter: number;
+  tone: "sun" | "leaf";
+  valueClass?: string;
+}) {
   return (
     <div className="flex min-w-0 flex-col gap-1.5 rounded-[14px] border border-navy-900/8 bg-white/75 p-3.5 shadow-[inset_0_1px_0_white]">
-      <span className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">{label}</span>
-      <span className={cn("font-display text-[22px] font-bold leading-[1.15] tracking-[-0.02em]", valueClass)}>{value}</span>
+      <span className="font-label text-[11px] tracking-[0.12em] text-ink-muted uppercase">{label}</span>
+      <span className={cn("font-display text-[22px] leading-[1.15] font-bold tracking-[-0.02em]", valueClass)}>
+        {value}
+      </span>
       <Meter value={meter} tone={tone} />
     </div>
   );

@@ -4,6 +4,7 @@ import { ArrowRight, Minus, Plus } from "lucide-react";
 import { useId, useMemo, useState } from "react";
 
 import { Hud } from "@/components/fx";
+import { RoofArray } from "@/components/three-d/roof-array";
 import { Button } from "@/components/ui/button";
 import type { CalculatorConfig, UiLabels } from "@/lib/content/types";
 import { t } from "@/lib/content/ui";
@@ -82,10 +83,18 @@ export function CalculatorApp({ config, content, ui, initialBill, initialSegment
   ];
 
   const assumptions = [
-    t(ui, "calcAssump1", { rate: config.electricityRate.toFixed(2), sun: config.peakSunHours, perf: pct(config.performanceRatio) }),
+    t(ui, "calcAssump1", {
+      rate: config.electricityRate.toFixed(2),
+      sun: config.peakSunHours,
+      perf: pct(config.performanceRatio),
+    }),
     t(ui, "calcAssump2", { watt: config.panelWatt, area: config.panelAreaM2, deg: pct(config.degradation) }),
     t(ui, "calcAssump3", { esc: pct(config.rateEscalation), credit: config.exportCreditRate }),
-    t(ui, "calcAssump4", { gridTie: formatPeso(config.costPerKwpGridTie), hybrid: formatPeso(config.costPerKwpHybrid), battery: formatPeso(config.batteryCostPerKwh) }),
+    t(ui, "calcAssump4", {
+      gridTie: formatPeso(config.costPerKwpGridTie),
+      hybrid: formatPeso(config.costPerKwpHybrid),
+      battery: formatPeso(config.batteryCostPerKwh),
+    }),
     config.disclaimer,
   ];
 
@@ -93,7 +102,7 @@ export function CalculatorApp({ config, content, ui, initialBill, initialSegment
     <div className="relative">
       <div className="grid items-start gap-7 lg:grid-cols-[420px_minmax(0,1fr)]">
         {/* INPUTS */}
-        <div className="glass-card flex min-w-0 flex-col gap-6 rounded-3xl p-[26px] lg:sticky lg:top-[calc(var(--site-top)+16px)]">
+        <div className="flex min-w-0 flex-col gap-6 rounded-3xl p-[26px] glass-card lg:sticky lg:top-[calc(var(--site-top)+16px)]">
           <div className="flex flex-col gap-2.5">
             <label htmlFor={`${uid}-bill`} className={labelCls}>
               {content.billLabel}
@@ -124,7 +133,7 @@ export function CalculatorApp({ config, content, ui, initialBill, initialSegment
               aria-valuetext={formatPeso(bill)}
               className={rangeCls}
             />
-            <div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 font-label text-[12px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="-mx-1 flex [scrollbar-width:none] gap-1.5 overflow-x-auto px-1 font-label text-[12px] [&::-webkit-scrollbar]:hidden">
               {config.presets.map((p) => (
                 <button
                   key={p}
@@ -179,7 +188,9 @@ export function CalculatorApp({ config, content, ui, initialBill, initialSegment
                   className={cn(
                     "flex min-h-[72px] flex-col gap-1 rounded-[14px] border-2 p-3.5 text-left text-navy-900",
                     focusRing,
-                    system === o.value ? "border-sun-500 bg-dawn-50" : "border-navy-900/10 bg-white hover:border-navy-900/30",
+                    system === o.value
+                      ? "border-sun-500 bg-dawn-50"
+                      : "border-navy-900/10 bg-white hover:border-navy-900/30",
                   )}
                 >
                   <span className="font-display text-[15px] font-bold">{o.label}</span>
@@ -195,10 +206,17 @@ export function CalculatorApp({ config, content, ui, initialBill, initialSegment
               aria-expanded={howOpen}
               aria-controls={`${uid}-how`}
               onClick={() => setHowOpen((o) => !o)}
-              className={cn("flex min-h-12 w-full items-center justify-between font-display text-[15px] font-bold text-navy-900", focusRing)}
+              className={cn(
+                "flex min-h-12 w-full items-center justify-between font-display text-[15px] font-bold text-navy-900",
+                focusRing,
+              )}
             >
               {content.howLabel}
-              {howOpen ? <Minus className="size-5 text-sun-700" aria-hidden /> : <Plus className="size-5 text-sun-700" aria-hidden />}
+              {howOpen ? (
+                <Minus className="size-5 text-sun-700" aria-hidden />
+              ) : (
+                <Plus className="size-5 text-sun-700" aria-hidden />
+              )}
             </button>
             {howOpen ? (
               <ul id={`${uid}-how`} className="m-0 list-disc pb-1 pl-[18px] text-[14px] leading-[1.7] text-ink-muted">
@@ -213,14 +231,33 @@ export function CalculatorApp({ config, content, ui, initialBill, initialSegment
         {/* RESULTS */}
         <div className="flex min-w-0 flex-col gap-3.5">
           <p className="sr-only" role="status" aria-live="polite">
-            {t(ui, "calcSummary", { kwp, savings: formatPeso(r.monthlySavings), payback, total: formatPeso(r.savings25) })}
+            {t(ui, "calcSummary", {
+              kwp,
+              savings: formatPeso(r.monthlySavings),
+              payback,
+              total: formatPeso(r.savings25),
+            })}
           </p>
+
+          <RoofArray
+            sun
+            count={r.panels}
+            label={t(ui, "roofPreview", { n: r.panels })}
+            hint={t(ui, "roofPreviewHint")}
+            ariaLabel={t(ui, "roofPreviewAria", { n: r.panels })}
+            scale="scale-[0.55] sm:scale-[0.8]"
+            className="h-[200px] rounded-[22px] border border-navy-900/8 bg-[linear-gradient(180deg,#cfe6ff,#eef5ff_60%,#fff3dc)] sm:h-[250px]"
+          />
 
           <div className="grid grid-cols-3 gap-3 max-[640px]:grid-cols-2">
             <div className="rounded-[20px] bg-[linear-gradient(150deg,var(--color-leaf-500),var(--color-leaf-600))] p-[22px] text-white shadow-[0_16px_32px_-16px_rgb(30_138_58/0.7)]">
               <span className={cn(monoTile, "block")}>{t(ui, "monthlySavings")}</span>
-              <span className="font-display text-[clamp(28px,3vw,40px)] font-bold tracking-[-0.02em]">{formatPeso(r.monthlySavings)}</span>
-              <span className={cn(monoTile, "mt-1 block")}>{t(ui, "calcBillReduction", { n: Math.round(r.billReduction * 100) })}</span>
+              <span className="font-display text-[clamp(28px,3vw,40px)] font-bold tracking-[-0.02em]">
+                {formatPeso(r.monthlySavings)}
+              </span>
+              <span className={cn(monoTile, "mt-1 block")}>
+                {t(ui, "calcBillReduction", { n: Math.round(r.billReduction * 100) })}
+              </span>
             </div>
             <div className="rounded-[20px] bg-[linear-gradient(150deg,var(--color-sun-300),var(--color-sun-500))] p-[22px] text-navy-900 shadow-[0_16px_32px_-16px_rgb(255_138_0/0.7)]">
               <span className={cn(monoTile, "block")}>{t(ui, "payback")}</span>
@@ -229,14 +266,18 @@ export function CalculatorApp({ config, content, ui, initialBill, initialSegment
             </div>
             <div className="rounded-[20px] bg-navy-900 p-[22px] text-white max-[640px]:col-span-full">
               <span className={cn(monoTile, "block text-ink-glow")}>{t(ui, "calcSavings25")}</span>
-              <span className="font-display text-[clamp(28px,3vw,40px)] font-bold tracking-[-0.02em]">{formatPeso(r.savings25)}</span>
-              <span className={cn(monoTile, "mt-1 block text-ink-glow")}>{t(ui, "calcNet", { amount: formatPeso(r.netSavings25) })}</span>
+              <span className="font-display text-[clamp(28px,3vw,40px)] font-bold tracking-[-0.02em]">
+                {formatPeso(r.savings25)}
+              </span>
+              <span className={cn(monoTile, "mt-1 block text-ink-glow")}>
+                {t(ui, "calcNet", { amount: formatPeso(r.netSavings25) })}
+              </span>
             </div>
           </div>
 
           <dl className="m-0 grid grid-cols-5 gap-3 max-[1023px]:grid-cols-2">
             {specs.map((s) => (
-              <div key={s.l} className={cn("glass-card min-w-0 rounded-2xl p-4")}>
+              <div key={s.l} className={cn("min-w-0 rounded-2xl p-4 glass-card")}>
                 <dt className={cn(monoTile, "block text-ink-muted")}>{s.l}</dt>
                 <dd className="m-0 inline font-display text-[21px] font-bold">{s.v}</dd>
               </div>
@@ -244,7 +285,7 @@ export function CalculatorApp({ config, content, ui, initialBill, initialSegment
           </dl>
 
           <div className="fx-screen flex flex-col gap-3 rounded-[20px] p-[22px]">
-            <div className="flex flex-wrap items-center justify-between gap-2.5 font-label text-[11px] uppercase tracking-[0.12em]">
+            <div className="flex flex-wrap items-center justify-between gap-2.5 font-label text-[11px] tracking-[0.12em] uppercase">
               <Hud dot="green">{content.chartChip}</Hud>
               <span className="inline-flex items-center gap-3 text-ink-soft">
                 <span className="inline-flex items-center gap-1.5">
@@ -278,7 +319,7 @@ export function CalculatorApp({ config, content, ui, initialBill, initialSegment
                 aria-hidden
               />
             </div>
-            <div className="flex justify-between font-label text-[11px] uppercase tracking-[0.12em] text-ink-soft">
+            <div className="flex justify-between font-label text-[11px] tracking-[0.12em] text-ink-soft uppercase">
               <span>{t(ui, "yearStart")}</span>
               <span>{t(ui, "yearMid")}</span>
               <span>{t(ui, "yearEnd")}</span>
@@ -299,7 +340,7 @@ export function CalculatorApp({ config, content, ui, initialBill, initialSegment
       {/* Sticky results bar (tablet + phone). Sticks inside this wrapper so it never covers the footer. */}
       <div className="sticky bottom-0 z-20 -mx-4 mt-8 grid grid-cols-[1fr_auto] items-center gap-2.5 border-t border-navy-900/10 bg-white/95 px-3.5 pt-2.5 pb-[calc(10px+env(safe-area-inset-bottom))] shadow-[0_-10px_30px_-12px_rgb(11_31_77/0.3)] backdrop-blur-md sm:-mx-10 lg:hidden">
         <span className="flex min-w-0 flex-col leading-tight">
-          <span className="truncate font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">
+          <span className="truncate font-label text-[11px] tracking-[0.12em] text-ink-muted uppercase">
             {t(ui, "calcStickySummary", { kwp, payback })}
           </span>
           <span className="font-display text-[22px] font-bold text-leaf-600">

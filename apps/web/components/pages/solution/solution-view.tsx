@@ -5,6 +5,9 @@ import type { ReactNode } from "react";
 import { SolutionSubnav } from "./subnav";
 import { Icon } from "@/components/icons";
 import { Hud } from "@/components/fx";
+import { RooftopWorld } from "@/components/three-d/models";
+import { HeroSceneFrame } from "@/components/three-d/scenes";
+import { SolutionModel } from "@/components/three-d/solution-model";
 import type { SolutionDetails } from "@/lib/content/pages/solution";
 import type { Solution, UiLabels } from "@/lib/content/types";
 import { t } from "@/lib/content/ui";
@@ -12,8 +15,7 @@ import { cn } from "@/lib/utils";
 
 /* Board constants (docs/designs/Solution.dc.html) */
 const SECTION = "py-[clamp(64px,8vw,100px)]";
-const SPLIT =
-  "grid grid-cols-[1.05fr_.95fr] items-center gap-[56px] max-[1000px]:grid-cols-1 [&>*]:min-w-0";
+const SPLIT = "grid grid-cols-[1.05fr_.95fr] items-center gap-[56px] max-[1000px]:grid-cols-1 [&>*]:min-w-0";
 const MONO = "font-label uppercase tracking-[0.12em]";
 const EYEBROW = `${MONO} inline-flex items-center gap-[10px] text-[11px] text-sun-700 before:size-[7px] before:shrink-0 before:animate-[fx-ping_2.4s_ease-out_infinite] before:rounded-full before:bg-current before:content-['']`;
 const H2 = "font-display font-bold text-[clamp(32px,4vw,56px)] leading-[1.02] tracking-[-0.04em]";
@@ -22,7 +24,12 @@ const HL_BLUE =
   "mx-[2px] inline-block rounded-[14px] px-[12px] pb-[4px] shadow-[0_0_0_2px_var(--color-sky-500),0_14px_34px_-14px_rgb(30_111_232/0.75)] bg-[linear-gradient(180deg,rgb(255_255_255/0.75),rgb(234_242_255/0.75))]";
 const HL_SUN =
   "mx-[2px] inline-block rounded-[18px] bg-white/55 px-[16px] pb-[6px] shadow-[0_0_0_2px_var(--color-sun-500),0_16px_40px_-14px_rgb(255_138_0/0.85)]";
-const TONE_COLOR: Record<string, string> = { leaf: "text-leaf-600", sky: "text-sky-600", amber: "text-sun-700", sun: "text-sun-700" };
+const TONE_COLOR: Record<string, string> = {
+  leaf: "text-leaf-600",
+  sky: "text-sky-600",
+  amber: "text-sun-700",
+  sun: "text-sun-700",
+};
 
 /** `*word*` → glowing frame, `~word~` → sun gradient text. */
 function Rich({ text, hl, depth = 0 }: { text: string; hl: string; depth?: number }): ReactNode {
@@ -73,26 +80,29 @@ export function SolutionView({ solution, details, ui }: Props) {
 /* ───────────────────────────── Hero ───────────────────────────── */
 function Hero({ solution, details, ui }: Props) {
   return (
-    <section className="relative isolate overflow-hidden bg-[linear-gradient(180deg,var(--color-sky-200)_0%,var(--color-day-100)_45%,var(--color-dawn-50)_100%)] pb-[80px] pt-[var(--site-top)]">
+    <section className="relative isolate overflow-hidden bg-[linear-gradient(180deg,var(--color-sky-200)_0%,var(--color-day-100)_45%,var(--color-dawn-50)_100%)] pt-[var(--site-top)] pb-[80px]">
       <div
         aria-hidden
-        className="fx-grid pointer-events-none absolute inset-x-0 top-0 -z-10 h-full max-h-[900px] [mask-image:radial-gradient(90%_75%_at_50%_20%,black,transparent_80%)]"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-full max-h-[900px] fx-grid [mask-image:radial-gradient(90%_75%_at_50%_20%,black,transparent_80%)]"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-[160px] -top-[180px] -z-10 size-[620px] rounded-full bg-[radial-gradient(circle,rgb(255_201_60/0.55),transparent_65%)]"
+        className="pointer-events-none absolute -top-[180px] -right-[160px] -z-10 size-[620px] rounded-full bg-[radial-gradient(circle,rgb(255_201_60/0.55),transparent_65%)]"
       />
-      <div className={cn("container-site relative", SPLIT)}>
+      <div className={cn("relative container-site", SPLIT)}>
         <div className="flex flex-col gap-[22px]">
           <span className={`${MONO} text-[11px] text-ink-muted`}>
             {t(ui, "home")} / {t(ui, "solutions")} / <span className="text-sun-700">{solution.title}</span>
           </span>
-          <h1 className="m-0 font-display text-[clamp(44px,5.6vw,84px)] font-bold leading-[0.98] tracking-[-0.045em]">
+          <h1 className="m-0 font-display text-[clamp(44px,5.6vw,84px)] leading-[0.98] font-bold tracking-[-0.045em]">
             <Rich text={details.heading} hl={HL_SUN} />
           </h1>
           <p className="m-0 max-w-[540px] text-[19px] leading-[1.6] text-navy-900/85">{details.lead}</p>
           <div className="flex flex-wrap gap-[10px]">
-            <Link href={details.primaryCta.href} className={`${MONO} rounded-[14px] bg-navy-900 px-[22px] py-[17px] text-[12px] text-white`}>
+            <Link
+              href={details.primaryCta.href}
+              className={`${MONO} rounded-[14px] bg-navy-900 px-[22px] py-[17px] text-[12px] text-white`}
+            >
               {details.primaryCta.label} →
             </Link>
             <Link
@@ -104,30 +114,20 @@ function Hero({ solution, details, ui }: Props) {
           </div>
           <div className="mt-[6px] grid max-w-[560px] grid-cols-3 gap-[10px] max-[640px]:grid-cols-2 max-[640px]:[&>div:last-child]:col-[1/-1]">
             {details.stats.map((s) => (
-              <div key={s.label} className="glass min-w-0 rounded-[16px] p-[14px]">
+              <div key={s.label} className="min-w-0 rounded-[16px] p-[14px] glass">
                 <span className={`${MONO} block text-[11px] text-ink-muted`}>{s.label}</span>
                 <span className={cn("font-display text-[22px] font-bold", TONE_COLOR[s.tone])}>{s.value}</span>
               </div>
             ))}
           </div>
         </div>
-        <figure className="corners relative m-0 box-border h-[520px] p-[10px] max-[1000px]:h-[340px]">
-          <div className="relative size-full overflow-hidden rounded-[18px]">
-            <Image
-              src={solution.image.src}
-              alt={solution.image.alt}
-              fill
-              priority
-              sizes="(min-width: 1001px) 45vw, 100vw"
-              className="object-cover"
-            />
-            <span className="fx-scan" aria-hidden />
-          </div>
-          <Hud className="absolute left-[22px] top-[22px] z-[2]">{t(ui, "systemOnline")}</Hud>
-          <figcaption className={`${MONO} glass absolute bottom-[24px] left-[24px] rounded-[10px] px-[12px] py-[9px] text-[11px]`}>
-            {solution.caption}
-          </figcaption>
-        </figure>
+        <HeroSceneFrame
+          className="h-[520px] max-[1000px]:h-[400px] max-[640px]:h-[330px]"
+          label={t(ui, "solutionSceneAria", { title: solution.title.toLowerCase() })}
+          world={solution.slug === "residential" ? <RooftopWorld /> : <SolutionModel slug={solution.slug} />}
+          chips={<Hud>{t(ui, "systemOnline")}</Hud>}
+          photo={{ src: solution.image.src, alt: solution.image.alt, caption: solution.caption }}
+        />
       </div>
     </section>
   );
@@ -140,14 +140,18 @@ function Systems({ details, ui }: { details: SolutionDetails; ui: UiLabels }) {
     <section id="systems" className={cn(SECTION, "scroll-mt-[calc(var(--site-top)+56px)] bg-white")}>
       <div className="container-site">
         <span className={EYEBROW}>{systems.eyebrow}</span>
-        <h2 className={cn(H2, "mb-[40px] mt-[16px]")}>
+        <h2 className={cn(H2, "mt-[16px] mb-[40px]")}>
           <Rich text={systems.heading} hl={HL_BLUE} />
         </h2>
         <div className="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-[18px]">
           {systems.cards.map((c) => (
             <div
               key={c.title}
-              className={cn(CARD, "flex min-w-0 flex-col gap-[16px] rounded-[24px] p-[30px]", c.featured && "border-sun-500!")}
+              className={cn(
+                CARD,
+                "flex min-w-0 flex-col gap-[16px] rounded-[24px] p-[30px]",
+                c.featured && "border-sun-500!",
+              )}
             >
               <div className="flex items-center justify-between">
                 <span className="font-display text-[28px] font-bold">{c.title}</span>
@@ -186,7 +190,12 @@ function Systems({ details, ui }: { details: SolutionDetails; ui: UiLabels }) {
 /* ───────────────────────────── 02 How it works ───────────────────────────── */
 function NodeArt({ kind, ui }: { kind: "sun" | "panel" | "inverter"; ui: UiLabels }) {
   if (kind === "sun") {
-    return <span aria-hidden className="mx-auto mb-[12px] block size-[56px] rounded-full bg-[radial-gradient(circle,var(--color-sun-300),var(--color-sun-500))]" />;
+    return (
+      <span
+        aria-hidden
+        className="mx-auto mb-[12px] block size-[56px] rounded-full bg-[radial-gradient(circle,var(--color-sun-300),var(--color-sun-500))]"
+      />
+    );
   }
   if (kind === "panel") {
     return (
@@ -197,7 +206,9 @@ function NodeArt({ kind, ui }: { kind: "sun" | "panel" | "inverter"; ui: UiLabel
     );
   }
   return (
-    <span className={`${MONO} mx-auto mb-[12px] grid size-[56px] place-items-center rounded-[14px] bg-navy-900 text-[11px] text-sun-300`}>
+    <span
+      className={`${MONO} mx-auto mb-[12px] grid size-[56px] place-items-center rounded-[14px] bg-navy-900 text-[11px] text-sun-300`}
+    >
       {t(ui, "inverterAbbr")}
     </span>
   );
@@ -217,7 +228,7 @@ function HowItWorks({ details, ui }: { details: SolutionDetails; ui: UiLabels })
     <section id="how" className={cn(SECTION, "scroll-mt-[calc(var(--site-top)+56px)] bg-day-100")}>
       <div className="container-site">
         <span className={EYEBROW}>{how.eyebrow}</span>
-        <h2 className={cn(H2, "mb-[44px] mt-[16px]")}>{how.heading}</h2>
+        <h2 className={cn(H2, "mt-[16px] mb-[44px]")}>{how.heading}</h2>
         <div className="flex items-center gap-[10px] max-[1000px]:flex-col max-[1000px]:items-stretch">
           {how.nodes.map((n) => (
             <FlowNode key={n.title} n={n} ui={ui} />
@@ -239,7 +250,13 @@ function HowItWorks({ details, ui }: { details: SolutionDetails; ui: UiLabels })
 function FlowNode({ n, ui }: { n: SolutionDetails["how"]["nodes"][number]; ui: UiLabels }) {
   return (
     <>
-      <div className={cn(CARD, "min-w-0 flex-1 rounded-[20px] p-[22px] text-center", n.kind === "inverter" && "border-sun-500!")}>
+      <div
+        className={cn(
+          CARD,
+          "min-w-0 flex-1 rounded-[20px] p-[22px] text-center",
+          n.kind === "inverter" && "border-sun-500!",
+        )}
+      >
         <NodeArt kind={n.kind} ui={ui} />
         <span className="font-display font-bold">{n.title}</span>
         <span className="mt-[4px] block text-[13px] text-ink-muted">{n.note}</span>
@@ -258,7 +275,7 @@ function Packages({ details }: { details: SolutionDetails }) {
         <div className="mb-[40px] flex flex-wrap items-end justify-between gap-[24px]">
           <div>
             <span className={EYEBROW}>{p.eyebrow}</span>
-            <h2 className={cn(H2, "mb-0 mt-[16px]")}>{p.heading}</h2>
+            <h2 className={cn(H2, "mt-[16px] mb-0")}>{p.heading}</h2>
           </div>
           <p className="m-0 max-w-[380px] leading-[1.6] text-ink-muted">{p.lead}</p>
         </div>
@@ -299,7 +316,9 @@ function Packages({ details }: { details: SolutionDetails }) {
                 className={cn(
                   MONO,
                   "mt-auto rounded-[14px] p-[15px] text-center text-[12px] text-navy-900",
-                  it.featured ? "bg-[linear-gradient(135deg,var(--color-sun-300),var(--color-sun-500)_50%,var(--color-sun-600))]" : "bg-day-50",
+                  it.featured
+                    ? "bg-[linear-gradient(135deg,var(--color-sun-300),var(--color-sun-500)_50%,var(--color-sun-600))]"
+                    : "bg-day-50",
                 )}
               >
                 {p.ctaLabel} →
@@ -318,7 +337,10 @@ function NetMetering({ details }: { details: SolutionDetails }) {
   return (
     <section
       id="net-metering"
-      className={cn(SECTION, "scroll-mt-[calc(var(--site-top)+56px)] bg-[linear-gradient(180deg,var(--color-dawn-50),var(--color-dawn-100))]")}
+      className={cn(
+        SECTION,
+        "scroll-mt-[calc(var(--site-top)+56px)] bg-[linear-gradient(180deg,var(--color-dawn-50),var(--color-dawn-100))]",
+      )}
     >
       <div className={cn("container-site", SPLIT)}>
         <div className="flex flex-col gap-[18px]">
@@ -329,7 +351,9 @@ function NetMetering({ details }: { details: SolutionDetails }) {
         <div className="flex flex-col gap-[12px]">
           {d.steps.map((s, i) => (
             <div key={s.title} className={cn(CARD, "flex items-center gap-[16px] rounded-[18px] px-[20px] py-[18px]")}>
-              <span className={`${MONO} grid size-[46px] flex-none place-items-center rounded-full bg-navy-900 text-[12px] text-sun-300`}>
+              <span
+                className={`${MONO} grid size-[46px] flex-none place-items-center rounded-full bg-navy-900 text-[12px] text-sun-300`}
+              >
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span>
@@ -351,12 +375,12 @@ function ProjectsFaq({ details }: { details: SolutionDetails }) {
     <section id="faq" className={cn(SECTION, "scroll-mt-[calc(var(--site-top)+56px)] bg-white")}>
       <div className="container-site">
         <span className={EYEBROW}>{projects.eyebrow}</span>
-        <div className="mb-[80px] mt-[28px] grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-[16px]">
+        <div className="mt-[28px] mb-[80px] grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-[16px]">
           {projects.items.map((pr) => (
             <figure key={pr.src} className="relative m-0 h-[300px] overflow-hidden rounded-[20px]">
               <Image src={pr.src} alt={pr.alt} fill sizes="(min-width: 1001px) 33vw, 100vw" className="object-cover" />
               <figcaption
-                className={`${MONO} glass absolute inset-x-[12px] bottom-[12px] flex justify-between rounded-[10px] px-[12px] py-[10px] text-[11px]`}
+                className={`${MONO} absolute inset-x-[12px] bottom-[12px] flex justify-between rounded-[10px] px-[12px] py-[10px] text-[11px] glass`}
               >
                 <span>{pr.location}</span>
                 <span className="text-sun-700">{pr.kwp}</span>
@@ -365,14 +389,19 @@ function ProjectsFaq({ details }: { details: SolutionDetails }) {
           ))}
         </div>
         <div className={cn(SPLIT, "items-start")}>
-          <h2 className="m-0 font-display text-[clamp(32px,4vw,52px)] font-bold leading-[1.02] tracking-[-0.04em]">{faq.heading}</h2>
+          <h2 className="m-0 font-display text-[clamp(32px,4vw,52px)] leading-[1.02] font-bold tracking-[-0.04em]">
+            {faq.heading}
+          </h2>
           <ul className={cn(CARD, "m-0 list-none rounded-[22px] px-[24px] py-[4px]")}>
             {faq.questions.map((q) => (
               <li
                 key={q}
                 className="flex min-h-[44px] items-center justify-between gap-[12px] border-b border-navy-900/10 py-[20px] text-left font-display text-[17px] font-bold"
               >
-                {q} <span aria-hidden className="font-normal text-ink-muted">+</span>
+                {q}{" "}
+                <span aria-hidden className="font-normal text-ink-muted">
+                  +
+                </span>
               </li>
             ))}
           </ul>
@@ -387,10 +416,13 @@ function CtaBand({ details }: { details: SolutionDetails }) {
   return (
     <section className="bg-[linear-gradient(120deg,var(--color-sun-300),var(--color-sun-500)_45%,var(--color-sun-600))]">
       <div className="container-site flex flex-wrap items-center justify-between gap-[24px] py-[64px]">
-        <h2 className="m-0 max-w-[640px] font-display text-[clamp(32px,4vw,56px)] font-extrabold leading-none tracking-[-0.045em]">
+        <h2 className="m-0 max-w-[640px] font-display text-[clamp(32px,4vw,56px)] leading-none font-extrabold tracking-[-0.045em]">
           {details.cta.heading}
         </h2>
-        <Link href="/contact" className={`${MONO} rounded-[14px] bg-navy-900 px-[26px] py-[19px] text-[13px] text-white`}>
+        <Link
+          href="/contact"
+          className={`${MONO} rounded-[14px] bg-navy-900 px-[26px] py-[19px] text-[13px] text-white`}
+        >
           {details.cta.label} »
         </Link>
       </div>

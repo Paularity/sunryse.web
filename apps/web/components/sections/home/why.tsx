@@ -11,9 +11,9 @@ export function WhySection({ content, warranty }: { content: HomeContent["why"];
           <h2 id="why-h" className={h2Class}>
             <RichText text={content.heading} />
           </h2>
-          <ul className="mt-2 grid list-none gap-3 p-0 sm:grid-cols-2">
+          <ul className="mt-2 grid list-none gap-3 p-0 [perspective:1400px] sm:grid-cols-2">
             {content.items.map((w) => (
-              <li key={w.title} className="glass-card fx-lift fx-ring flex min-w-0 gap-3.5 rounded-[18px] p-5">
+              <li key={w.title} className="d3-tilt fx-ring flex min-w-0 gap-3.5 rounded-[18px] p-5 glass-card">
                 <span className="glow-tile size-11 rounded-xl" style={{ ["--c" as string]: TONE[w.tone ?? "sun"] }}>
                   <Icon name={w.icon ?? "sun"} />
                 </span>
@@ -36,7 +36,9 @@ export function WhySection({ content, warranty }: { content: HomeContent["why"];
               </div>
             ))}
           </dl>
-          <span className="mt-4 block font-label text-[11px] uppercase tracking-[0.1em] text-ink-soft">{content.warrantyNote}</span>
+          <span className="mt-4 block font-label text-[11px] tracking-[0.1em] text-ink-soft uppercase">
+            {content.warrantyNote}
+          </span>
         </div>
       </div>
     </Section>
