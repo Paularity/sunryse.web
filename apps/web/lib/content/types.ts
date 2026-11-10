@@ -1,3 +1,4 @@
+import type { CalcConfig } from "@/lib/solar-calc";
 /**
  * Content contract for the whole site. Components only ever receive these shapes.
  * Data comes from Strapi (mapped in ./from-strapi.ts) and falls back to /content/*.json.
@@ -82,23 +83,8 @@ export type ImpactStat = { value: string; label: string; icon: IconName; tone: T
 export type Step = { title: string; description: string; tone: Tone };
 export type Warranty = { item: string; years: string };
 
-export type CalculatorConfig = {
-  electricityRate: number;
-  peakSunHours: number;
-  performanceRatio: number;
-  panelWatt: number;
-  panelAreaM2: number;
-  costPerKwpGridTie: number;
-  costPerKwpHybrid: number;
-  batteryCostPerKwh: number;
-  exportCreditRate: number;
-  rateEscalation: number;
-  degradation: number;
-  gridEmissionFactor: number;
-  kgCo2PerTree: number;
-  disclaimer: string;
-  presets: number[];
-};
+/** Calculator settings (see lib/solar-calc.ts for what each one does) plus copy for the page. */
+export type CalculatorConfig = CalcConfig & { disclaimer: string; presets: number[] };
 
 /* ── Home page (Strapi single type "homepage", dynamic zone in this order) ── */
 export type HomeContent = {

@@ -2,6 +2,7 @@
  * Idempotent seed. Single source of truth: apps/web/content/*.json (+ images in apps/web/public/images).
  *   pnpm --filter cms seed                 create what is missing, never touch existing entries
  *   SEED_FORCE=1 pnpm --filter cms seed    also overwrite existing entries from the JSON defaults
+ *   SEED_FORCE_ONLY=calculator-config pnpm --filter cms seed   overwrite only the listed single types
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -10,6 +11,7 @@ import { createStrapi, compileStrapi } from '@strapi/strapi';
 const WEB = path.join(__dirname, '..', '..', 'web');
 const read = (n: string) => JSON.parse(fs.readFileSync(path.join(WEB, 'content', `${n}.json`), 'utf8'));
 const FORCE = process.env.SEED_FORCE === '1';
+const FORCE_ONLY = (process.env.SEED_FORCE_ONLY ?? '').split(',').map((s) => s.trim()).filter(Boolean);
 /** SEED_PRUNE=1 also deletes collection entries that are no longer in the content files. */
 const PRUNE = process.env.SEED_PRUNE === '1';
 
@@ -56,7 +58,8 @@ function makeMedia(strapi: any) {
 async function upsertSingle(strapi: any, uid: string, data: any, publish: boolean) {
   const status = publish ? { status: 'published' } : {};
   const existing = await strapi.documents(uid).findFirst();
-  if (existing && !FORCE) return console.log(`skip ${uid}`);
+  const force = FORCE || FORCE_ONLY.some((name) => uid.endsWith(`.${name}`));
+  if (existing && !force) return console.log(`skip ${uid}`);
   if (existing) await strapi.documents(uid).update({ documentId: existing.documentId, data, ...status });
   else await strapi.documents(uid).create({ data, ...status });
   console.log(`${existing ? 'updated' : 'created'} ${uid}`);

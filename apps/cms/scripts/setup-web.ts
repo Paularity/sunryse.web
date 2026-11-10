@@ -2,7 +2,7 @@
  * Local wiring between Strapi and the website (run once, or again to rotate the token):
  *   pnpm --filter cms setup:web
  *
- * - Creates (or regenerates) the "website" API token: create leads + read content.
+ * - Creates (or regenerates) the "website" API token: create/update leads + read content.
  * - Writes STRAPI_URL, STRAPI_TOKEN, REVALIDATE_SECRET and NEXT_PUBLIC_SITE_URL to apps/web/.env.local.
  * - Writes WEB_REVALIDATE_URL and WEB_REVALIDATE_SECRET to apps/cms/.env (Strapi then registers the webhook on start).
  * Secrets are written to the git-ignored env files only and never printed.
@@ -48,6 +48,7 @@ async function main() {
     const tokens = strapi.service('admin::api-token');
     const permissions = [
       'api::lead.lead.create',
+      'api::lead.lead.update', // calculator: attach the estimate to the lead created at the contact step
       ...READ_TYPES.flatMap((t) => (SINGLE.has(t) ? [`api::${t}.${t}.find`] : [`api::${t}.${t}.find`, `api::${t}.${t}.findOne`])),
     ];
     const existing = await tokens.getByName(TOKEN_NAME);

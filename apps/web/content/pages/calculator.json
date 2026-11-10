@@ -1,26 +1,279 @@
 {
   "meta": {
     "title": "Solar savings calculator",
-    "description": "Enter your monthly electricity bill and see your estimated solar system size, monthly savings, payback period and 25-year savings in the Philippines."
+    "description": "Get your solar price in minutes: system size, all-in price, monthly savings and payback for homes and businesses in the Philippines."
   },
   "breadcrumb": "Calculator",
   "heading": "See what the ~sun~ can save you",
-  "lead": "Enter your average monthly bill. Results update instantly — send them to us for an exact quote.",
+  "lead": "Answer a few quick questions and get your system size, all-in price, savings and payback, sized the way our engineers do it.",
   "billLabel": "Average monthly bill",
   "billTip": "Tip: use the average of your last 3 Meralco / co-op bills.",
   "propertyLabel": "Property",
   "properties": [
-    { "value": "residential", "label": "Home" },
-    { "value": "commercial", "label": "Business" },
-    { "value": "industrial", "label": "Industrial" }
+    {
+      "value": "residential",
+      "label": "Home"
+    },
+    {
+      "value": "commercial",
+      "label": "Business"
+    },
+    {
+      "value": "industrial",
+      "label": "Industrial"
+    }
   ],
   "systemLabel": "System type",
   "systems": [
-    { "value": "grid-tie", "label": "Grid-tie", "sub": "Lowest cost" },
-    { "value": "hybrid", "label": "Hybrid + battery", "sub": "Backup in brownouts" }
+    {
+      "value": "grid-tie",
+      "label": "Grid-tie",
+      "sub": "Lowest cost"
+    },
+    {
+      "value": "hybrid",
+      "label": "Hybrid + battery",
+      "sub": "Backup in brownouts"
+    }
   ],
   "howLabel": "How we calculate",
   "chartChip": "Cumulative savings vs system cost",
   "ctaText": "We’ll attach these numbers to your request. A free site survey confirms roof, shading and exact price.",
-  "ctaLabel": "Get my exact quote"
+  "ctaLabel": "Get my exact quote",
+  "wizard": {
+    "stepOf": "Step {n} of {total}",
+    "back": "Back",
+    "next": "Next",
+    "edit": "Edit answers",
+    "contact": {
+      "eyebrow": "Before we start",
+      "title": "Where should we send your estimate?",
+      "lead": "Your estimate uses your bill, roof and location, so it is yours to keep. We send a copy and an advisor follows up only if you want.",
+      "name": "Full name",
+      "phone": "Mobile number",
+      "phoneHint": "e.g. 0917 123 4567",
+      "email": "Email (optional)",
+      "city": "City / municipality",
+      "consent": "I agree to SunRyse contacting me about this estimate. We follow the Data Privacy Act of 2012 and never sell or share your data.",
+      "submit": "Start my estimate",
+      "saving": "Saving…",
+      "returning": "Estimating for {name}",
+      "notYou": "Not you?",
+      "error": "We couldn’t save your details just now. You can continue; we’ll try again when your estimate is ready.",
+      "errName": "Please enter your name",
+      "errPhone": "Enter a valid PH mobile number, e.g. 0917 123 4567",
+      "errEmail": "Enter a valid email",
+      "errCity": "Please enter your city",
+      "errConsent": "Please agree so we can send your estimate"
+    },
+    "property": {
+      "title": "Is this for a home or a business?",
+      "lead": "Rates and system sizing work differently for each.",
+      "options": [
+        {
+          "value": "residential",
+          "label": "Home",
+          "sub": "Residential meter"
+        },
+        {
+          "value": "commercial",
+          "label": "Business",
+          "sub": "Commercial meter"
+        },
+        {
+          "value": "industrial",
+          "label": "Industrial",
+          "sub": "Factory or warehouse"
+        }
+      ]
+    },
+    "status": {
+      "title": "Is it an existing property or under construction?",
+      "lead": "This helps us plan the installation and wiring.",
+      "options": [
+        {
+          "value": "existing",
+          "label": "Existing property",
+          "sub": "Already built and occupied"
+        },
+        {
+          "value": "construction",
+          "label": "Under construction",
+          "sub": "New build or major renovation"
+        }
+      ]
+    },
+    "bill": {
+      "title": "What do you pay for electricity each month?",
+      "lead": "A close guess is fine. You can send us your bill later.",
+      "peso": "Pesos per month",
+      "kwh": "kWh per month",
+      "useKwh": "I know my kWh, not the peso amount",
+      "usePeso": "Enter pesos instead",
+      "noBill": "I don’t have a bill yet",
+      "addPlanned": "Plan on adding appliances?",
+      "planned": "Planned appliances add {kwh} kWh/month (≈ {cost})",
+      "perMonth": "/month"
+    },
+    "appliances": {
+      "title": "What do you plan on adding?",
+      "titleNoBill": "Which appliances will you use?",
+      "lead": "We add their load to your system size.",
+      "appliance": "Appliance",
+      "size": "Size",
+      "qty": "Qty",
+      "hours": "Hrs/day",
+      "remove": "Remove",
+      "total": "Adds {kwh} kWh/month · about {cost}",
+      "done": "Use these appliances",
+      "names": {
+        "aircon": "Air conditioner",
+        "fridge": "Refrigerator",
+        "washer": "Washing machine",
+        "tv": "Television",
+        "ev": "EV charger"
+      }
+    },
+    "usage": {
+      "title": "When do you use the most power?",
+      "lead": "Pick all that apply. This shapes how much of your power solar can cover directly.",
+      "options": [
+        {
+          "value": "morning",
+          "label": "Morning",
+          "sub": "5am – 10am"
+        },
+        {
+          "value": "daytime",
+          "label": "Daytime",
+          "sub": "10am – 4pm"
+        },
+        {
+          "value": "evening",
+          "label": "Evening",
+          "sub": "4pm – 9pm"
+        },
+        {
+          "value": "night",
+          "label": "Night",
+          "sub": "9pm – 5am"
+        }
+      ]
+    },
+    "roof": {
+      "title": "What kind of roof do you have?",
+      "lead": "Mounting differs by roof, and it changes your price.",
+      "options": [
+        {
+          "value": "metal",
+          "label": "Metal",
+          "sub": "Corrugated or long-span"
+        },
+        {
+          "value": "tile",
+          "label": "Tiles",
+          "sub": "Clay or concrete tiles"
+        },
+        {
+          "value": "shingles",
+          "label": "Shingles",
+          "sub": "Asphalt shingles"
+        },
+        {
+          "value": "concrete",
+          "label": "Flat concrete",
+          "sub": "Roof deck"
+        }
+      ]
+    },
+    "location": {
+      "title": "Where is your property?",
+      "lead": "Sun hours differ across the country. We confirm your exact roof at the free site survey.",
+      "options": [
+        {
+          "value": "ncr",
+          "label": "Metro Manila",
+          "sub": "NCR"
+        },
+        {
+          "value": "luzon",
+          "label": "Rest of Luzon",
+          "sub": "Incl. Calabarzon, Central Luzon"
+        },
+        {
+          "value": "visayas",
+          "label": "Visayas",
+          "sub": "Cebu, Iloilo, Bacolod…"
+        },
+        {
+          "value": "mindanao",
+          "label": "Mindanao",
+          "sub": "Davao, CDO, GenSan…"
+        }
+      ]
+    },
+    "packages": {
+      "title": "Pick your system",
+      "lead": "Three sizes for your usage. Each price is all-in: panels, inverter, mounting, installation, net metering and VAT.",
+      "recommended": "Recommended",
+      "names": {
+        "essential": "Essential",
+        "recommended": "Balanced",
+        "max": "Max savings"
+      },
+      "covers": "Covers ≈ {pct}% of your use",
+      "newBill": "New bill",
+      "payback": "Payback",
+      "savings": "Saves"
+    },
+    "battery": {
+      "title": "Add a battery?",
+      "lead": "A battery stores midday sun for the evening and keeps essentials on in a brownout.",
+      "none": "No battery",
+      "noneSub": "Lowest price",
+      "backup": "≈ {h} hrs backup",
+      "adds": "+{price}",
+      "suggest": "Suggested for evening use"
+    },
+    "proposal": {
+      "eyebrow": "Your estimate",
+      "title": "Your solar system, all-in",
+      "price": "All-in price",
+      "priceNote": "incl. 12% VAT",
+      "savings": "Monthly savings",
+      "newBill": "New monthly bill",
+      "payback": "Payback",
+      "lifetime": "{years}-year savings",
+      "solarCost": "Your solar cost",
+      "perKwh": "/kWh",
+      "cheaper": "{pct}% cheaper than the grid ({grid}/kWh)",
+      "system": "System",
+      "panels": "{n} × {w} W panels",
+      "inverter": "Inverter",
+      "gridTie": "Grid-tie",
+      "hybrid": "Hybrid, battery-ready",
+      "battery": "Battery",
+      "noBattery": "None",
+      "energy": "Your typical month",
+      "selfUse": "Solar used at home",
+      "exported": "Sent to the grid",
+      "fromBattery": "From the battery",
+      "fromGrid": "Still from the grid",
+      "breakdown": "What’s in the price",
+      "lines": {
+        "system": "Panels, inverter & installation",
+        "mounting": "Roof mounting",
+        "battery": "Battery",
+        "netMetering": "Net-metering processing",
+        "base": "Permits, monitoring & mobilisation",
+        "vat": "VAT (12%)"
+      },
+      "surplus": "Plus ≈ {amount}/month in extra net-metering credits",
+      "noNetMetering": "Over {cap} kW: no net-metering export credit assumed",
+      "book": "Book my free site survey",
+      "advisor": "Talk to an advisor",
+      "sent": "Saved to your request. An advisor will reach you at {phone}.",
+      "chart": "Cumulative savings minus price"
+    }
+  }
 }

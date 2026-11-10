@@ -48,6 +48,7 @@
       "enum": [
         "metal",
         "tile",
+        "shingles",
         "concrete",
         "unsure"
       ]
@@ -62,6 +63,25 @@
         "lost"
       ],
       "default": "new"
+    },
+    "city": {
+      "type": "string"
+    },
+    "propertyStatus": {
+      "type": "enumeration",
+      "enum": [
+        "existing",
+        "construction"
+      ]
+    },
+    "stage": {
+      "type": "enumeration",
+      "enum": [
+        "calculator-started",
+        "estimate-ready",
+        "quote-request"
+      ],
+      "default": "quote-request"
     }
   }
 }

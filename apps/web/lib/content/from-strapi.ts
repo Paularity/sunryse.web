@@ -23,6 +23,7 @@ type Many = { data: Raw[] };
 
 const str = (v: unknown) => (typeof v === "string" ? v : v == null ? "" : String(v));
 const num = (v: unknown) => Number(v ?? 0);
+const optNum = (v: unknown) => (v === null || v === undefined || v === "" ? undefined : Number(v));
 const list = (v: unknown): Raw[] => (Array.isArray(v) ? v : []);
 const values = (v: unknown) => list(v).map((x) => str(x.value));
 
@@ -363,6 +364,25 @@ const calculator: Loader<CalculatorConfig> = async () => {
     degradation: num(c.degradation),
     gridEmissionFactor: num(c.gridEmissionFactor),
     kgCo2PerTree: num(c.kgCo2PerTree),
+    // Newer settings: missing in older CMS records → the engine falls back to its defaults.
+    fixedChargeMonthly: optNum(c.fixedChargeMonthly),
+    demandShareCommercial: optNum(c.demandShareCommercial),
+    demandShareIndustrial: optNum(c.demandShareIndustrial),
+    basePrice: optNum(c.basePrice),
+    roofAdderMetal: optNum(c.roofAdderMetal),
+    roofAdderTile: optNum(c.roofAdderTile),
+    roofAdderShingles: optNum(c.roofAdderShingles),
+    roofAdderConcrete: optNum(c.roofAdderConcrete),
+    netMeteringFee: optNum(c.netMeteringFee),
+    netMeteringCapKw: optNum(c.netMeteringCapKw),
+    vatRate: optNum(c.vatRate),
+    creditDelayMonths: optNum(c.creditDelayMonths),
+    analysisYears: optNum(c.analysisYears),
+    batteryUsableShare: optNum(c.batteryUsableShare),
+    sunHoursNcr: optNum(c.sunHoursNcr),
+    sunHoursLuzon: optNum(c.sunHoursLuzon),
+    sunHoursVisayas: optNum(c.sunHoursVisayas),
+    sunHoursMindanao: optNum(c.sunHoursMindanao),
     disclaimer: str(c.disclaimer),
     presets,
   };

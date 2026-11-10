@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 import { RichText } from "@/components/fx";
-import { CalculatorApp } from "@/components/pages/calculator/calculator-app";
+import { CalculatorWizard } from "@/components/pages/calculator/calculator-wizard";
 import { CalculatorFromQuery } from "@/components/pages/calculator/calculator-loader";
 import { getCalculatorConfig, getSite } from "@/lib/content";
 import { getCalculatorPage } from "@/lib/content/pages/calculator";
@@ -15,19 +15,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function CalculatorPage() {
-  const [page, config, { ui }] = await Promise.all([getCalculatorPage(), getCalculatorConfig(), getSite()]);
-  const content = {
-    billLabel: page.billLabel,
-    billTip: page.billTip,
-    propertyLabel: page.propertyLabel,
-    properties: page.properties,
-    systemLabel: page.systemLabel,
-    systems: page.systems,
-    howLabel: page.howLabel,
-    chartChip: page.chartChip,
-    ctaText: page.ctaText,
-    ctaLabel: page.ctaLabel,
-  };
+  const [page, config, site] = await Promise.all([getCalculatorPage(), getCalculatorConfig(), getSite()]);
+  const { ui } = site;
+  const wizard = { config, copy: page.wizard, ui, messengerUrl: site.messengerUrl };
 
   return (
     <div className="relative isolate bg-[linear-gradient(180deg,var(--color-sky-200),var(--color-day-50)_30%,var(--color-dawn-50))] pt-[calc(var(--site-top)+4px)] pb-16 leading-[normal]">
@@ -51,8 +41,8 @@ export default async function CalculatorPage() {
           <p className="m-0 max-w-[400px] text-[16px] leading-[1.6] text-ink-muted">{page.lead}</p>
         </header>
 
-        <Suspense fallback={<CalculatorApp config={config} content={content} ui={ui} />}>
-          <CalculatorFromQuery config={config} content={content} ui={ui} />
+        <Suspense fallback={<CalculatorWizard {...wizard} />}>
+          <CalculatorFromQuery {...wizard} />
         </Suspense>
       </div>
     </div>

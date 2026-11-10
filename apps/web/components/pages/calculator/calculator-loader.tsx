@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 
 import type { Segment, SystemType } from "@/lib/solar-calc";
-import { CalculatorApp, type CalculatorAppProps } from "./calculator-app";
+import { CalculatorWizard, type WizardProps } from "./calculator-wizard";
 
 const SEGMENTS: Record<string, Segment> = {
   residential: "residential",
@@ -14,12 +14,14 @@ const SEGMENTS: Record<string, Segment> = {
 };
 const SYSTEMS: Record<string, SystemType> = { "grid-tie": "grid-tie", grid: "grid-tie", hybrid: "hybrid" };
 
-/** Reads ?bill=&segment=&type= on the client (so the page itself stays prerendered) and seeds the calculator. */
-export function CalculatorFromQuery(props: Pick<CalculatorAppProps, "config" | "content" | "ui">) {
+/** Reads ?bill=&segment=&type= on the client (so the page itself stays prerendered) and seeds the wizard. */
+export function CalculatorFromQuery(props: Omit<WizardProps, "initialBill" | "initialSegment" | "initialSystem">) {
   const sp = useSearchParams();
   const bill = Number(sp.get("bill"));
+  const key = sp.toString();
   return (
-    <CalculatorApp
+    <CalculatorWizard
+      key={key}
       {...props}
       initialBill={Number.isFinite(bill) && bill > 0 ? Math.min(Math.round(bill), 10_000_000) : undefined}
       initialSegment={SEGMENTS[sp.get("segment") ?? ""]}

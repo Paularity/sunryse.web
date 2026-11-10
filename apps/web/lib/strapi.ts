@@ -73,3 +73,16 @@ export async function strapiCreate<T>(collection: string, data: Record<string, u
   if (!res.ok) throw new StrapiError(res.status, collection);
   return (await res.json()) as T;
 }
+
+export async function strapiUpdate<T>(collection: string, documentId: string, data: Record<string, unknown>): Promise<T> {
+  const res = await fetch(`${STRAPI_URL}/api/${collection}/${encodeURIComponent(documentId)}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.STRAPI_TOKEN ?? ""}`,
+    },
+    body: JSON.stringify({ data }),
+  });
+  if (!res.ok) throw new StrapiError(res.status, collection);
+  return (await res.json()) as T;
+}

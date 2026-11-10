@@ -1,41 +1,44 @@
 ---
 name: solar-calculator
-description: Formulas, default assumptions and UX for the SunRyse solar savings calculator (system size, cost, payback, 25-year savings, CO2). Load before touching calculator logic, UI or its tests.
+description: Method, defaults and UX for the SunRyse solar calculator (Blueshift-style process: contact step, bill/kWh + planned appliances, usage times, roof, region, packages, battery, all-in proposal). Load before touching calculator logic, UI, leads or its tests.
 ---
 
-# Solar savings calculator
+# Solar calculator
 
-Pure function in `apps/web/lib/solar-calc.ts` (no React), unit-tested with Vitest. Defaults come from Strapi
-`calculator-config`; the values below are **placeholders until SunRyse confirms them**.
+Engine: `apps/web/lib/solar-calc.ts` (pure, no React, Vitest in `lib/solar-calc.test.ts`).
+Wizard: `apps/web/components/pages/calculator/calculator-wizard.tsx` (+ `wizard/parts.tsx`, `wizard/proposal.tsx`).
+Settings come from Strapi `calculator-config` (fallback `content/calculator.json`); copy from `calculator-page.content.wizard`.
+All numbers are **placeholders until SunRyse confirms them**. Missing CMS values fall back to `DEFAULT_CONFIG` via `withDefaults`.
 
-## Inputs
-monthlyBill (₱), segment (residential | commercial | industrial), systemType (grid-tie | hybrid),
-daytimeUsageShare (0.3–0.9, default 0.6 res / 0.75 com), backupHours (hybrid only), optional roofAreaM2.
+## Process (modelled on blueshift.ph/solar-pricing)
+0. **Contact first** (SunRyse requirement): name, PH mobile, optional email, city, Data Privacy Act consent →
+   `POST /api/leads` (stage `calculator-started`), id kept in localStorage (`sunryse.calc.contact`, 30 days; "Not you?" clears it).
+1. Home / Business / Industrial → 2. Existing / Under construction → 3. Bill in ₱ or kWh (+ optional planned appliances;
+   "no bill yet" / under construction → appliance builder) → 4. Busy periods (morning/daytime/evening/night, multi)
+   → 5. Roof (metal/tile/shingles/concrete) → 6. Region (NCR, Luzon, Visayas, Mindanao) → 7. Packages (3, one recommended)
+   → 8. Battery (homes only) → Proposal. The proposal `PATCH /api/leads/:id` (stage `estimate-ready`, `calcSnapshot`);
+   if the first save failed it `POST`s the full lead instead.
 
-## Defaults
-rate ₱12.50/kWh · peakSunHours 4.5 · performanceRatio 0.80 · panel 620 W, 2.6 m² ·
-grid-tie ₱60,000/kWp · hybrid ₱75,000/kWp · battery ₱28,000/kWh · export credit ₱6.00/kWh ·
-rate escalation 3%/yr · degradation 0.5%/yr · grid factor 0.71 kg CO₂/kWh · 21 kg CO₂/tree/yr.
-
-## Formulas
+## Method
 ```
-monthlyKwh   = monthlyBill / rate
-dailyKwh     = monthlyKwh / 30
-kWp          = (dailyKwh * daytimeUsageShare) / (peakSunHours * performanceRatio)   // round up to 0.5
-panels       = ceil(kWp * 1000 / panelWatt);  roofArea = panels * panelAreaM2
-annualGen    = kWp * peakSunHours * 365 * performanceRatio
-selfUsed     = min(annualGen, monthlyKwh*12*daytimeUsageShare*1.15); exported = annualGen - selfUsed
-year1Savings = selfUsed*rate + exported*exportCredit
-batteryKwh   = hybrid ? ceil(dailyKwh*(1-daytimeUsageShare)*backupHoursFactor) : 0
-systemCost   = kWp*costPerKwp(systemType) + batteryKwh*batteryCost
-payback      = first year where cumulative savings ≥ systemCost (with escalation & degradation)
-savings25    = Σ_{y=1..25} year1Savings * (1+esc)^(y-1) * (1-deg)^(y-1)
-co2Tons/yr   = annualGen * gridFactor / 1000;  trees = co2Kg / kgPerTree
-billReduction% = year1Savings / (monthlyBill*12)
+bill split   energy₱ = bill·(1 − demandShare) − fixedCharge     (demandShare: 0 home, 15 % business, 25 % industrial)
+usage        monthlyKwh = energy₱ / rate  (or kWh input) + planned appliances (kW × qty × h/day × 30)
+day model    24 h: usage curve (busy periods ×3 weight) vs solar curve (sin bell 6:00–18:00, kWp × PSH(region) × PR)
+             battery charges from surplus, discharges into deficits (usable 90 %, 95 % one-way efficiency)
+monthly      self-use, export, import = day × 30.4
+savings      min(self-use·rate + export·exportCredit (net metering ≤ cap kW), energy₱)   surplus credit reported separately
+price        (base + kWp·(perKwp[grid-tie|hybrid] + roofAdder) + battery·₱/kWh + net-metering fee) × (1 + VAT)
+years        savings × (1+escalation)^(y−1) × (1−degradation)^(y−1); year 1 loses export credits for creditDelayMonths
+outputs      payback (interpolated), lifetime & net savings, ROI, solar ₱/kWh = price / lifetime kWh, % cheaper than grid, CO₂
+packages     ≈50 % / 80 % / 105 % of monthly use, rounded to whole panels; recommended = balanced unless its payback is >10 % slower
 ```
-If roofArea is given and smaller than required, cap kWp to roof and flag "roof-limited".
+`calculateSolar()` (home hero, teaser) returns the recommended package with default usage — same engine, same numbers.
 
-## UX
-Step 1 bill slider (₱2k–₱500k, log scale) + segment tabs → live results (system size, panels, monthly savings,
-payback, 25-yr savings, CO₂/trees) with CountUp. Chart: cumulative savings vs cost (break-even marker).
-CTA "Get my exact quote" pre-fills the lead form with the calc snapshot. Always show the disclaimer.
+## Calibration check (tests)
+₱10k home, no battery → payback 4–6 yrs; with a 10 kWh battery → ≈ ₱3.5–4/kWh and ~70 % cheaper than the grid
+(Blueshift publishes ₱4/kWh, 71 %, 4–6 yr payback). A 1 HP aircon at 8 h/day ≈ 180 kWh/month (Blueshift: 179).
+
+## UX rules
+Big tappable answer cards (radio/checkbox roles), focus moves to each new question, progress bar, Back on every step,
+44 px targets, ₱ inputs with `inputMode="numeric"`, live roof + price preview on desktop, disclaimer under results.
+Never block the visitor if the lead save fails — show a note once and continue.

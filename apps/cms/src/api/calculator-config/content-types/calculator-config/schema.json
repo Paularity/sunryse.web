@@ -49,6 +49,60 @@
     "kgCo2PerTree": {
       "type": "decimal"
     },
+    "fixedChargeMonthly": {
+      "type": "decimal"
+    },
+    "demandShareCommercial": {
+      "type": "decimal"
+    },
+    "demandShareIndustrial": {
+      "type": "decimal"
+    },
+    "basePrice": {
+      "type": "decimal"
+    },
+    "roofAdderMetal": {
+      "type": "decimal"
+    },
+    "roofAdderTile": {
+      "type": "decimal"
+    },
+    "roofAdderShingles": {
+      "type": "decimal"
+    },
+    "roofAdderConcrete": {
+      "type": "decimal"
+    },
+    "netMeteringFee": {
+      "type": "decimal"
+    },
+    "netMeteringCapKw": {
+      "type": "decimal"
+    },
+    "vatRate": {
+      "type": "decimal"
+    },
+    "creditDelayMonths": {
+      "type": "decimal"
+    },
+    "analysisYears": {
+      "type": "decimal"
+    },
+    "batteryUsableShare": {
+      "type": "decimal"
+    },
+    "sunHoursNcr": {
+      "type": "decimal"
+    },
+    "sunHoursLuzon": {
+      "type": "decimal"
+    },
+    "sunHoursVisayas": {
+      "type": "decimal"
+    },
+    "sunHoursMindanao": {
+      "type": "decimal"
+    },
     "disclaimer": {
       "type": "text"
     },

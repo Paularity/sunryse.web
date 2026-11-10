@@ -1,6 +1,7 @@
 import { factories } from '@strapi/strapi';
 
-// Create-only. No public permission is granted (see bootstrap); the web server route creates leads with an API token.
+// Create + update only. No public permission is granted (see bootstrap); the web server routes create a lead
+// at the calculator's contact step and attach the estimate later, using the website API token.
 export default factories.createCoreRouter('api::lead.lead', {
-  only: ['create'],
+  only: ['create', 'update'],
 });
