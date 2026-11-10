@@ -1,0 +1,103 @@
+{
+  "draftLabel": "Draft · pending review by SunRyse",
+  "updatedLabel": "Last updated {date}",
+  "privacy": {
+    "draft": true,
+    "updated": "10 November 2026",
+    "meta": {
+      "title": "Privacy notice",
+      "description": "How SunRyse Solar Services collects, uses and protects your personal data, in line with the Data Privacy Act of 2012."
+    },
+    "heading": "Privacy notice",
+    "intro": "We respect your privacy. This notice explains what personal data we collect through this website, why we collect it and the choices you have, in line with the Philippine Data Privacy Act of 2012 (Republic Act No. 10173).",
+    "sections": [
+      {
+        "heading": "What we collect",
+        "body": [
+          "Contact details you give us: your name, mobile number, email address and city or address.",
+          "Details about your property and energy use: your monthly bill or kWh, the appliances you plan to add, when you use the most power, your roof type and region.",
+          "The estimate the calculator produces for you, and any message you send us.",
+          "Basic technical data that web servers record, such as your browser type and the pages you visit."
+        ]
+      },
+      {
+        "heading": "Why we use it",
+        "body": [
+          "To prepare your solar estimate and quote, contact you about it and arrange a site survey.",
+          "To install, register warranties for and support your system if you become a customer.",
+          "To keep the website secure and working well.",
+          "We only use your data for these purposes, with your consent or as needed to deliver what you asked for."
+        ]
+      },
+      {
+        "heading": "Saved on your device",
+        "body": [
+          "The calculator remembers the contact details you entered in your browser for up to 30 days, so you don't have to type them again. Choose “Not you?” in the calculator to clear them at any time."
+        ]
+      },
+      {
+        "heading": "Who we share it with",
+        "body": [
+          "We never sell your data. We share it only with service providers who help us run this website and our customer records, under confidentiality obligations, and with authorities when the law requires it."
+        ]
+      },
+      {
+        "heading": "How long we keep it",
+        "body": [
+          "We keep your data only as long as needed for your quote and, if you become a customer, for your system's warranty and after-sales support, or as required by law. Then we delete or anonymise it."
+        ]
+      },
+      {
+        "heading": "Your rights",
+        "body": [
+          "You can ask to see, correct or delete your data, object to its use, or withdraw your consent at any time. You may also file a complaint with the National Privacy Commission.",
+          "To make a request, contact us using the details below."
+        ]
+      }
+    ]
+  },
+  "terms": {
+    "draft": true,
+    "updated": "10 November 2026",
+    "meta": {
+      "title": "Terms of use",
+      "description": "The terms that apply when you use the SunRyse Solar Services website and its solar calculator."
+    },
+    "heading": "Terms of use",
+    "intro": "By using this website you agree to these terms. Please read them together with our privacy notice.",
+    "sections": [
+      {
+        "heading": "Estimates are indicative",
+        "body": [
+          "The calculator and any prices, savings or payback shown on this website are estimates based on general assumptions. Your final system design, price and expected savings are confirmed in a written quotation after a free site survey."
+        ]
+      },
+      {
+        "heading": "Quotations and installation",
+        "body": [
+          "Installation work, prices, payment terms and warranties are governed by the quotation and agreement you sign with us, not by this website."
+        ]
+      },
+      {
+        "heading": "Using this website",
+        "body": [
+          "Please use the website lawfully and don't try to disrupt it or access it without permission.",
+          "The text, images and design on this website belong to SunRyse Solar Services or its licensors. Brand names of equipment belong to their owners."
+        ]
+      },
+      {
+        "heading": "Links and liability",
+        "body": [
+          "Links to other websites are provided for convenience; we are not responsible for their content.",
+          "We work to keep this website accurate and available, but we can't guarantee it is always error-free or uninterrupted. To the extent the law allows, we are not liable for losses from relying on estimates shown here."
+        ]
+      },
+      {
+        "heading": "Changes and governing law",
+        "body": [
+          "We may update these terms; the date above shows the latest version. These terms are governed by the laws of the Republic of the Philippines."
+        ]
+      }
+    ]
+  }
+}

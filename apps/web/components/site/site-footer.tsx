@@ -23,13 +23,13 @@ export function SiteFooter({ site }: { site: Site }) {
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_80%_at_100%_0%,rgb(255_138_0/0.14),transparent_70%),radial-gradient(40%_70%_at_0%_100%,rgb(30_111_232/0.18),transparent_70%)]"
       />
-      <div className="container-site relative">
+      <div className="relative container-site">
         <div className="grid grid-cols-2 gap-x-4 gap-y-5 sm:gap-8 lg:grid-cols-[1.3fr_repeat(3,minmax(0,1fr))]">
           <div className="col-span-2 flex flex-col items-start gap-4 sm:col-span-1">
             <Logo dark />
             <p className="hidden max-w-[320px] text-[15px] leading-[1.6] text-ink-pale sm:block">{footer.blurb}</p>
             <Hud>{site.hours}</Hud>
-            <span className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-dim">{site.license}</span>
+            <span className="font-label text-[11px] tracking-[0.12em] text-ink-dim uppercase">{site.license}</span>
           </div>
 
           {footer.columns.map((col) => (
@@ -68,7 +68,8 @@ export function SiteFooter({ site }: { site: Site }) {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-5 font-label text-[11px] uppercase tracking-[0.12em] text-ink-soft sm:flex-row sm:items-center sm:justify-between">
+        {/* lg: keep clear of the floating "Message us" button (fixed bottom-right) */}
+        <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-5 font-label text-[11px] tracking-[0.12em] text-ink-soft uppercase sm:flex-row sm:items-center sm:justify-between lg:pr-56">
           <span>{footer.copyright}</span>
           <ul className="flex gap-4">
             {footer.legal.map((l) => (
