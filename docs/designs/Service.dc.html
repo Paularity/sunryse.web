@@ -25,6 +25,11 @@ a{color:#1553C7;text-decoration:none}a:hover{color:#C2410C}
 .ico{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
 @media (max-width:1000px){.split{grid-template-columns:1fr}.navlinks{display:none}.burger{display:grid}.mbar{display:grid;position:fixed;left:0;right:0;bottom:0;z-index:20}.mbar-sp{display:block;height:84px}.ph{height:260px !important}}
 @media (max-width:640px){.wrap{padding:0 16px}.hdr-quote{display:none !important}}
+/* inner3d:start */
+.svc3d .d3-stage{position:relative}
+@media (max-width:1023px){.svc3d{height:420px !important}}
+@media (max-width:640px){.svc3d{height:330px !important}.svc3d .d3-world{scale:.7 !important}}
+/* inner3d:end */
 /* fx-layer:start — SunRyse "daylight futurism" layer. Identical on every board; edit fx/layer.css, not here. */
 /* Baseline icon style (zero specificity: a board's own .ico rule wins) */
 :where(.ico){width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
@@ -119,6 +124,109 @@ section[data-pt]{isolation:isolate}
 @keyframes fx-flow{to{stroke-dashoffset:-24}}
 @media (prefers-reduced-motion:reduce){.eyebrow::before,.eb::before,.fx-eb::before,.fx-dot,.fx-scan::before,.btn-sun::after,.fx-sheen::after,.fx-spin,.fx-flowline{animation:none !important}.fx-scan{display:none}a.card,.fx-lift,.btn{transition:none}}
 /* fx-layer:end */
+/* d3:start — SunRyse "daylight 3D" kit: CSS 3D scenes, models and depth cards (shared on every board) */
+.d3-stage{position:relative;perspective:1600px;perspective-origin:50% 30%}
+.d3-world{position:absolute;left:50%;top:58%;width:0;height:0;transform-style:preserve-3d;transform:rotateX(60deg) rotateZ(-38deg);animation:d3-sway 14s ease-in-out infinite alternate}
+.d3-world *{transform-style:preserve-3d}
+@keyframes d3-sway{from{transform:rotateX(60deg) rotateZ(-44deg)}to{transform:rotateX(58deg) rotateZ(-30deg)}}
+/* ground */
+.d3-ground{position:absolute;left:-330px;top:-260px;width:660px;height:520px;border-radius:40px;background:radial-gradient(closest-side,rgba(255,255,255,.95),rgba(234,242,255,.75) 70%,rgba(234,242,255,0)),repeating-linear-gradient(0deg,rgba(21,83,199,.10) 0 1px,transparent 1px 40px),repeating-linear-gradient(90deg,rgba(21,83,199,.10) 0 1px,transparent 1px 40px)}
+.d3-shadow{position:absolute;border-radius:24px;background:radial-gradient(closest-side,rgba(11,31,77,.32),rgba(11,31,77,0));transform:translateZ(1px)}
+/* generic box: footprint W×D on the floor, faces rise along +Z (set --w --d --h on .d3-box) */
+.d3-box{position:absolute;width:var(--w);height:var(--d)}
+/* every face stands upright, content reads the right way up from outside (origin = face top-left) */
+.d3-box>.f{position:absolute;left:0;top:0;transform-origin:0 0;backface-visibility:hidden}
+.d3-box>.top{width:var(--w);height:var(--d);transform:translateZ(var(--h))}
+.d3-box>.front{width:var(--w);height:var(--h);transform:translate3d(0,var(--d),var(--h)) rotateX(-90deg)}
+.d3-box>.back{width:var(--w);height:var(--h);transform:translate3d(var(--w),0,var(--h)) rotateZ(180deg) rotateX(-90deg)}
+.d3-box>.left{width:var(--d);height:var(--h);transform:translateZ(var(--h)) rotateZ(90deg) rotateX(-90deg)}
+.d3-box>.right{width:var(--d);height:var(--h);transform:translate3d(var(--w),var(--d),var(--h)) rotateZ(-90deg) rotateX(-90deg)}
+/* upright plane at the front edge of a footprint (gables, signs): set --w --h, place with left/top */
+.d3-up{position:absolute;transform-origin:0 0;transform:translateZ(var(--h)) rotateX(-90deg)}
+/* materials */
+.m-wall{background:linear-gradient(180deg,#FFFFFF,#E9F0FB)}
+.m-wall-shade{background:linear-gradient(180deg,#DCE6F5,#C7D5EC)}
+.m-roof{background:#1B2F63}
+.m-navy{background:linear-gradient(180deg,#14306E,#0B1F4D)}
+.m-glass{background:linear-gradient(160deg,rgba(255,255,255,.75),rgba(191,224,255,.45));border:1px solid rgba(255,255,255,.9)}
+/* solar panel array (put on any plane): grid of cells */
+.d3-panels{position:absolute;display:grid;gap:4px;padding:6px;border-radius:6px;background:linear-gradient(160deg,#E6EEF9,#B9C9E4)}
+.d3-panels>i{display:block;border-radius:3px;background-image:linear-gradient(155deg,rgba(255,255,255,.6),rgba(255,255,255,0) 40%),repeating-linear-gradient(90deg,rgba(190,215,255,.35) 0 1px,transparent 1px 33%),repeating-linear-gradient(0deg,rgba(190,215,255,.35) 0 1px,transparent 1px 25%),linear-gradient(160deg,#2F6BEA,#163E9E 60%,#0D2A70);box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
+.d3-panels.lit>i{animation:d3-lit 4s ease-in-out infinite;animation-delay:calc(var(--i,0) * 120ms)}
+@keyframes d3-lit{0%,70%,100%{filter:brightness(1)}82%{filter:brightness(1.55) saturate(1.2)}}
+/* model details */
+.d3-door{position:absolute;left:50%;bottom:0;width:30px;height:52px;margin-left:-15px;border-radius:6px 6px 0 0;background:linear-gradient(180deg,#14306E,#0B1F4D)}
+.d3-window{position:absolute;top:24px;width:38px;height:30px;border-radius:5px;background:linear-gradient(160deg,#BFE0FF,#6FA8F0);box-shadow:inset 0 0 0 3px rgba(255,255,255,.85)}
+.d3-bat-face{background-image:linear-gradient(180deg,transparent 0 14%,#2DB84C 14% 22%,transparent 22% 30%,#2DB84C 30% 38%,transparent 38% 46%,#2DB84C 46% 54%,transparent 54% 62%,rgba(45,184,76,.35) 62% 70%,transparent 70%),linear-gradient(180deg,#FFFFFF,#E9F0FB);background-size:60% 100%,100% 100%;background-position:50% 0,0 0;background-repeat:no-repeat}
+.d3-glazing{background-image:repeating-linear-gradient(90deg,transparent 0 10px,rgba(111,168,240,.55) 10px 26px),repeating-linear-gradient(0deg,transparent 0 14px,rgba(255,255,255,.9) 14px 18px),linear-gradient(180deg,#FFFFFF,#E3ECF9)}
+.d3-bay{background-image:repeating-linear-gradient(90deg,transparent 0 30px,rgba(11,31,77,.18) 30px 56px),linear-gradient(180deg,#FFFFFF,#E9F0FB)}
+.d3-grid-pole{display:block;width:6px;height:6px;border-radius:50%;background:#FF8A00;box-shadow:0 0 12px #FF8A00}
+/* glow + energy */
+.d3-glow-sun{box-shadow:0 0 0 1px rgba(255,201,60,.6),0 0 40px 10px rgba(255,178,26,.35)}
+.d3-flow{position:absolute;height:4px;border-radius:4px;background:repeating-linear-gradient(90deg,var(--c,#FFC93C) 0 10px,transparent 10px 22px);background-size:22px 4px;animation:d3-dash 1s linear infinite;filter:drop-shadow(0 0 6px var(--c,#FFC93C));transform:translateZ(2px)}
+@keyframes d3-dash{to{background-position:22px 0}}
+.d3-led{width:8px;height:8px;border-radius:50%;background:#5BD97A;box-shadow:0 0 10px #5BD97A;animation:fx-blink 1.6s ease-in-out infinite}
+/* sun that travels on an arc (2D, outside the rotated world) */
+.d3-sun{position:absolute;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle at 42% 38%,#FFFBEA,#FFE07A 26%,#FFB21A 56%,#FF7A00 86%,#FF5A1F);box-shadow:0 0 70px 24px rgba(255,178,26,.55),0 0 180px 80px rgba(255,138,0,.22);offset-path:path("M 0 260 C 120 40, 420 -40, 640 120");offset-rotate:0deg;offset-distance:40%;animation:d3-arc 18s ease-in-out infinite alternate}
+@keyframes d3-arc{from{offset-distance:22%}to{offset-distance:78%}}
+.d3-beam{position:absolute;height:3px;transform-origin:left center;background:linear-gradient(90deg,rgba(255,201,60,0),rgba(255,201,60,.9),rgba(255,201,60,0));filter:blur(.5px);animation:d3-beam 3s ease-in-out infinite}
+@keyframes d3-beam{0%,100%{opacity:.25}50%{opacity:.9}}
+/* floating glass card placed in 3D (counter-rotated to face the viewer) */
+.d3-billboard{position:absolute;transform:rotateZ(38deg) rotateX(-60deg)}
+.d3-float{animation:d3-float 6s ease-in-out infinite}
+@keyframes d3-float{0%,100%{translate:0 0}50%{translate:0 -10px}}
+/* 3D tilt cards (depth on hover) */
+:is(a,div,figure,span).d3-tilt{transform:perspective(1000px) rotateX(0) rotateY(0);transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s}
+:is(a,div,figure,span).d3-tilt:hover{transform:perspective(1000px) rotateX(6deg) rotateY(-9deg) translateY(-4px);box-shadow:0 40px 70px -30px rgba(11,31,77,.45)}
+.d3-tilt .d3-pop{transform:translateZ(0);transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.d3-tilt:hover .d3-pop{transform:translateZ(40px)}
+.d3-tilt:hover .d3-pop2{transform:translateZ(70px)}
+/* depth stack: layered glass planes */
+.d3-depth{transform:perspective(1200px) rotateX(10deg) rotateY(-14deg);transform-style:preserve-3d}
+.d3-depth>*{transform:translateZ(calc(var(--z,0) * 1px))}
+/* 3D orbit ring around an object */
+.d3-orbit{position:absolute;inset:-18px;border-radius:50%;border:1.5px solid rgba(255,201,60,.55);transform:rotateX(72deg);animation:d3-orbit 9s linear infinite}
+.d3-orbit::before{content:"";position:absolute;left:50%;top:-5px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:#FFC93C;box-shadow:0 0 12px #FFC93C}
+@keyframes d3-orbit{to{transform:rotateX(72deg) rotateZ(360deg)}}
+/* camera rig: wraps a .d3-world so scroll can move the camera while the world keeps its idle sway */
+.d3-cam{position:absolute;inset:0;transform-style:preserve-3d}
+/* scroll-driven motion (CSS scroll timelines). With nothing to scroll (canvas boards) everything shows its end state. */
+@supports (animation-timeline:view()){
+  .sr{animation:sr-in linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
+  .sr-tilt{animation:sr-tilt linear both;animation-timeline:view();animation-range:entry calc(var(--k,0) * 6%) cover calc(30% + var(--k,0) * 6%)}
+  .sr-cam{animation:sr-cam linear both;animation-timeline:scroll(root);animation-range:0 110vh}
+  .sr-sun{animation:d3-arc linear both;animation-timeline:scroll(root);animation-range:0 120vh}
+  .sr-up{animation:sr-up linear both;animation-timeline:scroll(root);animation-range:0 100vh}
+  .sr-rise{animation:sr-rise linear both;animation-timeline:view();animation-range:entry 10% cover 45%}
+  .sr-lit>i{animation:sr-lit linear both;animation-timeline:view();animation-range:entry calc(20% + var(--i,0) * 3%) cover calc(40% + var(--i,0) * 3%)}
+  .sr-fan>*{animation:sr-fan linear both;animation-timeline:view();animation-range:entry 0% cover 40%}
+}
+@keyframes sr-in{from{opacity:0;translate:0 48px}}
+@keyframes sr-tilt{from{opacity:0;rotate:x 22deg;translate:0 70px}}
+@keyframes sr-cam{to{transform:translateY(-40px) rotateX(-14deg) rotateZ(-10deg) scale(1.12)}}
+@keyframes sr-up{to{translate:0 -140px;scale:1.08}}
+@keyframes sr-rise{from{opacity:0;translate:0 120px;scale:.8}}
+@keyframes sr-lit{from{filter:brightness(.45) saturate(.3)}}
+@keyframes sr-fan{from{rotate:y -24deg;translate:0 0 -120px;opacity:.2}}
+/* scroll annotations (design boards only — tells the build what moves on scroll) */
+.sn{position:absolute;z-index:6;display:block;max-width:min(380px,calc(100% - 32px));padding:7px 11px 7px 30px;border-radius:10px;border:1.5px dashed rgba(255,138,0,.85);background:rgba(255,250,240,.92);color:#7A2E0A;font:500 10.5px/1.35 "JetBrains Mono",monospace;letter-spacing:.02em;box-shadow:0 10px 24px -14px rgba(194,65,12,.6);pointer-events:none}
+.sn::before{content:"";position:absolute;left:10px;top:50%;margin-top:-9px;box-sizing:border-box;width:12px;height:18px;border-radius:7px;border:1.5px solid currentColor;background:radial-gradient(circle at 50% 30%,currentColor 0 1.6px,transparent 2px)}
+.sn b{font-weight:700;color:#C2410C}
+section:has(>.sn),footer:has(>.sn){position:relative}
+/* scroll cue */
+.scroll-cue{position:absolute;left:50%;bottom:92px;z-index:3;translate:-50% 0;display:flex;flex-direction:column;align-items:center;gap:8px;color:#0B1F4D;font:500 11px "JetBrains Mono",monospace;letter-spacing:.12em;text-transform:uppercase}
+.scroll-cue .mouse{width:24px;height:38px;border-radius:14px;border:2px solid #0B1F4D;display:flex;justify-content:center;padding-top:7px;box-sizing:border-box;background:rgba(255,255,255,.5);backdrop-filter:blur(6px)}
+.scroll-cue .mouse i{width:4px;height:8px;border-radius:2px;background:#FF8A00;animation:cue 1.8s ease-in-out infinite}
+@keyframes cue{0%{opacity:0;translate:0 -4px}30%{opacity:1}100%{opacity:0;translate:0 12px}}
+@media (max-width:1023px){
+  .sn{position:relative !important;inset:auto !important;display:block;margin:0 16px 16px;max-width:none}
+  .hero-sec>.sn{position:absolute !important;left:16px !important;right:16px !important;top:auto !important;bottom:92px !important;margin:0}
+  .arr3d>.sn{position:absolute !important;left:14px !important;right:14px !important;top:auto !important;bottom:52px !important;margin:0}
+  .scroll-cue,.hc-3{display:none}
+}
+@media (prefers-reduced-motion:reduce){.sr,.sr-up,.sr-tilt,.sr-cam,.sr-sun,.sr-rise,.sr-lit>i,.sr-fan>*,.scroll-cue .mouse i{animation:none !important}}
+@media (prefers-reduced-motion:reduce){.d3-world,.d3-sun,.d3-panels.lit>i,.d3-flow,.d3-beam,.d3-float,.d3-orbit,.d3-led{animation:none !important}.d3-sun{offset-distance:40%}.d3-tilt,.d3-tilt .d3-pop{transition:none}}
+/* d3:end */
 </style>
 </helmet>
 <div style="width:100%;background:#F7FAFF;color:#0B1F4D;font-family:Manrope,sans-serif;overflow:hidden">
@@ -152,12 +260,31 @@ section[data-pt]{isolation:isolate}
 <a href="Calculator.dc.html" class="mono" style="font-size:12px;color:#0B1F4D;background:#FFFFFF;border:1px solid rgba(11,31,77,.15);border-radius:14px;padding:17px 22px">Size my system</a>
 </div>
 </div>
-<div class="corners" style="padding:10px">
-<div class="ph" role="img" aria-label="Photo placeholder: wall-mounted battery and inverter installation" style="height:460px;border-radius:18px;background:repeating-linear-gradient(135deg,#EAF2FF 0 14px,#F4F8FF 14px 28px);border:1px dashed rgba(11,31,77,.25);display:grid;place-items:center;text-align:center">
-<span class="mono" style="font-size:11px;color:#4A5A80">[ Photo: battery + inverter install ]<br>from SunRyse project library</span>
+<div class="corners hero3d-in svc3d" style="position:relative;padding:10px;height:480px;box-sizing:border-box">
+<div class="d3-stage" role="img" aria-label="3D model of two wall-mounted lithium batteries beside a hybrid inverter" style="height:100%;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#E6F2FF,#F7FAFF 60%,#EAF2FF)">
+
+<div class="d3-cam sr-cam"><div class="d3-world" style="scale:1.05">
+<div class="d3-ground"></div>
+<div class="d3-shadow" style="left:-200px;top:-80px;width:400px;height:180px"></div>
+<i class="d3-up m-wall-shade" style="left:-190px;top:-70px;width:380px;height:220px;--h:220px;border-radius:12px 12px 0 0;background:linear-gradient(180deg,#FFFFFF,#DCE6F5)"></i>
+<div class="d3-model battery" style="position:absolute;left:-150px;top:-60px">
+  <div class="d3-shadow" style="left:-14px;top:-10px;width:120px;height:76px"></div>
+  <div class="d3-box " style="--w:84px;--d:46px;--h:176px;left:0px;top:0px;transform:translateZ(0px)"><i class="f top m-wall"></i><i class="f front m-wall d3-bat-face"></i><i class="f right m-wall-shade"></i><i class="f left m-wall-shade"></i><i class="f back m-wall-shade"></i></div>
+</div>
+<div class="d3-model battery" style="position:absolute;left:-50px;top:-60px">
+  <div class="d3-shadow" style="left:-14px;top:-10px;width:120px;height:76px"></div>
+  <div class="d3-box " style="--w:84px;--d:46px;--h:176px;left:0px;top:0px;transform:translateZ(0px)"><i class="f top m-wall"></i><i class="f front m-wall d3-bat-face"></i><i class="f right m-wall-shade"></i><i class="f left m-wall-shade"></i><i class="f back m-wall-shade"></i></div>
+</div>
+<div style="position:absolute;left:0;top:0"><div class="d3-box" style="--w:74px;--d:22px;--h:108px;left:60px;top:-62px">
+<i class="f top m-wall"></i><i class="f front m-wall" style="display:grid;place-items:center"><span style="width:44px;height:28px;border-radius:6px;background:#0B1F4D;box-shadow:inset 0 0 0 2px #2F6BEA;display:grid;place-items:center;color:#5BD97A;font:600 9px 'JetBrains Mono',monospace">4.2kW</span></i><i class="f left m-wall-shade"></i><i class="f right m-wall-shade"></i><i class="f back m-wall-shade"></i></div></div>
+<span class="d3-flow" style="--c:#5BD97A;left:-60px;top:2px;width:30px;transform-origin:left center;transform:translateZ(2px) rotate(180deg)"></span>
+<span class="d3-flow" style="--c:#FFC93C;left:130px;top:-20px;width:136px;transform-origin:left center;transform:translateZ(2px) rotate(54deg)"></span>
+</div></div>
+</div>
+<span class="fx-hud" style="position:absolute;z-index:3;left:24px;top:24px"><span class="fx-dot"></span>Charging · 82%</span><span class="fx-hud light" style="position:absolute;z-index:3;right:24px;top:24px">2 × 5.1 kWh LiFePO₄</span>
 </div>
 </div>
-</div>
+<span class="sn" style="right:16px;bottom:16px"><b>On scroll</b> the battery bars fill one by one and the camera eases round to the inverter screen.</span>
 </section>
 
 <!-- BENEFITS -->
