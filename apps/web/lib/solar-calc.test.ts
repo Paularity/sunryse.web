@@ -30,6 +30,7 @@ describe("usage from the bill", () => {
   it("accepts kWh instead of pesos and adds planned appliances", () => {
     const added = appliancesKwhPerMonth([{ key: "aircon", size: 0, qty: 1, hours: 8 }]);
     expect(added).toBeCloseTo(0.75 * 8 * 30, 5); // 1.0 HP for 8 h ≈ 180 kWh/month (Blueshift shows 179)
+    expect(added * C.electricityRate).toBeCloseTo(2_277, 0); // Blueshift shows ₱2,265
     const u = usageFromBill({ segment: "residential", monthlyKwh: 500, addedKwhPerMonth: added }, C);
     expect(u.monthlyKwh).toBeCloseTo(680, 5);
   });
@@ -81,16 +82,22 @@ describe("price and payback", () => {
     expect(e.priceLines.find((l) => l.key === "netMetering")!.amount).toBe(0);
   });
 
-  it("lands in Blueshift's published range for a ₱10k home (4–6 yr payback; battery systems ≈ ₱3–5/kWh)", () => {
-    const grid = planPackages({ segment: "residential", monthlyBill: 10_000 }, C).find((p) => p.recommended)!.estimate;
-    expect(grid.paybackYears!).toBeGreaterThan(4);
-    expect(grid.paybackYears!).toBeLessThan(6);
-    const hybrid = planPackages({ segment: "residential", monthlyBill: 10_000, batteryKwh: 10 }, C).find(
-      (p) => p.recommended,
-    )!.estimate;
-    expect(hybrid.solarCostPerKwh).toBeGreaterThan(3);
-    expect(hybrid.solarCostPerKwh).toBeLessThan(5);
-    expect(hybrid.cheaperThanGrid).toBeGreaterThan(0.6);
+  it("matches Blueshift's published figures for a ₱10k home (4–6 yr payback; ≈ ₱4/kWh, ~71 % cheaper with a battery)", () => {
+    const opts = {
+      segment: "residential" as const,
+      monthlyBill: 10_000,
+      systemType: "hybrid" as const,
+      usage: ["morning" as const, "evening" as const],
+    };
+    const solar = planPackages(opts, C).find((p) => p.recommended)!.estimate;
+    expect(solar.years).toBe(30);
+    expect(solar.paybackYears!).toBeGreaterThan(4);
+    expect(solar.paybackYears!).toBeLessThan(6);
+    const battery = planPackages({ ...opts, batteryKwh: 10 }, C).find((p) => p.recommended)!.estimate;
+    expect(battery.solarCostPerKwh).toBeGreaterThan(3.4);
+    expect(battery.solarCostPerKwh).toBeLessThan(4.2);
+    expect(battery.cheaperThanGrid).toBeGreaterThan(0.68);
+    expect(battery.cheaperThanGrid).toBeLessThan(0.74);
   });
 });
 
@@ -116,7 +123,7 @@ describe("compatibility estimate (home hero / teaser)", () => {
   it("caps the system to the available roof area", () => {
     const r = calculateSolar({ monthlyBill: 50_000, segment: "commercial", systemType: "grid-tie", roofAreaM2: 26 });
     expect(r.roofLimited).toBe(true);
-    expect(r.panels).toBe(10);
+    expect(r.panels).toBe(Math.floor(26 / C.panelAreaM2));
   });
 
   it("handles a zero bill and keeps bill reduction within 0–100 %", () => {

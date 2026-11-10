@@ -1,15 +1,38 @@
 import { Eyebrow, Hud, RichText, Section, h2Class } from "@/components/fx";
 import type { CalculatorConfig, HomeContent, UiLabels } from "@/lib/content/types";
 import { t } from "@/lib/content/ui";
+import { planPackages, withDefaults } from "@/lib/solar-calc";
 
 const X0 = 40;
 const X1 = 550;
 const Y_TOP = 32;
 const Y_START = 150;
 const Y_BASE = 205;
-const YEARS = 25;
+const fill = (s: string, v: Record<string, string | number>) =>
+  s.replace(/\{(\w+)\}/g, (m, k: string) => (k in v ? String(v[k]) : m));
 
-export function SolarVsGrid({ content, config, ui }: { content: HomeContent["solarVsGrid"]; config: CalculatorConfig; ui: UiLabels }) {
+export function SolarVsGrid({
+  content,
+  config,
+  ui,
+}: {
+  content: HomeContent["solarVsGrid"];
+  config: CalculatorConfig;
+  ui: UiLabels;
+}) {
+  // Years, grid rate and the solar ₱/kWh range all come from the calculator settings, so they always agree.
+  const c = withDefaults(config);
+  const YEARS = Math.round(c.analysisYears);
+  const solarAt = (batteryKwh: number) =>
+    planPackages(
+      { segment: "residential", monthlyBill: 10_000, systemType: "hybrid", batteryKwh, usage: ["morning", "evening"] },
+      c,
+    ).find((p) => p.recommended)!.estimate.solarCostPerKwh;
+  const lo = Math.round(solarAt(0));
+  const hi = Math.round(solarAt(10));
+  const solarValue = lo === hi ? `≈ ₱${lo}*` : `≈ ₱${lo}–${hi}*`;
+  const gridValue = `₱${c.electricityRate.toFixed(2)}*`;
+  const vars = { years: YEARS, esc: Math.round(c.rateEscalation * 100) };
   const rate = (yr: number) => config.electricityRate * Math.pow(1 + config.rateEscalation, yr - 1);
   const start = rate(1);
   const end = rate(YEARS);
@@ -21,15 +44,15 @@ export function SolarVsGrid({ content, config, ui }: { content: HomeContent["sol
   });
   const line = "M" + pts.join(" L");
   const area = `${line} L${X1} ${Y_BASE} L${X0} ${Y_BASE} Z`;
-  const alt = t(ui, "chartAlt", { start: start.toFixed(2), end: end.toFixed(2), solar: content.solarValue });
+  const alt = t(ui, "chartAlt", { start: start.toFixed(2), end: end.toFixed(2), solar: solarValue, years: YEARS });
 
   return (
     <Section tone="white" labelledBy="svg-h">
       <div className="grid items-center gap-14 lg:grid-cols-2">
         <div className="fx-screen min-w-0 rounded-3xl p-5 sm:p-6">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-            <Hud dot="amber">{content.chartLabel}</Hud>
-            <span className="flex flex-wrap gap-4 font-label text-[11px] uppercase tracking-[0.12em] text-ink-soft">
+            <Hud dot="amber">{fill(content.chartLabel, vars)}</Hud>
+            <span className="flex flex-wrap gap-4 font-label text-[11px] tracking-[0.12em] text-ink-soft uppercase">
               <span className="inline-flex items-center gap-1.5">
                 <i className="block h-[3px] w-3.5 rounded-sm bg-sun-600" />
                 {content.gridLabel}
@@ -54,8 +77,23 @@ export function SolarVsGrid({ content, config, ui }: { content: HomeContent["sol
               <line x1={X0} y1="90" x2={X1} y2="90" />
             </g>
             <path d={area} fill="url(#svg-gridfill)" />
-            <path d={line} stroke="var(--color-sun-600)" strokeWidth="3.5" fill="none" strokeLinejoin="round" style={{ filter: "drop-shadow(0 0 6px rgb(255 122 61 / 0.9))" }} />
-            <line x1={X0} y1={Y_BASE} x2={X1} y2={Y_BASE} stroke="var(--color-glow-leaf)" strokeWidth="3.5" style={{ filter: "drop-shadow(0 0 6px rgb(91 217 122 / 0.9))" }} />
+            <path
+              d={line}
+              stroke="var(--color-sun-600)"
+              strokeWidth="3.5"
+              fill="none"
+              strokeLinejoin="round"
+              style={{ filter: "drop-shadow(0 0 6px rgb(255 122 61 / 0.9))" }}
+            />
+            <line
+              x1={X0}
+              y1={Y_BASE}
+              x2={X1}
+              y2={Y_BASE}
+              stroke="var(--color-glow-leaf)"
+              strokeWidth="3.5"
+              style={{ filter: "drop-shadow(0 0 6px rgb(91 217 122 / 0.9))" }}
+            />
             <line
               x1={X0}
               y1={Y_BASE}
@@ -68,16 +106,38 @@ export function SolarVsGrid({ content, config, ui }: { content: HomeContent["sol
               className="motion-safe:animate-[fx-flow_1.4s_linear_infinite]"
               style={{ opacity: 0.8 }}
             />
-            <circle cx={X1} cy={yFor(end)} r="6" fill="var(--color-sun-600)" style={{ filter: "drop-shadow(0 0 8px var(--color-sun-600))" }} />
-            <circle cx={X1} cy={Y_BASE} r="6" fill="var(--color-glow-leaf)" style={{ filter: "drop-shadow(0 0 8px var(--color-glow-leaf))" }} />
+            <circle
+              cx={X1}
+              cy={yFor(end)}
+              r="6"
+              fill="var(--color-sun-600)"
+              style={{ filter: "drop-shadow(0 0 8px var(--color-sun-600))" }}
+            />
+            <circle
+              cx={X1}
+              cy={Y_BASE}
+              r="6"
+              fill="var(--color-glow-leaf)"
+              style={{ filter: "drop-shadow(0 0 8px var(--color-glow-leaf))" }}
+            />
             <g fontSize="12" fill="var(--color-ink-soft)" className="font-label">
-              <text x={X0} y="252">{t(ui, "yearStart")}</text>
-              <text x="295" y="252" textAnchor="middle">{t(ui, "chartYearMid")}</text>
-              <text x={X1} y="252" textAnchor="end">{t(ui, "yearEnd")}</text>
+              <text x={X0} y="252">
+                {t(ui, "yearStart")}
+              </text>
+              <text x="295" y="252" textAnchor="middle">
+                {t(ui, "chartYearMid", { n: Math.round(YEARS / 2) })}
+              </text>
+              <text x={X1} y="252" textAnchor="end">
+                {t(ui, "yearEnd", { n: YEARS })}
+              </text>
             </g>
             <g fontSize="12" fontWeight="500" className="font-label">
-              <text x={X1} y="20" textAnchor="end" fill="var(--color-sun-300)">{endLabel}</text>
-              <text x={X1} y="192" textAnchor="end" fill="var(--color-glow-leaf)">{content.solarValue}</text>
+              <text x={X1} y="20" textAnchor="end" fill="var(--color-sun-300)">
+                {endLabel}
+              </text>
+              <text x={X1} y="192" textAnchor="end" fill="var(--color-glow-leaf)">
+                {solarValue}
+              </text>
             </g>
           </svg>
         </div>
@@ -85,20 +145,30 @@ export function SolarVsGrid({ content, config, ui }: { content: HomeContent["sol
         <div className="flex min-w-0 flex-col gap-[18px]">
           <Eyebrow>{content.eyebrow}</Eyebrow>
           <h2 id="svg-h" className={h2Class}>
-            <RichText text={content.heading} />
+            <RichText text={fill(content.heading, vars)} />
           </h2>
           <p className="text-[17px] leading-relaxed text-ink-muted">{content.lead}</p>
           <div className="grid grid-cols-2 gap-2.5">
             <div className="flex min-w-0 flex-col gap-1.5 rounded-[14px] border border-navy-900/8 bg-day-50 p-3.5">
-              <span className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">{content.gridLabel}</span>
-              <span className="font-display text-[36px] font-bold leading-tight tracking-[-0.02em] text-sun-700">{content.gridValue}</span>
+              <span className="font-label text-[11px] tracking-[0.12em] text-ink-muted uppercase">
+                {content.gridLabel}
+              </span>
+              <span className="font-display text-[36px] leading-tight font-bold tracking-[-0.02em] text-sun-700">
+                {gridValue}
+              </span>
             </div>
             <div className="flex min-w-0 flex-col gap-1.5 rounded-[14px] border border-navy-900/8 bg-day-50 p-3.5">
-              <span className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">{content.solarLabel}</span>
-              <span className="font-display text-[36px] font-bold leading-tight tracking-[-0.02em] text-leaf-600">{content.solarValue}</span>
+              <span className="font-label text-[11px] tracking-[0.12em] text-ink-muted uppercase">
+                {content.solarLabel}
+              </span>
+              <span className="font-display text-[36px] leading-tight font-bold tracking-[-0.02em] text-leaf-600">
+                {solarValue}
+              </span>
             </div>
           </div>
-          <span className="font-label text-[11px] uppercase tracking-[0.12em] text-ink-muted">{content.note}</span>
+          <span className="font-label text-[11px] tracking-[0.12em] text-ink-muted uppercase">
+            {fill(content.note, vars)}
+          </span>
         </div>
       </div>
     </Section>

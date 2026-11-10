@@ -59,14 +59,15 @@ export type CalcConfig = {
 };
 
 export const DEFAULT_CONFIG: Required<CalcConfig> = {
-  electricityRate: 12.5,
+  electricityRate: 12.65, // Meralco-level all-in rate (as used in Blueshift's appliance estimates)
   peakSunHours: 4.5,
   performanceRatio: 0.8,
-  panelWatt: 620,
-  panelAreaM2: 2.6,
-  costPerKwpGridTie: 52_000,
-  costPerKwpHybrid: 62_000,
-  batteryCostPerKwh: 25_000,
+  panelWatt: 645, // Canadian Solar TOPBiHiKu6 645 W (Blueshift's default panel)
+  panelAreaM2: 2.7,
+  // Price book calibrated to Blueshift's published results (₱4/kWh ≈ 71 % cheaper with a battery, 4–6 yr payback)
+  costPerKwpGridTie: 50_000,
+  costPerKwpHybrid: 58_000,
+  batteryCostPerKwh: 32_000,
   exportCreditRate: 6,
   rateEscalation: 0.03,
   degradation: 0.005,
@@ -84,7 +85,7 @@ export const DEFAULT_CONFIG: Required<CalcConfig> = {
   netMeteringCapKw: 100,
   vatRate: 0.12,
   creditDelayMonths: 3,
-  analysisYears: 25,
+  analysisYears: 30, // panel performance warranty
   batteryUsableShare: 0.9,
   sunHoursNcr: 4.5,
   sunHoursLuzon: 4.6,

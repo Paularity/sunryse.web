@@ -1,0 +1,17 @@
+{
+  "global.ui": {
+    "chartYearMid": "Yr {n}",
+    "yearEnd": "Yr {n}",
+    "chartAlt": "Chart: grid electricity cost rises from {start} to about {end} pesos per kWh over {years} years while solar cost per kWh stays flat at {solar}"
+  },
+  "homepage": {
+    "sections.calculator-cta": {
+      "subheading": "Enter your monthly bill to see system size, panels, payback and 30-year savings, then send it to us for an exact quote."
+    },
+    "sections.solar-vs-grid": {
+      "heading": "Lock in your power price for {years} years",
+      "chartLabel": "{years}-year price outlook",
+      "note": "*Placeholder assumptions until SunRyse confirms: {esc}% yearly rate increase, {years}-year panel life. Solar range: without → with a battery."
+    }
+  }
+}

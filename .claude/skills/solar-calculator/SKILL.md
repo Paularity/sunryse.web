@@ -10,6 +10,12 @@ Wizard: `apps/web/components/pages/calculator/calculator-wizard.tsx` (+ `wizard/
 Settings come from Strapi `calculator-config` (fallback `content/calculator.json`); copy from `calculator-page.content.wizard`.
 All numbers are **placeholders until SunRyse confirms them**. Missing CMS values fall back to `DEFAULT_CONFIG` via `withDefaults`.
 
+**Current defaults = Blueshift's public data** (user's instruction, Nov 2026): Canadian Solar 645 W panel (2.7 m²), grid ₱12.65/kWh
+(from their appliance estimate), hybrid battery-ready inverter by default, 30-year horizon (panel warranty). Price book
+(₱58k/kWp hybrid, ₱50k/kWp grid-tie, ₱32k/kWh battery, before VAT) is *calibrated to* their published results, not copied:
+₱10k home ≈ 5.7 yr payback; with 10 kWh battery ≈ ₱3.6/kWh, 71 % cheaper. Do not lift constants from their site code.
+CMS copy patches: `pnpm --filter cms patch:content scripts/patches/<file>.json <backupDir>` (field-level, backs up first).
+
 ## Process (modelled on blueshift.ph/solar-pricing)
 0. **Contact first** (SunRyse requirement): name, PH mobile, optional email, city, Data Privacy Act consent →
    `POST /api/leads` (stage `calculator-started`), id kept in localStorage (`sunryse.calc.contact`, 30 days; "Not you?" clears it).

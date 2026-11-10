@@ -157,7 +157,7 @@ export function CalculatorWizard({
             roof,
             region,
             batteryKwh: battery,
-            systemType: battery > 0 ? "hybrid" : (initialSystem ?? "grid-tie"),
+            systemType: battery > 0 ? "hybrid" : (initialSystem ?? "hybrid"), // battery-ready inverter included by default
           }
         : null,
     [segment, noUsageBill, plannedKwh, billMode, kwh, bill, usage, roof, region, battery, initialSystem],
@@ -171,7 +171,7 @@ export function CalculatorWizard({
       base && chosenKwp
         ? BATTERY_OPTIONS[base.segment].map((b) => ({
             kwh: b,
-            e: estimate({ ...base, batteryKwh: b, systemType: b > 0 ? "hybrid" : "grid-tie", systemKwp: chosenKwp }, c),
+            e: estimate({ ...base, batteryKwh: b, systemType: b > 0 ? "hybrid" : base.systemType, systemKwp: chosenKwp }, c),
           }))
         : [],
     [base, chosenKwp, c],

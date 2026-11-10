@@ -14,7 +14,8 @@
     "upgrade": "npx @strapi/upgrade latest",
     "upgrade:dry": "npx @strapi/upgrade latest --dry",
     "seed": "tsx scripts/seed.ts",
-    "setup:web": "tsx scripts/setup-web.ts"
+    "setup:web": "tsx scripts/setup-web.ts",
+    "patch:content": "tsx scripts/patch-content.ts"
   },
   "dependencies": {
     "@strapi/database": "5.61.0",
