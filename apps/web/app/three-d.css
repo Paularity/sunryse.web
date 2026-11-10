@@ -57,6 +57,18 @@
 .d3-pin-dot::after{content:"";position:absolute;left:3px;bottom:6px;width:2px;height:10px;background:linear-gradient(#0B1F4D,transparent)}
 .d3-float{animation:d3-float 6s ease-in-out infinite}
 @keyframes d3-float{0%,100%{translate:0 0}50%{translate:0 -10px}}
+/* roof materials (roof pickers) */
+.d3-roof-metal{position:relative;background:repeating-linear-gradient(90deg,#8796b4 0 5px,#d3dcec 5px 8px,#a4b2cc 8px 11px,#7a89a8 11px 14px)}
+.d3-roof-metal::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.55) 45%,transparent 60%);background-size:250% 100%;animation:d3-roof-sheen 3.6s ease-in-out infinite}
+@keyframes d3-roof-sheen{from{background-position:120% 0}to{background-position:-120% 0}}
+.d3-roof-tile{background-color:#b34f2c;background-image:radial-gradient(120% 95% at 50% 0%,#e98d62 0 34%,#c9603a 35% 58%,transparent 60%),linear-gradient(180deg,rgba(0,0,0,.18),transparent 40%);background-size:22px 16px,22px 16px}
+.d3-roof-shingles{background-color:#3a4358;background-image:repeating-linear-gradient(180deg,transparent 0 13px,rgba(0,0,0,.35) 13px 15px),repeating-linear-gradient(90deg,#465068 0 22px,#3a4358 22px 24px);background-size:100% 15px,48px 15px}
+.d3-roof-concrete{background:radial-gradient(rgba(11,31,77,.12) 1px,transparent 1.5px) 0 0/9px 9px,linear-gradient(160deg,#d6dce7,#a7b1c3)}
+/* "not sure": materials cross-fade one after another */
+.d3-roof-layer{position:absolute;inset:0;opacity:0;animation:d3-roof-cycle calc(var(--of,3) * 2.2s) infinite;animation-delay:calc(var(--n,0) * 2.2s)}
+@keyframes d3-roof-cycle{0%{opacity:0}8%,30%{opacity:1}40%,100%{opacity:0}}
+/* picking a roof: panels drop onto it and shimmer */
+.d3-roof-pick .d3-panels{box-shadow:0 0 18px rgba(255,201,60,.55)}
 /* 3D tilt cards (depth on hover) */
 :is(a,div,figure,span,li,article).d3-tilt{transform:perspective(1000px) rotateX(0) rotateY(0);transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s}
 .d3-tilt .d3-pop,.d3-tilt .d3-pop2{transform:translateZ(0);transition:transform .5s cubic-bezier(.2,.7,.2,1)}
@@ -100,5 +112,5 @@
 @keyframes sr-lit{from{filter:brightness(.45) saturate(.3)}}
 @keyframes sr-fan{from{rotate:y -24deg;translate:0 0 -120px;opacity:.2}}
 @media (prefers-reduced-motion:reduce){.sr,.sr-up,.sr-tilt,.sr-cam,.sr-sun,.sr-rise,.sr-lit>i,.sr-fan>*{animation:none !important}}
-@media (prefers-reduced-motion:reduce){.d3-world,.d3-sun,.d3-panels.lit>i,.d3-panels.d3-panels-grow>i,.d3-flow,.d3-beam,.d3-float,.d3-orbit,.d3-led{animation:none !important}.d3-sun{offset-distance:40%}.d3-tilt,.d3-tilt .d3-pop{transition:none}}
+@media (prefers-reduced-motion:reduce){.d3-world,.d3-sun,.d3-panels.lit>i,.d3-panels.d3-panels-grow>i,.d3-flow,.d3-beam,.d3-float,.d3-orbit,.d3-led,.d3-roof-metal::after,.d3-roof-layer{animation:none !important}.d3-sun{offset-distance:40%}.d3-tilt,.d3-tilt .d3-pop{transition:none}}
 }

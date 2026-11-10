@@ -4,7 +4,7 @@ import { AlertCircle, Check, Lock, MessageCircle } from "lucide-react";
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 
 import { Icon } from "@/components/icons";
-import { Scene } from "@/components/three-d/models";
+import { RoofModel, Scene, type RoofKind } from "@/components/three-d/models";
 import { SolutionModel } from "@/components/three-d/solution-model";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -286,7 +286,7 @@ export function ContactForm({
                 {t(ui, "cfRoofTitle")}
               </h2>
             </legend>
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] gap-2.5">
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-[repeat(auto-fit,minmax(140px,1fr))]">
               {content.roofs.map((r) => {
                 const on = roof === r.value;
                 return (
@@ -296,12 +296,13 @@ export function ContactForm({
                     aria-pressed={on}
                     onClick={() => setRoof(r.value as Roof)}
                     className={cn(
-                      "min-h-[52px] rounded-[14px] border-2 p-3 font-display text-sm font-bold text-navy-900",
+                      "flex min-h-[52px] flex-col gap-2 rounded-[14px] border-2 p-2 pb-3 font-display text-sm font-bold text-navy-900",
                       focusRing,
                       on ? "border-sky-600 bg-day-100" : "border-navy-900/10 bg-white hover:border-navy-900/30",
                     )}
                   >
-                    {r.label}
+                    <RoofModel kind={r.value as RoofKind} active={on} className="h-[84px] w-full rounded-[10px]" />
+                    <span className="px-1">{r.label}</span>
                   </button>
                 );
               })}

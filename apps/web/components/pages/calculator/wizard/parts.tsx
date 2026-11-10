@@ -43,6 +43,7 @@ export function Choices<T extends string>({
   cols = 2,
   label,
   badge,
+  media,
 }: {
   options: { value: string; label: string; sub?: string }[];
   value: T[];
@@ -51,6 +52,8 @@ export function Choices<T extends string>({
   cols?: 2 | 3 | 4;
   label: string;
   badge?: (v: T) => ReactNode;
+  /** Optional picture above each option (e.g. an animated roof). */
+  media?: (v: T, on: boolean) => ReactNode;
 }) {
   return (
     <div
@@ -59,6 +62,8 @@ export function Choices<T extends string>({
       className={cn(
         "grid gap-3",
         cols === 2 ? "sm:grid-cols-2" : cols === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2 lg:grid-cols-4",
+        // Picture cards sit two per row on phones so the list stays short.
+        media && "max-sm:grid-cols-2",
       )}
     >
       {options.map((o) => {
@@ -72,19 +77,22 @@ export function Choices<T extends string>({
             onClick={() => onPick(o.value as T)}
             className={cn(
               "relative flex min-h-[88px] flex-col items-start justify-center gap-1 rounded-2xl border-2 p-4 pr-11 text-left transition-[border-color,background,box-shadow] duration-200",
+              media && "justify-start p-2 pr-2 pb-4",
               focusRing,
               on
                 ? "border-sun-500 bg-dawn-50 shadow-[0_12px_28px_-18px_rgb(255_138_0/0.9)]"
                 : "border-navy-900/10 bg-white hover:border-navy-900/30",
             )}
           >
-            <span className="font-display text-lg font-bold text-navy-900">{o.label}</span>
-            {o.sub ? <span className="text-sm text-ink-muted">{o.sub}</span> : null}
+            {media ? <span className="mb-2 block w-full">{media(o.value as T, on)}</span> : null}
+            <span className={cn("font-display text-lg font-bold text-navy-900", media && "px-2 pr-9")}>{o.label}</span>
+            {o.sub ? <span className={cn("text-sm text-ink-muted", media && "px-2")}>{o.sub}</span> : null}
             {badge ? badge(o.value as T) : null}
             <span
               aria-hidden
               className={cn(
-                "absolute top-4 right-4 grid size-6 place-items-center rounded-full border-2",
+                "absolute right-4 grid size-6 place-items-center rounded-full border-2",
+                media ? "bottom-4" : "top-4",
                 on ? "border-sun-500 bg-sun-500 text-white" : "border-navy-900/20 bg-white",
                 multi ? "rounded-md" : "rounded-full",
               )}

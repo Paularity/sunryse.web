@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode, type Ref } from "react";
 
+import { RoofModel, type RoofKind } from "@/components/three-d/models";
 import { RoofArray } from "@/components/three-d/roof-array";
 import type { CalculatorConfig, UiLabels } from "@/lib/content/types";
 import type { CalculatorPageContent } from "@/lib/content/pages/calculator";
@@ -108,11 +109,11 @@ export function CalculatorWizard({
   useEffect(() => {
     const saved = loadContact();
     if (!saved) return;
-    const id = requestAnimationFrame(() => {
+    const id = window.setTimeout(() => {
       setContact(saved);
       setStep("property");
     });
-    return () => cancelAnimationFrame(id);
+    return () => window.clearTimeout(id);
   }, []);
 
   // Move focus to the new question (not on first load).
@@ -171,7 +172,10 @@ export function CalculatorWizard({
       base && chosenKwp
         ? BATTERY_OPTIONS[base.segment].map((b) => ({
             kwh: b,
-            e: estimate({ ...base, batteryKwh: b, systemType: b > 0 ? "hybrid" : base.systemType, systemKwp: chosenKwp }, c),
+            e: estimate(
+              { ...base, batteryKwh: b, systemType: b > 0 ? "hybrid" : base.systemType, systemKwp: chosenKwp },
+              c,
+            ),
           }))
         : [],
     [base, chosenKwp, c],
@@ -418,6 +422,7 @@ export function CalculatorWizard({
                   options={copy.roof.options}
                   value={roof ? [roof] : []}
                   onPick={(v) => setRoof(v as RoofType)}
+                  media={(v, on) => <RoofModel kind={v as RoofKind} active={on} className="h-24 w-full rounded-xl" />}
                 />
               </>
             ) : null}

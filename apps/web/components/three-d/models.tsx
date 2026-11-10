@@ -138,6 +138,11 @@ export function House({
   alpha = 24,
   cols = 4,
   rows = 3,
+  roofClass = "m-roof",
+  roofLayers,
+  panels = true,
+  panelsClassName,
+  panelCover = 1,
 }: {
   x?: number;
   y?: number;
@@ -147,6 +152,15 @@ export function House({
   alpha?: number;
   cols?: number;
   rows?: number;
+  /** Roof surface material class (e.g. d3-roof-metal). */
+  roofClass?: string;
+  /** Extra roof materials shown one after another (cross-fade), e.g. for "not sure". */
+  roofLayers?: string[];
+  /** Show the panel array on the roof. */
+  panels?: boolean;
+  panelsClassName?: string;
+  /** Share of the roof the panel array covers (centred), 0–1. */
+  panelCover?: number;
 }) {
   const rad = deg(alpha);
   const rise = Math.round(d * Math.tan(rad));
@@ -186,10 +200,29 @@ export function House({
           transform: `translateZ(${H2 + Math.round(o * Math.sin(rad))}px) rotateX(-${alpha}deg)`,
         }}
       >
-        <div className="m-roof" style={{ position: "absolute", inset: 0, borderRadius: 6 }} />
-        <div style={{ position: "absolute", left: 18, top: 16, transform: "translateZ(3px)" }}>
-          <Panels cols={cols} rows={rows} w={w - 16} h={L - 12} />
+        <div className={roofClass} style={{ position: "absolute", inset: 0, borderRadius: 6, overflow: "hidden" }}>
+          {roofLayers?.map((c, i) => (
+            <span key={c} className={cn("d3-roof-layer", c)} style={{ "--n": i, "--of": roofLayers.length } as Vars} />
+          ))}
         </div>
+        {panels ? (
+          <div
+            style={{
+              position: "absolute",
+              left: 18 + ((w - 16) * (1 - panelCover)) / 2,
+              top: 16 + ((L - 12) * (1 - panelCover)) / 2,
+              transform: "translateZ(3px)",
+            }}
+          >
+            <Panels
+              cols={cols}
+              rows={rows}
+              w={(w - 16) * panelCover}
+              h={(L - 12) * panelCover}
+              className={panelsClassName}
+            />
+          </div>
+        ) : null}
       </div>
     </div>
   );
@@ -410,5 +443,73 @@ export function Pin({
         <div className={cn("absolute bottom-2.5 left-0 w-max -translate-x-1/2", className)}>{children}</div>
       </div>
     </div>
+  );
+}
+
+/* ---------- roof pickers ---------- */
+
+export type RoofKind = "metal" | "tile" | "shingles" | "concrete" | "unsure";
+const ROOF_CLASS: Record<Exclude<RoofKind, "unsure" | "concrete">, string> = {
+  metal: "d3-roof-metal",
+  tile: "d3-roof-tile",
+  shingles: "d3-roof-shingles",
+};
+
+/** Flat concrete roof deck with two tilted panel racks (racks only when picked). */
+function FlatDeck({ active }: { active: boolean }) {
+  const h = 80;
+  return (
+    <div className="d3-model" style={{ position: "absolute", left: -110, top: -80 }}>
+      <div className="d3-shadow" style={{ left: -40, top: -10, width: 320, height: 230 }} />
+      <Box
+        w={220}
+        d={160}
+        h={h}
+        faces={{ top: "d3-roof-concrete", front: "m-wall", left: "m-wall-shade" }}
+        front={<span className="d3-window" style={{ left: 30 }} />}
+      />
+      {active
+        ? [22, 88].map((top) => (
+            <div key={top} style={{ position: "absolute", left: 26, top, transform: `translateZ(${h + 4}px)` }}>
+              <div style={{ transformOrigin: "0 100%", transform: "rotateX(-22deg)" }}>
+                <Panels cols={4} rows={1} w={168} h={44} className="d3-panels-grow" />
+              </div>
+            </div>
+          ))
+        : null}
+    </div>
+  );
+}
+
+/**
+ * Small animated roof for roof-type pickers: the material is shown on a house (or a flat deck), the scene sways
+ * gently, and when the option is picked solar panels drop onto the roof and shimmer. "Not sure" cycles materials.
+ */
+export function RoofModel({ kind, active, className }: { kind: RoofKind; active: boolean; className?: string }) {
+  return (
+    <Scene
+      ground={false}
+      className={cn(
+        "relative overflow-hidden bg-[linear-gradient(180deg,#d7ebff,#f4f8ff_65%,#fff6e6)]",
+        active && "d3-roof-pick",
+        className,
+      )}
+      worldClassName="top-[66%] [--d3-s:0.3] [animation-duration:9s]"
+    >
+      {kind === "concrete" ? (
+        <FlatDeck active={active} />
+      ) : (
+        <House
+          key={String(active)}
+          roofClass={kind === "unsure" ? ROOF_CLASS.metal : ROOF_CLASS[kind]}
+          roofLayers={kind === "unsure" ? [ROOF_CLASS.tile, ROOF_CLASS.shingles, "d3-roof-concrete"] : undefined}
+          panels={active}
+          panelsClassName="d3-panels-grow"
+          cols={3}
+          rows={2}
+          panelCover={0.64}
+        />
+      )}
+    </Scene>
   );
 }
