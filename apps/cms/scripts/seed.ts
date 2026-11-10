@@ -2,7 +2,7 @@
  * Idempotent seed. Single source of truth: apps/web/content/*.json (+ images in apps/web/public/images).
  *   pnpm --filter cms seed                 create what is missing, never touch existing entries
  *   SEED_FORCE=1 pnpm --filter cms seed    also overwrite existing entries from the JSON defaults
- *   SEED_FORCE_ONLY=calculator-config pnpm --filter cms seed   overwrite only the listed single types
+ *   SEED_FORCE_ONLY=calculator-config,warranty pnpm --filter cms seed   overwrite only the listed types
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -70,7 +70,7 @@ async function upsertCollection(strapi: any, uid: string, items: any[], key: str
   let updated = 0;
   for (const data of items) {
     const found = await strapi.documents(uid).findFirst({ filters: { [key]: data[key] } });
-    if (found && !FORCE) continue;
+    if (found && !(FORCE || FORCE_ONLY.some((name) => uid.endsWith(`.${name}`)))) continue;
     if (found) {
       await strapi.documents(uid).update({ documentId: found.documentId, data, status: 'published' });
       updated++;

@@ -22,10 +22,10 @@
     { "value": "[0,000]", "label": "Trees equivalent", "icon": "leaf", "tone": "leaf" }
   ],
   "warranty": [
-    { "item": "Panel performance", "years": "[xx] yrs" },
-    { "item": "Panel product", "years": "[xx] yrs" },
-    { "item": "Inverter", "years": "[xx] yrs" },
-    { "item": "Battery", "years": "[xx] yrs" },
-    { "item": "Workmanship", "years": "[xx] yrs" }
+    { "item": "Panel performance", "years": "30 yrs" },
+    { "item": "Panel product", "years": "12 yrs" },
+    { "item": "Inverter", "years": "5 yrs" },
+    { "item": "Battery", "years": "10 yrs" },
+    { "item": "Workmanship", "years": "5 yrs" }
   ]
 }
