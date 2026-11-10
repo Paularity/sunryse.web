@@ -14,7 +14,7 @@ export function RoofArray({
   hint,
   sun,
   className,
-  scale = "scale-[0.6] sm:scale-[0.78]",
+  scale = "[--d3-s:0.6] sm:[--d3-s:0.78]",
 }: {
   count: number;
   label: string;

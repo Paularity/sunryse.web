@@ -2,7 +2,7 @@
    Source of truth for the look: docs/designs/fx-3d.css (boards). Models: components/three-d/models.tsx. */
 @layer components {
 .d3-stage{position:relative;perspective:1600px;perspective-origin:50% 30%}
-.d3-world{position:absolute;left:50%;top:58%;width:0;height:0;transform-style:preserve-3d;transform:rotateX(60deg) rotateZ(-38deg);animation:d3-sway 14s ease-in-out infinite alternate}
+.d3-world{position:absolute;left:50%;top:58%;width:0;height:0;scale:var(--d3-s,1);transform-style:preserve-3d;transform:rotateX(60deg) rotateZ(-38deg);animation:d3-sway 14s ease-in-out infinite alternate}
 .d3-world *{transform-style:preserve-3d}
 @keyframes d3-sway{from{transform:rotateX(60deg) rotateZ(-44deg)}to{transform:rotateX(58deg) rotateZ(-30deg)}}
 /* ground */
@@ -51,6 +51,8 @@
 @keyframes d3-beam{0%,100%{opacity:.25}50%{opacity:.9}}
 /* floating glass card placed in 3D (counter-rotated to face the viewer) */
 .d3-billboard{position:absolute;transform:rotateZ(38deg) rotateX(-60deg)}
+/* labels keep their real size whatever the world scale (--d3-s) */
+.d3-billboard>div{scale:calc(1 / var(--d3-s,1));transform-origin:50% 100%}
 .d3-pin-dot{position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px #0B1F4D,0 0 12px rgba(255,201,60,.9)}
 .d3-pin-dot::after{content:"";position:absolute;left:3px;bottom:6px;width:2px;height:10px;background:linear-gradient(#0B1F4D,transparent)}
 .d3-float{animation:d3-float 6s ease-in-out infinite}
@@ -75,6 +77,9 @@
 .d3-webgl{opacity:0;transition:opacity .9s ease}
 [data-webgl=ready]>.d3-webgl{opacity:1}
 [data-webgl=ready]>.d3-stage{opacity:0;visibility:hidden;transition:opacity .9s ease,visibility 0s .9s}
+/* configurator: night windows glow, brownout goes dark */
+.d3-night .d3-window{background:linear-gradient(160deg,#ffe6a8,#ffc35a);box-shadow:inset 0 0 0 3px rgba(255,255,255,.6),0 0 14px rgba(255,201,90,.9)}
+.d3-dark .d3-window{background:#1c2a5c;box-shadow:inset 0 0 0 3px rgba(255,255,255,.25)}
 .d3-cam{position:absolute;inset:0;transform-style:preserve-3d}
 /* scroll-driven motion (CSS scroll timelines). With nothing to scroll (canvas boards) everything shows its end state. */
 @supports (animation-timeline:view()){

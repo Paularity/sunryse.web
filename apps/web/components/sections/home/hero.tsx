@@ -112,7 +112,7 @@ export function HeroSection({ hero, estimate, ui }: { hero: HomeContent["hero"];
           <Scene
             label={t(ui, "heroSceneAria")}
             className={stageInset}
-            worldClassName="scale-[0.66] max-sm:left-[57%] max-sm:top-[62%] sm:scale-100 lg:scale-[0.86] xl:scale-[1.02]"
+            worldClassName="[--d3-s:0.66] max-sm:left-[57%] max-sm:top-[62%] sm:[--d3-s:1] lg:[--d3-s:0.86] xl:[--d3-s:1.02]"
             sun={
               <div data-d3-sun className="d3-sun size-24 sm:size-[130px] lg:size-[150px]">
                 <span className="d3-orbit" />

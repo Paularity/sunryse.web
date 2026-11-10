@@ -57,7 +57,7 @@ export function HeroSceneFrame({
   photo,
   sun = true,
   className,
-  worldClassName = "scale-[0.62] sm:scale-[0.9] lg:scale-[0.95] xl:scale-[1.05]",
+  worldClassName = "[--d3-s:0.62] sm:[--d3-s:0.9] lg:[--d3-s:0.95] xl:[--d3-s:1.05]",
   backdrop = "bg-[linear-gradient(180deg,#cfe6ff,#eef5ff_58%,#fff3dc)]",
 }: {
   world: ReactNode;

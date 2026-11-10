@@ -228,7 +228,7 @@ export function ContactForm({
                       className="-mx-1 -mt-1 h-[84px] w-[calc(100%+8px)] overflow-hidden rounded-xl bg-[linear-gradient(180deg,#e6f2ff,#f7faff)]"
                       worldClassName={cn(
                         "top-[62%] [animation-duration:9s]",
-                        p.value === "industrial" ? "scale-[0.26]" : "scale-[0.3]",
+                        p.value === "industrial" ? "[--d3-s:0.26]" : "[--d3-s:0.3]",
                       )}
                     >
                       <SolutionModel slug={p.value} />

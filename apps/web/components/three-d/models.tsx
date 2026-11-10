@@ -340,7 +340,7 @@ export function Factory({
 /** Perspective stage + camera rig + world. `camRef` lets client code move the camera on scroll. */
 export function Scene({
   children,
-  scale = 1,
+  scale,
   sun,
   className,
   style,
@@ -367,7 +367,7 @@ export function Scene({
     >
       {sun}
       <div className="d3-cam" data-d3-cam>
-        <div className={cn("d3-world", worldClassName)} style={{ scale }}>
+        <div className={cn("d3-world", worldClassName)} style={scale === undefined ? undefined : { scale }}>
           {ground ? <div className="d3-ground" /> : null}
           {children}
         </div>

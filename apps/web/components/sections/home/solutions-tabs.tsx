@@ -121,7 +121,7 @@ export function SolutionsTabs({
           <Scene
             label={t(ui, "solutionSceneAria", { title: s.title.toLowerCase() })}
             className="size-full overflow-hidden rounded-[18px] bg-[linear-gradient(180deg,#cfe6ff,#eef5ff_58%,#fff3dc)]"
-            worldClassName="scale-[0.62] sm:scale-[0.86] lg:scale-[0.74] xl:scale-[0.86]"
+            worldClassName="[--d3-s:0.62] sm:[--d3-s:0.86] lg:[--d3-s:0.74] xl:[--d3-s:0.86]"
           >
             <div key={s.slug} className="animate-in duration-700 zoom-in-90 fade-in motion-reduce:animate-none">
               <SolutionModel slug={s.slug} />

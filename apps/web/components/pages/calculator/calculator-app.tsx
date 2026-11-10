@@ -245,7 +245,7 @@ export function CalculatorApp({ config, content, ui, initialBill, initialSegment
             label={t(ui, "roofPreview", { n: r.panels })}
             hint={t(ui, "roofPreviewHint")}
             ariaLabel={t(ui, "roofPreviewAria", { n: r.panels })}
-            scale="scale-[0.55] sm:scale-[0.8]"
+            scale="[--d3-s:0.55] sm:[--d3-s:0.8]"
             className="h-[200px] rounded-[22px] border border-navy-900/8 bg-[linear-gradient(180deg,#cfe6ff,#eef5ff_60%,#fff3dc)] sm:h-[250px]"
           />
 
