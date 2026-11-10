@@ -99,12 +99,6 @@
 @keyframes sr-rise{from{opacity:0;translate:0 120px;scale:.8}}
 @keyframes sr-lit{from{filter:brightness(.45) saturate(.3)}}
 @keyframes sr-fan{from{rotate:y -24deg;translate:0 0 -120px;opacity:.2}}
-/* scroll cue */
-.scroll-cue{position:absolute;left:50%;bottom:92px;z-index:3;translate:-50% 0;display:flex;flex-direction:column;align-items:center;gap:8px;color:#0B1F4D;font:500 11px var(--font-label);letter-spacing:.12em;text-transform:uppercase}
-.scroll-cue .mouse{width:24px;height:38px;border-radius:14px;border:2px solid #0B1F4D;display:flex;justify-content:center;padding-top:7px;box-sizing:border-box;background:rgba(255,255,255,.5);backdrop-filter:blur(6px)}
-.scroll-cue .mouse i{width:4px;height:8px;border-radius:2px;background:#FF8A00;animation:cue 1.8s ease-in-out infinite}
-@keyframes cue{0%{opacity:0;translate:0 -4px}30%{opacity:1}100%{opacity:0;translate:0 12px}}
-@media (max-width:1023px){.scroll-cue{display:none}}
-@media (prefers-reduced-motion:reduce){.sr,.sr-up,.sr-tilt,.sr-cam,.sr-sun,.sr-rise,.sr-lit>i,.sr-fan>*,.scroll-cue .mouse i{animation:none !important}}
+@media (prefers-reduced-motion:reduce){.sr,.sr-up,.sr-tilt,.sr-cam,.sr-sun,.sr-rise,.sr-lit>i,.sr-fan>*{animation:none !important}}
 @media (prefers-reduced-motion:reduce){.d3-world,.d3-sun,.d3-panels.lit>i,.d3-panels.d3-panels-grow>i,.d3-flow,.d3-beam,.d3-float,.d3-orbit,.d3-led{animation:none !important}.d3-sun{offset-distance:40%}.d3-tilt,.d3-tilt .d3-pop{transition:none}}
 }

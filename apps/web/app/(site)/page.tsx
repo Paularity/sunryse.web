@@ -1,8 +1,8 @@
 import { BenefitsDock } from "@/components/sections/home/benefits";
 import { BrandRail } from "@/components/sections/home/brand-rail";
 import { CalculatorTeaser } from "@/components/sections/home/calculator-teaser";
+import { HeroConfigurator } from "@/components/sections/home/configurator/hero-configurator";
 import { FaqSection } from "@/components/sections/home/faq";
-import { HeroSection } from "@/components/sections/home/hero";
 import { ImpactBand } from "@/components/sections/home/impact";
 import { ProcessSection } from "@/components/sections/home/process";
 import { ProjectsBento } from "@/components/sections/home/projects";
@@ -13,19 +13,38 @@ import { SolutionsSection } from "@/components/sections/home/solutions";
 import { TestimonialsSection } from "@/components/sections/home/testimonials";
 import { WhySection } from "@/components/sections/home/why";
 import {
-  getBrands, getCalculatorConfig, getFaqs, getHome, getImpact, getProjects, getServices, getSite, getSolutions, getTestimonials, getWarranty,
+  getBrands,
+  getCalculatorConfig,
+  getFaqs,
+  getHome,
+  getImpact,
+  getProjects,
+  getServices,
+  getSite,
+  getSolutions,
+  getTestimonials,
+  getWarranty,
 } from "@/lib/content";
-import { calculateSolar } from "@/lib/solar-calc";
 
 export default async function HomePage() {
-  const [site, home, services, solutions, projects, testimonials, faqs, brands, impact, warranty, config] = await Promise.all([
-    getSite(), getHome(), getServices(), getSolutions(), getProjects(), getTestimonials(), getFaqs(), getBrands(), getImpact(), getWarranty(), getCalculatorConfig(),
-  ]);
-  const estimate = calculateSolar({ monthlyBill: home.hero.billDefault, segment: "residential", systemType: "grid-tie" }, config);
+  const [site, home, services, solutions, projects, testimonials, faqs, brands, impact, warranty, config] =
+    await Promise.all([
+      getSite(),
+      getHome(),
+      getServices(),
+      getSolutions(),
+      getProjects(),
+      getTestimonials(),
+      getFaqs(),
+      getBrands(),
+      getImpact(),
+      getWarranty(),
+      getCalculatorConfig(),
+    ]);
 
   return (
     <>
-      <HeroSection hero={home.hero} estimate={estimate} ui={site.ui} />
+      <HeroConfigurator hero={home.hero} config={config} ui={site.ui} />
       <BenefitsDock items={home.benefits} ui={site.ui} />
       <BrandRail label={home.marquee.label} brands={brands} />
       <SolutionsSection content={home.solutions} solutions={solutions} ui={site.ui} />

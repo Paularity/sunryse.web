@@ -23,6 +23,7 @@ import { t } from "@/lib/content/ui";
 import { formatPeso, type Segment } from "@/lib/solar-calc";
 import { cn } from "@/lib/utils";
 
+import { HeroStatus } from "./hero-status";
 import {
   backupHours,
   createStore,
@@ -245,7 +246,16 @@ function useWebglCapable() {
 
 /* ---------- the section ---------- */
 
-export function HeroLab({ hero, config, ui }: { hero: HomeContent["hero"]; config: CalculatorConfig; ui: UiLabels }) {
+/** Home hero: a live solar configurator (bill, property, battery, time of day, brownout) around a 3D scene. */
+export function HeroConfigurator({
+  hero,
+  config,
+  ui,
+}: {
+  hero: HomeContent["hero"];
+  config: CalculatorConfig;
+  ui: UiLabels;
+}) {
   const uid = useId();
   const [store] = useState(() =>
     createStore({
@@ -328,6 +338,12 @@ export function HeroLab({ hero, config, ui }: { hero: HomeContent["hero"]; confi
       <div className="relative z-[2] container-site grid gap-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:grid-rows-[auto_auto] lg:gap-x-10 lg:gap-y-4">
         {/* pitch (phones: headline → scene → configurator; desktop: left column) */}
         <div className="flex min-w-0 flex-col gap-4 lg:self-end">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <Hud light dot="amber">
+              <HeroStatus status={hero.status} />
+            </Hud>
+            <span className={cn(mono, "text-navy-900")}>{hero.tagline}</span>
+          </div>
           <h1 className="font-display text-[40px] leading-[1.02] font-bold tracking-[-0.045em] text-navy-900 sm:text-[clamp(44px,3.9vw,56px)]">
             <RichText text={hero.heading} />
           </h1>
@@ -356,7 +372,7 @@ export function HeroLab({ hero, config, ui }: { hero: HomeContent["hero"]; confi
                   aria-label={t(ui, "cfgBillAria")}
                   value={bill ? bill.toLocaleString("en-PH") : ""}
                   onChange={(ev) => setBill(Number(ev.target.value.replace(/[^\d]/g, "")))}
-                  className="w-[110px] border-0 bg-transparent font-display text-xl font-bold text-navy-900 outline-none"
+                  className="min-h-11 w-[110px] border-0 bg-transparent font-display text-xl font-bold text-navy-900 outline-none"
                 />
               </span>
             </div>
@@ -372,7 +388,7 @@ export function HeroLab({ hero, config, ui }: { hero: HomeContent["hero"]; confi
               className="h-11 w-full cursor-pointer accent-sun-500"
             />
             <div
-              className="flex flex-wrap gap-1.5 lg:max-xl:hidden"
+              className="flex flex-wrap gap-1.5 lg:hidden"
               role="group"
               aria-label={t(ui, "quickBillAmounts")}
             >

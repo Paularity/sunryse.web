@@ -7,7 +7,9 @@ export function HeroStatus({ status }: { status: string }) {
   return (
     <>
       <ScrambleLabel lines={[status]} className="text-[11px]" />
-      <span aria-hidden className="animate-[fx-blink_1s_steps(1)_infinite]">_</span>
+      <span aria-hidden className="animate-[fx-blink_1s_steps(1)_infinite]">
+        _
+      </span>
     </>
   );
 }
