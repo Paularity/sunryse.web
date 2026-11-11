@@ -89,8 +89,21 @@ The engine's price formula is now `systemPrice()`, which the estimate and the pa
       (edits made only in Strapi are not covered)
 - [x] Closest package and chosen payment saved in `calcSnapshot`; `preferredPayment` on the lead
 
-### Phase 5: QA
-- [ ] Unit tests: financing math, closest-package mapping, CMS fallbacks
-- [ ] `/qa /pricing` and the homepage: 360 / 768 / 1280, keyboard and focus, reduced motion
-- [ ] Empty states: no price ("Ask for price"), no packages for a type (hide the group), no payment options (hide the section)
-- [ ] `CONTENT-NEEDED.md` §4 updated with the package, add-on and financing details above
+### Phase 5: QA ✅
+- [x] Unit tests: financing math, closest package, package price check, CMS fallbacks for the Pricing page and the
+      packages / add-ons / payment options (`lib/content/pricing-content.test.ts`, with a mocked Strapi), empty states
+      (`components/pricing/pricing-empty-states.test.tsx`: no price shows "Ask for price", no packages or options hides the
+      section). 57 tests in total.
+- [x] Audit at 360 / 768 / 1280 of /pricing, the homepage pricing sections, the contact form and the residential packages:
+      no sideways scroll, no text under 11 px, one h1, no skipped heading levels, no duplicate ids, labelled controls.
+      Fixed: add-on checkboxes had no accessible name; "See all packages" on solution pages was an 18 px target.
+- [x] Keyboard: jump chips show a focus outline; Enter opens Check eligibility with focus inside, Tab stays in the panel,
+      Escape closes it and returns focus to the button.
+- [x] Reduced motion: the global `prefers-reduced-motion` rule in `globals.css` also stops the panel and card transitions.
+- [x] `CONTENT-NEEDED.md` §4 lists the package, add-on and financing details still needed.
+
+Left as they are (site-wide patterns, not pricing-specific):
+- Breadcrumb links ("Home") are 14 px tall on every page.
+- Choice buttons marked as radios (calculator answers, payment rows, term chips) are separate Tab stops. They work with
+  Enter or Space, but not with arrow keys.
+- Opening a `#section` link directly lands at the top (smooth scrolling ignores the hash on load); clicks work.

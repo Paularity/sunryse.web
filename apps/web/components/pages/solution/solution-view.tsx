@@ -301,7 +301,10 @@ function Packages({
             </div>
             <div className="flex max-w-[380px] flex-col items-start gap-4">
               <p className="m-0 leading-[1.6] text-ink-muted">{p.lead}</p>
-              <Link href="/pricing" className={cn(MONO, "text-[12px] text-sky-600 hover:text-sun-700")}>
+              <Link
+                href="/pricing"
+                className={cn(MONO, "inline-flex min-h-11 items-center text-[12px] text-sky-600 hover:text-sun-700")}
+              >
                 {copy.seeAllLabel} →
               </Link>
             </div>

@@ -356,12 +356,14 @@ export function ContactForm({
                   return (
                     <label
                       key={a.slug}
+                      htmlFor={`${uid}-addon-${a.slug}`}
                       className={cn(
                         "flex min-h-11 cursor-pointer items-center gap-2.5 rounded-xl border-2 px-3.5 text-sm font-semibold text-navy-900",
                         on ? "border-sun-500 bg-dawn-50" : "border-navy-900/10 bg-white hover:border-navy-900/30",
                       )}
                     >
                       <Checkbox
+                        id={`${uid}-addon-${a.slug}`}
                         checked={on}
                         onCheckedChange={(v) =>
                           setAddOns((list) => (v === true ? [...list, a.slug] : list.filter((x) => x !== a.slug)))
