@@ -41,8 +41,11 @@ until Strapi answers, and retries within a minute. Keeping Strapi awake avoids t
 
 **Steps** (same as sections 2–6 below, with these swaps):
 1. Neon: create a project in Singapore and copy its connection string into `DATABASE_URL` (with `DATABASE_SSL=true`).
-2. Render: create a free web service from the repo in Singapore. Build: `pnpm install --frozen-lockfile && pnpm --filter cms build`.
-   Start: `pnpm --filter cms start`. Add the CMS environment from section 2, with `PUBLIC_URL=https://<name>.onrender.com`.
+2. Render: create a free web service from the repo in Singapore (Root Directory empty).
+   Build: `npm install -g pnpm@10.34.9 && pnpm install --frozen-lockfile && NODE_OPTIONS=--max-old-space-size=3072 pnpm --filter cms build`
+   (the admin panel build needs more than the 460 MB heap cap that `NODE_OPTIONS` sets for the running server).
+   Start: `cd apps/cms && npm run start`.
+   Don't use `corepack enable`: Node 22.12's corepack has outdated signing keys and fails with "Cannot find matching keyid". Add the CMS environment from section 2, with `PUBLIC_URL=https://<name>.onrender.com`.
 3. Copy the content with `strapi transfer`, create the two API tokens, and add the UptimeRobot monitor.
 4. Vercel Hobby: import the repo as in section 4, with `STRAPI_URL=https://<name>.onrender.com` and
    `NEXT_PUBLIC_SITE_URL=https://<project>.vercel.app`. Set `WEB_REVALIDATE_URL` on Render to `https://<project>.vercel.app/api/revalidate`.
