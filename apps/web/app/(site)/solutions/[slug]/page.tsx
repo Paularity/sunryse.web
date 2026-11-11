@@ -4,7 +4,8 @@ import { Suspense } from "react";
 
 import { DetailSkeleton } from "@/components/pages/detail-skeleton";
 import { SolutionView } from "@/components/pages/solution/solution-view";
-import { getSite, getSolution } from "@/lib/content";
+import { getPackages, getSite, getSolution } from "@/lib/content";
+import { getPricingPage } from "@/lib/content/pages/pricing";
 import { getSolutionDetails, SOLUTION_SLUGS } from "@/lib/content/pages/solution";
 
 type Params = { slug: string };
@@ -21,7 +22,11 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     title: `${solution.title} solar`,
     description: solution.summary,
     alternates: { canonical: `/solutions/${solution.slug}` },
-    openGraph: { title: `${solution.title} solar | SunRyse`, description: solution.summary, images: [solution.image.src] },
+    openGraph: {
+      title: `${solution.title} solar | SunRyse`,
+      description: solution.summary,
+      images: [solution.image.src],
+    },
   };
 }
 
@@ -36,9 +41,22 @@ export default function SolutionPage({ params }: { params: Promise<Params> }) {
 
 async function SolutionContent({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
-  const [solution, site] = await Promise.all([getSolution(slug), getSite()]);
+  const [solution, site, packages, pricing] = await Promise.all([
+    getSolution(slug),
+    getSite(),
+    getPackages(),
+    getPricingPage(),
+  ]);
   const details = await getSolutionDetails(slug);
   if (!solution || !details) notFound();
 
-  return <SolutionView solution={solution} details={details} ui={site.ui} />;
+  return (
+    <SolutionView
+      solution={solution}
+      details={details}
+      ui={site.ui}
+      packages={packages.filter((p) => p.segment === solution.slug)}
+      pricingCopy={pricing.packages}
+    />
+  );
 }

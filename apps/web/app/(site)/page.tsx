@@ -1,6 +1,7 @@
 import { BenefitsDock } from "@/components/sections/home/benefits";
 import { BrandRail } from "@/components/sections/home/brand-rail";
 import { CalculatorTeaser } from "@/components/sections/home/calculator-teaser";
+import { PackagesTeaser, PaymentsSection } from "@/components/pricing/pricing-sections";
 import { HeroConfigurator } from "@/components/sections/home/configurator/hero-configurator";
 import { FaqSection } from "@/components/sections/home/faq";
 import { ImpactBand } from "@/components/sections/home/impact";
@@ -19,6 +20,8 @@ import {
   getFaqs,
   getHome,
   getImpact,
+  getPackages,
+  getPaymentOptions,
   getProjects,
   getServices,
   getSite,
@@ -26,24 +29,43 @@ import {
   getTestimonials,
   getWarranty,
 } from "@/lib/content";
+import { getPricingPage } from "@/lib/content/pages/pricing";
 import { getStoryPage } from "@/lib/content/pages/story";
 
 export default async function HomePage() {
-  const [site, home, services, solutions, projects, testimonials, faqs, brands, impact, warranty, config, story] =
-    await Promise.all([
-      getSite(),
-      getHome(),
-      getServices(),
-      getSolutions(),
-      getProjects(),
-      getTestimonials(),
-      getFaqs(),
-      getBrands(),
-      getImpact(),
-      getWarranty(),
-      getCalculatorConfig(),
-      getStoryPage(),
-    ]);
+  const [
+    site,
+    home,
+    services,
+    solutions,
+    projects,
+    testimonials,
+    faqs,
+    brands,
+    impact,
+    warranty,
+    config,
+    story,
+    pricing,
+    packages,
+    paymentOptions,
+  ] = await Promise.all([
+    getSite(),
+    getHome(),
+    getServices(),
+    getSolutions(),
+    getProjects(),
+    getTestimonials(),
+    getFaqs(),
+    getBrands(),
+    getImpact(),
+    getWarranty(),
+    getCalculatorConfig(),
+    getStoryPage(),
+    getPricingPage(),
+    getPackages(),
+    getPaymentOptions(),
+  ]);
 
   return (
     <>
@@ -55,6 +77,8 @@ export default async function HomePage() {
       <SolutionsSection content={home.solutions} solutions={solutions} ui={site.ui} />
       <ServicesSection content={home.services} services={services} ui={site.ui} />
       <ProcessSection content={home.process} ui={site.ui} />
+      <PackagesTeaser copy={pricing.packages} packages={packages} />
+      <PaymentsSection copy={pricing.payments} options={paymentOptions} />
       <CalculatorTeaser content={home.calculator} config={config} ui={site.ui} />
       <SolarVsGrid content={home.solarVsGrid} config={config} ui={site.ui} />
       <ImpactBand content={home.impact} stats={impact} />

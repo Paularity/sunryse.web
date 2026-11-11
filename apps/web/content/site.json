@@ -280,6 +280,10 @@
       "href": "/calculator"
     },
     {
+      "label": "Pricing",
+      "href": "/pricing"
+    },
+    {
       "label": "Projects",
       "href": "/projects"
     },
@@ -313,6 +317,10 @@
           {
             "label": "Industrial",
             "href": "/solutions/industrial"
+          },
+          {
+            "label": "Packages & pricing",
+            "href": "/pricing"
           },
           {
             "label": "Savings calculator",

@@ -5,11 +5,15 @@ import type { ReactNode } from "react";
 import { SolutionSubnav } from "./subnav";
 import { Icon } from "@/components/icons";
 import { Hud } from "@/components/fx";
+import { PackageCard } from "@/components/pricing/pricing-cards";
+import { CARD_GRID } from "@/components/pricing/pricing-sections";
 import { RooftopWorld } from "@/components/three-d/models";
 import { HeroSceneFrame } from "@/components/three-d/scenes";
 import { SolutionModel } from "@/components/three-d/solution-model";
+import type { PricingPage } from "@/lib/content/pages/pricing";
 import type { SolutionDetails } from "@/lib/content/pages/solution";
-import type { Solution, UiLabels } from "@/lib/content/types";
+import type { Package, Solution, UiLabels } from "@/lib/content/types";
+import { pickPackages } from "@/lib/pricing";
 import { t } from "@/lib/content/ui";
 import { cn } from "@/lib/utils";
 
@@ -51,9 +55,16 @@ function Rich({ text, hl, depth = 0 }: { text: string; hl: string; depth?: numbe
   return <>{out}</>;
 }
 
-type Props = { solution: Solution; details: SolutionDetails; ui: UiLabels };
+type Props = {
+  solution: Solution;
+  details: SolutionDetails;
+  ui: UiLabels;
+  /** Catalogue packages for this segment and the pricing copy for their cards. */
+  packages: Package[];
+  pricingCopy: PricingPage["packages"];
+};
 
-export function SolutionView({ solution, details, ui }: Props) {
+export function SolutionView({ solution, details, ui, packages, pricingCopy }: Props) {
   const stripNum = (s: string) => s.replace(/^\[[^\]]*\]\s*/, "");
   const subnav = [
     { id: "systems", label: t(ui, "subnavSystems") },
@@ -69,7 +80,7 @@ export function SolutionView({ solution, details, ui }: Props) {
       <SolutionSubnav items={subnav} cta={{ label: t(ui, "calculateSavings"), href: "/calculator" }} ui={ui} />
       <Systems details={details} ui={ui} />
       <HowItWorks details={details} ui={ui} />
-      <Packages details={details} />
+      <Packages details={details} packages={packages} copy={pricingCopy} />
       <NetMetering details={details} />
       <ProjectsFaq details={details} />
       <CtaBand details={details} />
@@ -78,7 +89,7 @@ export function SolutionView({ solution, details, ui }: Props) {
 }
 
 /* ───────────────────────────── Hero ───────────────────────────── */
-function Hero({ solution, details, ui }: Props) {
+function Hero({ solution, details, ui }: Pick<Props, "solution" | "details" | "ui">) {
   return (
     <section className="relative isolate overflow-hidden bg-[linear-gradient(180deg,var(--color-sky-200)_0%,var(--color-day-100)_45%,var(--color-dawn-50)_100%)] pt-[var(--site-top)] pb-[80px]">
       <div
@@ -267,8 +278,43 @@ function FlowNode({ n, ui }: { n: SolutionDetails["how"]["nodes"][number]; ui: U
 }
 
 /* ───────────────────────────── 03 Packages ───────────────────────────── */
-function Packages({ details }: { details: SolutionDetails }) {
+function Packages({
+  details,
+  packages,
+  copy,
+}: {
+  details: SolutionDetails;
+  packages: Package[];
+  copy: PricingPage["packages"];
+}) {
   const p = details.packages;
+  // Packages from the catalogue (Strapi → Package) when this segment has any; the old per-page cards otherwise.
+  const catalogue = pickPackages(packages, 3);
+  if (catalogue.length) {
+    return (
+      <section id="packages" className={cn(SECTION, "scroll-mt-[calc(var(--site-top)+56px)] bg-white")}>
+        <div className="container-site">
+          <div className="mb-[40px] flex flex-wrap items-end justify-between gap-[24px]">
+            <div>
+              <span className={EYEBROW}>{p.eyebrow}</span>
+              <h2 className={cn(H2, "mt-[16px] mb-0")}>{p.heading}</h2>
+            </div>
+            <div className="flex max-w-[380px] flex-col items-start gap-4">
+              <p className="m-0 leading-[1.6] text-ink-muted">{p.lead}</p>
+              <Link href="/pricing" className={cn(MONO, "text-[12px] text-sky-600 hover:text-sun-700")}>
+                {copy.seeAllLabel} →
+              </Link>
+            </div>
+          </div>
+          <div className={CARD_GRID}>
+            {catalogue.map((pkg) => (
+              <PackageCard key={pkg.slug} pkg={pkg} copy={copy} />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
   return (
     <section id="packages" className={cn(SECTION, "scroll-mt-[calc(var(--site-top)+56px)] bg-white")}>
       <div className="container-site">

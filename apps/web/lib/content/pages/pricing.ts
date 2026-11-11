@@ -17,7 +17,8 @@ const POPULATE = {
 };
 
 const PACKAGE_KEYS = [
-  "eyebrow", "heading", "lead", "note", "priceLabel", "askPriceLabel", "ctaLabel", "expandableLabel",
+  "eyebrow", "heading", "lead", "note", "priceLabel", "askPriceLabel", "ctaLabel", "seeAllLabel", "expandableLabel",
+  "panelsLabel", "batteryLabel",
   "gridTieLabel", "hybridLabel", "offGridLabel",
 ];
 

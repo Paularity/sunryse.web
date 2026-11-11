@@ -2,7 +2,7 @@
   "collectionName": "components_pricing_packages_copies",
   "info": {
     "displayName": "Packages copy",
-    "description": "Text around the package cards. {n} = number of panels.",
+    "description": "Text around the package cards. {n} = panels; {count}/{watt} = panel count and watts; {kwh} = battery size.",
     "icon": "priceTag"
   },
   "options": {},
@@ -34,7 +34,16 @@
     "ctaLabel": {
       "type": "string"
     },
+    "seeAllLabel": {
+      "type": "string"
+    },
     "expandableLabel": {
+      "type": "string"
+    },
+    "panelsLabel": {
+      "type": "string"
+    },
+    "batteryLabel": {
       "type": "string"
     },
     "gridTieLabel": {

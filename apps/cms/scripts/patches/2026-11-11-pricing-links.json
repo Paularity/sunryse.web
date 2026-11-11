@@ -1,0 +1,4 @@
+{
+  "global.nav.add": [{ "label": "Pricing", "href": "/pricing", "after": "Calculator" }],
+  "global.footer.add": [{ "column": "Solutions", "label": "Packages & pricing", "href": "/pricing", "after": "Industrial" }]
+}

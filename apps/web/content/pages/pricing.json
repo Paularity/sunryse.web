@@ -23,7 +23,10 @@
     "priceLabel": "Starts at",
     "askPriceLabel": "Ask for price",
     "ctaLabel": "Request quote",
+    "seeAllLabel": "See all packages",
     "expandableLabel": "Expandable up to {n} panels",
+    "panelsLabel": "{count} × {watt} W panels",
+    "batteryLabel": "{kwh} kWh battery",
     "gridTieLabel": "Grid-tie systems",
     "hybridLabel": "Hybrid systems (with battery)",
     "offGridLabel": "Off-grid systems"

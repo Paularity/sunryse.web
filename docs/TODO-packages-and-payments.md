@@ -47,14 +47,20 @@ vs ₱378k) because of ₱58k/kWp and ₱32k/kWh, so SunRyse should confirm both
 - [x] Web: types, `fromStrapi` loaders and `getPackages / getAddOns / getPaymentOptions` with JSON fallbacks in `collections.json`;
       public read and setup:web token permissions; seed.
 
-### Phase 2: Where it shows
-- [ ] Homepage section components (`sections.packages`, `sections.payment-options`) in the dynamic zone, optional heading overrides
-- [ ] New **/pricing** page: packages grouped by system type (tabs or filter chips; count in each heading), add-ons, payment
-      options, short FAQ, CTA. Add it to the nav and the sitemap.
-- [ ] **Homepage**: compact "Packages" section (featured 3 + "See all packages") and a "Payment options" section, placed through
-      the homepage dynamic zone so editors control the order.
-- [ ] **Solution pages**: replace the hard-coded `packages.items` with catalogue packages filtered by segment (keep the copy).
-- [ ] Featured card uses the existing sun-gradient treatment; "Starts at" price uses the display font; mobile is one column with full-width CTAs.
+### Phase 2: Where it shows ✅
+Done: `/pricing` (packages grouped by system type with jump chips and counts, "all-in includes" list, add-ons, payment options,
+CTA band), in the nav ("Pricing", after Calculator) and the footer, and in the sitemap. On the homepage, after "How it works", there are
+two sections: packages (the featured package and its neighbours, plus "See all packages") and payment options. Solution pages use
+catalogue packages for their segment, falling back to the old cards when there are none (Industrial today).
+Choices: the homepage order is fixed in code, so no new dynamic-zone blocks. The homepage sections reuse the Pricing page text,
+the **featured** box picks the homepage row, and homepage eyebrows drop the "[ 01 ]" number so the existing numbering stays.
+Nav and footer links were added with `scripts/patches/2026-11-11-pricing-links.json` (patch script now supports links).
+- [x] /pricing page, nav, footer, sitemap
+- [x] Homepage packages and payment sections
+- [x] Solution pages use catalogue packages
+- [x] Featured card styling; phone layout checked at 375 px (no sideways scroll, 44 px targets)
+- [ ] Short FAQ on /pricing (needs pricing/financing questions in Strapi → FAQ)
+- [ ] Opening `/pricing#payments` directly lands at the top (smooth scrolling ignores the hash on load; clicks work). Site-wide, not pricing-only.
 
 ### Phase 3: Actions and leads
 - [ ] "Request quote" → `/contact?package=<slug>`, so the form shows the package and pre-fills it.
