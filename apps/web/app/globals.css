@@ -463,6 +463,17 @@
 @keyframes fx-marquee {
   to { transform: translateX(-50%); }
 }
+/* Scrollytelling story: scroll cue + loader ring */
+@keyframes story-cue {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(300%); }
+}
+@keyframes story-ring {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(255 201 60 / 0.5); }
+  60% { box-shadow: 0 0 0 18px rgb(255 201 60 / 0); }
+}
+.story-scroll-cue { animation: story-cue 1.6s cubic-bezier(0.6, 0, 0.3, 1) infinite; }
+.story-loader { animation: story-ring 1.8s ease-out infinite; }
 @keyframes fx-blink {
   50% {
     opacity: 0.35;

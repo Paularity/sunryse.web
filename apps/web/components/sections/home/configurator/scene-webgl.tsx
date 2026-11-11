@@ -19,7 +19,7 @@ import { energyAt, size, type Energy, type HeroState, type Store } from "./model
  * 1 unit = 100 px of the CSS models; floor = XZ plane, +Y up, the camera looks at the front (+Z) and left (−X) walls.
  */
 
-const C = {
+export const C = {
   wall: "#ffffff",
   roof: "#1b2f63",
   frame: "#e6eef9",
@@ -45,7 +45,7 @@ function canvasTexture(w: number, h: number, draw: (g: CanvasRenderingContext2D)
   return t;
 }
 
-const panelTexture = () =>
+export const panelTexture = () =>
   canvasTexture(96, 144, (g) => {
     const grad = g.createLinearGradient(0, 0, 96, 144);
     grad.addColorStop(0, "#3a78f0");
@@ -84,7 +84,7 @@ const groundTexture = () =>
     }
   });
 
-const glowTexture = (inner: string, outer: string) =>
+export const glowTexture = (inner: string, outer: string) =>
   canvasTexture(256, 256, (g) => {
     const r = g.createRadialGradient(128, 128, 0, 128, 128, 128);
     r.addColorStop(0, inner);
@@ -110,10 +110,10 @@ const glazingTexture = () =>
 
 /* ---------- per-frame state shared by all parts ---------- */
 
-type Frame = { s: HeroState; sized: CalcResult; e: Energy; t: number; night: number };
-type FrameRef = { current: Frame };
+export type Frame = { s: HeroState; sized: CalcResult; e: Energy; t: number; night: number };
+export type FrameRef = { current: Frame };
 
-function useFrameState(store: Store, config: CalcConfig): FrameRef {
+export function useFrameState(store: Store, config: CalcConfig): FrameRef {
   const cache = useRef({ key: "", sized: size(store.get(), config) });
   const ref = useRef<Frame>(null as unknown as Frame);
   if (!ref.current) {
@@ -204,7 +204,7 @@ function useLitMaterial(frame: FrameRef, color = C.glass) {
 
 /* ---------- models ---------- */
 
-function House({ frame, panelMat }: { frame: FrameRef; panelMat: THREE.Material }) {
+export function House({ frame, panelMat }: { frame: FrameRef; panelMat: THREE.Material }) {
   const w = 220,
     d = 160,
     h = 96,
@@ -263,7 +263,7 @@ function House({ frame, panelMat }: { frame: FrameRef; panelMat: THREE.Material 
   );
 }
 
-function Building({ frame, panelMat }: { frame: FrameRef; panelMat: THREE.Material }) {
+export function Building({ frame, panelMat }: { frame: FrameRef; panelMat: THREE.Material }) {
   const glaze = useMemo(() => glazingTexture(), []);
   const lit = useLitMaterial(frame, "#ffffff");
   useEffect(() => {
@@ -287,7 +287,7 @@ function Building({ frame, panelMat }: { frame: FrameRef; panelMat: THREE.Materi
   );
 }
 
-function Factory({ frame, panelMat }: { frame: FrameRef; panelMat: THREE.Material }) {
+export function Factory({ frame, panelMat }: { frame: FrameRef; panelMat: THREE.Material }) {
   const lit = useLitMaterial(frame);
   return (
     <group>
@@ -308,7 +308,7 @@ function Factory({ frame, panelMat }: { frame: FrameRef; panelMat: THREE.Materia
 }
 
 /** Small neighbour house: lights on at night unless the grid is down. */
-function Neighbour({
+export function Neighbour({
   frame,
   position,
   rot = 0,
@@ -353,7 +353,7 @@ function Neighbour({
   );
 }
 
-function Battery({ frame, position }: { frame: FrameRef; position: [number, number, number] }) {
+export function Battery({ frame, position }: { frame: FrameRef; position: [number, number, number] }) {
   const g = useRef<THREE.Group>(null);
   const bars = useMemo(
     () =>
@@ -390,7 +390,7 @@ function Battery({ frame, position }: { frame: FrameRef; position: [number, numb
   );
 }
 
-function GridPole({ frame, position }: { frame: FrameRef; position: [number, number, number] }) {
+export function GridPole({ frame, position }: { frame: FrameRef; position: [number, number, number] }) {
   const lamp = useMemo(() => new THREE.MeshBasicMaterial({ color: C.export, toneMapped: false }), []);
   useFrame(({ clock }) => {
     const { s } = frame.current;
@@ -415,7 +415,7 @@ function GridPole({ frame, position }: { frame: FrameRef; position: [number, num
 
 /* ---------- energy flows: glowing beads along an arc ---------- */
 
-function Flow({
+export function Flow({
   frame,
   from,
   to,

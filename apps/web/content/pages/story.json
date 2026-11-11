@@ -1,0 +1,133 @@
+{
+  "meta": {
+    "title": "A day on solar",
+    "description": "Scroll through a day on a SunRyse solar island: sunrise to brownout, panels to the grid."
+  },
+  "loading": {
+    "brand": "SunRyse Solar Services",
+    "title": "A day on solar",
+    "note": "Building the island…"
+  },
+  "hud": {
+    "scroll": "Scroll",
+    "chapter": "Chapter {n}",
+    "jump": "Go to chapter {n}: {title}"
+  },
+  "chapters": [
+    {
+      "id": "sunrise",
+      "label": "Sunrise",
+      "eyebrow": "A day on solar",
+      "title": "Power your home & business with the sun.",
+      "body": "Scroll through one day on a SunRyse island, from the first light on the panels to the moment the grid goes dark.",
+      "ctas": [
+        {
+          "label": "Get my estimate",
+          "href": "/calculator",
+          "variant": "sun"
+        },
+        {
+          "label": "Book a free survey",
+          "href": "/contact",
+          "variant": "line"
+        }
+      ]
+    },
+    {
+      "id": "panels",
+      "label": "Panels wake up",
+      "eyebrow": "08:30 · Morning",
+      "title": "The panels wake with the sun.",
+      "body": "Tier-1 panels, sized to your bill and your roof, start producing from first light. Our engineers design the layout around shade, tilt and wind.",
+      "pins": [
+        {
+          "anchor": "roof",
+          "text": "Tier-1 panels"
+        }
+      ]
+    },
+    {
+      "id": "inverter",
+      "label": "The inverter",
+      "eyebrow": "10:30 · Late morning",
+      "title": "One box runs the whole house.",
+      "body": "A hybrid, battery-ready inverter turns sunlight into the power your appliances use, charges the battery and decides what goes to the grid.",
+      "pins": [
+        {
+          "anchor": "inverter",
+          "text": "Hybrid inverter"
+        },
+        {
+          "anchor": "battery",
+          "text": "Battery"
+        }
+      ]
+    },
+    {
+      "id": "grid",
+      "label": "Selling back",
+      "eyebrow": "12:30 · Noon",
+      "title": "Extra sun goes back to the grid.",
+      "body": "At midday you make more than you use. With net metering, every exported kWh earns a credit on your bill. We file the paperwork for you.",
+      "pins": [
+        {
+          "anchor": "pole",
+          "text": "Net meter · exporting"
+        }
+      ]
+    },
+    {
+      "id": "brownout",
+      "label": "Brownout",
+      "eyebrow": "19:30 · Evening",
+      "title": "The street goes dark. You don't.",
+      "body": "When the grid fails, your battery keeps the lights, fans and fridge running, quietly, for hours, while the neighbours wait for the power to come back.",
+      "pins": [
+        {
+          "anchor": "battery",
+          "text": "Battery backup on"
+        },
+        {
+          "anchor": "street",
+          "text": "Grid down"
+        }
+      ]
+    },
+    {
+      "id": "business",
+      "label": "Business & industry",
+      "eyebrow": "11:00 · Workday",
+      "title": "Built for shops, offices and factories too.",
+      "body": "Solar output peaks when businesses use the most power. Rooftop arrays on offices, malls and plants cut daytime power costs.",
+      "pins": [
+        {
+          "anchor": "office",
+          "text": "Commercial rooftop"
+        },
+        {
+          "anchor": "factory",
+          "text": "Industrial array"
+        }
+      ]
+    },
+    {
+      "id": "finale",
+      "label": "Your turn",
+      "eyebrow": "17:00 · Golden hour",
+      "title": "Ready to rise with the sun?",
+      "body": "Get your system size, all-in price and payback in two minutes, then book a free site survey.",
+      "ctas": [
+        {
+          "label": "Get my estimate",
+          "href": "/calculator",
+          "variant": "sun"
+        },
+        {
+          "label": "Book a free survey",
+          "href": "/contact",
+          "variant": "line"
+        }
+      ]
+    }
+  ]
+}
