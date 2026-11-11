@@ -5,7 +5,17 @@ import { t } from "@/lib/content/ui";
 const telHref = (phone: string) => `tel:${phone.replace(/[^\d+]/g, "")}`;
 
 /** Phone/tablet only: Call + Messenger before the long form. */
-export function QuickContact({ ui, phone, messengerUrl, divider }: { ui: UiLabels; phone: string; messengerUrl: string; divider: string }) {
+export function QuickContact({
+  ui,
+  phone,
+  messengerUrl,
+  divider,
+}: {
+  ui: UiLabels;
+  phone: string;
+  messengerUrl: string;
+  divider: string;
+}) {
   const base =
     "flex min-h-14 items-center justify-center gap-2.5 rounded-2xl font-bold outline-none focus-visible:ring-3 focus-visible:ring-sky-600/40";
   return (
@@ -13,15 +23,34 @@ export function QuickContact({ ui, phone, messengerUrl, divider }: { ui: UiLabel
       <a href={telHref(phone)} className={`${base} bg-navy-900 text-white`}>
         <Icon name="phone" /> {t(ui, "callNow")}
       </a>
-      <a href={messengerUrl} target="_blank" rel="noopener noreferrer" className={`${base} border border-navy-900/15 bg-white text-navy-900`}>
+      <a
+        href={messengerUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`${base} border border-navy-900/15 bg-white text-navy-900`}
+      >
         <Icon name="message" /> {t(ui, "messenger")}
       </a>
-      <p className="col-span-2 m-0 text-center font-label text-[11px] tracking-[0.12em] text-ink-muted uppercase">{divider}</p>
+      <p className="col-span-2 m-0 text-center font-label text-[11px] tracking-[0.12em] text-ink-muted uppercase">
+        {divider}
+      </p>
     </div>
   );
 }
 
-function Row({ icon, label, value, href, external }: { icon: IconName; label: string; value: string; href: string; external?: boolean }) {
+function Row({
+  icon,
+  label,
+  value,
+  href,
+  external,
+}: {
+  icon: IconName;
+  label: string;
+  value: string;
+  href: string;
+  external?: boolean;
+}) {
   return (
     <a
       href={href}
@@ -47,7 +76,13 @@ export function SideContact({ site, nextSteps }: { site: Site; nextSteps: string
       <div className="fx-dark flex flex-col gap-3.5 rounded-3xl p-6 max-[1000px]:hidden">
         <span className="font-label text-[11px] tracking-[0.12em] text-sun-300 uppercase">{t(ui, "preferToTalk")}</span>
         <Row icon="phone" label={t(ui, "callOrViber")} value={site.phone} href={telHref(site.phone)} />
-        <Row icon="message" label={t(ui, "messenger")} value={t(ui, "cfFacebookPage")} href={site.messengerUrl} external />
+        <Row
+          icon="message"
+          label={t(ui, "messenger")}
+          value={t(ui, "cfFacebookPage")}
+          href={site.messengerUrl}
+          external
+        />
         <Row icon="mail" label={t(ui, "email")} value={site.email} href={`mailto:${site.email}`} />
         <p className="m-0 flex items-center gap-2 text-[13px] text-ink-glow">
           <Icon name="clock" className="size-4" /> {site.hours}
@@ -56,7 +91,7 @@ export function SideContact({ site, nextSteps }: { site: Site; nextSteps: string
       <div
         role="img"
         aria-label={t(ui, "cfMapAria")}
-        className="glass-card relative h-[220px] overflow-hidden rounded-3xl"
+        className="relative h-[220px] overflow-hidden rounded-3xl glass-card"
         style={{
           background:
             "repeating-linear-gradient(0deg,rgb(11 31 77/.05) 0 1px,transparent 1px 32px),repeating-linear-gradient(90deg,rgb(11 31 77/.05) 0 1px,transparent 1px 32px),var(--color-day-100)",
@@ -68,8 +103,10 @@ export function SideContact({ site, nextSteps }: { site: Site; nextSteps: string
           {t(ui, "cfMapLabel")}
         </span>
       </div>
-      <div className="glass-card flex flex-col gap-3 rounded-3xl p-[22px]">
-        <span className="font-label text-[11px] tracking-[0.12em] text-ink-muted uppercase">{t(ui, "whatHappensNext")}</span>
+      <div className="flex flex-col gap-3 rounded-3xl p-[22px] glass-card">
+        <span className="font-label text-[11px] tracking-[0.12em] text-ink-muted uppercase">
+          {t(ui, "whatHappensNext")}
+        </span>
         <ol className="m-0 flex list-none flex-col gap-3 p-0">
           {nextSteps.map((ns, i) => (
             <li key={ns} className="flex items-center gap-3 text-[15px]">

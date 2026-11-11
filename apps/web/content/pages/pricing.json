@@ -45,7 +45,18 @@
     "ctaLabel": "Check eligibility",
     "requirementsLabel": "What you need",
     "tip": "The calculator shows your estimated monthly savings, so you can compare them with a monthly payment.",
-    "disclaimer": "Monthly amounts are estimates only. Final terms and rates depend on the lender's approval."
+    "disclaimer": "Monthly amounts are estimates only. Final terms and rates depend on the lender's approval.",
+    "estimateHeading": "Estimate your monthly payment",
+    "packageLabel": "Package",
+    "termLabel": "Term",
+    "monthsLabel": "{n} months",
+    "monthlyLabel": "≈ {amount} a month",
+    "downPaymentLabel": "Down payment ({pct}%)",
+    "rateNote": "At {rate}% a year. Your bank confirms the final rate.",
+    "noRateNote": "Before interest. Your bank or card issuer sets the rate.",
+    "noTermNote": "Terms are confirmed with your quote.",
+    "cashNote": "Pay {amount} in full, with no interest.",
+    "applyLabel": "Ask about this option"
   },
   "cta": {
     "heading": "Not sure which size fits?",

@@ -30,8 +30,20 @@ export type ContactFormContent = {
   successBody: string;
 };
 
+/** Choices from /pricing (packages, add-ons, payment options), slimmed down for the client. */
+export type PricingChoices = {
+  packages: { slug: string; name: string; segment: Segment; systemType: string }[];
+  addOns: { slug: string; name: string }[];
+  payments: { kind: string; title: string }[];
+};
+
 export type ContactFormProps = {
   content: ContactFormContent;
+  choices?: PricingChoices;
+  /** From "Request quote" / "Add to quote" / "Check eligibility" links on /pricing. */
+  initialPackage?: string;
+  initialAddOns?: string[];
+  initialPayment?: string;
   ui: UiLabels;
   messengerUrl: string;
   initialBill?: number;
@@ -48,6 +60,12 @@ const fieldCls =
 const lblCls = "font-label text-[11px] tracking-[0.12em] text-ink-muted uppercase";
 const focusRing = "outline-none focus-visible:ring-3 focus-visible:ring-sky-600/40";
 
+const NO_CHOICES: PricingChoices = { packages: [], addOns: [], payments: [] };
+const selectCls = cn(
+  fieldCls,
+  "w-full border px-3 outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
+);
+
 const INTEREST_FOR_SYSTEM: Record<string, string> = { "grid-tie": "Grid-tie", hybrid: "Hybrid + battery" };
 
 export function ContactForm({
@@ -57,19 +75,29 @@ export function ContactForm({
   initialBill,
   initialSegment,
   initialSystem,
+  choices = NO_CHOICES,
+  initialPackage,
+  initialAddOns = [],
+  initialPayment,
 }: ContactFormProps) {
   const uid = useId();
   const fromCalc = initialBill !== undefined || initialSegment !== undefined || initialSystem !== undefined;
+  const fromPricing = !!(initialPackage || initialAddOns.length || initialPayment);
+  const startPackage = choices.packages.find((p) => p.slug === initialPackage);
+  const system = initialSystem ?? startPackage?.systemType;
 
   const [step, setStep] = useState(1);
-  const [segment, setSegment] = useState<Segment>(initialSegment ?? "residential");
+  const [segment, setSegment] = useState<Segment>(initialSegment ?? startPackage?.segment ?? "residential");
+  const [pkg, setPkg] = useState(startPackage?.slug ?? "");
+  const [addOns, setAddOns] = useState<string[]>(initialAddOns.filter((a) => choices.addOns.some((x) => x.slug === a)));
+  const [payment, setPayment] = useState(
+    choices.payments.some((p) => p.kind === initialPayment) ? initialPayment! : "",
+  );
   const [roof, setRoof] = useState<Roof>("metal");
   const [bill, setBill] = useState(initialBill ? String(initialBill) : "");
   const [interest, setInterest] = useState(
-    initialSystem &&
-      INTEREST_FOR_SYSTEM[initialSystem] &&
-      content.interests.includes(INTEREST_FOR_SYSTEM[initialSystem])
-      ? INTEREST_FOR_SYSTEM[initialSystem]
+    system && INTEREST_FOR_SYSTEM[system] && content.interests.includes(INTEREST_FOR_SYSTEM[system])
+      ? INTEREST_FOR_SYSTEM[system]
       : content.interests[0],
   );
   const [city, setCity] = useState("");
@@ -112,7 +140,10 @@ export function ContactForm({
     calcSnapshot: fromCalc
       ? { monthlyBill: initialBill, segment: initialSegment, systemType: initialSystem }
       : undefined,
-    source: fromCalc ? "calculator" : "contact-form",
+    source: fromCalc ? "calculator" : fromPricing ? "pricing" : "contact-form",
+    packageName: choices.packages.find((p) => p.slug === pkg)?.name,
+    addOns: addOns.length ? choices.addOns.filter((a) => addOns.includes(a.slug)).map((a) => a.name) : undefined,
+    preferredPayment: choices.payments.find((p) => p.kind === payment)?.title,
   };
 
   const parsed = leadSchema.safeParse(payload);
@@ -264,10 +295,7 @@ export function ContactForm({
                 id={`${uid}-interest`}
                 value={interest}
                 onChange={(e) => setInterest(e.target.value)}
-                className={cn(
-                  fieldCls,
-                  "w-full border px-3 outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
-                )}
+                className={selectCls}
               >
                 {content.interests.map((o) => (
                   <option key={o}>{o}</option>
@@ -275,6 +303,78 @@ export function ContactForm({
               </select>
             </div>
           </div>
+          {choices.packages.length || choices.payments.length ? (
+            <div className="grid grid-cols-2 gap-3 max-[640px]:grid-cols-1">
+              {choices.packages.length ? (
+                <div className="flex flex-col gap-1.5">
+                  <Label htmlFor={`${uid}-package`} className={lblCls}>
+                    {t(ui, "cfPackage")}
+                  </Label>
+                  <select
+                    id={`${uid}-package`}
+                    value={pkg}
+                    onChange={(e) => setPkg(e.target.value)}
+                    className={selectCls}
+                  >
+                    <option value="">{t(ui, "cfPackageNone")}</option>
+                    {choices.packages.map((p) => (
+                      <option key={p.slug} value={p.slug}>
+                        {p.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : null}
+              {choices.payments.length ? (
+                <div className="flex flex-col gap-1.5">
+                  <Label htmlFor={`${uid}-payment`} className={lblCls}>
+                    {t(ui, "cfPayment")}
+                  </Label>
+                  <select
+                    id={`${uid}-payment`}
+                    value={payment}
+                    onChange={(e) => setPayment(e.target.value)}
+                    className={selectCls}
+                  >
+                    <option value="">{t(ui, "cfPaymentNone")}</option>
+                    {choices.payments.map((p) => (
+                      <option key={p.kind} value={p.kind}>
+                        {p.title}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+          {choices.addOns.length ? (
+            <fieldset className="m-0 flex flex-col gap-2 border-0 p-0">
+              <legend className={cn(lblCls, "mb-1.5 p-0")}>{t(ui, "cfAddOns")}</legend>
+              <div className="flex flex-wrap gap-2">
+                {choices.addOns.map((a) => {
+                  const on = addOns.includes(a.slug);
+                  return (
+                    <label
+                      key={a.slug}
+                      className={cn(
+                        "flex min-h-11 cursor-pointer items-center gap-2.5 rounded-xl border-2 px-3.5 text-sm font-semibold text-navy-900",
+                        on ? "border-sun-500 bg-dawn-50" : "border-navy-900/10 bg-white hover:border-navy-900/30",
+                      )}
+                    >
+                      <Checkbox
+                        checked={on}
+                        onCheckedChange={(v) =>
+                          setAddOns((list) => (v === true ? [...list, a.slug] : list.filter((x) => x !== a.slug)))
+                        }
+                        className="size-5 rounded-md border-navy-900/40 bg-white"
+                      />
+                      {a.name}
+                    </label>
+                  );
+                })}
+              </div>
+            </fieldset>
+          ) : null}
         </div>
       ) : null}
 

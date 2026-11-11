@@ -5,6 +5,13 @@ export function fill(template: string, values: Record<string, string | number>) 
   return template.replace(/\{(\w+)\}/g, (m, k: string) => (k in values ? String(values[k]) : m));
 }
 
+/** URL-safe key for names without a slug field (add-ons): "Extra battery module" → "extra-battery-module". */
+export const slugify = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
 /** Drop a leading section number ("[ 01 ] System packages" → "System packages") where the copy is reused elsewhere. */
 export const unnumbered = (eyebrow: string) => eyebrow.replace(/^\s*\[\s*\d+\s*\]\s*/, "");
 

@@ -1,5 +1,12 @@
 import { z } from "zod";
 
+/** Pricing choices (stored as readable names so the sales team sees "6 kW Hybrid System", not a slug). */
+const pricingFields = {
+  packageName: z.string().trim().max(120).optional(),
+  addOns: z.array(z.string().trim().min(1).max(120)).max(12).optional(),
+  preferredPayment: z.string().trim().max(80).optional(),
+};
+
 /** Quote request form — shared by the client form and the /api/leads route. */
 export const leadSchema = z.object({
   name: z.string().trim().min(2, "Please enter your name").max(120),
@@ -20,6 +27,7 @@ export const leadSchema = z.object({
   consent: z.literal(true, { error: "Please agree to be contacted" }),
   calcSnapshot: z.record(z.string(), z.unknown()).optional(),
   source: z.string().max(64).optional(),
+  ...pricingFields,
 });
 
 export type LeadInput = z.infer<typeof leadSchema>;
@@ -32,6 +40,7 @@ export const leadUpdateSchema = z.object({
   propertyStatus: z.enum(["existing", "construction"]).optional(),
   stage: z.enum(["calculator-started", "estimate-ready", "quote-request"]).optional(),
   calcSnapshot: z.record(z.string(), z.unknown()).optional(),
+  ...pricingFields,
 });
 
 /** Strapi document ids are 24+ lowercase alphanumerics. */

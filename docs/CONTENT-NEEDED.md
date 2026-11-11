@@ -56,7 +56,7 @@ Strapi: **Service**, **Solution**, **FAQ**. Drafts already exist for 14 services
 - [ ] Warranties: panels (product + performance), inverter, battery, workmanship, in years
 - [ ] Brands you install (9 seeded: check the list) and official logos for each
 - [ ] Typical timeline: site survey → design → permits → install → net-metering (days/weeks per step)
-- [ ] Payment options (Strapi → **Payment option**): cash, card installment, bank loan are seeded. Which banks or partners, terms (months), rates, down payment, required documents; add Pag-IBIG / GSIS / in-house if offered
+- [ ] Payment options (Strapi → **Payment option**): cash, card installment, bank loan are seeded. Which banks or partners, terms (months), rates, down payment, required documents; add Pag-IBIG / GSIS / in-house if offered. Placeholder maximum terms are set (card 24 months, bank loan 60) so the "Check eligibility" estimate works; interest rates are empty, so estimates show "before interest" until you add them
 - [ ] Net-metering: do you handle the application with the distribution utility (e.g. Meralco)? How long does it take?
 - [ ] Answers to check in the FAQ, especially net metering, brownouts, maintenance, typhoon resistance
 

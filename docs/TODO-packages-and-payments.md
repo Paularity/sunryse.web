@@ -62,16 +62,20 @@ Nav and footer links were added with `scripts/patches/2026-11-11-pricing-links.j
 - [ ] Short FAQ on /pricing (needs pricing/financing questions in Strapi → FAQ)
 - [ ] Opening `/pricing#payments` directly lands at the top (smooth scrolling ignores the hash on load; clicks work). Site-wide, not pricing-only.
 
-### Phase 3: Actions and leads
-- [ ] "Request quote" → `/contact?package=<slug>`, so the form shows the package and pre-fills it.
-- [ ] Add-ons: v1 checkboxes on the contact form (`?addons=` pre-checks them); a full "Add to quote" basket is optional, later.
-- [ ] "Check eligibility" → a drawer with requirements, a monthly-payment estimate (package/price × term × rate) and a CTA to
-      `/contact?payment=<kind>`.
-- [ ] Lead: add `package`, `addOns`, `preferredPayment` (Strapi schema + zod `lead-schema.ts` + `/api/leads`); a payment
-      preference select on the contact form and in the calculator's contact step.
+### Phase 3: Actions and leads ✅
+Done: "Request quote" (`?package=`), "Add to quote" (`?addons=`) and "Ask about this option" (`?payment=&package=`) pre-fill
+the contact form, which now has a package choice, a payment choice and add-on checkboxes. Leads store `packageName`,
+`addOns` and `preferredPayment` as readable text (source "pricing"). "Check eligibility" opens a side panel with what you need,
+a monthly estimate (package × term; "before interest" while the rate is empty), the disclaimer and a link to the contact form.
+Placeholder maximum terms: card 24 months, bank loan 60 months (the highlights say the same, in [brackets]).
+- [x] Request quote / Add to quote / Ask about this option links pre-fill the contact form
+- [x] Contact form: package, payment and add-on choices
+- [x] Check eligibility panel with monthly estimate
+- [x] Lead fields: Strapi schema, zod (`lead-schema.ts`), `/api/leads` (checked with a test lead, then deleted)
+- [ ] Moved to Phase 4: payment choice in the calculator, asked on the result step next to the monthly payments rather than at the first step
 
 ### Phase 4: Calculator integration
-- [ ] `lib/financing.ts` (pure, tested): monthly payment = P·r / (1 − (1 + r)^−n), 0 % → P / n, down payment, total interest.
+- [x] `lib/financing.ts` (pure, tested; built in Phase 3 for the panel): monthly payment = P·r / (1 − (1 + r)^−n), 0 % → P / n, down payment, total interest.
 - [ ] Proposal: monthly payment per payment option next to the monthly savings ("₱X/month vs saves ₱Y/month").
 - [ ] Proposal: "Closest standard package" (nearest catalogue kWp of the same system type) with its "Starts at" price and link.
 - [ ] Decide how the catalogue and the formula relate. Proposed: the catalogue is the public "starts at" list and the calculator

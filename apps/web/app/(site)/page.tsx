@@ -78,7 +78,7 @@ export default async function HomePage() {
       <ServicesSection content={home.services} services={services} ui={site.ui} />
       <ProcessSection content={home.process} ui={site.ui} />
       <PackagesTeaser copy={pricing.packages} packages={packages} />
-      <PaymentsSection copy={pricing.payments} options={paymentOptions} />
+      <PaymentsSection copy={pricing.payments} options={paymentOptions} packages={packages} />
       <CalculatorTeaser content={home.calculator} config={config} ui={site.ui} />
       <SolarVsGrid content={home.solarVsGrid} config={config} ui={site.ui} />
       <ImpactBand content={home.impact} stats={impact} />

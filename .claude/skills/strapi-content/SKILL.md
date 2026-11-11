@@ -32,7 +32,7 @@ description: Strapi 5 content model and Next.js data-fetching conventions for Su
 - **solar-package** ("Package") — name, slug, systemType (grid_tie|hybrid|off_grid → web "grid-tie"…), segment, inverterKw, panelCount, panelWatt, batteryKwh, batterySpec, expandableTo, bestFor, price (null = ask), badge, featured, image, order. kWp is computed in `getPackages`
 - **add-on** — name, spec, description, price (null = ask), priceFrom, unit, order · **payment-option** — title, kind (cash|card|bank_loan|gov_loan|in_house), icon, tone, description, highlight, termMonths, annualRate (% per year), downPaymentPct, requirements[] (text-item), ctaLabel, order
 - **article** — title, slug, cover, excerpt, body, tags, publishedDate (not `publishedAt`)
-- **lead** — create-only via web API route; never publicly readable
+- **lead** — create-only via web API route; never publicly readable. Pricing fields: packageName, addOns (json list of names), preferredPayment (title), source "pricing" from /pricing links
 
 ## Shared components
 link (label, href, newTab, menu?), feature-item (title, description, icon, tone), text-item (value), amount-item (amount),

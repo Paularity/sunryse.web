@@ -2,7 +2,7 @@
   "collectionName": "components_pricing_payments_copies",
   "info": {
     "displayName": "Payments copy",
-    "description": "",
+    "description": "Payment options section and the Check eligibility panel. {n} months, {amount} pesos, {pct} %, {rate} % a year.",
     "icon": "priceTag"
   },
   "options": {},
@@ -28,6 +28,39 @@
     },
     "disclaimer": {
       "type": "text"
+    },
+    "estimateHeading": {
+      "type": "string"
+    },
+    "packageLabel": {
+      "type": "string"
+    },
+    "termLabel": {
+      "type": "string"
+    },
+    "monthsLabel": {
+      "type": "string"
+    },
+    "monthlyLabel": {
+      "type": "string"
+    },
+    "downPaymentLabel": {
+      "type": "string"
+    },
+    "rateNote": {
+      "type": "string"
+    },
+    "noRateNote": {
+      "type": "string"
+    },
+    "noTermNote": {
+      "type": "string"
+    },
+    "cashNote": {
+      "type": "string"
+    },
+    "applyLabel": {
+      "type": "string"
     }
   }
 }

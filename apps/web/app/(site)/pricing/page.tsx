@@ -130,7 +130,7 @@ export default async function PricingPage() {
       ) : null}
 
       {/* WAYS TO PAY */}
-      <PaymentsSection id="payments" copy={payments} options={options} numbered />
+      <PaymentsSection id="payments" copy={payments} options={options} packages={packages} numbered />
 
       {/* CTA band */}
       <section className="bg-[linear-gradient(120deg,var(--color-sun-300),var(--color-sun-500)_45%,var(--color-sun-600))]">

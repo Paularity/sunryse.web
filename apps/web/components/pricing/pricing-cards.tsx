@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { ArrowRight, Check } from "lucide-react";
 
 import { Icon, TONE } from "@/components/icons";
+import { EligibilityPanel, type PricedPackage } from "@/components/pricing/eligibility-panel";
 import { Button } from "@/components/ui/button";
 import type { PricingPage } from "@/lib/content/pages/pricing";
 import type { AddOn, Package, PaymentOption } from "@/lib/content/types";
-import { fill } from "@/lib/pricing";
+import { fill, slugify } from "@/lib/pricing";
 import { formatPeso } from "@/lib/solar-calc";
 import { cn } from "@/lib/utils";
 
@@ -15,11 +15,6 @@ const FEATURED = "border-sun-500! bg-[linear-gradient(170deg,var(--color-dawn-50
 type Heading = "h3" | "h4";
 
 const kwpText = (kwp: number) => `${Number(kwp.toFixed(2))} kWp`;
-const slugify = (s: string) =>
-  s
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
 
 /** Price block: "Starts at ₱817,000", or "Ask for price" when the CMS leaves it empty. */
 function Price({ label, price, ask, unit }: { label: string; price: number | null; ask: string; unit?: string }) {
@@ -101,7 +96,15 @@ export function AddOnCard({ item, copy, ask }: { item: AddOn; copy: PricingPage[
   );
 }
 
-export function PaymentCard({ option, copy }: { option: PaymentOption; copy: PricingPage["payments"] }) {
+export function PaymentCard({
+  option,
+  copy,
+  packages,
+}: {
+  option: PaymentOption;
+  copy: PricingPage["payments"];
+  packages: PricedPackage[];
+}) {
   return (
     <article className={cn(CARD, "fx-ring")}>
       <span className="glow-tile size-12 rounded-xl" style={{ ["--c" as string]: TONE[option.tone] }}>
@@ -110,35 +113,11 @@ export function PaymentCard({ option, copy }: { option: PaymentOption; copy: Pri
       <h3 className="m-0 font-display text-[22px] font-bold tracking-[-0.02em]">{option.title}</h3>
       {option.description ? <p className="m-0 leading-[1.55] text-ink-muted">{option.description}</p> : null}
       {option.highlight ? <span className={cn(MONO, "text-[12px] text-sun-700")}>{option.highlight}</span> : null}
-      {option.requirements.length ? (
-        <details className="group border-t border-line pt-4">
-          <summary
-            className={cn(
-              MONO,
-              "flex min-h-11 cursor-pointer list-none items-center justify-between gap-2 text-[11px] text-navy-900 [&::-webkit-details-marker]:hidden",
-            )}
-          >
-            {copy.requirementsLabel}
-            <ArrowRight aria-hidden className="size-4 transition-transform group-open:rotate-90" />
-          </summary>
-          <ul className="m-0 mt-2 flex list-none flex-col gap-2 p-0 text-sm">
-            {option.requirements.map((r) => (
-              <li key={r} className="flex gap-2">
-                <Check aria-hidden className="mt-0.5 size-4 shrink-0 text-leaf-600" />
-                {r}
-              </li>
-            ))}
-          </ul>
-        </details>
-      ) : null}
-      <Button asChild variant="line" size="xl" className="mt-auto w-full">
-        <Link
-          href={`/contact?payment=${option.kind}`}
-          aria-label={`${option.ctaLabel || copy.ctaLabel}: ${option.title}`}
-        >
-          {option.ctaLabel || copy.ctaLabel}
-        </Link>
-      </Button>
+      <EligibilityPanel option={option} copy={copy} packages={packages} />
     </article>
   );
 }
+
+/** Packages that have a price, for payment estimates (featured first in the picker's default). */
+export const pricedPackages = (list: Package[]): PricedPackage[] =>
+  list.flatMap((p) => (p.price === null ? [] : [{ slug: p.slug, name: p.name, price: p.price, featured: p.featured }]));

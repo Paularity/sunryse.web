@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { Section, SectionHeader } from "@/components/fx";
-import { PackageCard, PaymentCard } from "@/components/pricing/pricing-cards";
+import { PackageCard, PaymentCard, pricedPackages } from "@/components/pricing/pricing-cards";
 import { Button } from "@/components/ui/button";
 import type { PricingPage } from "@/lib/content/pages/pricing";
 import type { Package, PaymentOption } from "@/lib/content/types";
@@ -56,17 +56,21 @@ export function PackagesTeaser({
 export function PaymentsSection({
   copy,
   options,
+  packages,
   id,
   numbered = false,
   className,
 }: {
   copy: PricingPage["payments"];
   options: PaymentOption[];
+  /** For the monthly estimate in each option's "Check eligibility" panel. */
+  packages: Package[];
   id?: string;
   numbered?: boolean;
   className?: string;
 }) {
   if (!options.length) return null;
+  const priced = pricedPackages(packages);
   return (
     <Section id={id} tone="tint" labelledBy="pay-h" className={cn("scroll-mt-[calc(var(--site-top)+16px)]", className)}>
       <SectionHeader
@@ -77,7 +81,7 @@ export function PaymentsSection({
       />
       <div className={CARD_GRID}>
         {options.map((o) => (
-          <PaymentCard key={o.title} option={o} copy={copy} />
+          <PaymentCard key={o.title} option={o} copy={copy} packages={priced} />
         ))}
       </div>
       <div className="mt-6 flex max-w-[760px] flex-col gap-2 text-sm leading-[1.6] text-ink-muted">

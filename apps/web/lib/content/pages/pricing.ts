@@ -22,6 +22,12 @@ const PACKAGE_KEYS = [
   "gridTieLabel", "hybridLabel", "offGridLabel",
 ];
 
+const PAYMENT_KEYS = [
+  "eyebrow", "heading", "lead", "ctaLabel", "requirementsLabel", "tip", "disclaimer", "estimateHeading", "packageLabel",
+  "termLabel", "monthsLabel", "monthlyLabel", "downPaymentLabel", "rateNote", "noRateNote", "noTermNote", "cashNote",
+  "applyLabel",
+];
+
 /** The Pricing page single type mapped to the page shape; missing pieces stay undefined. */
 async function fromStrapi(): Promise<unknown> {
   if (!process.env.STRAPI_URL) return null;
@@ -39,7 +45,7 @@ async function fromStrapi(): Promise<unknown> {
         includes: items(p.packages.includes, (i) => text(i.value)),
       },
       addOns: pick(p.addOns, "eyebrow", "heading", "lead", "ctaLabel", "fromLabel"),
-      payments: pick(p.payments, "eyebrow", "heading", "lead", "ctaLabel", "requirementsLabel", "tip", "disclaimer"),
+      payments: pick(p.payments, ...PAYMENT_KEYS),
       cta: pick(p.cta, "heading", "label", "href"),
     };
   } catch {

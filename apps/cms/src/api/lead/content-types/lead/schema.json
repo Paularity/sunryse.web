@@ -82,6 +82,15 @@
         "quote-request"
       ],
       "default": "quote-request"
+    },
+    "packageName": {
+      "type": "string"
+    },
+    "addOns": {
+      "type": "json"
+    },
+    "preferredPayment": {
+      "type": "string"
     }
   }
 }
