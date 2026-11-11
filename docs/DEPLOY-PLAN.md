@@ -14,6 +14,43 @@ Status: code changes for deployment done (section 1); nothing deployed yet (Nov 
 
 Accounts: create them under SunRyse's own email (or a team they own) so the business keeps control and billing.
 
+## Free setup (for now, until launch)
+
+Everything below has a free tier, so the site can go online for review and testing without paying. The trade-offs
+are real, so switch to the paid setup above before the site goes live for customers.
+
+| Part | Free option | Limits to know |
+|---|---|---|
+| Website | **Vercel Hobby** (`<project>.vercel.app`) | **Non-commercial use only** under Vercel's terms. Fine for a demo or staging site; a live business site taking leads needs Pro. |
+| CMS | **Render** free web service, Singapore | 512 MB RAM and a tenth of a CPU. **Sleeps after 15 minutes** without traffic and takes about a minute to wake. 750 free hours a month covers one always-on service. |
+| Database | **Neon** free Postgres, Singapore | Sleeps after 5 minutes but wakes in about a second; around 0.5–1 GB storage, plenty for this site. **Not** Render's free Postgres, which is deleted 30 days after it's created. |
+| Media | **Cloudinary** free | Enough for a site this size. |
+| Lead emails | **Resend** free | Daily and monthly send caps, far above what a lead form uses. Sending from your own address needs a domain; until then, use Resend's test sender to your own inbox. |
+| Keep the CMS awake | **UptimeRobot** (or similar) free monitor | Pings `https://<cms>.onrender.com/_health` every 5 minutes so Render doesn't put Strapi to sleep. |
+| Domain | none | Use the free `*.vercel.app` and `*.onrender.com` addresses. |
+
+**Why the CMS keep-awake matters:** the website caches CMS content and refreshes it every few hours or when an edit
+is saved. If Strapi is asleep at that moment, the refresh fails. The site then shows the bundled placeholder text
+until Strapi answers, and retries within a minute. Keeping Strapi awake avoids that.
+
+**Risks of the free CMS host:**
+- **Memory:** 512 MB is tight for Strapi 5, especially for building the admin panel. If a deploy runs out of memory,
+  set `NODE_OPTIONS=--max-old-space-size=460`. If it still fails, the free option is Oracle Cloud's Always Free virtual
+  machine: plenty of memory and always on, but you run the server yourself (Docker, HTTPS), and sign-up asks for a card.
+- **Wake-ups:** if the monitor ever stops, the first request after a sleep takes about a minute.
+
+**Steps** (same as sections 2–6 below, with these swaps):
+1. Neon: create a project in Singapore and copy its connection string into `DATABASE_URL` (with `DATABASE_SSL=true`).
+2. Render: create a free web service from the repo in Singapore. Build: `pnpm install --frozen-lockfile && pnpm --filter cms build`.
+   Start: `pnpm --filter cms start`. Add the CMS environment from section 2, with `PUBLIC_URL=https://<name>.onrender.com`.
+3. Copy the content with `strapi transfer`, create the two API tokens, and add the UptimeRobot monitor.
+4. Vercel Hobby: import the repo as in section 4, with `STRAPI_URL=https://<name>.onrender.com` and
+   `NEXT_PUBLIC_SITE_URL=https://<project>.vercel.app`. Set `WEB_REVALIDATE_URL` on Render to `https://<project>.vercel.app/api/revalidate`.
+5. Test as in section 5.
+
+**When going live:** move the website to Vercel Pro, which is a plan change on the same project. Optionally move the
+CMS to a paid always-on host (Render's paid tier or Railway). The Neon database and Cloudinary media can stay as they are.
+
 ## 1. Code changes before the first deploy ✅
 
 - [x] **Build no longer depends on the CMS.** A failed CMS read is now cached for about a minute instead of seconds
