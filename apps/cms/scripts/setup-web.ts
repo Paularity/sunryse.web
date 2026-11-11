@@ -2,6 +2,8 @@
  * Local wiring between Strapi and the website (run once; run again after adding a content type):
  *   pnpm --filter cms setup:web                  update permissions, keep the current key
  *   ROTATE_TOKEN=1 pnpm --filter cms setup:web   also issue a new key
+ *   PRINT_PERMISSIONS=1 pnpm --filter cms setup:web   only print the permissions to tick when creating the token
+ *                                                     by hand in a production admin (touches nothing)
  *
  * - Creates the "website" API token (create/update leads + read content), or updates its permissions.
  * - Writes STRAPI_URL, STRAPI_TOKEN, REVALIDATE_SECRET and NEXT_PUBLIC_SITE_URL to apps/web/.env.local.
@@ -42,7 +44,38 @@ function setEnv(file: string, values: Record<string, string>) {
 const readEnv = (file: string, key: string) =>
   fs.existsSync(file) ? fs.readFileSync(file, 'utf8').match(new RegExp(`^${key}=(.*)$`, 'm'))?.[1]?.trim() : undefined;
 
+/** API token permissions the website needs. Previews get a read-only token: the same list without the lead actions. */
+function websitePermissions({ readOnly = false } = {}) {
+  return [
+    ...(readOnly
+      ? []
+      : [
+          'api::lead.lead.create',
+          'api::lead.lead.update', // calculator: attach the estimate to the lead created at the contact step
+        ]),
+    ...READ_TYPES.flatMap((t) => (SINGLE.has(t) ? [`api::${t}.${t}.find`] : [`api::${t}.${t}.find`, `api::${t}.${t}.findOne`])),
+  ];
+}
+
+/** Admin → Settings → API Tokens → Create: token type "Custom", then tick these per content type. */
+function printPermissions() {
+  const group = (list: string[]) => {
+    const byType = new Map<string, string[]>();
+    for (const p of list) {
+      const [, type, action] = /^api::([^.]+)\.[^.]+\.(.+)$/.exec(p)!;
+      byType.set(type, [...(byType.get(type) ?? []), action]);
+    }
+    return [...byType].map(([type, actions]) => `  ${type.padEnd(20)} ${actions.join(', ')}`).join('\n');
+  };
+  console.log(`Production token "${TOKEN_NAME}" (type Custom, duration Unlimited):\n${group(websitePermissions())}\n`);
+  console.log(
+    `Preview token "${TOKEN_NAME}-preview" (read-only, so previews can't create leads):\n` +
+      group(websitePermissions({ readOnly: true })),
+  );
+}
+
 async function main() {
+  if (process.env.PRINT_PERMISSIONS === '1') return printPermissions();
   const strapiUrl = process.env.STRAPI_URL ?? 'http://localhost:1337';
   const siteUrl = process.env.SITE_URL ?? 'http://localhost:3000';
   const secret = readEnv(WEB_ENV, 'REVALIDATE_SECRET') || crypto.randomBytes(24).toString('hex');
@@ -51,11 +84,7 @@ async function main() {
   strapi.log.level = 'error';
   try {
     const tokens = strapi.service('admin::api-token');
-    const permissions = [
-      'api::lead.lead.create',
-      'api::lead.lead.update', // calculator: attach the estimate to the lead created at the contact step
-      ...READ_TYPES.flatMap((t) => (SINGLE.has(t) ? [`api::${t}.${t}.find`] : [`api::${t}.${t}.find`, `api::${t}.${t}.findOne`])),
-    ];
+    const permissions = websitePermissions();
     const existing = await tokens.getByName(TOKEN_NAME);
     // Re-running setup (e.g. after adding a content type) only updates permissions and keeps the key the
     // website already uses. ROTATE_TOKEN=1 issues a new key; one is also issued when the web env has none.

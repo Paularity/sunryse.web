@@ -3,6 +3,7 @@
 import { AlertCircle, Check, Lock, MessageCircle } from "lucide-react";
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 
+import { Honeypot } from "@/components/forms/honeypot";
 import { Icon } from "@/components/icons";
 import { RoofModel, Scene, type RoofKind } from "@/components/three-d/models";
 import { SolutionModel } from "@/components/three-d/solution-model";
@@ -107,6 +108,7 @@ export function ContactForm({
   const [email, setEmail] = useState("");
   const [notes, setNotes] = useState("");
   const [consent, setConsent] = useState(false);
+  const [trap, setTrap] = useState("");
   const [tried, setTried] = useState(false);
   const [sending, setSending] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
@@ -179,7 +181,7 @@ export function ContactForm({
       const res = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(parsed.data),
+        body: JSON.stringify({ ...parsed.data, website: trap }),
       });
       if (!res.ok) throw new Error("failed");
       setStep(4);
@@ -209,8 +211,9 @@ export function ContactForm({
       onSubmit={onSubmit}
       noValidate
       aria-label={t(ui, "cfAria")}
-      className="flex min-w-0 flex-col gap-6 rounded-[28px] p-8 glass-card max-[640px]:p-5"
+      className="relative flex min-w-0 flex-col gap-6 rounded-[28px] p-8 glass-card max-[640px]:p-5"
     >
+      <Honeypot value={trap} onChange={setTrap} />
       <div className="flex flex-col gap-2.5">
         <div className="flex justify-between font-label text-[11px] tracking-[0.12em] text-ink-muted uppercase">
           <span>{done ? t(ui, "cfComplete") : t(ui, "cfStepOf", { n: step })}</span>

@@ -25,6 +25,7 @@ import {
 } from "@/lib/solar-calc";
 import { cn } from "@/lib/utils";
 
+import { Honeypot } from "@/components/forms/honeypot";
 import { Proposal, type ProposalPricing } from "./wizard/proposal";
 import { AppliancesEditor, Choices, focusRing, mono, NavButtons, StepHead } from "./wizard/parts";
 
@@ -667,6 +668,7 @@ function ContactStep({
 }) {
   const k = copy.contact;
   const [f, setF] = useState({ name: "", phone: "", email: "", city: "", consent: false });
+  const [trap, setTrap] = useState("");
   const [errors, setErrors] = useState<Partial<Record<keyof typeof f, string>>>({});
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -697,6 +699,7 @@ function ContactStep({
           consent: true,
           source: "calculator",
           stage: "calculator-started",
+          website: trap,
           segment: prefill.segment,
           monthlyBill: prefill.bill,
         }),
@@ -746,7 +749,8 @@ function ContactStep({
   );
 
   return (
-    <form onSubmit={submit} className="flex flex-col gap-6" noValidate>
+    <form onSubmit={submit} className="relative flex flex-col gap-6" noValidate>
+      <Honeypot value={trap} onChange={setTrap} />
       <StepHead ref={headRef} eyebrow={k.eyebrow} title={k.title} lead={k.lead} />
       <div className="grid gap-4 sm:grid-cols-2">
         {field("name", k.name, "text", "name")}

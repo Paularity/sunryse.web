@@ -22,9 +22,14 @@ export class StrapiError extends Error {
 
 type CachedResult = { ok: true; body: unknown } | { ok: false; status: number };
 
+/** How long a failed read is kept before Strapi is tried again (see cachedGet). */
+const RETRY_SOON = "minutes";
+
 /**
- * The cached part. It never throws: a failed read is cached for seconds only (so an outage
- * is retried quickly), a good read for hours (cleared by the Strapi webhook via revalidateTag).
+ * The cached part. It never throws: a good read is cached for hours (cleared by the Strapi webhook via
+ * revalidateTag), a failed read for about a minute, so an outage is retried soon. Not "seconds": Next treats
+ * caches that short as live data, so a build with the CMS down could not pre-render pages from the bundled
+ * defaults and failed.
  */
 async function cachedGet(url: string, tags: string[]): Promise<CachedResult> {
   "use cache";
@@ -34,13 +39,13 @@ async function cachedGet(url: string, tags: string[]): Promise<CachedResult> {
       headers: process.env.STRAPI_TOKEN ? { Authorization: `Bearer ${process.env.STRAPI_TOKEN}` } : undefined,
     });
     if (!res.ok) {
-      cacheLife("seconds");
+      cacheLife(RETRY_SOON);
       return { ok: false, status: res.status };
     }
     cacheLife("hours");
     return { ok: true, body: await res.json() };
   } catch {
-    cacheLife("seconds");
+    cacheLife(RETRY_SOON);
     return { ok: false, status: 0 };
   }
 }

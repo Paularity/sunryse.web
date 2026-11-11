@@ -1,10 +1,20 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { after, NextResponse, type NextRequest } from "next/server";
+import { clientKey, createRateLimiter, isBot } from "@/lib/lead-guard";
+import { notifyNewLead } from "@/lib/lead-notify";
 import { leadSchema } from "@/lib/lead-schema";
 import { strapiCreate } from "@/lib/strapi";
 
+/** New leads per visitor: generous for real people (a form and a calculator run), tight for scripts. */
+const allow = createRateLimiter({ limit: 5, windowMs: 10 * 60_000 });
+
 /** Creates a lead in Strapi using the server-side API token. Returns its id so the calculator can update it. */
 export async function POST(req: NextRequest) {
+  if (!allow(clientKey(req.headers))) {
+    return NextResponse.json({ ok: false, error: "Too many requests. Please call us." }, { status: 429 });
+  }
   const json = await req.json().catch(() => null);
+  // Honeypot filled: answer like a success so the bot moves on, but save nothing.
+  if (isBot(json)) return NextResponse.json({ ok: true, id: null });
   const parsed = leadSchema.safeParse(json);
   if (!parsed.success) {
     return NextResponse.json({ ok: false, errors: parsed.error.flatten().fieldErrors }, { status: 400 });
@@ -20,8 +30,10 @@ export async function POST(req: NextRequest) {
       ...lead,
       source: lead.source ?? "website",
     });
-    // TODO(phase 6): notify SunRyse by email (Resend) once the address is confirmed.
-    return NextResponse.json({ ok: true, id: created.data?.documentId ?? null });
+    const id = created.data?.documentId ?? null;
+    // Email SunRyse after the response is sent, so the visitor never waits on it (off until Resend is configured).
+    after(() => notifyNewLead(lead, id));
+    return NextResponse.json({ ok: true, id });
   } catch {
     return NextResponse.json({ ok: false, error: "Could not save your request. Please call us." }, { status: 502 });
   }
