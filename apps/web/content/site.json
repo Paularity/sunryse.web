@@ -156,6 +156,8 @@
     "cfCityPh": "e.g. [City], [Province]",
     "cfMapAria": "Map placeholder showing SunRyse office and service area",
     "cfMapLabel": "[ Office · service area ]",
+    "cfMapTitle": "Map: SunRyse office at {address}",
+    "cfMapOpen": "Open in Google Maps",
     "cfServerError": "We could not send your request. Please try again or call us.",
     "subnavSystems": "Systems",
     "subnavHow": "How it works",

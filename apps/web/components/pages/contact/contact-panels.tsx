@@ -4,6 +4,16 @@ import { t } from "@/lib/content/ui";
 
 const telHref = (phone: string) => `tel:${phone.replace(/[^\d+]/g, "")}`;
 
+/** CMS text still holding a "[placeholder]" is treated as not filled in yet. */
+const isSet = (v?: string | null) => !!v?.trim() && !/\[[^\]]*\]/.test(v);
+
+/** The Facebook page name from the CMS socials ("Sunryse Solar Services | Facebook" → "Sunryse Solar Services"). */
+function facebookName(site: Site) {
+  const label = site.socials.find((s) => s.platform === "facebook")?.label ?? "";
+  const name = label.replace(/\s*[|·–-]\s*facebook\s*$/i, "").trim();
+  return isSet(name) && !/^facebook$/i.test(name) ? name : "";
+}
+
 /** Phone/tablet only: Call + Messenger before the long form. */
 export function QuickContact({
   ui,
@@ -79,7 +89,7 @@ export function SideContact({ site, nextSteps }: { site: Site; nextSteps: string
         <Row
           icon="message"
           label={t(ui, "messenger")}
-          value={t(ui, "cfFacebookPage")}
+          value={facebookName(site) || t(ui, "cfFacebookPage")}
           href={site.messengerUrl}
           external
         />
@@ -88,21 +98,7 @@ export function SideContact({ site, nextSteps }: { site: Site; nextSteps: string
           <Icon name="clock" className="size-4" /> {site.hours}
         </p>
       </div>
-      <div
-        role="img"
-        aria-label={t(ui, "cfMapAria")}
-        className="relative h-[220px] overflow-hidden rounded-3xl glass-card"
-        style={{
-          background:
-            "repeating-linear-gradient(0deg,rgb(11 31 77/.05) 0 1px,transparent 1px 32px),repeating-linear-gradient(90deg,rgb(11 31 77/.05) 0 1px,transparent 1px 32px),var(--color-day-100)",
-        }}
-      >
-        <span className="absolute top-[45%] left-1/2 -mt-[85px] -ml-[85px] size-[170px] rounded-full border-2 border-dashed border-sun-500/60 bg-sun-500/15" />
-        <span className="absolute top-[45%] left-1/2 -mt-2.5 -ml-2.5 size-5 rounded-full border-4 border-white bg-sun-600 shadow-[0_4px_10px_rgb(11_31_77/0.3)]" />
-        <span className="absolute bottom-3.5 left-3.5 rounded-lg bg-white px-2.5 py-[7px] font-label text-[11px] tracking-[0.12em] uppercase">
-          {t(ui, "cfMapLabel")}
-        </span>
-      </div>
+      <OfficeMap site={site} />
       <div className="flex flex-col gap-3 rounded-3xl p-[22px] glass-card">
         <span className="font-label text-[11px] tracking-[0.12em] text-ink-muted uppercase">
           {t(ui, "whatHappensNext")}
@@ -119,5 +115,52 @@ export function SideContact({ site, nextSteps }: { site: Site; nextSteps: string
         </ol>
       </div>
     </aside>
+  );
+}
+
+/**
+ * The office on a map: a Google Maps embed of the CMS address (no API key needed; loads only when scrolled near),
+ * with a link that opens it in Google Maps. Until a real address is set, a drawn placeholder is shown instead.
+ */
+function OfficeMap({ site }: { site: Site }) {
+  const { ui } = site;
+  if (!isSet(site.address)) {
+    return (
+      <div
+        role="img"
+        aria-label={t(ui, "cfMapAria")}
+        className="relative h-[220px] overflow-hidden rounded-3xl glass-card"
+        style={{
+          background:
+            "repeating-linear-gradient(0deg,rgb(11 31 77/.05) 0 1px,transparent 1px 32px),repeating-linear-gradient(90deg,rgb(11 31 77/.05) 0 1px,transparent 1px 32px),var(--color-day-100)",
+        }}
+      >
+        <span className="absolute top-[45%] left-1/2 -mt-[85px] -ml-[85px] size-[170px] rounded-full border-2 border-dashed border-sun-500/60 bg-sun-500/15" />
+        <span className="absolute top-[45%] left-1/2 -mt-2.5 -ml-2.5 size-5 rounded-full border-4 border-white bg-sun-600 shadow-[0_4px_10px_rgb(11_31_77/0.3)]" />
+        <span className="absolute bottom-3.5 left-3.5 rounded-lg bg-white px-2.5 py-[7px] font-label text-[11px] tracking-[0.12em] uppercase">
+          {t(ui, "cfMapLabel")}
+        </span>
+      </div>
+    );
+  }
+  const q = encodeURIComponent(site.address.trim());
+  return (
+    <div className="relative h-[260px] overflow-hidden rounded-3xl bg-day-100 glass-card">
+      <iframe
+        title={t(ui, "cfMapTitle", { address: site.address.trim() })}
+        src={`https://www.google.com/maps?q=${q}&z=16&output=embed`}
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        className="absolute inset-0 size-full border-0"
+      />
+      <a
+        href={`https://www.google.com/maps/search/?api=1&query=${q}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="absolute bottom-3 left-3 inline-flex min-h-11 items-center gap-2 rounded-xl bg-white px-3.5 font-label text-[11px] tracking-[0.12em] text-navy-900 uppercase shadow-[0_6px_18px_-6px_rgb(11_31_77/0.35)] hover:text-sun-700"
+      >
+        <Icon name="map-pin" className="size-4" /> {t(ui, "cfMapOpen")}
+      </a>
+    </div>
   );
 }
