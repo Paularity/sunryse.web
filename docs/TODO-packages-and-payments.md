@@ -74,13 +74,20 @@ Placeholder maximum terms: card 24 months, bank loan 60 months (the highlights s
 - [x] Lead fields: Strapi schema, zod (`lead-schema.ts`), `/api/leads` (checked with a test lead, then deleted)
 - [ ] Moved to Phase 4: payment choice in the calculator, asked on the result step next to the monthly payments rather than at the first step
 
-### Phase 4: Calculator integration
-- [x] `lib/financing.ts` (pure, tested; built in Phase 3 for the panel): monthly payment = P·r / (1 − (1 + r)^−n), 0 % → P / n, down payment, total interest.
-- [ ] Proposal: monthly payment per payment option next to the monthly savings ("₱X/month vs saves ₱Y/month").
-- [ ] Proposal: "Closest standard package" (nearest catalogue kWp of the same system type) with its "Starts at" price and link.
-- [ ] Decide how the catalogue and the formula relate. Proposed: the catalogue is the public "starts at" list and the calculator
-      stays the personalised estimate. A test flags catalogue prices more than ~15 % away from the engine price for the same size.
-- [ ] Save the selected package and payment in `calcSnapshot`.
+### Phase 4: Calculator integration ✅
+Done: the proposal shows **How you could pay**. Each payment option shows its monthly amount at its longest term, next to the
+monthly savings, plus "Covered by your savings" or the gap. Picking one saves `preferredPayment` on the lead and in
+`calcSnapshot`. A **Closest standard package** card shows the same system type with the same battery-or-not and the nearest kWp,
+with its "starts at" price. It is hidden when nothing comparable exists: a battery-ready hybrid estimate without a battery is not
+compared with hybrid packages that include one. "Book my free site survey" carries `package=` and `payment=` into the contact form.
+The engine's price formula is now `systemPrice()`, which the estimate and the package price check share.
+- [x] `lib/financing.ts` (pure, tested; built in Phase 3)
+- [x] Proposal: monthly payment per option vs monthly savings
+- [x] Proposal: closest standard package (`closestPackage` in `lib/pricing.ts`, tested)
+- [x] Catalogue vs formula: the catalogue is the public "starts at" list and the calculator stays the personal estimate.
+      `lib/pricing.test.ts` fails if a bundled package is more than 15% away from the calculator price for the same system
+      (edits made only in Strapi are not covered)
+- [x] Closest package and chosen payment saved in `calcSnapshot`; `preferredPayment` on the lead
 
 ### Phase 5: QA
 - [ ] Unit tests: financing math, closest-package mapping, CMS fallbacks

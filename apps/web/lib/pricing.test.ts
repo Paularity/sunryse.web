@@ -2,7 +2,11 @@ import { describe, expect, it } from "vitest";
 
 import type { Package } from "@/lib/content/types";
 
-import { fill, groupPackages, pickPackages, unnumbered } from "./pricing";
+import calculator from "@/content/calculator.json";
+import collections from "@/content/collections.json";
+import { systemPrice } from "@/lib/solar-calc";
+
+import { closestPackage, fill, groupPackages, pickPackages, unnumbered } from "./pricing";
 
 const pkg = (slug: string, systemType: Package["systemType"], featured = false): Package => ({
   name: slug,
@@ -63,4 +67,52 @@ describe("pricing helpers", () => {
     expect(slugs(pickPackages(short))).toEqual(["g3", "h3", "h5"]);
     expect(slugs(pickPackages(short.slice(0, 2)))).toEqual(["g3", "h3"]);
   });
+
+  it("finds the closest package of the same type, preferring the visitor's segment", () => {
+    const sized = (
+      slug: string,
+      type: Package["systemType"],
+      kwp: number,
+      segment: Package["segment"] = "residential",
+    ) => ({
+      ...pkg(slug, type),
+      kwp,
+      segment,
+    });
+    const cat = [
+      { ...sized("h5", "hybrid", 5.16), batteryKwh: 10 },
+      { ...sized("h6", "hybrid", 6.45), batteryKwh: 10 },
+      sized("g20", "grid-tie", 20.6, "commercial"),
+      sized("g5", "grid-tie", 5.16),
+    ];
+    expect(closestPackage(cat, { systemType: "hybrid", kwp: 6, batteryKwh: 10 })?.slug).toBe("h6");
+    expect(closestPackage(cat, { systemType: "hybrid", kwp: 5.8, batteryKwh: 5 })?.slug).toBe("h5");
+    // A battery-ready hybrid estimate without a battery has no comparable package here.
+    expect(closestPackage(cat, { systemType: "hybrid", kwp: 6 })).toBeNull();
+    expect(closestPackage(cat, { systemType: "grid-tie", kwp: 18, segment: "commercial" })?.slug).toBe("g20");
+    expect(closestPackage(cat, { systemType: "grid-tie", kwp: 18, segment: "residential" })?.slug).toBe("g5");
+    expect(closestPackage(cat, { systemType: "off-grid", kwp: 5 })).toBeNull();
+  });
+});
+
+/**
+ * The bundled package prices ("starts at") should stay close to what the calculator charges for the same system,
+ * so the pricing page and the calculator don't contradict each other. Edits made only in Strapi are not covered here.
+ */
+describe("package prices vs the calculator", () => {
+  for (const p of collections.packages) {
+    it(`${p.name} is within 15% of the calculator price`, () => {
+      const kwp = (p.panelCount * p.panelWatt) / 1000;
+      const { price } = systemPrice(
+        {
+          systemKwp: kwp,
+          systemType: p.systemType as "hybrid" | "grid-tie",
+          batteryKwh: p.batteryKwh ?? 0,
+          netMetering: kwp <= (calculator.netMeteringCapKw ?? 100),
+        },
+        calculator,
+      );
+      expect(Math.abs(p.price - price) / price).toBeLessThan(0.15);
+    });
+  }
 });

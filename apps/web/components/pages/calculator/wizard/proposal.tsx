@@ -1,11 +1,14 @@
 "use client";
 
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { ArrowRight, Check, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState, type Ref } from "react";
 
+import { Icon } from "@/components/icons";
 import { buttonVariants } from "@/components/ui/button";
-import type { UiLabels } from "@/lib/content/types";
+import type { Package, PaymentOption, UiLabels } from "@/lib/content/types";
+import { financeEstimate } from "@/lib/financing";
+import { closestPackage } from "@/lib/pricing";
 import { formatPeso, type CalcConfig, type Estimate } from "@/lib/solar-calc";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +16,23 @@ import { fill, type WizardCopy } from "../calculator-wizard";
 import { mono, StepHead } from "./parts";
 
 type Answers = Record<string, unknown> & { segment: string; bill?: number; roof?: string; status?: string };
+
+/** Standard packages (for "closest package") and payment options (for monthly payments) from /pricing. */
+export type ProposalPricing = {
+  packages: Pick<Package, "slug" | "name" | "systemType" | "segment" | "kwp" | "price" | "batteryKwh">[];
+  payments: PaymentOption[];
+};
+
+/** Monthly payment for an option at its longest term; null for cash or when the term is not set yet. */
+function monthlyFor(option: PaymentOption, price: number) {
+  if (option.kind === "cash" || !option.termMonths) return null;
+  return financeEstimate({
+    price,
+    months: option.termMonths,
+    annualRatePct: option.annualRate,
+    downPaymentPct: option.downPaymentPct,
+  }).monthly;
+}
 
 /** Final step: the all-in proposal. Attaches the answers and estimate to the visitor's lead once. */
 export function Proposal({
@@ -23,6 +43,7 @@ export function Proposal({
   contact,
   answers,
   messengerUrl,
+  pricing,
   headRef,
   onLeadId,
 }: {
@@ -33,13 +54,23 @@ export function Proposal({
   contact: { name: string; phone: string; email: string; city: string; leadId: string | null };
   answers: Answers;
   messengerUrl?: string;
+  pricing?: ProposalPricing;
   headRef: Ref<HTMLHeadingElement>;
   onLeadId: (id: string) => void;
 }) {
   const p = copy.proposal;
   const years = ui.years ?? "yrs";
   const [saved, setSaved] = useState(false);
+  const [payKind, setPayKind] = useState("");
   const sentKey = useRef("");
+  const payments = pricing?.payments ?? [];
+  const chosenPayment = payments.find((o) => o.kind === payKind);
+  const closest = closestPackage(pricing?.packages ?? [], {
+    systemType: result.systemType,
+    kwp: result.systemKwp,
+    batteryKwh: result.batteryKwh,
+    segment: answers.segment as Package["segment"],
+  });
 
   // Save the estimate to the lead (once per distinct estimate).
   useEffect(() => {
@@ -56,6 +87,8 @@ export function Proposal({
       paybackYears: result.paybackYears,
       lifetimeSavings: Math.round(result.lifetimeSavings),
       solarCostPerKwh: Number(result.solarCostPerKwh.toFixed(2)),
+      closestPackage: closest?.name,
+      preferredPayment: chosenPayment?.kind,
     };
     const key = JSON.stringify(snapshot);
     if (sentKey.current === key) return;
@@ -67,6 +100,7 @@ export function Proposal({
       propertyStatus: answers.status,
       stage: "estimate-ready",
       calcSnapshot: snapshot,
+      ...(chosenPayment ? { preferredPayment: chosenPayment.title } : {}),
     };
     const send = contact.leadId
       ? fetch(`/api/leads/${contact.leadId}`, {
@@ -96,9 +130,15 @@ export function Proposal({
         }
       })
       .catch(() => {});
-  }, [answers, result, contact, onLeadId]);
+  }, [answers, result, contact, onLeadId, closest, chosenPayment]);
 
-  const query = `bill=${answers.bill ?? ""}&segment=${answers.segment}&type=${result.systemType}`;
+  const query = [
+    `bill=${answers.bill ?? ""}`,
+    `segment=${answers.segment}`,
+    `type=${result.systemType}`,
+    ...(closest ? [`package=${encodeURIComponent(closest.slug)}`] : []),
+    ...(chosenPayment ? [`payment=${chosenPayment.kind}`] : []),
+  ].join("&");
   const max = Math.max(...result.cumulative.map(Math.abs), 1);
   const stats: [string, string, string][] = [
     [p.savings, formatPeso(result.monthlySavings), "text-leaf-600"],
@@ -178,6 +218,90 @@ export function Proposal({
           </div>
         ))}
       </dl>
+
+      {/* closest standard package */}
+      {closest ? (
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-navy-900/10 bg-white p-4">
+          <div className="flex min-w-0 flex-col gap-0.5">
+            <span className={cn(mono, "text-ink-muted")}>{p.closestHeading}</span>
+            <b className="font-display text-lg">{closest.name}</b>
+            {closest.price !== null ? (
+              <span className="text-sm text-ink-muted">
+                {fill(p.closestStarts, { price: formatPeso(closest.price) })}
+              </span>
+            ) : null}
+          </div>
+          <Link href="/pricing" className={cn(buttonVariants({ variant: "line", size: "xl" }))}>
+            {p.closestLink} <ArrowRight className="size-4" aria-hidden />
+          </Link>
+        </div>
+      ) : null}
+
+      {/* how you could pay */}
+      {payments.length ? (
+        <section className="flex flex-col gap-3" aria-labelledby="pay-options-h">
+          <div className="flex flex-col gap-1">
+            <h3 id="pay-options-h" className="m-0 font-display text-xl font-bold">
+              {p.payHeading}
+            </h3>
+            <p className="m-0 text-sm text-ink-muted">{p.payLead}</p>
+            <p className="m-0 text-sm font-semibold text-leaf-600">
+              {fill(p.paySaves, { amount: formatPeso(result.monthlySavings) })}
+            </p>
+          </div>
+          <div role="radiogroup" aria-labelledby="pay-options-h" className="flex flex-col gap-2.5">
+            {payments.map((o) => {
+              const monthly = monthlyFor(o, result.price);
+              const on = o.kind === payKind;
+              return (
+                <button
+                  key={o.kind}
+                  type="button"
+                  role="radio"
+                  aria-checked={on}
+                  onClick={() => setPayKind(on ? "" : o.kind)}
+                  className={cn(
+                    "flex min-h-11 min-w-0 flex-col gap-1 rounded-2xl border-2 px-4 py-3.5 text-left text-navy-900 outline-none focus-visible:ring-3 focus-visible:ring-sky-600/40",
+                    on ? "border-sun-500 bg-dawn-50" : "border-navy-900/10 bg-white hover:border-navy-900/30",
+                  )}
+                >
+                  {/* line 1: option + amount; line 2: term + how it compares with the savings (each wraps on phones) */}
+                  <span className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5">
+                    <span className="flex items-center gap-2 font-display font-bold">
+                      <Icon name={o.icon} className="size-[18px] text-sky-600" /> {o.title}
+                    </span>
+                    <span className="font-display text-[clamp(18px,1.8vw,22px)] font-bold tracking-[-0.02em] whitespace-nowrap tabular-nums">
+                      {o.kind === "cash"
+                        ? fill(p.payCash, { amount: formatPeso(result.price) })
+                        : monthly !== null
+                          ? fill(p.payMonthly, { amount: formatPeso(monthly) })
+                          : p.payTerms}
+                    </span>
+                  </span>
+                  {monthly !== null ? (
+                    <span className="flex flex-wrap justify-between gap-x-4 gap-y-0.5 text-sm">
+                      <span className="text-ink-muted">
+                        {fill(p.payOver, { n: o.termMonths ?? 0 })}
+                        {o.annualRate !== null ? ` · ${o.annualRate}%` : ""}
+                      </span>
+                      {monthly <= result.monthlySavings ? (
+                        <span className="flex items-center gap-1 font-semibold text-leaf-600">
+                          <Check className="size-4" aria-hidden /> {p.payCovered}
+                        </span>
+                      ) : (
+                        <span className="font-semibold text-sun-700">
+                          {fill(p.payGap, { amount: formatPeso(monthly - result.monthlySavings) })}
+                        </span>
+                      )}
+                    </span>
+                  ) : null}
+                </button>
+              );
+            })}
+          </div>
+          <p className="m-0 text-xs text-ink-muted">{p.payNote}</p>
+        </section>
+      ) : null}
 
       {/* typical month */}
       <div className="flex flex-col gap-3">

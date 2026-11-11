@@ -273,6 +273,19 @@
       "book": "Book my free site survey",
       "advisor": "Talk to an advisor",
       "sent": "Saved to your request. An advisor will reach you at {phone}.",
+      "payHeading": "How you could pay",
+      "payLead": "Compare each option with what solar saves you every month. Pick one to tell us your preference.",
+      "payMonthly": "≈ {amount}/month",
+      "payOver": "over {n} months",
+      "payCash": "{amount} once",
+      "payTerms": "Terms confirmed with your quote",
+      "paySaves": "Solar saves you ≈ {amount}/month",
+      "payCovered": "Covered by your savings",
+      "payGap": "{amount}/month above your savings",
+      "payNote": "Estimates before interest unless a rate is shown. Your bank or card issuer confirms the final terms.",
+      "closestHeading": "Closest standard package",
+      "closestStarts": "Starts at {price}",
+      "closestLink": "See all packages",
       "chart": "Cumulative savings minus price"
     }
   }

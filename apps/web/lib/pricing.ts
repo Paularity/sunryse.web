@@ -37,3 +37,25 @@ export function pickPackages(list: Package[], n = 3): Package[] {
   for (const p of list) if (picked.length < n && !picked.includes(p)) picked.push(p);
   return picked;
 }
+
+/**
+ * The standard package nearest to a calculated system: same system type and the same battery-or-not (a hybrid
+ * estimate without a battery is not comparable to a hybrid package with one), the visitor's segment preferred,
+ * then the closest kWp (the smaller one on a tie). Null when nothing comparable is in the catalogue.
+ */
+export function closestPackage<P extends Pick<Package, "systemType" | "segment" | "kwp" | "batteryKwh">>(
+  list: P[],
+  system: { systemType: PackageSystemType; kwp: number; segment?: Package["segment"]; batteryKwh?: number },
+): P | null {
+  const hasBattery = (system.batteryKwh ?? 0) > 0;
+  const sameType = list.filter((p) => p.systemType === system.systemType && (p.batteryKwh ?? 0) > 0 === hasBattery);
+  const sameSegment = sameType.filter((p) => p.segment === system.segment);
+  const pool = sameSegment.length ? sameSegment : sameType;
+  let best: P | null = null;
+  for (const p of pool) {
+    const d = Math.abs(p.kwp - system.kwp);
+    const bd = best ? Math.abs(best.kwp - system.kwp) : Infinity;
+    if (d < bd || (d === bd && best && p.kwp < best.kwp)) best = p;
+  }
+  return best;
+}

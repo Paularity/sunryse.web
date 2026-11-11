@@ -25,7 +25,7 @@ import {
 } from "@/lib/solar-calc";
 import { cn } from "@/lib/utils";
 
-import { Proposal } from "./wizard/proposal";
+import { Proposal, type ProposalPricing } from "./wizard/proposal";
 import { AppliancesEditor, Choices, focusRing, mono, NavButtons, StepHead } from "./wizard/parts";
 
 export type WizardCopy = CalculatorPageContent["wizard"];
@@ -72,6 +72,8 @@ export type WizardProps = {
   copy: WizardCopy;
   ui: UiLabels;
   messengerUrl?: string;
+  /** Standard packages and payment options from /pricing, for the proposal. */
+  pricing?: ProposalPricing;
   initialBill?: number;
   initialSegment?: Segment;
   initialSystem?: SystemType;
@@ -82,6 +84,7 @@ export function CalculatorWizard({
   copy,
   ui,
   messengerUrl,
+  pricing,
   initialBill,
   initialSegment,
   initialSystem,
@@ -558,6 +561,7 @@ export function CalculatorWizard({
                 result={result}
                 contact={contact}
                 messengerUrl={messengerUrl}
+                pricing={pricing}
                 answers={{
                   segment: segment!,
                   status,

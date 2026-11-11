@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import { RichText } from "@/components/fx";
 import { CalculatorWizard } from "@/components/pages/calculator/calculator-wizard";
 import { CalculatorFromQuery } from "@/components/pages/calculator/calculator-loader";
-import { getCalculatorConfig, getSite } from "@/lib/content";
+import { getCalculatorConfig, getPackages, getPaymentOptions, getSite } from "@/lib/content";
 import { getCalculatorPage } from "@/lib/content/pages/calculator";
 import { t } from "@/lib/content/ui";
 
@@ -15,24 +15,48 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function CalculatorPage() {
-  const [page, config, site] = await Promise.all([getCalculatorPage(), getCalculatorConfig(), getSite()]);
+  const [page, config, site, packages, payments] = await Promise.all([
+    getCalculatorPage(),
+    getCalculatorConfig(),
+    getSite(),
+    getPackages(),
+    getPaymentOptions(),
+  ]);
   const { ui } = site;
-  const wizard = { config, copy: page.wizard, ui, messengerUrl: site.messengerUrl };
+  const pricing = {
+    packages: packages.map(({ slug, name, systemType, segment, kwp, price, batteryKwh }) => ({
+      slug,
+      name,
+      systemType,
+      segment,
+      kwp,
+      price,
+      batteryKwh,
+    })),
+    payments,
+  };
+  const wizard = { config, copy: page.wizard, ui, messengerUrl: site.messengerUrl, pricing };
 
   return (
     <div className="relative isolate bg-[linear-gradient(180deg,var(--color-sky-200),var(--color-day-50)_30%,var(--color-dawn-50))] pt-[calc(var(--site-top)+4px)] pb-16 leading-[normal]">
       <div
         aria-hidden
-        className="fx-grid pointer-events-none absolute inset-x-0 top-0 -z-10 h-full max-h-[900px] [mask-image:radial-gradient(90%_75%_at_50%_20%,black,transparent_80%)]"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-full max-h-[900px] fx-grid [mask-image:radial-gradient(90%_75%_at_50%_20%,black,transparent_80%)]"
       />
       <div className="container-site flex flex-col gap-[30px]">
         <header className="flex flex-wrap items-end justify-between gap-5">
           <div className="flex flex-col gap-3">
-            <nav aria-label={t(ui, "breadcrumb")} className="font-label text-[12px] uppercase tracking-[0.12em] text-ink-muted">
+            <nav
+              aria-label={t(ui, "breadcrumb")}
+              className="font-label text-[12px] tracking-[0.12em] text-ink-muted uppercase"
+            >
               <Link href="/" className="hover:text-navy-900">
                 {t(ui, "home")}
               </Link>{" "}
-              / <span aria-current="page" className="text-sun-700">{page.breadcrumb}</span>
+              /{" "}
+              <span aria-current="page" className="text-sun-700">
+                {page.breadcrumb}
+              </span>
             </nav>
             <h1 className="m-0 font-display text-[clamp(34px,4.6vw,64px)] leading-[1.02] font-bold tracking-[-0.045em]">
               <RichText text={page.heading} />

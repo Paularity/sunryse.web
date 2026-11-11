@@ -39,6 +39,9 @@ outputs      payback (interpolated), lifetime & net savings, ROI, solar ₱/kWh 
 packages     ≈50 % / 80 % / 105 % of monthly use, rounded to whole panels; recommended = balanced unless its payback is >10 % slower
 ```
 `calculateSolar()` (home hero, teaser) returns the recommended package with default usage — same engine, same numbers.
+Price formula lives in `systemPrice()` (shared with the package price check in `lib/pricing.test.ts`: bundled packages must stay
+within 15 % of it). Proposal extras from /pricing: **How you could pay** (`lib/financing.ts`, longest term, vs monthly savings;
+choice → lead `preferredPayment`) and **Closest standard package** (`closestPackage`: same type + battery-or-not, nearest kWp).
 
 ## Calibration check (tests)
 ₱10k home, no battery → payback 4–6 yrs; with a 10 kWh battery → ≈ ₱3.5–4/kWh and ~70 % cheaper than the grid

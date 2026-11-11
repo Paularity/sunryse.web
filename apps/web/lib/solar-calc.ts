@@ -278,6 +278,33 @@ export function usageFromBill(
   return { monthlyKwh, bill, fixedCharges: Math.max(0, fixedCharges) };
 }
 
+/** All-in price of a system: price-book lines before VAT, then VAT. Shared by the estimate and the package price check. */
+export function systemPrice(
+  sys: { systemKwp: number; systemType: SystemType; batteryKwh?: number; roof?: EstimateInput["roof"]; netMetering: boolean },
+  config: CalcConfig,
+): { lines: PriceLine[]; price: number } {
+  const c = withDefaults(config);
+  const perKwp = sys.systemType === "hybrid" ? c.costPerKwpHybrid : c.costPerKwpGridTie;
+  const roofAdder =
+    sys.roof === "tile"
+      ? c.roofAdderTile
+      : sys.roof === "shingles"
+        ? c.roofAdderShingles
+        : sys.roof === "concrete"
+          ? c.roofAdderConcrete
+          : c.roofAdderMetal;
+  const lines: PriceLine[] = [
+    { key: "system", amount: sys.systemKwp * perKwp },
+    { key: "mounting", amount: sys.systemKwp * roofAdder },
+    { key: "battery", amount: (sys.batteryKwh ?? 0) * c.batteryCostPerKwh },
+    { key: "netMetering", amount: sys.netMetering ? c.netMeteringFee : 0 },
+    { key: "base", amount: c.basePrice },
+  ];
+  const subtotal = lines.reduce((a, l) => a + l.amount, 0);
+  lines.push({ key: "vat", amount: subtotal * c.vatRate });
+  return { lines, price: Math.round(subtotal * (1 + c.vatRate)) };
+}
+
 export function estimate(input: EstimateInput, config: CalcConfig): Estimate {
   const c = withDefaults(config);
   const { monthlyKwh, bill, fixedCharges } = usageFromBill(input, c);
@@ -310,26 +337,10 @@ export function estimate(input: EstimateInput, config: CalcConfig): Estimate {
   const surplusCredit = Math.max(0, avoided + credits - cap);
   const newBill = bill - monthlySavings;
 
-  // Price (before VAT), then VAT.
-  const perKwp = systemType === "hybrid" ? c.costPerKwpHybrid : c.costPerKwpGridTie;
-  const roofAdder =
-    input.roof === "tile"
-      ? c.roofAdderTile
-      : input.roof === "shingles"
-        ? c.roofAdderShingles
-        : input.roof === "concrete"
-          ? c.roofAdderConcrete
-          : c.roofAdderMetal;
-  const lines: PriceLine[] = [
-    { key: "system", amount: systemKwp * perKwp },
-    { key: "mounting", amount: systemKwp * roofAdder },
-    { key: "battery", amount: batteryKwh * c.batteryCostPerKwh },
-    { key: "netMetering", amount: netMetering ? c.netMeteringFee : 0 },
-    { key: "base", amount: c.basePrice },
-  ];
-  const subtotal = lines.reduce((a, l) => a + l.amount, 0);
-  lines.push({ key: "vat", amount: subtotal * c.vatRate });
-  const price = Math.round(subtotal * (1 + c.vatRate));
+  const { lines, price } = systemPrice(
+    { systemKwp, systemType, batteryKwh, roof: input.roof, netMetering },
+    c,
+  );
 
   // Years: escalation up, degradation down; year 1 loses export credits until net metering starts.
   const years = Math.round(c.analysisYears);
