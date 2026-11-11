@@ -20,7 +20,7 @@ export type Station = {
 };
 
 export const STATIONS: Station[] = [
-  { pos: [-15.5, 10.5, 21], look: [0.4, -0.6, -0.4], hour: 6.6, side: "left", battery: false, brownout: false }, // sunrise · whole island
+  { pos: [-15.5, 10.5, 21], look: [0.4, 1.5, -0.4], hour: 6.6, side: "left", battery: false, brownout: false }, // sunrise · whole island
   { pos: [-4.4, 5.4, 6.0], look: [0.3, 1.2, 0], hour: 8.5, side: "right", battery: false, brownout: false }, // panels
   { pos: [-6.2, 2.5, 4.6], look: [-1.3, 0.7, 0.2], hour: 10.5, side: "right", battery: true, brownout: false }, // inverter + battery wall
   { pos: [6.2, 3.0, 6.4], look: [2.2, 1.1, 1.4], hour: 12.6, side: "left", battery: true, brownout: false }, // grid pole · export

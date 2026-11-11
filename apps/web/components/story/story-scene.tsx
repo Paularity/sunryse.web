@@ -261,6 +261,38 @@ function Trees() {
   );
 }
 
+/** Inverter close-up dressing: a status screen that glows with the power flowing, plus conduits to roof and battery. */
+function InverterDetail({ frame }: { frame: FrameRef }) {
+  const screen = useMemo(() => new THREE.MeshBasicMaterial({ color: "#7fe0a0", toneMapped: false }), []);
+  const led = useMemo(() => new THREE.MeshBasicMaterial({ color: C.home, toneMapped: false }), []);
+  useFrame(({ clock }) => {
+    const { e } = frame.current;
+    const busy = e.toHomeKw + e.chargeKw + e.dischargeKw + e.exportKw > 0.05;
+    screen.color.set(e.dark ? "#1c2a5c" : busy ? "#8ff0b4" : "#9fb4e8");
+    led.color.set(busy && Math.sin(clock.elapsedTime * 4) > 0 ? C.home : "#2f8f4c");
+  });
+  const x = -1.215; // just outside the left wall, on the inverter's face
+  return (
+    <group>
+      <mesh position={[x, 0.68, 0.35]} rotation={[0, -Math.PI / 2, 0]} material={screen}>
+        <planeGeometry args={[0.14, 0.09]} />
+      </mesh>
+      <mesh position={[x, 0.56, 0.42]} rotation={[0, -Math.PI / 2, 0]} material={led}>
+        <circleGeometry args={[0.012, 12]} />
+      </mesh>
+      {/* conduits: up to the roof, down to the battery */}
+      <mesh position={[-1.13, 1.0, 0.3]}>
+        <cylinderGeometry args={[0.012, 0.012, 0.42, 6]} />
+        <meshStandardMaterial color="#c9d4f2" />
+      </mesh>
+      <mesh position={[-1.4, 0.46, 0.3]} rotation={[0, 0, Math.PI / 2]}>
+        <cylinderGeometry args={[0.012, 0.012, 0.42, 6]} />
+        <meshStandardMaterial color="#c9d4f2" />
+      </mesh>
+    </group>
+  );
+}
+
 /** EV + home charger in the driveway: charges from the panels while the sun is up. */
 function Car({ frame }: { frame: FrameRef }) {
   const screen = useMemo(() => new THREE.MeshBasicMaterial({ color: C.home, toneMapped: false }), []);
@@ -563,7 +595,7 @@ const skyBody = (h: number, out: THREE.Vector3) => {
     .copy(EAST)
     .multiplyScalar(Math.cos(a) * 34)
     .addScaledVector(BACK, 14)
-    .setY(Math.sin(a) * 24 + 1);
+    .setY(Math.sin(a) * 24 - 2);
 };
 
 function Director({
@@ -719,7 +751,7 @@ function Director({
       }
     }
     if (hemi.current) {
-      hemi.current.intensity = 0.55 + 1.45 * Math.min(1, day * 1.6);
+      hemi.current.intensity = 0.8 + 1.2 * Math.min(1, day * 1.6);
       hemi.current.color.copy(v.nightHemi).lerp(v.dayHemi, 1 - n);
     }
 
@@ -864,6 +896,7 @@ function World({
       <Wires />
       <StreetLamps frame={home} glow={tex.glow} />
       <Car frame={home} />
+      <InverterDetail frame={home} />
 
       {/* the SunRyse home */}
       <House frame={home} panelMat={panelMat} />

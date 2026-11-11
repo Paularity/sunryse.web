@@ -94,16 +94,17 @@ export const glowTexture = (inner: string, outer: string) =>
     g.fillRect(0, 0, 256, 256);
   });
 
-const glazingTexture = () =>
+/** Curtain-wall glazing: white frame, blue glass. The glow version lights only the glass at night. */
+const glazingTexture = (frame = "#ffffff", glass = "#9cc8f7") =>
   canvasTexture(128, 128, (g) => {
-    g.fillStyle = "#ffffff";
+    g.fillStyle = frame;
     g.fillRect(0, 0, 128, 128);
     for (let x = 6; x < 128; x += 21) {
-      g.fillStyle = "#9cc8f7";
+      g.fillStyle = glass;
       g.fillRect(x, 0, 12, 128);
     }
     for (let y = 0; y < 128; y += 26) {
-      g.fillStyle = "#ffffff";
+      g.fillStyle = frame;
       g.fillRect(0, y, 128, 4);
     }
   });
@@ -264,12 +265,16 @@ export function House({ frame, panelMat }: { frame: FrameRef; panelMat: THREE.Ma
 }
 
 export function Building({ frame, panelMat }: { frame: FrameRef; panelMat: THREE.Material }) {
-  const glaze = useMemo(() => glazingTexture(), []);
+  const glaze = useMemo(() => ({ map: glazingTexture(), glow: glazingTexture("#000000", "#ffffff") }), []);
   const lit = useLitMaterial(frame, "#ffffff");
   useEffect(() => {
-    lit.map = glaze;
+    lit.map = glaze.map;
+    lit.emissiveMap = glaze.glow;
     lit.needsUpdate = true;
-    return () => glaze.dispose();
+    return () => {
+      glaze.map.dispose();
+      glaze.glow.dispose();
+    };
   }, [glaze, lit]);
   return (
     <group>

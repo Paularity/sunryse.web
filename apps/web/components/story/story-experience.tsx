@@ -7,7 +7,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { formatHour } from "@/components/sections/home/configurator/model";
 import { ENERGY, RooftopWorld, Scene } from "@/components/three-d/models";
 import { buttonVariants } from "@/components/ui/button";
-import { ScrollTrigger } from "@/lib/gsap";
+import { gsap, ScrollTrigger, SplitText, useGSAP } from "@/lib/gsap";
 import type { CalcConfig } from "@/lib/solar-calc";
 import { cn } from "@/lib/utils";
 
@@ -88,35 +88,65 @@ export function StoryExperience({ story, config }: { story: StoryCopy; config: C
   const pins = useRef<StoryPin[]>(pinList.map((p) => ({ el: null, anchor: p.anchor as Anchor, chapter: p.chapter })));
 
   // Scroll → progress (0–1 across the whole story) → visible chapter, HUD.
+  useGSAP(
+    () => {
+      const el = section.current;
+      if (!el || mode !== "webgl") return;
+      ScrollTrigger.create({
+        trigger: el,
+        start: "top top",
+        end: "bottom bottom",
+        onUpdate: (s) => {
+          progress.current = s.progress;
+          const v = chapterVisible(s.progress, count);
+          if (v !== visibleRef.current) {
+            visibleRef.current = v;
+            setVisible(v);
+          }
+          const shot = shotAt(s.progress, reduced);
+          setIndex(shot.index);
+          setDark(shot.hour >= 18.8 || shot.hour < 5.8);
+          if (bar.current) bar.current.style.transform = `scaleX(${s.progress})`;
+          if (pct.current) pct.current.textContent = `${Math.round(s.progress * 100)}%`;
+          if (clock.current) clock.current.textContent = formatHour(shot.hour);
+        },
+      });
+    },
+    { scope: section, dependencies: [mode, count, reduced], revertOnUpdate: true },
+  );
+
+  // Pause the 3D scene while the story is off screen.
   useEffect(() => {
     const el = section.current;
     if (!el || mode !== "webgl") return;
-    const st = ScrollTrigger.create({
-      trigger: el,
-      start: "top top",
-      end: "bottom bottom",
-      onUpdate: (s) => {
-        progress.current = s.progress;
-        const v = chapterVisible(s.progress, count);
-        if (v !== visibleRef.current) {
-          visibleRef.current = v;
-          setVisible(v);
-        }
-        const shot = shotAt(s.progress, reduced);
-        setIndex(shot.index);
-        setDark(shot.hour >= 18.8 || shot.hour < 5.8);
-        if (bar.current) bar.current.style.transform = `scaleX(${s.progress})`;
-        if (pct.current) pct.current.textContent = `${Math.round(s.progress * 100)}%`;
-        if (clock.current) clock.current.textContent = formatHour(shot.hour);
-      },
-    });
     const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting));
     io.observe(el);
-    return () => {
-      st.kill();
-      io.disconnect();
-    };
-  }, [mode, count, reduced]);
+    return () => io.disconnect();
+  }, [mode]);
+
+  // Chapter text arrives in rhythm: eyebrow scrambles, title lines rise out of a mask, then body and buttons.
+  useGSAP(
+    () => {
+      if (mode !== "webgl" || reduced || visible < 0) return;
+      const art = section.current?.querySelector<HTMLElement>(`[data-chapter="${visible}"]`);
+      if (!art) return;
+      const title = art.querySelector<HTMLElement>("[data-split]");
+      const eyebrow = art.querySelector<HTMLElement>("[data-eyebrow]");
+      const tl = gsap.timeline({ delay: 0.1 });
+      if (eyebrow?.textContent)
+        tl.to(eyebrow, { duration: 0.8, scrambleText: { text: eyebrow.textContent, chars: "01░▒▓_", speed: 0.6 } }, 0);
+      if (title) {
+        const split = SplitText.create(title, { type: "lines", mask: "lines" });
+        tl.from(split.lines, { yPercent: 110, duration: 0.9, ease: "power4.out", stagger: 0.08 }, 0);
+      }
+      tl.from(
+        art.querySelectorAll("[data-rise]"),
+        { y: 18, autoAlpha: 0, duration: 0.7, ease: "power3.out", stagger: 0.08 },
+        0.3,
+      );
+    },
+    { scope: section, dependencies: [visible, reduced, mode], revertOnUpdate: true },
+  );
 
   // Pointer parallax (mouse only).
   useEffect(() => {
@@ -177,6 +207,19 @@ export function StoryExperience({ story, config }: { story: StoryCopy; config: C
           </div>
         ) : null}
 
+        {/* cinematic edge falloff, plus a light scrim behind the big headlines on phones */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_50%_45%,transparent_55%,rgb(11_31_77/0.22)_100%)]"
+        />
+        <div
+          aria-hidden
+          className={cn(
+            "pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(to_top,rgb(255_243_220/0.9)_10%,rgb(255_243_220/0)_60%)] transition-opacity duration-700 lg:hidden",
+            visible === 0 || visible === count - 1 ? "opacity-100" : "opacity-0",
+          )}
+        />
+
         {/* 3D-anchored labels */}
         <div aria-hidden className="pointer-events-none absolute inset-0 z-[2]">
           {pinList.map((p, k) => (
@@ -209,6 +252,7 @@ export function StoryExperience({ story, config }: { story: StoryCopy; config: C
             return (
               <article
                 key={c.id}
+                data-chapter={i}
                 data-on={on}
                 aria-hidden={!on}
                 inert={!on}
@@ -223,27 +267,37 @@ export function StoryExperience({ story, config }: { story: StoryCopy; config: C
                   hero && "lg:w-[min(560px,42vw)]",
                 )}
               >
-                <span className={cn(mono, hero ? "text-navy-900/70" : "text-sun-700")}>{c.eyebrow}</span>
+                <span className={cn(mono, "flex items-center gap-3", hero ? "text-navy-900/70" : "text-sun-700")}>
+                  <span className="tabular-nums">
+                    {String(i + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}
+                  </span>
+                  <span aria-hidden className="h-px w-6 bg-current opacity-40" />
+                  <span data-eyebrow>{c.eyebrow}</span>
+                </span>
                 <Heading
+                  data-split
                   className={cn(
                     "m-0 font-display font-bold tracking-[-0.035em] text-balance text-navy-900",
                     hero
-                      ? "text-[clamp(36px,5.4vw,76px)] leading-[0.98] [text-shadow:0_2px_30px_rgb(255_255_255/0.55)]"
+                      ? "text-[clamp(32px,5.4vw,76px)] leading-[0.98] [text-shadow:0_2px_30px_rgb(255_255_255/0.55)]"
                       : "text-[clamp(24px,2.6vw,36px)] leading-[1.08]",
                   )}
                 >
                   {c.title}
                 </Heading>
                 <p
+                  data-rise
                   className={cn(
                     "m-0 max-w-[52ch] leading-[1.55]",
-                    hero ? "text-[17px] font-medium text-navy-900/85" : "text-[15px] text-ink-muted sm:text-base",
+                    hero
+                      ? "text-[15px] font-medium text-navy-900/85 sm:text-[17px]"
+                      : "text-[15px] text-ink-muted sm:text-base",
                   )}
                 >
                   {c.body}
                 </p>
                 {c.ctas?.length ? (
-                  <div className="mt-2 flex flex-wrap gap-3">
+                  <div data-rise className="mt-2 flex flex-wrap gap-3">
                     {c.ctas.map((a) => (
                       <Link
                         key={a.href}
