@@ -218,6 +218,7 @@ async function main() {
       ['api::projects-page.projects-page', 'pages/projects'],
       ['api::calculator-page.calculator-page', 'pages/calculator'],
       ['api::contact-page.contact-page', 'pages/contact'],
+      ['api::story-page.story-page', 'pages/story'],
     ] as const) {
       await upsertSingle(strapi, uid, { content: read(file) }, false);
     }

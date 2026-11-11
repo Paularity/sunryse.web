@@ -1,0 +1,19 @@
+{
+  "kind": "singleType",
+  "collectionName": "story_pages",
+  "info": {
+    "singularName": "story-page",
+    "pluralName": "story-pages",
+    "displayName": "Homepage story",
+    "description": "Copy for the homepage scrollytelling (\"A day on solar\"): 7 chapters in camera order, labels, loader and the configurator intro."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "content": {
+      "type": "json",
+      "required": true
+    }
+  }
+}

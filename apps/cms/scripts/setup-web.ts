@@ -1,8 +1,9 @@
 /**
- * Local wiring between Strapi and the website (run once, or again to rotate the token):
- *   pnpm --filter cms setup:web
+ * Local wiring between Strapi and the website (run once; run again after adding a content type):
+ *   pnpm --filter cms setup:web                  update permissions, keep the current key
+ *   ROTATE_TOKEN=1 pnpm --filter cms setup:web   also issue a new key
  *
- * - Creates (or regenerates) the "website" API token: create/update leads + read content.
+ * - Creates the "website" API token (create/update leads + read content), or updates its permissions.
  * - Writes STRAPI_URL, STRAPI_TOKEN, REVALIDATE_SECRET and NEXT_PUBLIC_SITE_URL to apps/web/.env.local.
  * - Writes WEB_REVALIDATE_URL and WEB_REVALIDATE_SECRET to apps/cms/.env (Strapi then registers the webhook on start).
  * Secrets are written to the git-ignored env files only and never printed.
@@ -18,10 +19,14 @@ const TOKEN_NAME = 'website';
 const READ_TYPES = [
   'global', 'homepage', 'calculator-config', 'service', 'solution', 'project', 'brand', 'testimonial', 'faq',
   'article', 'impact-stat', 'warranty', 'about-page', 'projects-page', 'calculator-page', 'contact-page', 'service-defaults',
+  'story-page',
 ];
 
 /** Single types only have "find". */
-const SINGLE = new Set(['global', 'homepage', 'calculator-config', 'about-page', 'projects-page', 'calculator-page', 'contact-page', 'service-defaults']);
+const SINGLE = new Set([
+  'global', 'homepage', 'calculator-config', 'about-page', 'projects-page', 'calculator-page', 'contact-page', 'service-defaults',
+  'story-page',
+]);
 
 /** Set KEY=value lines in an env file, keeping everything else as is. */
 function setEnv(file: string, values: Record<string, string>) {
@@ -52,10 +57,13 @@ async function main() {
       ...READ_TYPES.flatMap((t) => (SINGLE.has(t) ? [`api::${t}.${t}.find`] : [`api::${t}.${t}.find`, `api::${t}.${t}.findOne`])),
     ];
     const existing = await tokens.getByName(TOKEN_NAME);
-    let accessKey: string;
+    // Re-running setup (e.g. after adding a content type) only updates permissions and keeps the key the
+    // website already uses. ROTATE_TOKEN=1 issues a new key; one is also issued when the web env has none.
+    const keep = !!existing && process.env.ROTATE_TOKEN !== '1' && !!readEnv(WEB_ENV, 'STRAPI_TOKEN');
+    let accessKey: string | undefined;
     if (existing) {
       await tokens.update(existing.id, { permissions });
-      accessKey = (await tokens.regenerate(existing.id)).accessKey;
+      if (!keep) accessKey = (await tokens.regenerate(existing.id)).accessKey;
     } else {
       accessKey = (
         await tokens.create({
@@ -68,10 +76,15 @@ async function main() {
       ).accessKey;
     }
 
-    setEnv(WEB_ENV, { STRAPI_URL: strapiUrl, STRAPI_TOKEN: accessKey, REVALIDATE_SECRET: secret, NEXT_PUBLIC_SITE_URL: siteUrl });
+    setEnv(WEB_ENV, {
+      STRAPI_URL: strapiUrl,
+      ...(accessKey ? { STRAPI_TOKEN: accessKey } : {}),
+      REVALIDATE_SECRET: secret,
+      NEXT_PUBLIC_SITE_URL: siteUrl,
+    });
     setEnv(CMS_ENV, { WEB_REVALIDATE_URL: `${siteUrl}/api/revalidate`, WEB_REVALIDATE_SECRET: secret });
-    console.log(`API token "${TOKEN_NAME}" ${existing ? 'regenerated' : 'created'}.`);
-    console.log(`Wrote apps/web/.env.local and apps/cms/.env (secrets not shown). Restart both dev servers.`);
+    console.log(`API token "${TOKEN_NAME}" ${keep ? 'permissions updated (key kept)' : existing ? 'regenerated' : 'created'}.`);
+    console.log(`Wrote apps/web/.env.local and apps/cms/.env (secrets not shown).${keep ? '' : ' Restart both dev servers.'}`);
   } finally {
     await strapi.destroy();
   }
