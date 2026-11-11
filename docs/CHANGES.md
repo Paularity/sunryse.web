@@ -2,7 +2,7 @@
 
 What was built and changed, where it lives, and how to edit it. Covers 10–12 Nov 2026 (commits `142f477` to `e2dac78`
 and the deployment that followed), plus a short summary of the earlier foundation work.
-Detailed plans: [PLAN.md](PLAN.md), [TODO-packages-and-payments.md](TODO-packages-and-payments.md),
+Architecture: [ARCHITECTURE.md](ARCHITECTURE.md). Detailed plans: [PLAN.md](PLAN.md), [TODO-packages-and-payments.md](TODO-packages-and-payments.md),
 [DEPLOY-PLAN.md](DEPLOY-PLAN.md). Content still needed from SunRyse: [CONTENT-NEEDED.md](CONTENT-NEEDED.md).
 
 ## At a glance
