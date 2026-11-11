@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_pricing_intros",
+  "info": {
+    "displayName": "Intro",
+    "description": "Eyebrow, heading and lead.",
+    "icon": "priceTag"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "lead": {
+      "type": "text"
+    }
+  }
+}

@@ -51,11 +51,12 @@ The calculator uses placeholder numbers. Strapi: **Calculator config** (editable
 Strapi: **Service**, **Solution**, **FAQ**. Drafts already exist for 14 services and 3 solutions; please review them.
 
 - [ ] Confirm the 14 services list (add/remove) and correct the short descriptions
-- [ ] Packages or "starting from" prices per solution, if you want them shown
+- [ ] Packages (Strapi → **Package**): 12 placeholder packages are seeded, priced from the calculator's price book. Replace them with your real list and "starts at" prices. They currently look about 2× typical market prices, so please also check the calculator's ₱/kWp and ₱/kWh.
+- [ ] Add-ons (Strapi → **Add-on**): extra battery, extra panels, EV charger. Prices, or leave blank for "Ask for price"
 - [ ] Warranties: panels (product + performance), inverter, battery, workmanship, in years
 - [ ] Brands you install (9 seeded: check the list) and official logos for each
 - [ ] Typical timeline: site survey → design → permits → install → net-metering (days/weeks per step)
-- [ ] Financing / installment partners, if any
+- [ ] Payment options (Strapi → **Payment option**): cash, card installment, bank loan are seeded. Which banks or partners, terms (months), rates, down payment, required documents; add Pag-IBIG / GSIS / in-house if offered
 - [ ] Net-metering: do you handle the application with the distribution utility (e.g. Meralco)? How long does it take?
 - [ ] Answers to check in the FAQ, especially net metering, brownouts, maintenance, typhoon resistance
 

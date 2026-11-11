@@ -1,7 +1,7 @@
 import "server-only";
 
 import data from "@/content/pages/about.json";
-import { mergeContent } from "@/lib/content/strapi-page";
+import { items, mergeContent, pick, type Raw, text } from "@/lib/content/strapi-page";
 import type { IconName, Img, Tone } from "@/lib/content/types";
 import { strapiFetch, strapiMedia } from "@/lib/strapi";
 
@@ -20,15 +20,6 @@ export type AboutPage = {
   team: { eyebrow: string; heading: string; lead: string; photoLabel: string };
 };
 
-// Raw Strapi JSON, shape-checked field by field below.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Raw = Record<string, any>;
-
-/** Blank text counts as "not filled in", so the bundled default shows instead (optional list-item fields stay blank). */
-const text = (v: unknown) => (typeof v === "string" && v.trim() ? v : undefined);
-const items = (v: unknown, map: (x: Raw) => unknown) => (Array.isArray(v) ? v.map(map) : undefined);
-const pick = (o: Raw | null | undefined, ...keys: string[]) =>
-  o ? Object.fromEntries(keys.map((k) => [k, text(o[k])])) : undefined;
 
 const POPULATE = {
   seo: true,

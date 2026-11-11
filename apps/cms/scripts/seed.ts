@@ -214,6 +214,36 @@ async function main() {
 
     await upsertCollection(strapi, 'api::team-member.team-member', ordered(collections.team), 'role');
 
+    // Pricing: Strapi enum values can't hold hyphens, so "grid-tie" is stored as "grid_tie".
+    const enumValue = (v: string) => v.replace(/-/g, '_');
+    await upsertCollection(
+      strapi,
+      'api::solar-package.solar-package',
+      ordered(collections.packages.map((p: any) => ({ ...p, systemType: enumValue(p.systemType) }))),
+      'slug',
+    );
+    await upsertCollection(strapi, 'api::add-on.add-on', ordered(collections.addOns), 'name');
+    await upsertCollection(
+      strapi,
+      'api::payment-option.payment-option',
+      ordered(collections.paymentOptions.map((o: any) => ({ ...o, kind: enumValue(o.kind), requirements: texts(o.requirements) }))),
+      'title',
+    );
+    const pricing = read('pages/pricing');
+    await upsertSingle(
+      strapi,
+      'api::pricing-page.pricing-page',
+      {
+        seo: { metaTitle: pricing.meta.title, metaDescription: pricing.meta.description },
+        hero: pricing.hero,
+        packages: { ...pricing.packages, includes: texts(pricing.packages.includes) },
+        addOns: pricing.addOns,
+        payments: pricing.payments,
+        cta: pricing.cta,
+      },
+      false,
+    );
+
     // About page: real fields (team members and brands are their own entries)
     const about = read('pages/about');
     await upsertSingle(

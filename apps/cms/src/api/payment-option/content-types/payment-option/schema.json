@@ -1,0 +1,74 @@
+{
+  "kind": "collectionType",
+  "collectionName": "payment_options",
+  "info": {
+    "singularName": "payment-option",
+    "pluralName": "payment-options",
+    "displayName": "Payment option",
+    "description": "How customers can pay. Leave term or rate empty when it depends on the lender."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "kind": {
+      "type": "enumeration",
+      "enum": [
+        "cash",
+        "card",
+        "bank_loan",
+        "gov_loan",
+        "in_house"
+      ],
+      "default": "cash",
+      "required": true
+    },
+    "icon": {
+      "type": "string"
+    },
+    "tone": {
+      "type": "enumeration",
+      "enum": [
+        "sun",
+        "amber",
+        "sky",
+        "leaf",
+        "flame",
+        "navy"
+      ]
+    },
+    "description": {
+      "type": "text"
+    },
+    "highlight": {
+      "type": "string"
+    },
+    "termMonths": {
+      "type": "integer"
+    },
+    "annualRate": {
+      "type": "decimal"
+    },
+    "downPaymentPct": {
+      "type": "integer",
+      "min": 0,
+      "max": 100
+    },
+    "requirements": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.text-item"
+    },
+    "ctaLabel": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

@@ -10,7 +10,7 @@ export type IconName =
   | "trending-down" | "leaf" | "battery" | "wrench" | "headset" | "sun" | "zap" | "home" | "building"
   | "factory" | "clipboard-check" | "solar-panel" | "shield-check" | "frame" | "lightbulb" | "droplet"
   | "plug" | "cctv" | "award" | "users" | "check" | "phone" | "mail" | "map-pin" | "message" | "clock"
-  | "trees" | "gauge" | "calculator" | "file-text" | "activity";
+  | "trees" | "gauge" | "calculator" | "file-text" | "activity" | "banknote" | "credit-card" | "landmark" | "wallet";
 
 export type Link = { label: string; href: string };
 export type Img = { src: string; alt: string };
@@ -77,6 +77,44 @@ export type Project = {
 };
 
 export type Testimonial = { quote: string; name: string; roleLocation: string; rating: number; initial: string; tone: Tone };
+/* ── Pricing (Strapi: solar-package, add-on, payment-option; copy in pricing-page) ── */
+export type PackageSystemType = "grid-tie" | "hybrid" | "off-grid";
+/** A standard system with an all-in "starts at" price (null = "Ask for price"). kWp = panelCount × panelWatt. */
+export type Package = {
+  name: string;
+  slug: string;
+  systemType: PackageSystemType;
+  segment: SolutionSlug;
+  inverterKw: number;
+  panelCount: number;
+  panelWatt: number;
+  kwp: number;
+  batteryKwh?: number;
+  batterySpec?: string;
+  expandableTo?: number;
+  bestFor: string;
+  price: number | null;
+  badge?: string;
+  featured: boolean;
+  image?: Img;
+};
+export type AddOn = { name: string; spec: string; description: string; price: number | null; priceFrom: boolean; unit: string };
+export type PaymentKind = "cash" | "card" | "bank-loan" | "gov-loan" | "in-house";
+/** Term and rate stay null while they depend on the lender. */
+export type PaymentOption = {
+  title: string;
+  kind: PaymentKind;
+  icon: IconName;
+  tone: Tone;
+  description: string;
+  highlight: string;
+  termMonths: number | null;
+  annualRate: number | null;
+  downPaymentPct: number | null;
+  requirements: string[];
+  ctaLabel?: string;
+};
+
 /** About-page team card; without a photo the card shows the initials on a tinted background. */
 export type TeamMember = { name: string; role: string; initial: string; tone: Tone; photo?: Img };
 export type Faq = { question: string; answer: string; category?: string };

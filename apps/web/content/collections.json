@@ -33,5 +33,29 @@
     { "item": "Inverter", "years": "5 yrs" },
     { "item": "Battery", "years": "10 yrs" },
     { "item": "Workmanship", "years": "5 yrs" }
+  ],
+  "packages": [
+    { "name": "3 kW Hybrid System", "slug": "3kw-hybrid", "systemType": "hybrid", "segment": "residential", "inverterKw": 3, "panelCount": 6, "panelWatt": 645, "batteryKwh": 5, "batterySpec": "1 × 5 kWh LiFePO4 (51.2 V)", "bestFor": "Small homes: lights, fans, a fridge and TV, with backup for brownouts.", "price": 470000 },
+    { "name": "5 kW Hybrid System", "slug": "5kw-hybrid", "systemType": "hybrid", "segment": "residential", "inverterKw": 5, "panelCount": 8, "panelWatt": 645, "batteryKwh": 10, "batterySpec": "2 × 5 kWh LiFePO4 (51.2 V)", "expandableTo": 11, "bestFor": "Homes with one aircon used in the evening.", "price": 733000 },
+    { "name": "6 kW Hybrid System", "slug": "6kw-hybrid", "systemType": "hybrid", "segment": "residential", "inverterKw": 6, "panelCount": 10, "panelWatt": 645, "batteryKwh": 10, "batterySpec": "2 × 5 kWh LiFePO4 (51.2 V)", "expandableTo": 13, "bestFor": "The usual pick for a family home with one or two aircons.", "price": 817000, "badge": "Popular", "featured": true },
+    { "name": "8 kW Hybrid System", "slug": "8kw-hybrid", "systemType": "hybrid", "segment": "residential", "inverterKw": 8, "panelCount": 13, "panelWatt": 645, "batteryKwh": 15, "batterySpec": "3 × 5 kWh LiFePO4 (51.2 V)", "expandableTo": 18, "bestFor": "Bigger homes running aircons for most of the day.", "price": 1121000 },
+    { "name": "10 kW Hybrid System", "slug": "10kw-hybrid", "systemType": "hybrid", "segment": "residential", "inverterKw": 10, "panelCount": 16, "panelWatt": 645, "batteryKwh": 15, "batterySpec": "3 × 5 kWh LiFePO4 (51.2 V)", "expandableTo": 23, "bestFor": "Large homes or a home office with heavy daytime use.", "price": 1247000 },
+    { "name": "12 kW Hybrid System", "slug": "12kw-hybrid", "systemType": "hybrid", "segment": "residential", "inverterKw": 12, "panelCount": 19, "panelWatt": 645, "batteryKwh": 20, "batterySpec": "4 × 5 kWh LiFePO4 (51.2 V)", "expandableTo": 27, "bestFor": "Very large homes or small shops.", "price": 1552000 },
+    { "name": "3 kW Grid-tie System", "slug": "3kw-grid-tie", "systemType": "grid-tie", "segment": "residential", "inverterKw": 3, "panelCount": 6, "panelWatt": 645, "bestFor": "The lowest-cost way to cut a daytime bill.", "price": 256000 },
+    { "name": "5 kW Grid-tie System", "slug": "5kw-grid-tie", "systemType": "grid-tie", "segment": "residential", "inverterKw": 5, "panelCount": 8, "panelWatt": 645, "bestFor": "Homes that use most of their power during the day.", "price": 328000 },
+    { "name": "8 kW Grid-tie System", "slug": "8kw-grid-tie", "systemType": "grid-tie", "segment": "residential", "inverterKw": 8, "panelCount": 13, "panelWatt": 645, "bestFor": "Larger homes with daytime aircon use.", "price": 509000 },
+    { "name": "20 kW Grid-tie System", "slug": "20kw-grid-tie-commercial", "systemType": "grid-tie", "segment": "commercial", "inverterKw": 20, "panelCount": 32, "panelWatt": 645, "bestFor": "Small offices, clinics and shops.", "price": 1195000 },
+    { "name": "30 kW Grid-tie System", "slug": "30kw-grid-tie-commercial", "systemType": "grid-tie", "segment": "commercial", "inverterKw": 30, "panelCount": 47, "panelWatt": 645, "bestFor": "Restaurants, schools and mid-size offices.", "price": 1737000 },
+    { "name": "50 kW Grid-tie System", "slug": "50kw-grid-tie-commercial", "systemType": "grid-tie", "segment": "commercial", "inverterKw": 50, "panelCount": 78, "panelWatt": 645, "bestFor": "Warehouses, malls and light industry.", "price": 2857000 }
+  ],
+  "addOns": [
+    { "name": "Extra battery module", "spec": "5 kWh LiFePO4, 51.2 V", "description": "More stored power for evenings and longer brownouts.", "price": 179000, "priceFrom": true, "unit": "" },
+    { "name": "Extra solar panels", "spec": "2 × 645 W, mounting and wiring included", "description": "Add generation as your usage grows (within the inverter limit).", "price": null, "priceFrom": false, "unit": "per pair" },
+    { "name": "EV charger", "spec": "7 kW home wall charger, installed", "description": "Charge your car from the sun during the day.", "price": null, "priceFrom": true, "unit": "" }
+  ],
+  "paymentOptions": [
+    { "title": "Cash", "kind": "cash", "icon": "banknote", "tone": "leaf", "description": "Pay in full, or in milestones during the project. Lowest total cost, with no interest and no monthly payments.", "highlight": "No interest", "termMonths": null, "annualRate": null, "downPaymentPct": null, "requirements": ["Signed quotation", "[Payment schedule, e.g. 50% down, 50% on switch-on]"] },
+    { "title": "Credit card installment", "kind": "card", "icon": "credit-card", "tone": "sky", "description": "Split the price into monthly payments on a participating bank card. The rate depends on your bank; we confirm it in your quote.", "highlight": "[Up to 24 months]", "termMonths": null, "annualRate": null, "downPaymentPct": null, "requirements": ["Credit card with enough available limit", "[Participating banks]"] },
+    { "title": "Bank solar loan", "kind": "bank-loan", "icon": "landmark", "tone": "amber", "description": "Finance through a partner bank and pay it off over several years, often less than what you save each month.", "highlight": "[Up to 5 years]", "termMonths": null, "annualRate": null, "downPaymentPct": null, "requirements": ["Valid ID and proof of income", "Latest electricity bill", "[Bank-specific documents]"] }
   ]
 }

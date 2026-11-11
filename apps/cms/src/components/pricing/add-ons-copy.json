@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_pricing_add_ons_copies",
+  "info": {
+    "displayName": "Add-ons copy",
+    "description": "",
+    "icon": "priceTag"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "lead": {
+      "type": "text"
+    },
+    "ctaLabel": {
+      "type": "string"
+    },
+    "fromLabel": {
+      "type": "string"
+    }
+  }
+}

@@ -43,3 +43,14 @@ export async function strapiJson(path: string, field: string, tag: string, query
 export async function pageContent<T>(singleType: string, fallback: T): Promise<T> {
   return mergeContent(fallback, await strapiJson(singleType, "content", singleType));
 }
+
+/* ── Field helpers for single types built from real fields (About, Pricing) ── */
+// Raw Strapi JSON, shape-checked field by field by the callers.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Raw = Record<string, any>;
+
+/** Blank text counts as "not filled in", so mergeContent keeps the bundled default. */
+export const text = (v: unknown) => (typeof v === "string" && v.trim() ? v : undefined);
+export const items = (v: unknown, map: (x: Raw) => unknown) => (Array.isArray(v) ? v.map(map) : undefined);
+export const pick = (o: Raw | null | undefined, ...keys: string[]) =>
+  o ? Object.fromEntries(keys.map((k) => [k, text(o[k])])) : undefined;

@@ -1,0 +1,91 @@
+{
+  "kind": "collectionType",
+  "collectionName": "solar_packages",
+  "info": {
+    "singularName": "solar-package",
+    "pluralName": "solar-packages",
+    "displayName": "Package",
+    "description": "Standard system packages (\"Starts at\" prices). kWp is worked out from panel count × panel watts."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "systemType": {
+      "type": "enumeration",
+      "enum": [
+        "grid_tie",
+        "hybrid",
+        "off_grid"
+      ],
+      "default": "hybrid",
+      "required": true
+    },
+    "segment": {
+      "type": "enumeration",
+      "enum": [
+        "residential",
+        "commercial",
+        "industrial"
+      ],
+      "default": "residential",
+      "required": true
+    },
+    "inverterKw": {
+      "type": "decimal",
+      "required": true
+    },
+    "panelCount": {
+      "type": "integer",
+      "min": 1,
+      "required": true
+    },
+    "panelWatt": {
+      "type": "integer",
+      "min": 1,
+      "required": true
+    },
+    "batteryKwh": {
+      "type": "decimal"
+    },
+    "batterySpec": {
+      "type": "string"
+    },
+    "expandableTo": {
+      "type": "integer"
+    },
+    "bestFor": {
+      "type": "text"
+    },
+    "price": {
+      "type": "integer"
+    },
+    "badge": {
+      "type": "string"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

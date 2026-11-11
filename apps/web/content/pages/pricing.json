@@ -1,0 +1,52 @@
+{
+  "meta": {
+    "title": "Packages & pricing",
+    "description": "Solar packages with all-in starting prices, add-ons and flexible ways to pay: cash, card installment or a bank loan."
+  },
+  "hero": {
+    "eyebrow": "Packages & pricing",
+    "heading": "Clear prices. ^No surprises.^",
+    "lead": "Pick a standard system to start from, add what you need, then choose how you want to pay."
+  },
+  "packages": {
+    "eyebrow": "[ 01 ] System packages",
+    "heading": "Pick a package",
+    "lead": "All-in starting prices for our standard systems. Your final quote follows a free site survey.",
+    "includes": [
+      "Panels, inverter and mounting",
+      "Battery (hybrid systems)",
+      "Installation and testing",
+      "Net-metering application",
+      "VAT"
+    ],
+    "note": "Starting price for the standard package. The final price depends on the brands you choose, your roof, add-ons and the site survey. Use the calculator for an estimate based on your bill.",
+    "priceLabel": "Starts at",
+    "askPriceLabel": "Ask for price",
+    "ctaLabel": "Request quote",
+    "expandableLabel": "Expandable up to {n} panels",
+    "gridTieLabel": "Grid-tie systems",
+    "hybridLabel": "Hybrid systems (with battery)",
+    "offGridLabel": "Off-grid systems"
+  },
+  "addOns": {
+    "eyebrow": "[ 02 ] Add-ons",
+    "heading": "Add to your system",
+    "lead": "Extras you can include now or add later.",
+    "ctaLabel": "Add to quote",
+    "fromLabel": "From"
+  },
+  "payments": {
+    "eyebrow": "[ 03 ] Ways to pay",
+    "heading": "Flexible payment options",
+    "lead": "Solar pays for itself. Choose the plan that fits your budget.",
+    "ctaLabel": "Check eligibility",
+    "requirementsLabel": "What you need",
+    "tip": "The calculator shows your estimated monthly savings, so you can compare them with a monthly payment.",
+    "disclaimer": "Monthly amounts are estimates only. Final terms and rates depend on the lender's approval."
+  },
+  "cta": {
+    "heading": "Not sure which size fits?",
+    "label": "Try the calculator",
+    "href": "/calculator"
+  }
+}

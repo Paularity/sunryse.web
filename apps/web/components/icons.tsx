@@ -1,7 +1,7 @@
 import {
-  Activity, Award, Battery, Building2, Calculator, Cctv, Check, ClipboardCheck, Clock, Droplet, Factory, FileText, Frame,
-  Gauge, Headset, House, Leaf, Lightbulb, Mail, MapPin, MessageCircle, Phone, Plug, ShieldCheck, SolarPanel, Sun, Trees,
-  TrendingDown, Users, Wrench, Zap, type LucideIcon, type LucideProps,
+  Activity, Award, Banknote, Battery, Building2, Calculator, Cctv, Check, ClipboardCheck, Clock, CreditCard, Droplet, Factory, FileText, Frame,
+  Gauge, Headset, House, Landmark, Leaf, Lightbulb, Mail, MapPin, MessageCircle, Phone, Plug, ShieldCheck, SolarPanel, Sun, Trees,
+  TrendingDown, Users, Wallet, Wrench, Zap, type LucideIcon, type LucideProps,
 } from "lucide-react";
 
 import type { IconName, Tone } from "@/lib/content/types";
@@ -13,6 +13,7 @@ const ICONS: Record<IconName, LucideIcon> = {
   "shield-check": ShieldCheck, frame: Frame, lightbulb: Lightbulb, droplet: Droplet, plug: Plug, cctv: Cctv, award: Award,
   users: Users, check: Check, phone: Phone, mail: Mail, "map-pin": MapPin, message: MessageCircle, clock: Clock,
   trees: Trees, gauge: Gauge, calculator: Calculator, "file-text": FileText, activity: Activity,
+  banknote: Banknote, "credit-card": CreditCard, landmark: Landmark, wallet: Wallet,
 };
 
 /** One stroke icon set across the site (lucide, 1.75 stroke). */

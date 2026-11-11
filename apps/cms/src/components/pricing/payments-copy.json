@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_pricing_payments_copies",
+  "info": {
+    "displayName": "Payments copy",
+    "description": "",
+    "icon": "priceTag"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "lead": {
+      "type": "text"
+    },
+    "ctaLabel": {
+      "type": "string"
+    },
+    "requirementsLabel": {
+      "type": "string"
+    },
+    "tip": {
+      "type": "text"
+    },
+    "disclaimer": {
+      "type": "text"
+    }
+  }
+}

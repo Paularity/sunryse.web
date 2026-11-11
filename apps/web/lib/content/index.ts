@@ -11,11 +11,14 @@ import collections from "@/content/collections.json";
 
 import { fromStrapi } from "./from-strapi";
 import type {
+  AddOn,
   Brand,
   CalculatorConfig,
   Faq,
   HomeContent,
   ImpactStat,
+  Package,
+  PaymentOption,
   Project,
   Service,
   Site,
@@ -89,6 +92,14 @@ export const getSolution = async (slug: string) =>
 export const getProjects = () => withFallback(fromStrapi.projects, collections.projects as Project[]);
 export const getTestimonials = () => withFallback(fromStrapi.testimonials, collections.testimonials as Testimonial[]);
 export const getTeam = () => withFallback(fromStrapi.team, collections.team as TeamMember[]);
+/** Standard packages in CMS order, with kWp worked out from the panels (count × watts ÷ 1000). */
+export const getPackages = async (): Promise<Package[]> =>
+  (await withFallback(fromStrapi.packages, collections.packages as Omit<Package, "kwp">[])).map((p) => ({
+    ...p,
+    kwp: Math.round(p.panelCount * p.panelWatt) / 1000,
+  }));
+export const getAddOns = () => withFallback(fromStrapi.addOns, collections.addOns as AddOn[]);
+export const getPaymentOptions = () => withFallback(fromStrapi.paymentOptions, collections.paymentOptions as PaymentOption[]);
 export const getFaqs = () => withFallback(fromStrapi.faqs, faqs as Faq[]);
 export const getBrands = () => withFallback(fromStrapi.brands, brands as Brand[]);
 export const getImpact = () => withFallback(fromStrapi.impact, collections.impact as ImpactStat[]);

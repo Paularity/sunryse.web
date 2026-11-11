@@ -1,0 +1,45 @@
+{
+  "kind": "singleType",
+  "collectionName": "pricing_pages",
+  "info": {
+    "singularName": "pricing-page",
+    "pluralName": "pricing-pages",
+    "displayName": "Pricing page",
+    "description": "Text for /pricing and the packages / payment sections. Packages, add-ons and payment options are their own entries."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    },
+    "hero": {
+      "type": "component",
+      "repeatable": false,
+      "component": "pricing.intro"
+    },
+    "packages": {
+      "type": "component",
+      "repeatable": false,
+      "component": "pricing.packages-copy"
+    },
+    "addOns": {
+      "type": "component",
+      "repeatable": false,
+      "component": "pricing.add-ons-copy"
+    },
+    "payments": {
+      "type": "component",
+      "repeatable": false,
+      "component": "pricing.payments-copy"
+    },
+    "cta": {
+      "type": "component",
+      "repeatable": false,
+      "component": "pricing.cta-band"
+    }
+  }
+}

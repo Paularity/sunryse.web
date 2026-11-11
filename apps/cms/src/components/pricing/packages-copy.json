@@ -1,0 +1,50 @@
+{
+  "collectionName": "components_pricing_packages_copies",
+  "info": {
+    "displayName": "Packages copy",
+    "description": "Text around the package cards. {n} = number of panels.",
+    "icon": "priceTag"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "lead": {
+      "type": "text"
+    },
+    "includes": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.text-item"
+    },
+    "note": {
+      "type": "text"
+    },
+    "priceLabel": {
+      "type": "string"
+    },
+    "askPriceLabel": {
+      "type": "string"
+    },
+    "ctaLabel": {
+      "type": "string"
+    },
+    "expandableLabel": {
+      "type": "string"
+    },
+    "gridTieLabel": {
+      "type": "string"
+    },
+    "hybridLabel": {
+      "type": "string"
+    },
+    "offGridLabel": {
+      "type": "string"
+    }
+  }
+}

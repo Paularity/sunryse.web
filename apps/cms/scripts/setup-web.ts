@@ -18,14 +18,14 @@ const WEB_ENV = path.join(__dirname, '..', '..', 'web', '.env.local');
 const TOKEN_NAME = 'website';
 const READ_TYPES = [
   'global', 'homepage', 'calculator-config', 'service', 'solution', 'project', 'brand', 'testimonial', 'faq',
-  'article', 'impact-stat', 'warranty', 'team-member', 'about-page', 'projects-page', 'calculator-page', 'contact-page', 'service-defaults',
-  'story-page',
+  'article', 'impact-stat', 'warranty', 'team-member', 'solar-package', 'add-on', 'payment-option', 'about-page', 'projects-page', 'calculator-page', 'contact-page', 'service-defaults',
+  'story-page', 'pricing-page',
 ];
 
 /** Single types only have "find". */
 const SINGLE = new Set([
   'global', 'homepage', 'calculator-config', 'about-page', 'projects-page', 'calculator-page', 'contact-page', 'service-defaults',
-  'story-page',
+  'story-page', 'pricing-page',
 ]);
 
 /** Set KEY=value lines in an env file, keeping everything else as is. */

@@ -1,0 +1,79 @@
+# TODO: Package pricing and payment options
+
+Reference: devsolutions.com.ph (`#estimator` and the sections around it), reviewed Nov 2026. We borrow the **structure**,
+not their copy, prices or look; SunRyse styling follows the `sunryse-design` skill.
+
+## What the reference does
+- **Package pricing**: cards grouped by system type ("Hybrid Systems (7)"). Each card has a name (5 kW Hybrid), a spec line
+  (panels × watts | kWp | battery kWh), "Expandable up to N panels", a one-line "best for", "Starts at ₱…", a "Popular" badge
+  and a "Request quote" button. Above the cards: an "all-in includes…" line plus warranties, and a note that the final quote
+  depends on brand, add-ons and a site visit.
+- **Add-ons**: extra battery module and extra panels (per pair), each with a price and "Add to quote".
+- **Payment options**: 3 cards (Cash / Credit card / GSIS loan), each with an icon, a short description, a highlight
+  ("No interest", "Up to 36 months", "5 years • 5% int.") and "Check eligibility". A tip line points to the estimator for
+  a monthly payment per financing path.
+- The estimator (bill → usage profile → region) recommends a system and price; the quote form asks for the preferred payment.
+
+## What SunRyse has today
+- The calculator (`lib/solar-calc.ts` + wizard) builds **3 sized packages from a formula** (≈50/80/105 % of use) with an
+  all-in price. There is no fixed catalogue.
+- Solution pages have a hard-coded "packages" block (`solution-details.json` → `packages.items`: tag, kWp, bill, panels,
+  price placeholder).
+- There are no payment or financing options anywhere. Leads have no package, add-on or payment field.
+- `CONTENT-NEEDED.md` §4 already asks SunRyse for "starting from" prices and financing partners.
+
+## Decisions needed from SunRyse (before real numbers go live)
+- [ ] Real package list per system type (grid-tie / hybrid / off-grid): inverter kW, panel count and watt, battery, price, "expandable to"
+- [ ] Are prices VAT-inclusive? Show them publicly, or "Ask for price"?
+- [ ] Add-ons offered (extra battery, extra panels, EV charger, monitoring…) and their prices
+- [ ] Payment options actually offered: cash, card installment (which banks? 0 %?), bank loan, Pag-IBIG / GSIS, in-house plan
+- [ ] Terms per option: months, interest rate, down payment, required documents
+- [ ] Disclaimer wording for monthly estimates (illustrative, subject to lender approval)
+
+## Plan
+
+### Phase 1: Content model (Strapi), seeded with placeholders ✅
+Done: `solar-package` (shown as "Package"; `package` is a reserved word), `add-on`, `payment-option` and the `pricing-page`
+single type with real fields. Homepage section components move to Phase 2, where the sections are built.
+Placeholder package prices come from the calculator's price book. They are about 2× the reference site's (6 kW + battery: ₱817k
+vs ₱378k) because of ₱58k/kWp and ₱32k/kWh, so SunRyse should confirm both the packages and the calculator price book.
+- [x] Collection **package**: name, slug, systemType (grid-tie | hybrid | off-grid), segments (residential/commercial/industrial),
+      inverterKw, panelCount, panelWatt, batteryKwh, batterySpec, expandableTo, bestFor, price (₱, empty = "Ask for price"),
+      badge ("Popular"), featured, image (optional), order. kWp is computed (panelCount × panelWatt), not typed in.
+- [x] Collection **add-on**: name, spec, description, price, priceFrom (bool), unit ("per pair"), order.
+- [x] Collection **payment-option**: title, kind (cash | card | loan | gov-loan | in-house), icon, tone, description,
+      highlight, termMonths, annualRate, downPaymentPct, requirements (list), ctaLabel, order.
+- [x] Copy (headings, "all-in includes", disclaimers) in a `pricing-page` single type with real fields (like About)
+- [x] Web: types, `fromStrapi` loaders and `getPackages / getAddOns / getPaymentOptions` with JSON fallbacks in `collections.json`;
+      public read and setup:web token permissions; seed.
+
+### Phase 2: Where it shows
+- [ ] Homepage section components (`sections.packages`, `sections.payment-options`) in the dynamic zone, optional heading overrides
+- [ ] New **/pricing** page: packages grouped by system type (tabs or filter chips; count in each heading), add-ons, payment
+      options, short FAQ, CTA. Add it to the nav and the sitemap.
+- [ ] **Homepage**: compact "Packages" section (featured 3 + "See all packages") and a "Payment options" section, placed through
+      the homepage dynamic zone so editors control the order.
+- [ ] **Solution pages**: replace the hard-coded `packages.items` with catalogue packages filtered by segment (keep the copy).
+- [ ] Featured card uses the existing sun-gradient treatment; "Starts at" price uses the display font; mobile is one column with full-width CTAs.
+
+### Phase 3: Actions and leads
+- [ ] "Request quote" → `/contact?package=<slug>`, so the form shows the package and pre-fills it.
+- [ ] Add-ons: v1 checkboxes on the contact form (`?addons=` pre-checks them); a full "Add to quote" basket is optional, later.
+- [ ] "Check eligibility" → a drawer with requirements, a monthly-payment estimate (package/price × term × rate) and a CTA to
+      `/contact?payment=<kind>`.
+- [ ] Lead: add `package`, `addOns`, `preferredPayment` (Strapi schema + zod `lead-schema.ts` + `/api/leads`); a payment
+      preference select on the contact form and in the calculator's contact step.
+
+### Phase 4: Calculator integration
+- [ ] `lib/financing.ts` (pure, tested): monthly payment = P·r / (1 − (1 + r)^−n), 0 % → P / n, down payment, total interest.
+- [ ] Proposal: monthly payment per payment option next to the monthly savings ("₱X/month vs saves ₱Y/month").
+- [ ] Proposal: "Closest standard package" (nearest catalogue kWp of the same system type) with its "Starts at" price and link.
+- [ ] Decide how the catalogue and the formula relate. Proposed: the catalogue is the public "starts at" list and the calculator
+      stays the personalised estimate. A test flags catalogue prices more than ~15 % away from the engine price for the same size.
+- [ ] Save the selected package and payment in `calcSnapshot`.
+
+### Phase 5: QA
+- [ ] Unit tests: financing math, closest-package mapping, CMS fallbacks
+- [ ] `/qa /pricing` and the homepage: 360 / 768 / 1280, keyboard and focus, reduced motion
+- [ ] Empty states: no price ("Ask for price"), no packages for a type (hide the group), no payment options (hide the section)
+- [ ] `CONTENT-NEEDED.md` §4 updated with the package, add-on and financing details above

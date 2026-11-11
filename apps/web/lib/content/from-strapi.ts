@@ -2,8 +2,8 @@ import "server-only";
 
 import { strapiFetch, strapiMedia, StrapiError } from "@/lib/strapi";
 import type {
-  Brand, CalculatorConfig, Faq, Feature, HomeContent, IconName, Img, ImpactStat, Link, Project, Service, ServiceCategory,
-  Site, Solution, SolutionSlug, Step, TeamMember, Testimonial, Tone, Warranty,
+  AddOn, Brand, CalculatorConfig, Faq, Feature, HomeContent, IconName, Img, ImpactStat, Link, Package, PackageSystemType,
+  PaymentKind, PaymentOption, Project, Service, ServiceCategory, Site, Solution, SolutionSlug, Step, TeamMember, Testimonial, Tone, Warranty,
 } from "./types";
 
 /**
@@ -337,6 +337,71 @@ const team: Loader<TeamMember[]> = async () => {
   );
 };
 
+/** Strapi enum values can't hold hyphens ("grid_tie"); the site uses "grid-tie". */
+const slugEnum = (v: unknown) => str(v).replace(/_/g, "-");
+const optStr = (v: unknown) => (typeof v === "string" && v.trim() ? v : undefined);
+const nullNum = (v: unknown) => (v === null || v === undefined || v === "" ? null : Number(v));
+
+/** Packages without kWp; the getter works it out from the panels. */
+const packages: Loader<Omit<Package, "kwp">[]> = async () => {
+  const rows = await many("solar-packages", "packages", { image: true });
+  return (
+    rows?.map((p) => {
+      const image = strapiMedia(p.image?.url);
+      return {
+        name: str(p.name),
+        slug: str(p.slug),
+        systemType: slugEnum(p.systemType) as PackageSystemType,
+        segment: (p.segment ?? "residential") as SolutionSlug,
+        inverterKw: num(p.inverterKw),
+        panelCount: num(p.panelCount),
+        panelWatt: num(p.panelWatt),
+        batteryKwh: optNum(p.batteryKwh),
+        batterySpec: optStr(p.batterySpec),
+        expandableTo: optNum(p.expandableTo),
+        bestFor: str(p.bestFor),
+        price: nullNum(p.price),
+        badge: optStr(p.badge),
+        featured: p.featured === true,
+        ...(image ? { image: { src: image, alt: str(p.image?.alternativeText) || str(p.name) } } : {}),
+      };
+    }) ?? null
+  );
+};
+
+const addOns: Loader<AddOn[]> = async () => {
+  const rows = await many("add-ons", "add-ons");
+  return (
+    rows?.map((a) => ({
+      name: str(a.name),
+      spec: str(a.spec),
+      description: str(a.description),
+      price: nullNum(a.price),
+      priceFrom: a.priceFrom === true,
+      unit: str(a.unit),
+    })) ?? null
+  );
+};
+
+const paymentOptions: Loader<PaymentOption[]> = async () => {
+  const rows = await many("payment-options", "payments", { requirements: true });
+  return (
+    rows?.map((o) => ({
+      title: str(o.title),
+      kind: slugEnum(o.kind) as PaymentKind,
+      icon: (o.icon || "wallet") as IconName,
+      tone: (o.tone ?? "sun") as Tone,
+      description: str(o.description),
+      highlight: str(o.highlight),
+      termMonths: nullNum(o.termMonths),
+      annualRate: nullNum(o.annualRate),
+      downPaymentPct: nullNum(o.downPaymentPct),
+      requirements: values(o.requirements),
+      ctaLabel: optStr(o.ctaLabel),
+    })) ?? null
+  );
+};
+
 const faqs: Loader<Faq[]> = async () => {
   const rows = await many("faqs", "faqs");
   return (
@@ -429,9 +494,12 @@ export const fromStrapi: {
   projects: Loader<Project[]>;
   testimonials: Loader<Testimonial[]>;
   team: Loader<TeamMember[]>;
+  packages: Loader<Omit<Package, "kwp">[]>;
+  addOns: Loader<AddOn[]>;
+  paymentOptions: Loader<PaymentOption[]>;
   faqs: Loader<Faq[]>;
   brands: Loader<Brand[]>;
   impact: Loader<ImpactStat[]>;
   warranty: Loader<Warranty[]>;
   calculator: Loader<CalculatorConfig>;
-} = { site, home, services, solutions, projects, testimonials, team, faqs, brands, impact, warranty, calculator };
+} = { site, home, services, solutions, projects, testimonials, team, packages, addOns, paymentOptions, faqs, brands, impact, warranty, calculator };
