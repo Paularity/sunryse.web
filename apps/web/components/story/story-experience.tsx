@@ -2,8 +2,9 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react";
 
+import { scrollToTarget } from "@/components/motion/smooth-scroll";
 import { formatHour } from "@/components/sections/home/configurator/model";
 import { ENERGY, RooftopWorld, Scene } from "@/components/three-d/models";
 import { buttonVariants } from "@/components/ui/button";
@@ -169,8 +170,16 @@ export function StoryExperience({ story, config }: { story: StoryCopy; config: C
   const jump = (i: number) => {
     const el = section.current;
     if (!el) return;
-    const top = el.offsetTop + chapterProgress(i, count) * (el.offsetHeight - window.innerHeight);
-    window.scrollTo({ top, behavior: reduced ? "auto" : "smooth" });
+    scrollToTarget(el.offsetTop + chapterProgress(i, count) * (el.offsetHeight - window.innerHeight));
+  };
+  /** In-page links (e.g. "#configurator") scroll through Lenis too. */
+  const onAnchor = (e: MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (!href.startsWith("#")) return;
+    const target = document.getElementById(href.slice(1));
+    if (!target) return;
+    e.preventDefault();
+    scrollToTarget(target);
+    history.replaceState(null, "", href);
   };
 
   if (mode === "static") return <StaticStory story={story} />;
@@ -302,6 +311,7 @@ export function StoryExperience({ story, config }: { story: StoryCopy; config: C
                       <Link
                         key={a.href}
                         href={a.href}
+                        onClick={(e) => onAnchor(e, a.href)}
                         className={buttonVariants({ variant: a.variant === "sun" ? "sun" : "line", size: "xl" })}
                       >
                         {a.label}

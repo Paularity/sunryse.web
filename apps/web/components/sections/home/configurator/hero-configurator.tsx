@@ -251,11 +251,17 @@ export function HeroConfigurator({
   hero,
   config,
   ui,
+  intro,
+  id,
 }: {
   hero: HomeContent["hero"];
   config: CalculatorConfig;
   ui: UiLabels;
+  /** Used further down the page (e.g. after the story): an h2 with its own copy, no header offset. */
+  intro?: { tagline: string; heading: string; subheading: string };
+  id?: string;
 }) {
+  const Heading = intro ? "h2" : "h1";
   const uid = useId();
   const [store] = useState(() =>
     createStore({
@@ -331,8 +337,12 @@ export function HeroConfigurator({
 
   return (
     <section
+      id={id}
       aria-label={t(ui, "heroAria")}
-      className="relative overflow-hidden bg-[linear-gradient(180deg,var(--color-sky-200)_0%,var(--color-dawn-50)_70%,var(--color-dawn-100))] pt-[calc(var(--site-top)+28px)] pb-16 lg:pb-20"
+      className={cn(
+        "relative scroll-mt-[var(--site-top)] overflow-hidden bg-[linear-gradient(180deg,var(--color-sky-200)_0%,var(--color-dawn-50)_70%,var(--color-dawn-100))] pb-16 lg:pb-20",
+        intro ? "pt-16 lg:pt-24" : "pt-[calc(var(--site-top)+28px)]",
+      )}
     >
       <div aria-hidden className="absolute inset-0 fx-grid opacity-70" />
       <div className="relative z-[2] container-site grid gap-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:grid-rows-[auto_auto] lg:gap-x-10 lg:gap-y-4">
@@ -342,12 +352,14 @@ export function HeroConfigurator({
             <Hud light dot="amber">
               <HeroStatus status={hero.status} />
             </Hud>
-            <span className={cn(mono, "text-navy-900")}>{hero.tagline}</span>
+            <span className={cn(mono, "text-navy-900")}>{intro?.tagline ?? hero.tagline}</span>
           </div>
-          <h1 className="font-display text-[40px] leading-[1.02] font-bold tracking-[-0.045em] text-navy-900 sm:text-[clamp(44px,3.9vw,56px)]">
-            <RichText text={hero.heading} />
-          </h1>
-          <p className="max-w-[520px] text-[17px] leading-[1.55] text-navy-900/85">{hero.subheading}</p>
+          <Heading className="font-display text-[40px] leading-[1.02] font-bold tracking-[-0.045em] text-navy-900 sm:text-[clamp(44px,3.9vw,56px)]">
+            <RichText text={intro?.heading ?? hero.heading} />
+          </Heading>
+          <p className="max-w-[520px] text-[17px] leading-[1.55] text-navy-900/85">
+            {intro?.subheading ?? hero.subheading}
+          </p>
         </div>
 
         <div
@@ -387,11 +399,7 @@ export function HeroConfigurator({
               aria-valuetext={formatPeso(bill)}
               className="h-11 w-full cursor-pointer accent-sun-500"
             />
-            <div
-              className="flex flex-wrap gap-1.5 lg:hidden"
-              role="group"
-              aria-label={t(ui, "quickBillAmounts")}
-            >
+            <div className="flex flex-wrap gap-1.5 lg:hidden" role="group" aria-label={t(ui, "quickBillAmounts")}>
               {presets.map((p) => (
                 <button
                   key={p}

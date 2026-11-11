@@ -1,8 +1,4 @@
 {
-  "meta": {
-    "title": "A day on solar",
-    "description": "Scroll through a day on a SunRyse solar island: sunrise to brownout, panels to the grid."
-  },
   "loading": {
     "brand": "SunRyse Solar Services",
     "title": "A day on solar",
@@ -123,11 +119,16 @@
           "variant": "sun"
         },
         {
-          "label": "Book a free survey",
-          "href": "/contact",
+          "label": "Try it with your bill",
+          "href": "#configurator",
           "variant": "line"
         }
       ]
     }
-  ]
+  ],
+  "configurator": {
+    "tagline": "Try it with your bill",
+    "heading": "See *~your~* home on solar.",
+    "subheading": "Type your monthly bill, pick your property and play the day: panels, battery and savings update as you go."
+  }
 }

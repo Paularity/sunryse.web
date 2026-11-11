@@ -12,6 +12,8 @@ import { SolarVsGrid } from "@/components/sections/home/solar-vs-grid";
 import { SolutionsSection } from "@/components/sections/home/solutions";
 import { TestimonialsSection } from "@/components/sections/home/testimonials";
 import { WhySection } from "@/components/sections/home/why";
+import { StoryExperience, type StoryCopy } from "@/components/story/story-experience";
+import story from "@/content/pages/story.json";
 import {
   getBrands,
   getCalculatorConfig,
@@ -44,7 +46,9 @@ export default async function HomePage() {
 
   return (
     <>
-      <HeroConfigurator hero={home.hero} config={config} ui={site.ui} />
+      {/* Opening: scroll through "a day on solar", then try it with your own bill. */}
+      <StoryExperience story={story as StoryCopy} config={config} />
+      <HeroConfigurator id="configurator" hero={home.hero} config={config} ui={site.ui} intro={story.configurator} />
       <BenefitsDock items={home.benefits} ui={site.ui} />
       <BrandRail label={home.marquee.label} brands={brands} />
       <SolutionsSection content={home.solutions} solutions={solutions} ui={site.ui} />
