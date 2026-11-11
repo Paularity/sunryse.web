@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_about_stories",
+  "info": {
+    "displayName": "Story",
+    "description": "Image, heading and paragraphs. ^carets^ highlight a phrase.",
+    "icon": "information"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "chip": {
+      "type": "string"
+    },
+    "paragraphs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.text-item"
+    }
+  }
+}

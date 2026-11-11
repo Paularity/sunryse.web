@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_about_statements",
+  "info": {
+    "displayName": "Statement",
+    "description": "Mission or vision card.",
+    "icon": "information"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "text": {
+      "type": "text",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_about_ctas",
+  "info": {
+    "displayName": "Call to action",
+    "description": "Bottom band.",
+    "icon": "information"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "href": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

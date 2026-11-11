@@ -18,7 +18,7 @@ const WEB_ENV = path.join(__dirname, '..', '..', 'web', '.env.local');
 const TOKEN_NAME = 'website';
 const READ_TYPES = [
   'global', 'homepage', 'calculator-config', 'service', 'solution', 'project', 'brand', 'testimonial', 'faq',
-  'article', 'impact-stat', 'warranty', 'about-page', 'projects-page', 'calculator-page', 'contact-page', 'service-defaults',
+  'article', 'impact-stat', 'warranty', 'team-member', 'about-page', 'projects-page', 'calculator-page', 'contact-page', 'service-defaults',
   'story-page',
 ];
 

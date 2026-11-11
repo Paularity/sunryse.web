@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { BrandMark } from "@/components/brand-mark";
 import { Icon, TONE } from "@/components/icons";
 import { Eyebrow, Hud, RichText } from "@/components/fx";
 import { Reveal } from "@/components/motion/reveal";
@@ -267,9 +268,9 @@ function Process({
               {brands.map((b) => (
                 <li
                   key={b.name}
-                  className="rounded-[14px] px-6 py-4 font-display text-[20px] font-extrabold glass-card"
+                  className="grid place-items-center rounded-[14px] px-6 py-4 font-display text-[20px] font-extrabold glass-card"
                 >
-                  {b.name}
+                  <BrandMark brand={b} className="h-8" />
                 </li>
               ))}
             </ul>

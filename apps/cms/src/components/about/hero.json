@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_about_heroes",
+  "info": {
+    "displayName": "Hero",
+    "description": "Top of the page. Wrap a word in ~tildes~ for the gradient.",
+    "icon": "information"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "lead": {
+      "type": "text"
+    }
+  }
+}

@@ -21,6 +21,7 @@ import type {
   Site,
   Solution,
   SolutionSlug,
+  TeamMember,
   Testimonial,
   Warranty,
 } from "./types";
@@ -87,6 +88,7 @@ export const getSolution = async (slug: string) =>
   (await getSolutions()).find((s) => s.slug === (slug as SolutionSlug)) ?? null;
 export const getProjects = () => withFallback(fromStrapi.projects, collections.projects as Project[]);
 export const getTestimonials = () => withFallback(fromStrapi.testimonials, collections.testimonials as Testimonial[]);
+export const getTeam = () => withFallback(fromStrapi.team, collections.team as TeamMember[]);
 export const getFaqs = () => withFallback(fromStrapi.faqs, faqs as Faq[]);
 export const getBrands = () => withFallback(fromStrapi.brands, brands as Brand[]);
 export const getImpact = () => withFallback(fromStrapi.impact, collections.impact as ImpactStat[]);

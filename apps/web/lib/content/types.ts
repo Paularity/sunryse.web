@@ -77,8 +77,11 @@ export type Project = {
 };
 
 export type Testimonial = { quote: string; name: string; roleLocation: string; rating: number; initial: string; tone: Tone };
+/** About-page team card; without a photo the card shows the initials on a tinted background. */
+export type TeamMember = { name: string; role: string; initial: string; tone: Tone; photo?: Img };
 export type Faq = { question: string; answer: string; category?: string };
-export type Brand = { name: string; category: "panel" | "inverter" | "battery" };
+/** A brand partner; with a logo uploaded it shows the logo, otherwise the name. */
+export type Brand = { name: string; category: "panel" | "inverter" | "battery"; logo?: Img };
 export type ImpactStat = { value: string; label: string; icon: IconName; tone: Tone };
 export type Step = { title: string; description: string; tone: Tone };
 export type Warranty = { item: string; years: string };

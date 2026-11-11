@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_about_teams",
+  "info": {
+    "displayName": "Team section",
+    "description": "Section copy. The people themselves are Team member entries.",
+    "icon": "information"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "lead": {
+      "type": "text"
+    },
+    "photoLabel": {
+      "type": "string",
+      "default": "Team photo placeholder"
+    }
+  }
+}

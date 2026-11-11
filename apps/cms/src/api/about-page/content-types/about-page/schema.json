@@ -5,15 +5,65 @@
     "singularName": "about-page",
     "pluralName": "about-pages",
     "displayName": "About page",
-    "description": "Copy for /about (hero, story, timeline, values, credentials). Edit the JSON values; keep the keys."
+    "description": "Everything on /about. Team members and brand partners are their own entries (Team member, Brand)."
   },
   "options": {
     "draftAndPublish": false
   },
   "attributes": {
-    "content": {
-      "type": "json",
-      "required": true
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    },
+    "hero": {
+      "type": "component",
+      "repeatable": false,
+      "component": "about.hero"
+    },
+    "story": {
+      "type": "component",
+      "repeatable": false,
+      "component": "about.story"
+    },
+    "mission": {
+      "type": "component",
+      "repeatable": false,
+      "component": "about.statement"
+    },
+    "vision": {
+      "type": "component",
+      "repeatable": false,
+      "component": "about.statement"
+    },
+    "values": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.feature-item"
+    },
+    "timeline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "about.timeline"
+    },
+    "team": {
+      "type": "component",
+      "repeatable": false,
+      "component": "about.team"
+    },
+    "credentials": {
+      "type": "component",
+      "repeatable": false,
+      "component": "about.credentials"
+    },
+    "brandsEyebrow": {
+      "type": "string",
+      "default": "[ 05 ] Brand partners"
+    },
+    "cta": {
+      "type": "component",
+      "repeatable": false,
+      "component": "about.cta"
     }
   }
 }

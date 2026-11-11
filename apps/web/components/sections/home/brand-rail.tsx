@@ -1,7 +1,10 @@
+import { BrandMark } from "@/components/brand-mark";
 import { Hud } from "@/components/fx";
 import type { Brand } from "@/lib/content/types";
 
-/** Infinite CSS marquee of installed brands. */
+const LOGO = "h-8 grayscale";
+
+/** Infinite CSS marquee of installed brands (logos when uploaded, names otherwise). */
 export function BrandRail({ label, brands }: { label: string; brands: Brand[] }) {
   const item = "whitespace-nowrap pr-14 font-display text-[22px] font-bold text-navy-900 opacity-50 transition-opacity duration-300 hover:opacity-100";
   return (
@@ -14,12 +17,12 @@ export function BrandRail({ label, brands }: { label: string; brands: Brand[] })
           <div className="flex w-max animate-[fx-marquee_36s_linear_infinite] group-hover:[animation-play-state:paused] motion-reduce:animate-none">
             {brands.map((b) => (
               <span key={b.name} className={item}>
-                {b.name}
+                <BrandMark brand={b} className={LOGO} />
               </span>
             ))}
             {brands.map((b) => (
               <span key={`dup-${b.name}`} aria-hidden className={item}>
-                {b.name}
+                <BrandMark brand={b} className={LOGO} decorative />
               </span>
             ))}
           </div>

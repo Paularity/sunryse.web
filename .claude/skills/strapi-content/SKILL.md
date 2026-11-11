@@ -25,9 +25,10 @@ description: Strapi 5 content model and Next.js data-fetching conventions for Su
 - **solution** — slug (residential|commercial|industrial), title, tag, summary, typicalSize, sizeMeter, metricLabel/Value/Meter, features[], caption, image
 - **project** — slug, title, segment, location, sizeKwp (TEXT, e.g. "12 kWp"), system, completed (text), image, order
 - **testimonial** — quote, name, roleLocation, rating, initial, tone, order
+- **team-member** — name, role, photo (optional; card shows initials without it), initial (derived from name when blank), tone, order. Shown on /about; defaults in `collections.json` `team`
 - **impact-stat** — label, value (TEXT, e.g. "[000]+"), icon, tone, order
 - **warranty** — item, years (text), order
-- **faq** — question, answer, category, order · **brand** — name, category (panel|inverter|battery), order
+- **faq** — question, answer, category, order · **brand** — name, logo (optional; `BrandMark` shows it instead of the name everywhere brands appear), category (panel|inverter|battery), order
 - **article** — title, slug, cover, excerpt, body, tags, publishedDate (not `publishedAt`)
 - **lead** — create-only via web API route; never publicly readable
 
@@ -52,5 +53,6 @@ After schema edits: `pnpm --filter cms strapi ts:generate-types`.
 ## Website wiring (v4)
 - **Env**: `pnpm setup` (or `pnpm --filter cms setup:web`) creates the "website" API token (create lead + read content); re-run it after adding a content type: it updates permissions and keeps the key (`ROTATE_TOKEN=1` for a new one). A running Strapi caches token permissions, so restart it after; restart the web dev server to drop cached failed reads and writes `apps/web/.env.local` (STRAPI_URL, STRAPI_TOKEN, REVALIDATE_SECRET, NEXT_PUBLIC_SITE_URL) and `apps/cms/.env` (WEB_REVALIDATE_URL, WEB_REVALIDATE_SECRET). Secrets are never printed. Without STRAPI_URL the site renders the bundled defaults.
 - **Refresh**: on start Strapi keeps a webhook "Website revalidate" (entry/media events) → `/api/revalidate` with header `x-revalidate-secret`; the route clears the `strapi` cache tag (all CMS reads).
-- **Page copy**: single types `about-page`, `projects-page`, `calculator-page`, `contact-page`, `story-page` (homepage scrollytelling: chapters in camera order, always 7, see `lib/content/pages/story.ts`), `service-defaults` each hold a `content` JSON (seeded from `apps/web/content/pages/*.json`); `solution.details` and `service.details` hold per-entry detail copy; `global.ui` holds interface labels. The web merges these over the bundled defaults key by key (`lib/content/strapi-page.ts` `mergeContent`): unknown keys are dropped, wrong types ignored, so partial edits never break a page.
+- **About page**: `about-page` uses real fields (components in `src/components/about/*`: hero, story, statement, timeline/milestone, team, credentials/credential, cta + shared.seo, shared.feature-item values, brandsEyebrow). `lib/content/pages/about.ts` maps them to the page shape and merges over `content/pages/about.json`, so blank fields fall back.
+- **Page copy**: single types `projects-page`, `calculator-page`, `contact-page`, `story-page` (homepage scrollytelling: chapters in camera order, always 7, see `lib/content/pages/story.ts`), `service-defaults` each hold a `content` JSON (seeded from `apps/web/content/pages/*.json`); `solution.details` and `service.details` hold per-entry detail copy; `global.ui` holds interface labels. The web merges these over the bundled defaults key by key (`lib/content/strapi-page.ts` `mergeContent`): unknown keys are dropped, wrong types ignored, so partial edits never break a page.
 - **Leads**: `/api/leads` validates with zod and creates a `lead` with the server token (fields include roofType, calcSnapshot, source; `status` defaults to "new" for the sales workflow). Public role cannot read leads.

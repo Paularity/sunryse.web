@@ -212,9 +212,31 @@ async function main() {
     await upsertCollection(strapi, 'api::impact-stat.impact-stat', ordered(collections.impact), 'label');
     await upsertCollection(strapi, 'api::warranty.warranty', ordered(collections.warranty), 'item');
 
+    await upsertCollection(strapi, 'api::team-member.team-member', ordered(collections.team), 'role');
+
+    // About page: real fields (team members and brands are their own entries)
+    const about = read('pages/about');
+    await upsertSingle(
+      strapi,
+      'api::about-page.about-page',
+      {
+        seo: { metaTitle: about.meta.title, metaDescription: about.meta.description },
+        hero: about.hero,
+        story: { ...about.story, image: await media(about.story.image), paragraphs: texts(about.story.paragraphs) },
+        mission: about.mission,
+        vision: about.vision,
+        values: about.values,
+        timeline: about.timeline,
+        team: about.team,
+        credentials: about.credentials,
+        brandsEyebrow: about.brands.eyebrow,
+        cta: about.cta,
+      },
+      false,
+    );
+
     // Page copy (JSON per page; the web app merges it over its bundled defaults key by key)
     for (const [uid, file] of [
-      ['api::about-page.about-page', 'pages/about'],
       ['api::projects-page.projects-page', 'pages/projects'],
       ['api::calculator-page.calculator-page', 'pages/calculator'],
       ['api::contact-page.contact-page', 'pages/contact'],

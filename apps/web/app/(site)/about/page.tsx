@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+import { BrandMark } from "@/components/brand-mark";
 import { Eyebrow, Hud, RichText } from "@/components/fx";
 import { Icon, TONE } from "@/components/icons";
-import { getBrands, getSite } from "@/lib/content";
+import { getBrands, getSite, getTeam } from "@/lib/content";
 import { getAboutPage } from "@/lib/content/pages/about";
 import type { Tone } from "@/lib/content/types";
 import { t } from "@/lib/content/ui";
@@ -28,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function AboutPage() {
-  const [page, brands, { ui }] = await Promise.all([getAboutPage(), getBrands(), getSite()]);
+  const [page, brands, members, { ui }] = await Promise.all([getAboutPage(), getBrands(), getTeam(), getSite()]);
   const { hero, story, mission, vision, values, timeline, credentials, cta, team } = page;
 
   return (
@@ -160,7 +161,7 @@ export default async function AboutPage() {
       </section>
 
       {/* TEAM */}
-      {team?.members?.length ? (
+      {members.length ? (
         <section className="bg-day-50 py-[100px]" aria-labelledby="team-h">
           <div className="container-site">
             <div className="mb-9 flex flex-wrap items-end justify-between gap-6">
@@ -173,17 +174,29 @@ export default async function AboutPage() {
               <p className="m-0 max-w-[380px] leading-[1.6] text-ink-muted">{team.lead}</p>
             </div>
             <div className="grid grid-cols-[repeat(auto-fit,minmax(230px,1fr))] gap-4 [perspective:1400px]">
-              {team.members.map((m, i) => (
+              {members.map((m, i) => (
                 <div key={`${i}-${m.role}`} className="d3-tilt sr-tilt overflow-hidden rounded-[22px] glass-card">
-                  <div
-                    role="img"
-                    aria-label={team.photoLabel}
-                    className={cn("grid h-[240px] place-items-center", TEAM_BG[m.tone] ?? TEAM_BG.sun)}
-                  >
-                    <span aria-hidden className="font-display text-[54px] font-bold text-navy-900/35">
-                      {m.initial}
-                    </span>
-                  </div>
+                  {m.photo ? (
+                    <div className="relative h-[240px] bg-day-100">
+                      <Image
+                        src={m.photo.src}
+                        alt={m.photo.alt}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw"
+                        className="object-cover object-top"
+                      />
+                    </div>
+                  ) : (
+                    <div
+                      role="img"
+                      aria-label={team.photoLabel}
+                      className={cn("grid h-[240px] place-items-center", TEAM_BG[m.tone] ?? TEAM_BG.sun)}
+                    >
+                      <span aria-hidden className="font-display text-[54px] font-bold text-navy-900/35">
+                        {m.initial}
+                      </span>
+                    </div>
+                  )}
                   <div className="p-[18px]">
                     <span className="block font-display text-lg font-bold">{m.name}</span>
                     <span className={cn(MONO, "text-[11px] text-ink-muted")}>{m.role}</span>
@@ -218,9 +231,9 @@ export default async function AboutPage() {
               {brands.map((b) => (
                 <span
                   key={b.name}
-                  className="grid h-20 place-items-center rounded-[14px] font-display text-lg font-extrabold glass-card max-[640px]:h-16 max-[640px]:text-[15px]"
+                  className="grid h-20 place-items-center rounded-[14px] px-4 font-display text-lg font-extrabold glass-card max-[640px]:h-16 max-[640px]:text-[15px]"
                 >
-                  {b.name}
+                  <BrandMark brand={b} className="max-h-10 max-[640px]:max-h-8" />
                 </span>
               ))}
             </div>

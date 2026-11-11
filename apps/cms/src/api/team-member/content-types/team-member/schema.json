@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "team_members",
+  "info": {
+    "singularName": "team-member",
+    "pluralName": "team-members",
+    "displayName": "Team member",
+    "description": "People shown on /about, sorted by order. Upload a photo (portrait works best); without one the card shows the initials."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "role": {
+      "type": "string",
+      "required": true
+    },
+    "photo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "initial": {
+      "type": "string",
+      "maxLength": 3
+    },
+    "tone": {
+      "type": "enumeration",
+      "enum": [
+        "sun",
+        "amber",
+        "sky",
+        "leaf",
+        "flame",
+        "navy"
+      ],
+      "default": "sun"
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

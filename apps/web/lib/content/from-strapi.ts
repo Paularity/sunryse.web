@@ -3,7 +3,7 @@ import "server-only";
 import { strapiFetch, strapiMedia, StrapiError } from "@/lib/strapi";
 import type {
   Brand, CalculatorConfig, Faq, Feature, HomeContent, IconName, Img, ImpactStat, Link, Project, Service, ServiceCategory,
-  Site, Solution, SolutionSlug, Step, Testimonial, Tone, Warranty,
+  Site, Solution, SolutionSlug, Step, TeamMember, Testimonial, Tone, Warranty,
 } from "./types";
 
 /**
@@ -313,6 +313,30 @@ const testimonials: Loader<Testimonial[]> = async () => {
   );
 };
 
+/** "Ryan Christian D. Requina" → "RR": first and last word. */
+const initials = (name: string) => {
+  const w = name.replace(/[^\p{L}\s]/gu, " ").trim().split(/\s+/).filter(Boolean);
+  return ((w[0]?.[0] ?? "") + (w.length > 1 ? w[w.length - 1][0] : "")).toUpperCase();
+};
+
+const team: Loader<TeamMember[]> = async () => {
+  const rows = await many("team-members", "team", { photo: true });
+  return (
+    rows?.map((m) => {
+      const name = str(m.name);
+      const photo = strapiMedia(m.photo?.url);
+      return {
+        name,
+        role: str(m.role),
+        initial: str(m.initial) || initials(name),
+        tone: (m.tone ?? "sun") as Tone,
+        // The person's name describes their portrait better than the library's alt text (often a file name).
+        ...(photo ? { photo: { src: photo, alt: name } } : {}),
+      };
+    }) ?? null
+  );
+};
+
 const faqs: Loader<Faq[]> = async () => {
   const rows = await many("faqs", "faqs");
   return (
@@ -325,8 +349,17 @@ const faqs: Loader<Faq[]> = async () => {
 };
 
 const brands: Loader<Brand[]> = async () => {
-  const rows = await many("brands", "brands");
-  return rows?.map((b) => ({ name: str(b.name), category: b.category as Brand["category"] })) ?? null;
+  const rows = await many("brands", "brands", { logo: true });
+  return (
+    rows?.map((b) => {
+      const logo = strapiMedia(b.logo?.url);
+      return {
+        name: str(b.name),
+        category: b.category as Brand["category"],
+        ...(logo ? { logo: { src: logo, alt: str(b.logo?.alternativeText) || str(b.name) } } : {}),
+      };
+    }) ?? null
+  );
 };
 
 const impact: Loader<ImpactStat[]> = async () => {
@@ -395,9 +428,10 @@ export const fromStrapi: {
   solutions: Loader<Solution[]>;
   projects: Loader<Project[]>;
   testimonials: Loader<Testimonial[]>;
+  team: Loader<TeamMember[]>;
   faqs: Loader<Faq[]>;
   brands: Loader<Brand[]>;
   impact: Loader<ImpactStat[]>;
   warranty: Loader<Warranty[]>;
   calculator: Loader<CalculatorConfig>;
-} = { site, home, services, solutions, projects, testimonials, faqs, brands, impact, warranty, calculator };
+} = { site, home, services, solutions, projects, testimonials, team, faqs, brands, impact, warranty, calculator };
